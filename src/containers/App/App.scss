@@ -1,0 +1,55 @@
+@import '../../styles/_colors.scss';
+
+body {
+  font-family: $main-font;
+  font-weight: $main-font-weight;
+  color: $default-light-color;
+}
+
+a:hover {
+  color: $default-dark-color;
+}
+
+.logo {
+  width: 100%;
+  text-align: center;
+  color: $secondary-color;
+  svg {
+    height: 20em;
+    fill: $primary-color; // currentColor;
+    margin-bottom: 1em;
+  }
+}
+
+.mini-brand {
+  color: $secondary-color;
+  svg {
+    height: 2em;
+    fill: $primary-color;
+  }
+}
+
+.nav-action {
+  margin-right: 40px;
+  color: $primary-color;
+}
+
+.action {
+  color: $primary-color;
+}
+
+section {
+  margin-bottom: 5em;
+}
+
+.fixed-bottom > .container {
+  background-color: white;
+  a {
+    color: $primary-color
+  }
+
+  a:hover {
+    color: $default-dark-color;
+    text-decoration: none;
+  }
+}
