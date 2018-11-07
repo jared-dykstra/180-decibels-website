@@ -1,0 +1,28 @@
+{
+  "eslint.autoFixOnSave": true,
+  "files.exclude": {
+    "**/.git": true,
+    "node_modules": true
+  },
+  "files.associations": {
+    "*.json": "jsonc" // <== Allow comments in JSON
+  },
+  "javascript.validate.enable": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist/**": true,
+    "**/tmp/**": true
+  },
+  "markdown.extension.toc.githubCompatibility": true,
+  "markdown.extension.toc.updateOnSave": true,
+  "markdown.extension.orderedList.marker": "one",
+  "cSpell.words": [
+    "blockchain",
+    "blockchains",
+    "eosjs",
+    "parallelize",
+    "reselect",
+    "ricardian",
+    "unmount"
+  ]
+}
