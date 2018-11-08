@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-// import { composeWithDevTools } from 'redux-devtools-extension'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 
 import { reducer as formReducer } from 'redux-form'
 import createSagaMiddleware from 'redux-saga'
@@ -19,13 +19,14 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-export default () => {
+export default history => {
   const store = createStore(
     combineReducers({
-      ...reducers,
-      form: formReducer
+      router: connectRouter(history),
+      form: formReducer,
+      ...reducers
     }),
-    composeEnhancers(applyMiddleware(sagaMiddleware))
+    composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
   )
   sagaMiddleware.run(rootSaga)
   return store

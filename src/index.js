@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { createBrowserHistory } from 'history'
+import { Route, Switch } from 'react-router'
+import { ConnectedRouter } from 'connected-react-router'
 import 'bootstrap'
 
 import './index.css'
@@ -10,11 +13,19 @@ import createStore from './redux/createStore'
 import { App } from './containers'
 import * as serviceWorker from './serviceWorker'
 
-const store = createStore()
+const history = createBrowserHistory()
+const store = createStore(history)
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+      <div>
+        <Switch>
+          <Route exact path="/" render={() => <App />} />
+          <Route render={() => <div>Miss</div>} />
+        </Switch>
+      </div>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
 )
