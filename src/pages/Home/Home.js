@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+// import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   Button,
-  Col,
   Collapse,
   Container,
   Nav,
@@ -11,28 +10,22 @@ import {
   NavbarBrand,
   NavbarToggler,
   NavItem,
-  NavLink,
-  Row
+  NavLink
 } from 'reactstrap'
 
-import './App.scss'
+import './Home.scss'
 
-import BlockList from '../../components/BlockList/BlockList'
-import { blockListPropType } from '../../components/BlockList/blockListPropTypes'
-import Status from './Status'
-import Logo from './Logo'
-import SocialLinks from './SocialLinks'
-import Carousel from './Carousel'
+import { Logo, SocialLinks } from '../../components'
 
-import {
-  actions as eosActions,
-  selectors as eosSelector
-} from '../../redux/eos'
+// import {
+//   actions as eosActions,
+//   selectors as eosSelector
+// } from '../../redux/eos'
 
 class App extends Component {
   static propTypes = {
-    doUpdateBlocks: propTypes.func.isRequired,
-    blocks: blockListPropType.isRequired
+    // doUpdateBlocks: propTypes.func.isRequired,
+    // blocks: blockListPropType.isRequired
   }
 
   constructor(props) {
@@ -52,7 +45,7 @@ class App extends Component {
   }
 
   render() {
-    const { doUpdateBlocks, blocks } = this.props
+    // const { doUpdateBlocks, blocks } = this.props
     const { collapsed, showBrand } = this.state
     return (
       <Container>
@@ -128,11 +121,11 @@ class App extends Component {
 
 export default connect(
   (state /* , ownProps */) => ({
-    blocks: eosSelector.blocks(state),
-    latestTimestamp: eosSelector.latestBlockTimestamp(state),
-    isUpdating: eosSelector.isUpdating(state)
+    // blocks: eosSelector.blocks(state),
+    // latestTimestamp: eosSelector.latestBlockTimestamp(state),
+    // isUpdating: eosSelector.isUpdating(state)
   }),
   dispatch => ({
-    doUpdateBlocks: () => dispatch(eosActions.loadBlocks())
+    // doUpdateBlocks: () => dispatch(eosActions.loadBlocks())
   })
 )(App)

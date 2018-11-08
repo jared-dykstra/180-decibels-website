@@ -10,7 +10,7 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import createStore from './redux/createStore'
-import { App } from './containers'
+import { Home } from './pages'
 import * as serviceWorker from './serviceWorker'
 
 const history = createBrowserHistory()
@@ -21,7 +21,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <Switch>
-          <Route exact path="/" render={() => <App />} />
+          <Route exact path="/" render={() => <Home />} />
           <Route render={() => <div>Miss</div>} />
         </Switch>
       </div>

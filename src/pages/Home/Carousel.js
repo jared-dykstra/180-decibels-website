@@ -21,8 +21,8 @@ const items = [
 const Images = () => (
   <Row className="carousel">
     {items.map(i => (
-      <Col md={4} className="my-auto">
-        <img src={i.src} alt={i.altText} key={i.src} />
+      <Col key={i.src} md={4} className="my-auto">
+        <img src={i.src} alt={i.altText} />
       </Col>
     ))}
   </Row>

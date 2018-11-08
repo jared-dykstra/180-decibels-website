@@ -20,6 +20,7 @@
     "blockchain",
     "blockchains",
     "eosjs",
+    "mailto",
     "parallelize",
     "reselect",
     "ricardian",
