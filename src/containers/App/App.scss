@@ -19,6 +19,10 @@ a:hover {
     fill: $primary-color; // currentColor;
     margin-bottom: 1em;
   }
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+  }
 }
 
 .mini-brand {
@@ -53,3 +57,12 @@ section {
     text-decoration: none;
   }
 }
+
+/*
+.carousel{
+  img {
+    max-height: 100px;
+    width: initial !important;
+  }
+}
+*/

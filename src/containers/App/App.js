@@ -22,6 +22,7 @@ import { blockListPropType } from '../../components/BlockList/blockListPropTypes
 import Status from './Status'
 import Logo from './Logo'
 import SocialLinks from './SocialLinks'
+import Carousel from './Carousel'
 
 import {
   actions as eosActions,
@@ -57,7 +58,7 @@ class App extends Component {
       <Container>
         <Navbar color="faded" light expand="md">
           {showBrand && (
-            <NavbarBrand href="/">
+            <NavbarBrand href="/about">
               <div className="mini-brand">
                 <Logo />
                 180 Decibels
@@ -108,9 +109,12 @@ class App extends Component {
           </p>
           <Button>Discover how 180 Decibels can help you</Button>
         </section>
+        {/*
         <section>
           <h2>Organizations using 180 Decibels</h2>
+          <Carousel />
         </section>
+        */}
         <Navbar color="faded" light className="fixed-bottom">
           <Container>
             <a href="mailto:info@180decibels.com">info@180decibels.com</a>
