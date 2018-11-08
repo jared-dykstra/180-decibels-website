@@ -11,6 +11,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import createStore from './redux/createStore'
 import { HelpMe, HelpMyTeam, Home, NotFound } from './pages'
+import {
+  ROUTE_HOME,
+  ROUTE_HELP_ME,
+  ROUTE_HELP_MY_TEAM
+} from './redux/routes/routesConstants'
 import * as serviceWorker from './serviceWorker'
 
 const history = createBrowserHistory()
@@ -21,9 +26,13 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <Switch>
-          <Route exact path="/" render={() => <Home />} />
-          <Route exact path="/help-me" render={() => <HelpMe />} />
-          <Route exact path="/help-my-team" render={() => <HelpMyTeam />} />
+          <Route exact path={ROUTE_HOME} render={() => <Home />} />
+          <Route exact path={ROUTE_HELP_ME} render={() => <HelpMe />} />
+          <Route
+            exact
+            path={ROUTE_HELP_MY_TEAM}
+            render={() => <HelpMyTeam />}
+          />
           <Route render={() => <NotFound />} />
         </Switch>
       </div>

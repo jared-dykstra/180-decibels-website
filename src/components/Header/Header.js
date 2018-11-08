@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import {
   Collapse,
   Nav,
@@ -10,6 +12,13 @@ import {
   NavLink
 } from 'reactstrap'
 
+import { isHomePageSelector } from '../../redux/routes/routesSelectors'
+import {
+  ROUTE_HOME,
+  ROUTE_HELP_ME,
+  ROUTE_HELP_MY_TEAM
+} from '../../redux/routes/routesConstants'
+
 import { Logo, SocialLinks } from '..'
 
 import './Header.scss'
@@ -18,8 +27,10 @@ import './Header.scss'
 
 class Header extends Component {
   static propTypes = {
-    // doUpdateBlocks: propTypes.func.isRequired,
-    // blocks: blockListPropType.isRequired
+    doClickHome: PropTypes.func.isRequired,
+    doClickHelpMe: PropTypes.func.isRequired,
+    doClickHelpMyTeam: PropTypes.func.isRequired,
+    isHomePage: PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -27,8 +38,7 @@ class Header extends Component {
 
     this.toggleNavbar = this.toggleNavbar.bind(this)
     this.state = {
-      collapsed: true,
-      showBrand: true
+      isOpen: false
     }
   }
 
@@ -39,11 +49,38 @@ class Header extends Component {
   }
 
   render() {
-    const { collapsed, showBrand } = this.state
+    const { isOpen } = this.state
+    const {
+      doClickHelpMyTeam,
+      doClickHelpMe,
+      doClickHome,
+      isHomePage
+    } = this.props
+    const showBrand = !isHomePage
+
+    const navItems = [
+      {
+        url: ROUTE_HELP_MY_TEAM,
+        handler: doClickHelpMyTeam,
+        text: 'Help My Team'
+      },
+      {
+        url: ROUTE_HELP_ME,
+        handler: doClickHelpMe,
+        text: 'Help Me'
+      }
+    ].map(({ handler, url, text }) => (
+      <NavItem key={url}>
+        <NavLink className="nav-action" onClick={handler} href="#">
+          {text}
+        </NavLink>
+      </NavItem>
+    ))
+
     return (
       <Navbar color="faded" light expand="md">
         {showBrand && (
-          <NavbarBrand href="/">
+          <NavbarBrand onClick={doClickHome} href="#">
             <div className="mini-brand">
               <Logo />
               180 Decibels
@@ -51,19 +88,13 @@ class Header extends Component {
           </NavbarBrand>
         )}
         <NavbarToggler onClick={this.toggleNavbar} />
-        <Collapse isOpen={collapsed} navbar>
+        <Collapse isOpen={isOpen} navbar>
+          {isHomePage && <Nav navbar>{navItems}</Nav>}
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink className="nav-action" href="/help-my-team">
-                Help My Team
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-action" href="/help-me">
-                Help Me
-              </NavLink>
-            </NavItem>
-            <SocialLinks />
+            {!isHomePage && navItems}
+            <span className="d-none d-md-flex">
+              <SocialLinks />
+            </span>
           </Nav>
         </Collapse>
       </Navbar>
@@ -73,11 +104,11 @@ class Header extends Component {
 
 export default connect(
   (state /* , ownProps */) => ({
-    // blocks: eosSelector.blocks(state),
-    // latestTimestamp: eosSelector.latestBlockTimestamp(state),
-    // isUpdating: eosSelector.isUpdating(state)
+    isHomePage: isHomePageSelector(state)
   }),
   dispatch => ({
-    // doUpdateBlocks: () => dispatch(eosActions.loadBlocks())
+    doClickHome: () => dispatch(push(ROUTE_HOME)),
+    doClickHelpMe: () => dispatch(push(ROUTE_HELP_ME)),
+    doClickHelpMyTeam: () => dispatch(push(ROUTE_HELP_MY_TEAM))
   })
 )(Header)

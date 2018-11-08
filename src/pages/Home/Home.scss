@@ -1,15 +1,5 @@
 @import '../../styles/_colors.scss';
 
-body {
-  font-family: $main-font;
-  font-weight: $main-font-weight;
-  color: $default-light-color;
-}
-
-a:hover {
-  color: $default-dark-color;
-}
-
 section {
   margin-bottom: 5em;
 }
@@ -17,15 +7,16 @@ section {
 .section-splash {
   width: 100%;
   text-align: center;
-  color: $secondary-color;
+  color: $primary-color;
   svg {
     height: 20em;
-    fill: $primary-color; // currentColor;
+    fill: currentColor;
     margin-bottom: 1em;
   }
   h1 {
     font-size: 3.5rem;
     font-weight: 800;
+    color: $secondary-color;
   }
 }
 
@@ -33,7 +24,14 @@ section {
   color: $primary-color;
 }
 
+.btn {
+  border-color: $primary-color;
+  background-color: $secondary-color;
+}
 
+.btn:hover {
+  background-color: $primary-color;
+}
 
 /*
 .carousel{

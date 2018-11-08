@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import { Button } from 'reactstrap'
+
+import {
+  ROUTE_HELP_ME,
+  ROUTE_HELP_MY_TEAM
+} from '../../redux/routes/routesConstants'
 
 import './Home.scss'
 
 import { Logo, Template } from '../../components'
 
-export default () => (
+const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <Template>
     <section className="section-splash">
       <Logo />
       <h1>180 Decibels</h1>
-      <p>Management Consulting for the Modern Manager</p>
+      <h3>Management Consulting for the Modern Manager</h3>
     </section>
     <section className="section-help-my-team">
       <h2 className="action">Help My Team</h2>
@@ -20,7 +28,9 @@ export default () => (
         what they need to do EACH DAY to meet targets? IF THIS SOUNDS LIKE YOUR
         COMPANY, WE GET IT AND WE CAN HELP.
       </p>
-      <Button>Discover what 180 Decibels can do for your team</Button>
+      <Button onClick={doClickHelpMyTeam}>
+        Discover what 180 Decibels can do for your team
+      </Button>
     </section>
     <section className="section-help-me">
       <h2 className="action">Help Me</h2>
@@ -30,7 +40,9 @@ export default () => (
         culture so you can start feeling more competent and more
         confident--getting huge productivity gains out of your team.
       </p>
-      <Button>Discover how 180 Decibels can help you</Button>
+      <Button onClick={doClickHelpMe}>
+        Discover how 180 Decibels can help you
+      </Button>
     </section>
     {/*
       <section>
@@ -40,3 +52,18 @@ export default () => (
     */}
   </Template>
 )
+
+Home.propTypes = {
+  doClickHelpMe: PropTypes.func.isRequired,
+  doClickHelpMyTeam: PropTypes.func.isRequired
+}
+
+export default connect(
+  (state /* , ownProps */) => ({
+    // No props mapped
+  }),
+  dispatch => ({
+    doClickHelpMe: () => dispatch(push(ROUTE_HELP_ME)),
+    doClickHelpMyTeam: () => dispatch(push(ROUTE_HELP_MY_TEAM))
+  })
+)(Home)

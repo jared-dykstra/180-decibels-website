@@ -8,6 +8,8 @@ import { Container } from 'reactstrap'
 
 import { Header, Footer } from '..'
 
+import './Template.scss'
+
 const Template = ({ children }) => (
   <Container>
     <Header />
