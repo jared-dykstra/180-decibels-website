@@ -10,7 +10,7 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import createStore from './redux/createStore'
-import { Home } from './pages'
+import { HelpMe, HelpMyTeam, Home, NotFound } from './pages'
 import * as serviceWorker from './serviceWorker'
 
 const history = createBrowserHistory()
@@ -22,7 +22,9 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route exact path="/" render={() => <Home />} />
-          <Route render={() => <div>Miss</div>} />
+          <Route exact path="/help-me" render={() => <HelpMe />} />
+          <Route exact path="/help-my-team" render={() => <HelpMyTeam />} />
+          <Route render={() => <NotFound />} />
         </Switch>
       </div>
     </ConnectedRouter>

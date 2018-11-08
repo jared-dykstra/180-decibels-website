@@ -1,0 +1,14 @@
+@import '../../styles/_colors.scss';
+
+.mini-brand {
+  color: $secondary-color;
+  svg {
+    height: 2em;
+    fill: $primary-color;
+  }
+}
+
+.nav-action {
+  margin-right: 40px;
+  color: $primary-color;
+}

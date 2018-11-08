@@ -10,7 +10,11 @@ a:hover {
   color: $default-dark-color;
 }
 
-.logo {
+section {
+  margin-bottom: 5em;
+}
+
+.section-splash {
   width: 100%;
   text-align: center;
   color: $secondary-color;
@@ -25,38 +29,11 @@ a:hover {
   }
 }
 
-.mini-brand {
-  color: $secondary-color;
-  svg {
-    height: 2em;
-    fill: $primary-color;
-  }
-}
-
-.nav-action {
-  margin-right: 40px;
-  color: $primary-color;
-}
-
 .action {
   color: $primary-color;
 }
 
-section {
-  margin-bottom: 5em;
-}
 
-.fixed-bottom > .container {
-  background-color: white;
-  a {
-    color: $secondary-color
-  }
-
-  a:hover {
-    color: $default-dark-color;
-    text-decoration: none;
-  }
-}
 
 /*
 .carousel{

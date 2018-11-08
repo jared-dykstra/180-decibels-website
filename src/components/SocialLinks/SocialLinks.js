@@ -1,3 +1,7 @@
+/*
+   This is a list of social media icons and their corresponding links
+*/
+
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
