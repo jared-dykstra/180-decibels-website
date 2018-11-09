@@ -6,8 +6,7 @@ import { Route, Switch } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
 import 'bootstrap'
 
-import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles/custom.scss'
 
 import createStore from './redux/createStore'
 import { HelpMe, HelpMyTeam, Home, NotFound } from './pages'

@@ -28,7 +28,7 @@ const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
         what they need to do EACH DAY to meet targets? IF THIS SOUNDS LIKE YOUR
         COMPANY, WE GET IT AND WE CAN HELP.
       </p>
-      <Button onClick={doClickHelpMyTeam}>
+      <Button color="primary" onClick={doClickHelpMyTeam}>
         Discover what 180 Decibels can do for your team
       </Button>
     </section>
@@ -40,7 +40,7 @@ const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
         culture so you can start feeling more competent and more
         confident--getting huge productivity gains out of your team.
       </p>
-      <Button onClick={doClickHelpMe}>
+      <Button color="primary" onClick={doClickHelpMe}>
         Discover how 180 Decibels can help you
       </Button>
     </section>

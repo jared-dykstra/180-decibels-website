@@ -2,19 +2,6 @@
 
 .home {
   :global {
-    .btn {
-      border-color: $primary-color;
-      background-color: $secondary-color;
-    }
-
-    .btn:hover {
-      background-color: $primary-color;
-    }
-
-    h2 {
-      color: $primary-color;
-    }
-
     section {
       margin-bottom: 5em;
     }
@@ -23,7 +10,7 @@
 
 .sectionSplash {
   text-align: center;
-  color: $primary-color;
+  color: $helix-red;
 
   svg {
     height: 20em;
@@ -34,7 +21,7 @@
   h1 {
     font-size: 3.5rem;
     font-weight: 800;
-    color: $secondary-color;
+    color: $helix-teal;
   }
 }
 

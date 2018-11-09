@@ -9,8 +9,6 @@ import { Container } from 'reactstrap'
 
 import { Header, Footer } from '..'
 
-import './Template.module.scss'
-
 const Template = ({ className, children }) => (
   <Container>
     <Header />

@@ -1,0 +1,57 @@
+// See: https://getbootstrap.com/docs/4.0/getting-started/theming
+
+// Local
+@import "_colors.scss";
+
+// Overrides values from _variables.scss
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:200,300,600');
+$font-family-sans-serif: 'Ubuntu', sans-serif;
+$font-weight-light: 200;
+$font-weight-normal: 300;
+$font-weight-bold: 600;
+
+// Links
+$primary: $helix-teal;
+$link-hover-color: $helix-red;
+
+// Headings
+$headings-color: $helix-red;
+
+// Option A: Include all of Bootstrap
+@import "node_modules/bootstrap/scss/bootstrap";
+
+// // Option B: Include parts of Bootstrap
+
+// // Required
+// @import "node_modules/bootstrap/scss/functions";
+// @import "node_modules/bootstrap/scss/variables";
+// @import "node_modules/bootstrap/scss/mixins";
+
+// // Optional
+// @import "node_modules/bootstrap/scss/reboot";
+// @import "node_modules/bootstrap/scss/type";
+// @import "node_modules/bootstrap/scss/images";
+// @import "node_modules/bootstrap/scss/code";
+// @import "node_modules/bootstrap/scss/grid";
+
+// Buttons
+.btn-primary {
+  color: $white;
+  border-color: $helix-red;
+
+  :hover {
+    color: $link-hover-color;
+  }
+}
+
+.btn-primary:hover {
+  color: $link-hover-color;
+}
+
+// Links
+a:hover {
+  color: $link-hover-color !important;
+  text-decoration: none;
+}

@@ -1,15 +1,14 @@
 @import '../../styles/_colors.scss';
 
 .miniBrand {
-  color: $secondary-color;
+  color: $helix-teal;
 
   svg {
     height: 2em;
-    fill: $primary-color;
+    fill: $helix-red;
   }
 }
 
 .navAction {
   margin-right: 40px;
-  color: $primary-color;
 }
