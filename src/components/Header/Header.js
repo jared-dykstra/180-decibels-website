@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { Link } from 'react-router-dom'
 import {
   Collapse,
   Nav,
@@ -27,9 +28,6 @@ import styles from './Header.module.scss'
 
 class Header extends Component {
   static propTypes = {
-    doClickHome: PropTypes.func.isRequired,
-    doClickHelpMe: PropTypes.func.isRequired,
-    doClickHelpMyTeam: PropTypes.func.isRequired,
     isHomePage: PropTypes.bool.isRequired
   }
 
@@ -50,42 +48,33 @@ class Header extends Component {
 
   render() {
     const { isOpen } = this.state
-    const {
-      doClickHelpMyTeam,
-      doClickHelpMe,
-      doClickHome,
-      isHomePage
-    } = this.props
+    const { isHomePage } = this.props
     const showBrand = !isHomePage
 
     const navItems = [
       {
         url: ROUTE_HELP_MY_TEAM,
-        handler: doClickHelpMyTeam,
         text: 'Help My Team'
       },
       {
         url: ROUTE_HELP_ME,
-        handler: doClickHelpMe,
         text: 'Help Me'
       }
-    ].map(({ handler, url, text }) => (
+    ].map(({ url, text }) => (
       <NavItem key={url}>
-        <NavLink className={styles.navAction} onClick={handler} href="#">
+        <Link className={`${styles.navAction} nav-link`} to={url}>
           {text}
-        </NavLink>
+        </Link>
       </NavItem>
     ))
 
     return (
       <Navbar color="faded" light expand="md">
         {showBrand && (
-          <NavbarBrand onClick={doClickHome} href="#">
-            <div className={styles.miniBrand}>
-              <Logo />
-              180 Decibels
-            </div>
-          </NavbarBrand>
+          <Link className={`${styles.miniBrand} nav-link`} to={ROUTE_HOME}>
+            <Logo />
+            180 Decibels
+          </Link>
         )}
         <NavbarToggler onClick={this.toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
@@ -107,8 +96,6 @@ export default connect(
     isHomePage: isHomePageSelector(state)
   }),
   dispatch => ({
-    doClickHome: () => dispatch(push(ROUTE_HOME)),
-    doClickHelpMe: () => dispatch(push(ROUTE_HELP_ME)),
-    doClickHelpMyTeam: () => dispatch(push(ROUTE_HELP_MY_TEAM))
+    // No events
   })
 )(Header)
