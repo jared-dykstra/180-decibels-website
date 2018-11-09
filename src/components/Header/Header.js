@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom'
-import {
-  Collapse,
-  Nav,
-  Navbar,
-  NavbarBrand,
-  NavbarToggler,
-  NavItem,
-  NavLink
-} from 'reactstrap'
+import { Collapse, Nav, Navbar, NavbarToggler, NavItem } from 'reactstrap'
 
 import { isHomePageSelector } from '../../redux/routes/routesSelectors'
 import {

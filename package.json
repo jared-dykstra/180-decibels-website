@@ -35,8 +35,9 @@
     "redux-form": "^7.4.2",
     "redux-saga": "^0.16.2",
     "reselect": "^4.0.0",
-    "seamless-immutable": "^7.1.4"
-  },
+    "seamless-immutable": "^7.1.4",
+    "serve": "^10.0.2"
+    },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "eslint": "5.6.0",
@@ -54,10 +55,12 @@
     "stylelint-config-standard": "^18.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build",
     "ci": "cross-env npm run lint && npm run test:ci",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:eslint": "eslint --ignore-path .gitignore",
