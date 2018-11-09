@@ -5,7 +5,8 @@
     "node_modules": true
   },
   "files.associations": {
-    "*.json": "jsonc" // <== Allow comments in JSON
+    "*.json": "jsonc", // <== Allow comments in JSON
+    ".stylelintrc": "jsonc"
   },
   "javascript.validate.enable": true,
   "search.exclude": {
@@ -13,6 +14,9 @@
     "**/dist/**": true,
     "**/tmp/**": true
   },
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
   "markdown.extension.toc.githubCompatibility": true,
   "markdown.extension.toc.updateOnSave": true,
   "markdown.extension.orderedList.marker": "one",

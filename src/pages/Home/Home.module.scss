@@ -24,18 +24,19 @@
 .sectionSplash {
   text-align: center;
   color: $primary-color;
+
   svg {
     height: 20em;
     fill: currentColor;
     margin-bottom: 1em;
   }
+
   h1 {
     font-size: 3.5rem;
     font-weight: 800;
     color: $secondary-color;
   }
 }
-
 
 /*
 .carousel{

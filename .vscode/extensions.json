@@ -6,6 +6,7 @@
     "EditorConfig.EditorConfig",
     "davidanson.vscode-markdownlint",
     "streetsidesoftware.code-spell",
-    "msjsdiag.debugger-for-chrome"
+    "msjsdiag.debugger-for-chrome",
+    "shinnn.stylelint"
   ]
 }
