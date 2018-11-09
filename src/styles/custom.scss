@@ -5,12 +5,14 @@
 
 // Overrides values from _variables.scss
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Ubuntu:200,300,600');
+// Self-host Fonts
+// @import url('https://fonts.googleapis.com/css?family=Ubuntu:200,300,600');
 $font-family-sans-serif: 'Ubuntu', sans-serif;
 $font-weight-light: 200;
 $font-weight-normal: 300;
 $font-weight-bold: 600;
+
+@import "_fonts.scss";
 
 // Links
 $primary: $helix-teal;
