@@ -9,7 +9,7 @@ import { Container } from 'reactstrap'
 
 import { Header, Footer } from '..'
 
-import './Template.scss'
+import './Template.module.scss'
 
 const Template = ({ className, children }) => (
   <Container>

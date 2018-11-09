@@ -1,0 +1,13 @@
+@import '../../styles/_colors.scss';
+
+:global {
+  body {
+    font-family: $main-font;
+    font-weight: $main-font-weight;
+    color: $default-light-color;
+  }
+
+  a:hover {
+    color: $primary-color !important;
+  }
+}
