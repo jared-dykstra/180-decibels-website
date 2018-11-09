@@ -1,9 +1,8 @@
 @import '../../styles/_colors.scss';
 
 .miniBrand {
-  color: $helix-teal;
-
   svg {
+    margin-top: -0.5em;
     height: 2em;
     fill: $helix-red;
   }
