@@ -21,7 +21,7 @@ import {
 
 import { Logo, SocialLinks } from '..'
 
-import './Header.scss'
+import styles from './Header.module.scss'
 
 // TODO: Use Redux for state and change to PureComponent
 
@@ -71,7 +71,7 @@ class Header extends Component {
       }
     ].map(({ handler, url, text }) => (
       <NavItem key={url}>
-        <NavLink className="nav-action" onClick={handler} href="#">
+        <NavLink className={styles.navAction} onClick={handler} href="#">
           {text}
         </NavLink>
       </NavItem>
@@ -81,7 +81,7 @@ class Header extends Component {
       <Navbar color="faded" light expand="md">
         {showBrand && (
           <NavbarBrand onClick={doClickHome} href="#">
-            <div className="mini-brand">
+            <div className={styles.miniBrand}>
               <Logo />
               180 Decibels
             </div>

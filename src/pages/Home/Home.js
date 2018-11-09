@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
@@ -9,19 +9,19 @@ import {
   ROUTE_HELP_MY_TEAM
 } from '../../redux/routes/routesConstants'
 
-import './Home.scss'
+import styles from './Home.module.scss'
 
 import { Logo, Template } from '../../components'
 
 const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
-  <Template>
-    <section className="section-splash">
+  <Template className={styles.home}>
+    <section className={styles.sectionSplash}>
       <Logo />
       <h1>180 Decibels</h1>
       <h3>Management Consulting for the Modern Manager</h3>
     </section>
-    <section className="section-help-my-team">
-      <h2 className="action">Help My Team</h2>
+    <section>
+      <h2>Help My Team</h2>
       <p>
         Are you a manager or leader who is frustrated by your team’s results? Is
         there confusion on who is accountable for what? Do team members KNOW
@@ -32,8 +32,8 @@ const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
         Discover what 180 Decibels can do for your team
       </Button>
     </section>
-    <section className="section-help-me">
-      <h2 className="action">Help Me</h2>
+    <section>
+      <h2>Help Me</h2>
       <p>
         We re-focus managers on driving to outcome and on creating urgency. We
         offer a practical, results-oriented process to build a high-performing

@@ -1,0 +1,15 @@
+@import '../../styles/_colors.scss';
+
+.footer {
+  background-color: white;
+
+  a {
+    color: $secondary-color
+  }
+
+  a:hover {
+    color: $default-dark-color;
+    text-decoration: none;
+  }
+
+}

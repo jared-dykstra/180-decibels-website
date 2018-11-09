@@ -1,11 +1,27 @@
 @import '../../styles/_colors.scss';
 
-section {
-  margin-bottom: 5em;
+.home {
+  :global {
+    .btn {
+      border-color: $primary-color;
+      background-color: $secondary-color;
+    }
+
+    .btn:hover {
+      background-color: $primary-color;
+    }
+
+    h2 {
+      color: $primary-color;
+    }
+
+    section {
+      margin-bottom: 5em;
+    }
+  }
 }
 
-.section-splash {
-  width: 100%;
+.sectionSplash {
   text-align: center;
   color: $primary-color;
   svg {
@@ -20,18 +36,6 @@ section {
   }
 }
 
-.action {
-  color: $primary-color;
-}
-
-.btn {
-  border-color: $primary-color;
-  background-color: $secondary-color;
-}
-
-.btn:hover {
-  background-color: $primary-color;
-}
 
 /*
 .carousel{
