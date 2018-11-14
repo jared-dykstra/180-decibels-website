@@ -34,7 +34,7 @@ class ScrollToTop extends Component {
   }
 
   static defaultProps = {
-    location: undefined
+    location: {}
   }
 
   componentDidUpdate(prevProps) {
