@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
@@ -20,10 +21,33 @@ import * as serviceWorker from './serviceWorker'
 const history = createBrowserHistory()
 const store = createStore(history)
 
+// https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/guides/scroll-restoration.md
+class ScrollToTop extends Component {
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]).isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string
+    }).isRequired
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      window.scrollTo(0, 0)
+    }
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
+      <ScrollToTop>
         <Switch>
           <Route exact path={ROUTE_HOME} render={() => <Home />} />
           <Route exact path={ROUTE_HELP_ME} render={() => <HelpMe />} />
@@ -34,7 +58,7 @@ ReactDOM.render(
           />
           <Route render={() => <NotFound />} />
         </Switch>
-      </div>
+      </ScrollToTop>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
