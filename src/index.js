@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
@@ -11,6 +10,7 @@ import './styles/custom.scss'
 
 import createStore from './redux/createStore'
 import { HelpMe, HelpMyTeam, Home, NotFound } from './pages'
+import { ScrollToTop } from './components'
 import {
   ROUTE_HOME,
   ROUTE_HELP_ME,
@@ -20,33 +20,6 @@ import * as serviceWorker from './serviceWorker'
 
 const history = createBrowserHistory()
 const store = createStore(history)
-
-// ScrollToTop - see https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/guides/scroll-restoration.md
-class ScrollToTop extends Component {
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string
-    })
-  }
-
-  static defaultProps = {
-    location: {}
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0)
-    }
-  }
-
-  render() {
-    return this.props.children
-  }
-}
 
 ReactDOM.render(
   <Provider store={store}>
