@@ -21,7 +21,7 @@ import * as serviceWorker from './serviceWorker'
 const history = createBrowserHistory()
 const store = createStore(history)
 
-// https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/guides/scroll-restoration.md
+// ScrollToTop - see https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/guides/scroll-restoration.md
 class ScrollToTop extends Component {
   static propTypes = {
     children: PropTypes.oneOfType([
@@ -30,7 +30,11 @@ class ScrollToTop extends Component {
     ]).isRequired,
     location: PropTypes.shape({
       pathname: PropTypes.string
-    }).isRequired
+    })
+  }
+
+  static defaultProps = {
+    location: undefined
   }
 
   componentDidUpdate(prevProps) {

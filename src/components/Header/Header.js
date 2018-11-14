@@ -33,7 +33,7 @@ class Header extends Component {
 
   toggleNavbar() {
     this.setState(prevState => ({
-      collapsed: !prevState.collapsed
+      isOpen: !prevState.isOpen
     }))
   }
 
