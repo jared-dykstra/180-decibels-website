@@ -1,0 +1,20 @@
+{
+  "buildpacks": [
+    {
+      "url": "mars/create-react-app"
+    }
+  ],
+  "env": {
+  },
+  "environments": {
+    "test": {
+      "env": {
+        "CI": "true"
+      },
+      "scripts": {
+        "test-setup": "npm run build",
+        "test": "npm run ci"
+      }
+    }
+  }
+}
