@@ -6,11 +6,17 @@
   background-color: #333;
   height: 500px;
 
+
   h2 {
     color: $helix-teal;
     height: 120px;
     text-align: center;
   }
+}
+
+.buttons {
+  padding-right: 15%;
+  padding-left: 15%;
 }
 
 .knob {

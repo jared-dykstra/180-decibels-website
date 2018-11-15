@@ -83,7 +83,9 @@ class SelfAssessment extends Component {
         <div className={styles.panel}>
           {/* The he library is used to decode HTML character entities like &apos; */}
           <h2>{he.decode(item.text)}</h2>
-          <VolumeButtons />
+          <div className={styles.buttons}>
+            <VolumeButtons />
+          </div>
         </div>
       </CarouselItem>
     ))

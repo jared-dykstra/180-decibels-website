@@ -46,8 +46,7 @@ class SelfAssessment extends PureComponent {
     const muteButtonText = isMuted ? 'muted' : 'mute'
     return (
       <Row>
-        <Col xs="3" />
-        <Col xs="5">
+        <Col md={{ offset: 2, size: 'auto' }}>
           <Knob
             skin={knobSkin}
             className={styles.knob}
@@ -58,12 +57,11 @@ class SelfAssessment extends PureComponent {
             value={volume}
           />
         </Col>
-        <Col xs="1">
+        <Col md="2">
           <Button color={muteButtonColor} active={isMuted} onClick={toggleMute}>
             {muteButtonText}
           </Button>
         </Col>
-        <Col xs="3" />
       </Row>
     )
   }
