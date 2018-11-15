@@ -9,20 +9,31 @@ const configurationSelector = createSelector(
   selfAssessment => selfAssessment.configuration
 )
 
-export const isFirstQuestionSelector = createSelector(
+export const questionListSelector = createSelector(
   selfAssessmentSelector,
-  selfAssessment => selfAssessment.currentIndex <= 0
+  selfAssessment => selfAssessment.questionList
+)
+
+export const currentIndexSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.currentIndex
+)
+
+export const isFirstQuestionSelector = createSelector(
+  currentIndexSelector,
+  currentIndex => currentIndex <= 0
 )
 
 export const isLastQuestionSelector = createSelector(
-  selfAssessmentSelector,
-  selfAssessment =>
-    selfAssessment.currentIndex >= selfAssessment.questionList.length
+  currentIndexSelector,
+  questionListSelector,
+  (currentIndex, questionList) => currentIndex >= questionList.length - 1
 )
 
 export const currentQuestionIdSelector = createSelector(
-  selfAssessmentSelector,
-  selfAssessment => selfAssessment.questionList[selfAssessment.currentIndex]
+  currentIndexSelector,
+  questionListSelector,
+  (currentIndex, questionList) => questionList[currentIndex].id
 )
 
 const currentResponseSelector = createSelector(
@@ -52,3 +63,8 @@ export const currentMuteStateSelector = createSelector(
   currentResponseSelector,
   response => response.mute
 )
+
+export const maxVolumeSelector = () => 10
+export const minVolumeSelector = () => 0
+export const midVolumeSelector = () =>
+  Math.round((maxVolumeSelector() - minVolumeSelector()) / 2)

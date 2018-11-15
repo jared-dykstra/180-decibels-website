@@ -9,7 +9,11 @@ import {
 import {
   currentQuestionIdSelector,
   currentVolumeSelector,
-  currentMuteStateSelector
+  currentMuteStateSelector,
+  maxVolumeSelector,
+  minVolumeSelector,
+  isFirstQuestionSelector,
+  isLastQuestionSelector
 } from './selfAssessmentSelectors'
 import { mountPoint } from '.'
 
@@ -18,22 +22,30 @@ const getSurrogateState = state =>
     [mountPoint]: state
   })
 
+const maxVolume = maxVolumeSelector()
+const minVolume = minVolumeSelector()
+const upperVolumeThreshold = Math.round(maxVolume * 0.7)
+const lowerVolumeThreshold = Math.round(maxVolume * 0.3)
+const midVolumeThreshold = Math.round((maxVolume - minVolume) / 2)
+
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SELF_ASSESSMENT_NEXT_QUESTION:
+    case SELF_ASSESSMENT_NEXT_QUESTION: {
+      const selectorState = getSurrogateState(state)
+      const isLastQuestion = isLastQuestionSelector(selectorState)
       return state.setIn(
         ['currentIndex'],
-        state.currentIndex >= state.questionList.length
-          ? state.questionList.length
-          : state.currentIndex + 1
+        isLastQuestion ? state.questionList.length - 1 : state.currentIndex + 1
       )
-    case SELF_ASSESSMENT_PREV_QUESTION:
+    }
+    case SELF_ASSESSMENT_PREV_QUESTION: {
+      const selectorState = getSurrogateState(state)
+      const isFirstQuestion = isFirstQuestionSelector(selectorState)
       return state.setIn(
         ['currentIndex'],
-        state.currentIndex <= 0
-          ? state.questionList.length
-          : state.currentIndex - 1
+        isFirstQuestion ? 0 : state.currentIndex - 1
       )
+    }
     case SELF_ASSESSMENT_SET_VOLUME: {
       const selectorState = getSurrogateState(state)
       const currentQuestionId = currentQuestionIdSelector(selectorState)
@@ -44,11 +56,17 @@ export default (state = initialState, action) => {
         return state
       }
       // Don't allow the value to underflow
-      if (currentVolume < 3 && newVolume > 5) {
+      if (
+        currentVolume < lowerVolumeThreshold &&
+        newVolume > midVolumeThreshold
+      ) {
         return state
       }
       // Don't allow the value to overflow
-      if (currentVolume > 7 && newVolume < 5) {
+      if (
+        currentVolume > upperVolumeThreshold &&
+        newVolume < midVolumeThreshold
+      ) {
         return state
       }
 

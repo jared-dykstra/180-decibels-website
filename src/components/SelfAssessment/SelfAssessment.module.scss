@@ -1,4 +1,19 @@
+@import '../../styles/_colors.scss';
+
+.panel {
+  padding: 30px;
+  padding-bottom: 40px;
+  background-color: #333;
+  height: 500px;
+
+  h2 {
+    color: $helix-teal;
+    height: 120px;
+    text-align: center;
+  }
+}
+
 .knob {
-  height: 300px !important;
-  width: 300px !important;
+  height: 250px !important;
+  width: 250px !important;
 }

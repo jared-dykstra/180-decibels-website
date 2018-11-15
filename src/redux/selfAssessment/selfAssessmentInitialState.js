@@ -1,3 +1,4 @@
+import { shuffle as _shuffle } from 'lodash'
 import Immutable from 'seamless-immutable'
 import configuration from './configuration.json'
 
@@ -6,8 +7,8 @@ const emptyResponses = configuration.questions.reduce((acc, v) => {
   return acc
 }, {})
 
-// If we want to randomize the order, questionList could be shuffled
-const questionList = configuration.questions.map(q => q.id)
+// Shuffle all available questions
+const questionList = _shuffle(configuration.questions)
 
 export default Immutable.from({
   currentIndex: 0,
