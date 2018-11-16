@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import he from 'he'
 import {
   Carousel,
   CarouselItem,
@@ -14,7 +13,6 @@ import { connect } from 'react-redux'
 
 import { actions } from '../../redux/selfAssessment'
 import {
-  currentQuestionTextSelector,
   questionListSelector,
   currentIndexSelector,
   isFirstQuestionSelector,
@@ -23,7 +21,7 @@ import {
 
 import styles from './SelfAssessment.module.scss'
 
-import VolumeButtons from './VolumeButtons'
+import Question from './Question'
 
 class SelfAssessment extends Component {
   static propTypes = {
@@ -74,18 +72,14 @@ class SelfAssessment extends Component {
       isLastQuestion
     } = this.props
 
-    const slides = questions.asMutable().map(item => (
+    const slides = questions.map(question => (
       <CarouselItem
         onExiting={this.onExiting}
         onExited={this.onExited}
-        key={item.id}
+        key={question.id}
       >
         <div className={styles.panel}>
-          {/* The he library is used to decode HTML character entities like &apos; */}
-          <h2>{he.decode(item.text)}</h2>
-          <div className={styles.buttons}>
-            <VolumeButtons />
-          </div>
+          <Question questionId={question.id} questionText={question.text} />
         </div>
       </CarouselItem>
     ))
@@ -134,7 +128,6 @@ class SelfAssessment extends Component {
 export default connect(
   (state /* , ownProps */) => ({
     questions: questionListSelector(state),
-    currentQuestion: currentQuestionTextSelector(state),
     activeIndex: currentIndexSelector(state),
     isFirstQuestion: isFirstQuestionSelector(state),
     isLastQuestion: isLastQuestionSelector(state)

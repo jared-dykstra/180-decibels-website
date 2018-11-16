@@ -13,11 +13,12 @@ export const prevQuestion = () => ({
   type: SELF_ASSESSMENT_PREV_QUESTION
 })
 
-export const setVolume = volume => ({
+export const setVolume = ({ questionId, volume }) => ({
   type: SELF_ASSESSMENT_SET_VOLUME,
-  payload: { volume }
+  payload: { questionId, volume }
 })
 
-export const toggleMute = () => ({
-  type: SELF_ASSESSMENT_MUTE
+export const toggleMute = ({ questionId }) => ({
+  type: SELF_ASSESSMENT_MUTE,
+  payload: { questionId }
 })

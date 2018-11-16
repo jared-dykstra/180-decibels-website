@@ -7,9 +7,8 @@ import {
   SELF_ASSESSMENT_MUTE
 } from './selfAssessmentConstants'
 import {
-  currentQuestionIdSelector,
-  currentVolumeSelector,
-  currentMuteStateSelector,
+  makeVolumeSelector,
+  makeMuteSelector,
   maxVolumeSelector,
   minVolumeSelector,
   isFirstQuestionSelector,
@@ -47,12 +46,15 @@ export default (state = initialState, action) => {
       )
     }
     case SELF_ASSESSMENT_SET_VOLUME: {
+      const { questionId } = action.payload
       const selectorState = getSurrogateState(state)
-      const currentQuestionId = currentQuestionIdSelector(selectorState)
-      const currentVolume = currentVolumeSelector(selectorState)
+      const currentVolumeSelector = makeVolumeSelector()
+      const currentVolume = currentVolumeSelector(selectorState, {
+        questionId
+      })
       const newVolume = action.payload.volume
-      if (state.responses[currentQuestionId].mute) {
-        // Don't change volume when muted
+      // Don't change volume when muted
+      if (state.responses[questionId].mute) {
         return state
       }
       // Don't allow the value to underflow
@@ -70,29 +72,16 @@ export default (state = initialState, action) => {
         return state
       }
 
-      return (
-        state
-          .setIn(
-            ['responses', currentQuestionId, 'volume'],
-            action.payload.volume
-          )
-          // If the volume drops to zero, consider it muted
-          .setIn(
-            ['responses', currentQuestionId, 'mute'],
-            Math.round(newVolume) === 0
-          )
-      )
+      return state.setIn(['responses', questionId, 'volume'], newVolume)
     }
     case SELF_ASSESSMENT_MUTE: {
+      const { questionId } = action.payload
       const selectorState = getSurrogateState(state)
-      const currentQuestionId = currentQuestionIdSelector(selectorState)
-      const currentMuteState = currentMuteStateSelector(selectorState)
-      const initialVolume = initialState.responses[currentQuestionId].volume
-      // Set the volume to 0 when muting.  Set to the mid-point when un-muting
-      const newVolume = !currentMuteState ? 0 : initialVolume
-      return state
-        .setIn(['responses', currentQuestionId, 'mute'], !currentMuteState)
-        .setIn(['responses', currentQuestionId, 'volume'], newVolume)
+      const currentMuteStateSelector = makeMuteSelector()
+      const currentMuteState = currentMuteStateSelector(selectorState, {
+        questionId
+      })
+      return state.setIn(['responses', questionId, 'mute'], !currentMuteState)
     }
     default:
       return state
