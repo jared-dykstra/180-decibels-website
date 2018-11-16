@@ -24,14 +24,12 @@ class Header extends Component {
 
   constructor(props) {
     super(props)
-
-    this.toggleNavbar = this.toggleNavbar.bind(this)
     this.state = {
       isOpen: false
     }
   }
 
-  toggleNavbar() {
+  toggleNavbar = () => {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }))

@@ -18,7 +18,50 @@
   padding-left: 15%;
 }
 
-.knob {
-  height: 250px !important;
-  width: 250px !important;
+.volume {
+  font-size: 7em;
+}
+
+.vol1 {
+  color: lighten($helix-red, 5%);
+}
+
+.vol2 {
+  color: lighten($helix-red, 10%);
+}
+
+.vol3 {
+  color: lighten($helix-red, 15%);
+}
+
+.vol4 {
+  color: lighten($helix-red, 20%);
+}
+
+.vol5 {
+  color: lighten($helix-red, 25%);
+}
+
+.vol6 {
+  color: lighten($helix-red, 30%);
+}
+
+.vol7 {
+  color: lighten($helix-red, 35%);
+}
+
+.vol8 {
+  color: lighten($helix-red, 40%);
+}
+
+.vol9 {
+  color: lighten($helix-red, 45%);
+}
+
+.vol10 {
+  color: lighten($helix-red, 50%);
+}
+
+.vol11 {
+  color: lighten($helix-red, 55%);
 }

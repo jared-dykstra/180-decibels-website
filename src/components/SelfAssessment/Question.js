@@ -1,24 +1,21 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Col, Row } from 'reactstrap'
-import { Knob } from 'react-rotary-knob'
 import { connect } from 'react-redux'
-import { s7 as knobSkin } from 'react-rotary-knob-skin-pack'
 import he from 'he'
+import ReactBootstrapSlider from 'react-bootstrap-slider'
 
 import { actions } from '../../redux/selfAssessment'
 import {
   makeVolumeSelector,
   makeMuteSelector,
   maxVolumeSelector,
-  minVolumeSelector,
-  midVolumeSelector
+  minVolumeSelector
 } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
-// import knobSkin from './knobSkin'
-import styles from './SelfAssessment.module.scss'
+import 'bootstrap-slider/dist/css/bootstrap-slider.min.css'
 
-const midVolume = midVolumeSelector()
+import styles from './SelfAssessment.module.scss'
 
 class Question extends PureComponent {
   static propTypes = {
@@ -29,11 +26,7 @@ class Question extends PureComponent {
     isMuted: PropTypes.bool.isRequired,
     minVolume: PropTypes.number.isRequired,
     maxVolume: PropTypes.number.isRequired,
-    volume: PropTypes.number
-  }
-
-  static defaultProps = {
-    volume: midVolume
+    volume: PropTypes.number.isRequired
   }
 
   doToggleMute = () => {
@@ -41,9 +34,10 @@ class Question extends PureComponent {
     toggleMute({ questionId })
   }
 
-  doSetVolume = val => {
+  doSetVolume = ({ target }) => {
     const { questionId, setVolume } = this.props
-    setVolume({ volume: val, questionId })
+    const { value } = target
+    setVolume({ volume: value, questionId })
   }
 
   render() {
@@ -56,18 +50,28 @@ class Question extends PureComponent {
         <h2>{he.decode(questionText)}</h2>
         <div className={styles.buttons}>
           <Row>
-            <Col md={{ offset: 2, size: 'auto' }}>
-              <Knob
-                skin={knobSkin}
-                className={styles.knob}
-                onChange={this.doSetVolume}
-                min={maxVolume}
-                max={minVolume}
-                preciseMode={false}
+            <Col md={{ offset: 3, size: 'auto' }}>
+              <ReactBootstrapSlider
                 value={volume}
+                change={this.doSetVolume}
+                slideStop={this.doSetVolume}
+                step={2}
+                max={maxVolume}
+                min={minVolume}
+                disabled={isMuted ? 'disabled' : null}
+                // orientation="vertical"
               />
             </Col>
-            <Col md="2">
+            <Col>
+              <h2 className={styles.volume}>
+                {!isMuted && (
+                  <span className={styles[`vol${volume}`]}>{volume}</span>
+                )}
+              </h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{ offset: 3, size: 'auto' }}>
               <Button
                 color={muteButtonColor}
                 active={isMuted}

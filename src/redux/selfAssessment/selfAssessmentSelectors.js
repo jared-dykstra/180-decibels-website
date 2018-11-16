@@ -43,13 +43,16 @@ const currentResponseSelector = createSelector(
   }
 )
 
+export const maxVolumeSelector = () => 11
+export const minVolumeSelector = () => 1
+
+// Export functions so that when multiple instances are present, reselect memoizes properly
 export const makeVolumeSelector = () =>
-  createSelector(currentResponseSelector, response => response.volume)
+  createSelector(
+    minVolumeSelector,
+    currentResponseSelector,
+    (minVolume, response) => (response.volume ? response.volume : minVolume)
+  )
 
 export const makeMuteSelector = () =>
   createSelector(currentResponseSelector, response => response.mute)
-
-export const maxVolumeSelector = () => 10
-export const minVolumeSelector = () => 0
-export const midVolumeSelector = () =>
-  Math.round((maxVolumeSelector() - minVolumeSelector()) / 2)
