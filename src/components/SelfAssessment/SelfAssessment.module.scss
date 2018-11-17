@@ -3,65 +3,80 @@
 .panel {
   padding: 30px;
   padding-bottom: 40px;
-  background-color: #333;
+  background-color: $decibels-dark-grey;
   height: 500px;
 
   h2 {
-    color: $helix-teal;
+    color: $decibels-teal;
     height: 120px;
     text-align: center;
   }
 }
 
-.buttons {
+.question {
   padding-right: 15%;
   padding-left: 15%;
 }
 
 .volume {
-  font-size: 7em;
+  font-size: 100px;
+  width: 120px;
+  line-height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  border: 2px solid $decibels-light-grey;
+  background-color: $decibels-red;
+  margin-bottom: 40px;
+}
+
+.volMuted {
+  background-color: $decibels-light-grey !important;
 }
 
 .vol1 {
-  color: lighten($helix-red, 5%);
+  color: lighten($decibels-teal, 5%);
 }
 
 .vol2 {
-  color: lighten($helix-red, 10%);
+  color: lighten($decibels-teal, 10%);
 }
 
 .vol3 {
-  color: lighten($helix-red, 15%);
+  color: lighten($decibels-teal, 15%);
 }
 
 .vol4 {
-  color: lighten($helix-red, 20%);
+  color: lighten($decibels-teal, 20%);
 }
 
 .vol5 {
-  color: lighten($helix-red, 25%);
+  color: lighten($decibels-teal, 25%);
 }
 
 .vol6 {
-  color: lighten($helix-red, 30%);
+  color: lighten($decibels-teal, 30%);
 }
 
 .vol7 {
-  color: lighten($helix-red, 35%);
+  color: lighten($decibels-teal, 35%);
 }
 
 .vol8 {
-  color: lighten($helix-red, 40%);
+  color: lighten($decibels-teal, 40%);
 }
 
 .vol9 {
-  color: lighten($helix-red, 45%);
+  color: lighten($decibels-teal, 45%);
 }
 
 .vol10 {
-  color: lighten($helix-red, 50%);
+  color: lighten($decibels-teal, 50%);
 }
 
 .vol11 {
-  color: lighten($helix-red, 55%);
+  color: lighten($decibels-teal, 55%);
+}
+
+.slider {
+  margin-top: 0.5em !important;
 }

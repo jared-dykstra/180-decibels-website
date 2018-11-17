@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Col, Row } from 'reactstrap'
 import { connect } from 'react-redux'
 import he from 'he'
-import ReactBootstrapSlider from 'react-bootstrap-slider'
+import Slider from 'rc-slider'
 
 import { actions } from '../../redux/selfAssessment'
 import {
@@ -13,7 +13,7 @@ import {
   minVolumeSelector
 } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
-import 'bootstrap-slider/dist/css/bootstrap-slider.min.css'
+import 'rc-slider/assets/index.css'
 
 import styles from './SelfAssessment.module.scss'
 
@@ -34,9 +34,8 @@ class Question extends PureComponent {
     toggleMute({ questionId })
   }
 
-  doSetVolume = ({ target }) => {
+  doSetVolume = value => {
     const { questionId, setVolume } = this.props
-    const { value } = target
     setVolume({ volume: value, questionId })
   }
 
@@ -45,43 +44,47 @@ class Question extends PureComponent {
     const muteButtonColor = isMuted ? 'danger' : 'success'
     const muteButtonText = isMuted ? 'muted' : 'mute'
     return (
-      <div>
-        {/* The he library is used to decode HTML character entities like &apos; */}
-        <h2>{he.decode(questionText)}</h2>
-        <div className={styles.buttons}>
-          <Row>
-            <Col md={{ offset: 3, size: 'auto' }}>
-              <ReactBootstrapSlider
-                value={volume}
-                change={this.doSetVolume}
-                slideStop={this.doSetVolume}
-                step={2}
-                max={maxVolume}
-                min={minVolume}
-                disabled={isMuted ? 'disabled' : null}
-                // orientation="vertical"
-              />
-            </Col>
-            <Col>
-              <h2 className={styles.volume}>
-                {!isMuted && (
-                  <span className={styles[`vol${volume}`]}>{volume}</span>
-                )}
-              </h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={{ offset: 3, size: 'auto' }}>
-              <Button
-                color={muteButtonColor}
-                active={isMuted}
-                onClick={this.doToggleMute}
-              >
-                {muteButtonText}
-              </Button>
-            </Col>
-          </Row>
-        </div>
+      <div className={styles.question}>
+        <Row>
+          <Col md={12}>
+            {/* The he library is used to decode HTML character entities like &apos; */}
+            <h2>{he.decode(questionText)}</h2>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col xs={3}>
+            <div
+              className={`${styles.volume} ${isMuted ? styles.volMuted : ''}`}
+            >
+              <span className={styles[`vol${volume}`]}>
+                {isMuted ? '-' : volume}
+              </span>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <Button
+              color={muteButtonColor}
+              active={isMuted}
+              onClick={this.doToggleMute}
+            >
+              {muteButtonText}
+            </Button>
+          </Col>
+          <Col xs={10}>
+            <Slider
+              value={volume}
+              min={minVolume}
+              max={maxVolume}
+              step={1}
+              dots
+              disabled={isMuted}
+              className={styles.slider}
+              onChange={this.doSetVolume}
+            />
+          </Col>
+        </Row>
       </div>
     )
   }

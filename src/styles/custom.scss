@@ -5,7 +5,7 @@
 
 // Overrides values from _variables.scss
 
-$white: $helix-white;
+$white: $decibels-white;
 
 // Fonts
 // Self-host Fonts
@@ -26,11 +26,11 @@ $font-weight-bold: 600;
 $navbar-padding-y: 1em;
 
 // Links
-$primary: $helix-teal;
-$link-hover-color: $helix-red;
+$primary: $decibels-teal;
+$link-hover-color: $decibels-red;
 
 // Headings
-$headings-color: $helix-red;
+$headings-color: $decibels-red;
 
 // Option A: Include all of Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
@@ -61,7 +61,7 @@ $headings-color: $helix-red;
 // Buttons
 .btn-primary {
   color: $white;
-  border-color: $helix-red;
+  border-color: $decibels-red;
 
   :hover {
     color: $link-hover-color;
