@@ -1,24 +1,30 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
 @import '../../styles/_colors.scss';
 
+$slider-height: 20px;
+
 .panel {
-  padding: 30px;
-  padding-bottom: 40px;
   background-color: $decibels-dark-grey;
   height: 500px;
+  padding: 30px;
+  padding-bottom: 40px;
+
+  @include media-breakpoint-up(sm) {
+    h2 {
+      height: 3em;
+    }
+  }
 
   h2 {
     color: $decibels-teal;
-    height: 120px;
+    height: 5em;
     text-align: center;
   }
 }
 
-$slider-height: 20px;
-
 .question {
-  padding-right: 15%;
-  padding-left: 15%;
-
   :global {
     .rc-slider-rail {
       height: $slider-height;
@@ -36,14 +42,14 @@ $slider-height: 20px;
     // }
 
     .rc-slider-handle {
-      width: calc(#{$slider-height} + 10px); // 14px;
-      height: calc(#{$slider-height} + 10px); // 14px;
+      height: calc(#{$slider-height} + 10px);
       margin-top: -5px;
+      width: calc(#{$slider-height} + 10px);
     }
 
     .rc-slider {
-      margin-top: 0.5em !important;
       height: calc(#{$slider-height} + 10px);
+      margin-top: 0.5em !important;
     }
 
     .rc-slider-disabled {
@@ -52,18 +58,24 @@ $slider-height: 20px;
   }
 }
 
-.volume {
-  font-size: 100px;
-  width: 120px;
-  line-height: 120px;
-  border-radius: 50%;
-  text-align: center;
-  border: 2px solid $decibels-light-grey;
-  background-color: $decibels-red;
-  margin-bottom: 40px;
+.control-row {
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
-.volMuted {
+.volume {
+  background-color: $decibels-red;
+  border: 2px solid $decibels-light-grey;
+  border-radius: 50%;
+  font-size: 100px;
+  line-height: 120px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  text-align: center;
+  width: 120px;
+}
+
+.vol-muted {
   background-color: $decibels-light-grey !important;
 }
 

@@ -54,7 +54,9 @@ class Question extends PureComponent {
         <Row className="justify-content-center">
           <Col xs={12}>
             <div
-              className={`${styles.volume} ${isMuted ? styles.volMuted : ''}`}
+              className={`${styles.volume} ${
+                isMuted ? styles['vol-muted'] : ''
+              }`}
             >
               <span className={styles[`vol${volume}`]}>
                 {isMuted ? '-' : volume}
@@ -62,7 +64,7 @@ class Question extends PureComponent {
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row className={styles['control-row']}>
           <Col xs={3}>
             <Button
               color={muteButtonColor}
@@ -73,7 +75,7 @@ class Question extends PureComponent {
               {muteButtonText}
             </Button>
           </Col>
-          <Col xs={7}>
+          <Col>
             <Slider
               value={volume}
               min={minVolume}
