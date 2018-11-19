@@ -1,6 +1,7 @@
 import { findIndex as _findIndex } from 'lodash'
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
+import resultsGenerator from './ResultsGenerator'
 
 const selfAssessmentSelector = state => state[mountPoint]
 
@@ -78,3 +79,13 @@ export const makeVolumeSelector = () =>
 
 export const makeMuteSelector = () =>
   createSelector(currentResponseSelector, response => response.mute)
+
+export const resultsSelector = createSelector(
+  selfAssessmentSelector,
+  configSelector,
+  (selfAssessment, config) =>
+    resultsGenerator({
+      responses: selfAssessment.responses,
+      config
+    })
+)

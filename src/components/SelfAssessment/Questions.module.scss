@@ -1,0 +1,94 @@
+@import '../../styles/_colors';
+
+$slider-height: 1.25em;
+$slider-padding: .75em;
+
+.control-row {
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.volume {
+  background-color: $decibels-red;
+  border: 2px solid $decibels-light-grey;
+  border-radius: 50%;
+  font-size: 100px;
+  line-height: 120px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  text-align: center;
+  width: 120px;
+}
+
+.vol-muted {
+  background-color: $decibels-light-grey !important;
+}
+
+.vol0 {
+  color: lighten($decibels-teal, 5%);
+}
+
+.vol1 {
+  color: lighten($decibels-teal, 10%);
+}
+
+.vol2 {
+  color: lighten($decibels-teal, 15%);
+}
+
+.vol3 {
+  color: lighten($decibels-teal, 20%);
+}
+
+.vol4 {
+  color: lighten($decibels-teal, 25%);
+}
+
+.vol5 {
+  color: lighten($decibels-teal, 30%);
+}
+
+.vol6 {
+  color: lighten($decibels-teal, 35%);
+}
+
+.vol7 {
+  color: lighten($decibels-teal, 40%);
+}
+
+.vol8 {
+  color: lighten($decibels-teal, 45%);
+}
+
+.vol9 {
+  color: lighten($decibels-teal, 50%);
+}
+
+.vol10 {
+  color: lighten($decibels-teal, 55%);
+}
+
+.slider :global {
+  .rc-slider-rail {
+    height: $slider-height;
+  }
+
+  .rc-slider-track {
+    height: $slider-height;
+  }
+
+  .rc-slider-handle {
+    height: calc(#{$slider-height} + #{$slider-padding});
+    margin-top: -5px;
+    width: calc(#{$slider-height} + #{$slider-padding});
+  }
+
+  .rc-slider {
+    height: calc(#{$slider-height} + #{$slider-padding});
+    margin-top: calc(#{$slider-padding} / 2);
+  }
+
+  .rc-slider-disabled {
+    background-color: $decibels-red;
+  }
+}

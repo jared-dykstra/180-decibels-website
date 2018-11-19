@@ -23,6 +23,7 @@ import styles from './SelfAssessment.module.scss'
 
 import Intro from './Intro'
 import Question from './Question'
+import Results from './Results'
 
 class SelfAssessment extends Component {
   static propTypes = {
@@ -74,8 +75,19 @@ class SelfAssessment extends Component {
     } = this.props
 
     const slides = [
-      <CarouselItem onExiting={this.onExiting} onExited={this.onExited}>
+      <CarouselItem
+        onExiting={this.onExiting}
+        onExited={this.onExited}
+        key="intro"
+      >
         <Intro next={this.next} />
+      </CarouselItem>,
+      <CarouselItem
+        onExiting={this.onExiting}
+        onExited={this.onExited}
+        key="results"
+      >
+        <Results />
       </CarouselItem>,
       ...questions.map(question => (
         <CarouselItem

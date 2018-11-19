@@ -16,7 +16,7 @@ import {
 
 import 'rc-slider/assets/index.css'
 
-import styles from './SelfAssessment.module.scss'
+import styles from './Questions.module.scss'
 
 class Question extends PureComponent {
   static propTypes = {
@@ -53,7 +53,7 @@ class Question extends PureComponent {
     const muteButtonColor = isMuted ? 'danger' : 'secondary'
     const muteButtonText = isMuted ? 'muted' : 'mute'
     return (
-      <div className={styles.panel}>
+      <div>
         {/* The he library is used to decode HTML character entities like &apos; */}
         <h2>{he.decode(questionText)}</h2>
         <div

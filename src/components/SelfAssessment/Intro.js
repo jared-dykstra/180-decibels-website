@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'reactstrap'
-import styles from './SelfAssessment.module.scss'
+import styles from './Intro.module.scss'
 
 const Intro = ({ next }) => (
-  <div className={styles.panel}>
+  <div>
     <h2>How loudly will each of the following questions resonate?</h2>
     <div className={`text-center ${styles['control-row']}`}>
       <h2>
