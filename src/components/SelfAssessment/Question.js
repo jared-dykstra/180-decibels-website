@@ -53,26 +53,18 @@ class Question extends PureComponent {
     const muteButtonColor = isMuted ? 'danger' : 'success'
     const muteButtonText = isMuted ? 'muted' : 'mute'
     return (
-      <div className={styles.question}>
-        <Row>
-          <Col md={12}>
-            {/* The he library is used to decode HTML character entities like &apos; */}
-            <h2>{he.decode(questionText)}</h2>
-          </Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col xs={12}>
-            <div
-              className={`${styles.volume} ${
-                isMuted ? styles['vol-muted'] : ''
-              }`}
-            >
-              <span className={styles[`vol${volume}`]}>
-                {isMuted ? '-' : volume}
-              </span>
-            </div>
-          </Col>
-        </Row>
+      <div className={styles.panel}>
+        {/* The he library is used to decode HTML character entities like &apos; */}
+        <h2>{he.decode(questionText)}</h2>
+        <div
+          className={`justify-content-center ${styles.volume} ${
+            isMuted ? styles['vol-muted'] : ''
+          }`}
+        >
+          <span className={styles[`vol${volume}`]}>
+            {isMuted ? '-' : volume}
+          </span>
+        </div>
         <Row className={styles['control-row']}>
           <Col xs={3}>
             <Button
@@ -93,6 +85,7 @@ class Question extends PureComponent {
               dots={false}
               disabled={isMuted}
               onChange={this.doSetVolume}
+              className={styles.slider}
             />
           </Col>
         </Row>

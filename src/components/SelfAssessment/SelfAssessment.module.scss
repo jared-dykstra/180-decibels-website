@@ -1,10 +1,8 @@
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
-@import '../../styles/_colors.scss';
+@import '../../styles/_colors';
 
-// $slider-height: 20px;
-// $slider-padding: 10px;
 $slider-height: 1.25em;
 $slider-padding: .75em;
 
@@ -30,12 +28,11 @@ $slider-padding: .75em;
 
   h2 {
     color: $decibels-teal;
-    height: 5em;
     text-align: center;
   }
 }
 
-.question :global {
+.slider :global {
   .rc-slider-rail {
     height: $slider-height;
   }

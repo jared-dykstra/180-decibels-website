@@ -21,6 +21,7 @@ import {
 
 import styles from './SelfAssessment.module.scss'
 
+import Intro from './Intro'
 import Question from './Question'
 
 class SelfAssessment extends Component {
@@ -72,17 +73,20 @@ class SelfAssessment extends Component {
       isLastQuestion
     } = this.props
 
-    const slides = questions.map(question => (
-      <CarouselItem
-        onExiting={this.onExiting}
-        onExited={this.onExited}
-        key={question.id}
-      >
-        <div className={styles.panel}>
+    const slides = [
+      <CarouselItem onExiting={this.onExiting} onExited={this.onExited}>
+        <Intro next={this.next} />
+      </CarouselItem>,
+      ...questions.map(question => (
+        <CarouselItem
+          onExiting={this.onExiting}
+          onExited={this.onExited}
+          key={question.id}
+        >
           <Question questionId={question.id} questionText={question.text} />
-        </div>
-      </CarouselItem>
-    ))
+        </CarouselItem>
+      ))
+    ]
 
     return (
       <Container>
