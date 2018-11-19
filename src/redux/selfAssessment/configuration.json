@@ -5,6 +5,11 @@
     "risingStar": {},
     "rockStar": {}
   },
+  "volume": {
+    "min": 0,
+    "max": 10,
+    "step": 2
+  },
   "questions": [
     {
       "id": "9a36cc7b-af54-4fcb-a827-f2c18949c075",

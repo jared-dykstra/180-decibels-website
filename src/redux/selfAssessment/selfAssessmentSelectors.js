@@ -4,6 +4,16 @@ import { mountPoint } from '.'
 
 const selfAssessmentSelector = state => state[mountPoint]
 
+const configSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.configuration
+)
+
+const volumeConfigSelector = createSelector(
+  configSelector,
+  config => config.volume
+)
+
 export const questionListSelector = createSelector(
   selfAssessmentSelector,
   selfAssessment => selfAssessment.questionList
@@ -43,8 +53,20 @@ const currentResponseSelector = createSelector(
   }
 )
 
-export const maxVolumeSelector = () => 10
-export const minVolumeSelector = () => 0
+export const maxVolumeSelector = createSelector(
+  volumeConfigSelector,
+  volumeConfig => volumeConfig.max
+)
+
+export const minVolumeSelector = createSelector(
+  volumeConfigSelector,
+  volumeConfig => volumeConfig.min
+)
+
+export const volumeStepSelector = createSelector(
+  volumeConfigSelector,
+  volumeConfig => volumeConfig.step
+)
 
 // Export functions so that when multiple instances are present, reselect memoizes properly
 export const makeVolumeSelector = () =>

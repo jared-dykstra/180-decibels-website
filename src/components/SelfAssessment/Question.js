@@ -10,7 +10,8 @@ import {
   makeVolumeSelector,
   makeMuteSelector,
   maxVolumeSelector,
-  minVolumeSelector
+  minVolumeSelector,
+  volumeStepSelector
 } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
 import 'rc-slider/assets/index.css'
@@ -26,6 +27,7 @@ class Question extends PureComponent {
     isMuted: PropTypes.bool.isRequired,
     minVolume: PropTypes.number.isRequired,
     maxVolume: PropTypes.number.isRequired,
+    volumeStep: PropTypes.number.isRequired,
     volume: PropTypes.number.isRequired
   }
 
@@ -40,7 +42,14 @@ class Question extends PureComponent {
   }
 
   render() {
-    const { questionText, isMuted, volume, minVolume, maxVolume } = this.props
+    const {
+      questionText,
+      isMuted,
+      volume,
+      minVolume,
+      maxVolume,
+      volumeStep
+    } = this.props
     const muteButtonColor = isMuted ? 'danger' : 'success'
     const muteButtonText = isMuted ? 'muted' : 'mute'
     return (
@@ -80,7 +89,7 @@ class Question extends PureComponent {
               value={volume}
               min={minVolume}
               max={maxVolume}
-              step={2}
+              step={volumeStep}
               dots={false}
               disabled={isMuted}
               onChange={this.doSetVolume}
@@ -99,8 +108,9 @@ export default connect(
     return {
       volume: volumeSelector(state, props),
       isMuted: muteSelector(state, props),
-      maxVolume: maxVolumeSelector(state),
-      minVolume: minVolumeSelector(state)
+      maxVolume: maxVolumeSelector(state, props),
+      minVolume: minVolumeSelector(state, props),
+      volumeStep: volumeStepSelector(state, props)
     }
   },
   dispatch => ({
