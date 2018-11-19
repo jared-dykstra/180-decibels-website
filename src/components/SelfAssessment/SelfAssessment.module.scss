@@ -3,7 +3,18 @@
 @import "node_modules/bootstrap/scss/mixins";
 @import '../../styles/_colors.scss';
 
-$slider-height: 20px;
+// $slider-height: 20px;
+// $slider-padding: 10px;
+$slider-height: 1.25em;
+$slider-padding: .75em;
+
+
+.carousel :global .carousel-inner {
+  // See: https://github.com/reactstrap/reactstrap/issues/677
+  // Eventually this will be fixed in reactstrap and this can be removed
+  height: 450px;
+}
+
 
 .panel {
   background-color: $decibels-dark-grey;
@@ -24,37 +35,28 @@ $slider-height: 20px;
   }
 }
 
-.question {
-  :global {
-    .rc-slider-rail {
-      height: $slider-height;
-    }
+.question :global {
+  .rc-slider-rail {
+    height: $slider-height;
+  }
 
-    .rc-slider-track {
-      height: $slider-height;
-    }
+  .rc-slider-track {
+    height: $slider-height;
+  }
 
-    // Only if dots={true}
-    // .rc-slider-dot {
-    //   width: 8px;
-    //   height: 8px;
-    //   bottom: -2px;
-    // }
+  .rc-slider-handle {
+    height: calc(#{$slider-height} + #{$slider-padding});
+    margin-top: -5px;
+    width: calc(#{$slider-height} + #{$slider-padding});
+  }
 
-    .rc-slider-handle {
-      height: calc(#{$slider-height} + 10px);
-      margin-top: -5px;
-      width: calc(#{$slider-height} + 10px);
-    }
+  .rc-slider {
+    height: calc(#{$slider-height} + #{$slider-padding});
+    margin-top: calc(#{$slider-padding} / 2);
+  }
 
-    .rc-slider {
-      height: calc(#{$slider-height} + 10px);
-      margin-top: 0.5em !important;
-    }
-
-    .rc-slider-disabled {
-      background-color: $decibels-red;
-    }
+  .rc-slider-disabled {
+    background-color: $decibels-red;
   }
 }
 

@@ -94,6 +94,7 @@ class SelfAssessment extends Component {
               activeIndex={activeIndex}
               next={this.next}
               previous={this.previous}
+              className={styles.carousel}
             >
               <CarouselIndicators
                 // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104

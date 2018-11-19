@@ -80,7 +80,7 @@ class Question extends PureComponent {
               value={volume}
               min={minVolume}
               max={maxVolume}
-              step={1}
+              step={2}
               dots={false}
               disabled={isMuted}
               onChange={this.doSetVolume}
