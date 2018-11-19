@@ -52,7 +52,7 @@ class Question extends PureComponent {
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col xs={3}>
+          <Col xs={12}>
             <div
               className={`${styles.volume} ${isMuted ? styles.volMuted : ''}`}
             >
@@ -63,16 +63,17 @@ class Question extends PureComponent {
           </Col>
         </Row>
         <Row>
-          <Col xs={2}>
+          <Col xs={3}>
             <Button
               color={muteButtonColor}
               active={isMuted}
               onClick={this.doToggleMute}
+              className="float-right"
             >
               {muteButtonText}
             </Button>
           </Col>
-          <Col xs={10}>
+          <Col xs={7}>
             <Slider
               value={volume}
               min={minVolume}
