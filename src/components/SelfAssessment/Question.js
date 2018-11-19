@@ -78,9 +78,8 @@ class Question extends PureComponent {
               min={minVolume}
               max={maxVolume}
               step={1}
-              dots
+              dots={false}
               disabled={isMuted}
-              className={styles.slider}
               onChange={this.doSetVolume}
             />
           </Col>
