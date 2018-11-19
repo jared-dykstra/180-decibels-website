@@ -1,4 +1,6 @@
+@import './constants.scss';
+
 .control-row {
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: $carousel-padding;
+  padding-right: $carousel-padding;
 }

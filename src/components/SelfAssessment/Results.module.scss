@@ -1,7 +1,11 @@
+@import '../../styles/_colors';
+
+@import './constants.scss';
+
 .results {
   pre {
-    color: white;
-    margin-left: 15%;
-    margin-right: 15%;
+    color: $decibels-white;
+    margin-left: $carousel-padding;
+    margin-right: $carousel-padding;
   }
 }
