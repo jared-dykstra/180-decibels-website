@@ -50,7 +50,7 @@ class Question extends PureComponent {
       maxVolume,
       volumeStep
     } = this.props
-    const muteButtonColor = isMuted ? 'danger' : 'success'
+    const muteButtonColor = isMuted ? 'danger' : 'secondary'
     const muteButtonText = isMuted ? 'muted' : 'mute'
     return (
       <div className={styles.panel}>
