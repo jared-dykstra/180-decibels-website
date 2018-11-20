@@ -139,7 +139,6 @@ class SelfAssessment extends Component {
                 />
               )}
             </Carousel>
-            <Results assessmentName={assessmentName} />
           </Col>
           <Col md={4} />
         </Row>

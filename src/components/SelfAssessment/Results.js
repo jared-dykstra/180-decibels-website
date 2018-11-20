@@ -6,12 +6,17 @@ import { makeResultsSelector } from '../../redux/selfAssessment/selfAssessmentSe
 
 import styles from './Results.module.scss'
 
-const Result = ({ assessmentName, results }) => (
-  <div className={styles.results}>
-    <h2>Results</h2>
-    <pre>{JSON.stringify({ [assessmentName]: results }, null, 2)}</pre>
-  </div>
-)
+const Result = ({ assessmentName, results }) => {
+  const comments = Object.entries(results).map(([dimension, result]) => (
+    <h2 key={dimension}>{result.comment}</h2>
+  ))
+  return (
+    <div className={styles.results}>
+      <h2>Results</h2>
+      {comments}
+    </div>
+  )
+}
 
 Result.propTypes = {
   assessmentName: PropTypes.string.isRequired,
