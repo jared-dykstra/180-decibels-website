@@ -34,13 +34,22 @@ const currentResponseSelector = createSelector(
 )
 
 export const makeMaxVolumeSelector = () =>
-  createSelector(volumeConfigSelector, volumeConfig => volumeConfig.max)
+  createSelector(
+    volumeConfigSelector,
+    volumeConfig => volumeConfig.max
+  )
 
 export const makeMinVolumeSelector = () =>
-  createSelector(volumeConfigSelector, volumeConfig => volumeConfig.min)
+  createSelector(
+    volumeConfigSelector,
+    volumeConfig => volumeConfig.min
+  )
 
 export const makeVolumeStepSelector = () =>
-  createSelector(volumeConfigSelector, volumeConfig => volumeConfig.step)
+  createSelector(
+    volumeConfigSelector,
+    volumeConfig => volumeConfig.step
+  )
 
 // Export functions so that when multiple instances are present, reselect memoizes properly
 export const makeVolumeSelector = () =>
@@ -52,7 +61,10 @@ export const makeVolumeSelector = () =>
   )
 
 export const makeMuteSelector = () =>
-  createSelector(currentResponseSelector, response => response.mute)
+  createSelector(
+    currentResponseSelector,
+    response => response.mute
+  )
 
 export const makeResultsSelector = () =>
   createSelector(
