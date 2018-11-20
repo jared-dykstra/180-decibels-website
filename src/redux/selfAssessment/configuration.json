@@ -1,4 +1,37 @@
 {
+  "helpMyTeam": {
+    "dimensions": {
+      "accountability": {
+        "highComment": "Great job with the accountability.  Use <this technique> to keep it up",
+        "lowComment": "Improving accountability will make a big difference.  Use <these these techniques> to get started right away",
+        "threshold": "50%"
+      },
+      "scoreKeeping": {
+        "highComment": "Great job with score-keeping.  Use <this technique> to continue improving",
+        "lowComment": "Try <this technique> to improve score-keeping",
+        "threshold": "50%"
+      }
+    },
+    "volume": {
+      "min": 0,
+      "max": 10,
+      "step": 2
+    },
+    "questions": [
+      {
+        "id": "f7ca272e-6c96-4ee9-96a2-6e5d33012478",
+        "text": "Do you know where your kids are right now?",
+        "accountability": 20,
+        "scoreKeeping": 0
+      },
+      {
+        "id": "2e18a618-2cf0-4bc2-bb46-49669d68fe37",
+        "text": "Have you defined measurable targets for this quarter?",
+        "accountability": 0,
+        "scoreKeeping": 20
+      }
+    ]
+  },
   "helpMe": {
     "dimensions": {
       "toneDeaf": {

@@ -9,9 +9,9 @@ import { actions } from '../../redux/selfAssessment'
 import {
   makeVolumeSelector,
   makeMuteSelector,
-  maxVolumeSelector,
-  minVolumeSelector,
-  volumeStepSelector
+  makeMaxVolumeSelector,
+  makeMinVolumeSelector,
+  makeVolumeStepSelector
 } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
 import 'rc-slider/assets/index.css'
@@ -99,6 +99,9 @@ export default connect(
   (state, props) => {
     const volumeSelector = makeVolumeSelector()
     const muteSelector = makeMuteSelector()
+    const volumeStepSelector = makeVolumeStepSelector()
+    const minVolumeSelector = makeMinVolumeSelector()
+    const maxVolumeSelector = makeMaxVolumeSelector()
     return {
       volume: volumeSelector(state, props),
       isMuted: muteSelector(state, props),
