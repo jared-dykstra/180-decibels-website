@@ -5,16 +5,23 @@ import configuration from './configuration.json'
 const assessments = Object.keys(configuration)
 
 const buildEmptyResponses = currentConfig =>
-  currentConfig.questions.reduce((acc, v) => {
-    acc[v.id] = { volume: undefined, mute: false }
+  Object.keys(currentConfig.questions).reduce((acc, id) => {
+    acc[id] = { volume: undefined, mute: false }
     return acc
   }, {})
+
+// Create a shuffled array of questions, putting the id into the object
+const buildQuestionList = questions =>
+  _shuffle(Object.entries(questions)).map(([id, question]) => ({
+    id,
+    ...question
+  }))
 
 export default Immutable.from(
   assessments.reduce((acc, assessment) => {
     const currentConfig = configuration[assessment]
     acc[assessment] = {
-      questionList: _shuffle(currentConfig.questions),
+      questionList: buildQuestionList(currentConfig.questions),
       responses: buildEmptyResponses(currentConfig),
       configuration: currentConfig
     }

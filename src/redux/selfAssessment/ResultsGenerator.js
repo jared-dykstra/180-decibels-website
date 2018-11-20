@@ -1,7 +1,4 @@
-import { find as _find, isNil as _isNil } from 'lodash'
-
-const getQuestionFromId = ({ questions, questionId }) =>
-  _find(questions, q => q.id === questionId)
+import { isNil as _isNil } from 'lodash'
 
 /**
  * Sum the total available, and total earned points for a specific dimension.
@@ -25,7 +22,7 @@ const sumDimension = ({ responses, questions, dimensionName, maxVolume }) =>
 
       // Accumulate the chosen volume times the weighting for this dimension
       const normalizedVolume = volume || 0
-      const currentQuestion = getQuestionFromId({ questions, questionId })
+      const currentQuestion = questions[questionId]
       const currentDimensionWeight = currentQuestion[dimensionName]
       return {
         points: acc.points + normalizedVolume * currentDimensionWeight,
