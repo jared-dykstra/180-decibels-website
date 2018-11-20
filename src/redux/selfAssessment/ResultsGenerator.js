@@ -56,11 +56,12 @@ export default ({ config, responses }) => {
         dimensionName,
         maxVolume
       })
-      const percentage = totals.points / totals.maxPoints
+      const percentage =
+        totals.maxPoints < 1 ? null : totals.points / totals.maxPoints
       const comment = percentage > numericThreshold ? highComment : lowComment
       acc[dimensionName] = {
         percentage,
-        comment: percentage > 0 ? comment : null
+        comment: _isNil(percentage) ? null : comment
       }
       return acc
     },
