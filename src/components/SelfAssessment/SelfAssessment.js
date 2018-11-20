@@ -82,13 +82,6 @@ class SelfAssessment extends Component {
       >
         <Intro next={this.next} />
       </CarouselItem>,
-      <CarouselItem
-        onExiting={this.onExiting}
-        onExited={this.onExited}
-        key="results"
-      >
-        <Results />
-      </CarouselItem>,
       ...questions.map(question => (
         <CarouselItem
           onExiting={this.onExiting}
@@ -97,7 +90,14 @@ class SelfAssessment extends Component {
         >
           <Question questionId={question.id} questionText={question.text} />
         </CarouselItem>
-      ))
+      )),
+      <CarouselItem
+        onExiting={this.onExiting}
+        onExited={this.onExited}
+        key="results"
+      >
+        <Results />
+      </CarouselItem>
     ]
 
     return (
@@ -134,6 +134,7 @@ class SelfAssessment extends Component {
                 />
               )}
             </Carousel>
+            <Results />
           </Col>
           <Col md={4} />
         </Row>
