@@ -79,7 +79,6 @@ $slider-padding: .75em;
 
   .rc-slider-handle {
     height: calc(#{$slider-height} + #{$slider-padding});
-    margin-top: -5px;
     width: calc(#{$slider-height} + #{$slider-padding});
   }
 
@@ -87,8 +86,10 @@ $slider-padding: .75em;
     height: calc(#{$slider-height} + #{$slider-padding});
     margin-top: calc(#{$slider-padding} / 2);
   }
+}
 
-  .rc-slider-disabled {
-    background-color: $decibels-red;
-  }
+:global .rc-slider-disabled {
+  background-color: $decibels-red;
+  box-shadow: 0 0 $slider-padding .2em $decibels-red;
+  height: calc(#{$slider-height} + #{$slider-padding});
 }
