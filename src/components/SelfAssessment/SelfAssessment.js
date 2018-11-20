@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import {
   Carousel,
   CarouselItem,
@@ -9,21 +8,18 @@ import {
   Col,
   Row
 } from 'reactstrap'
-import { connect } from 'react-redux'
-
-import { questionListSelector } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
 import styles from './SelfAssessment.module.scss'
+
+import { questionsPropType } from '../../propTypes'
 
 import Intro from './Intro'
 import Question from './Question'
 import Results from './Results'
 
-class SelfAssessment extends Component {
+export default class SelfAssessment extends Component {
   static propTypes = {
-    questions: PropTypes.arrayOf(
-      PropTypes.shape({ id: PropTypes.string, text: PropTypes.string })
-    ).isRequired
+    questions: questionsPropType.isRequired
   }
 
   constructor(props) {
@@ -142,7 +138,3 @@ class SelfAssessment extends Component {
     )
   }
 }
-
-export default connect(state => ({
-  questions: questionListSelector(state)
-}))(SelfAssessment)
