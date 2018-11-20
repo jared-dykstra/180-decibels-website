@@ -4,24 +4,36 @@ import {
   SELF_ASSESSMENT_MUTE
 } from './selfAssessmentConstants'
 
+const mutePath = ({ assessmentName, questionId }) => [
+  assessmentName,
+  'responses',
+  questionId,
+  'mute'
+]
+
+const volumePath = ({ assessmentName, questionId }) => [
+  assessmentName,
+  'responses',
+  questionId,
+  'volume'
+]
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case SELF_ASSESSMENT_SET_VOLUME: {
-      const { assessmentName, questionId } = action.payload
-      const newVolume = action.payload.volume
       // Don't change volume when muted
-      if (state[assessmentName].responses[questionId].mute) {
+      const currentMuteState = state.getIn(mutePath(action.payload))
+      if (currentMuteState) {
         return state
       }
 
-      return state.setIn(
-        [assessmentName, 'responses', questionId, 'volume'],
-        newVolume
-      )
+      // Set the volume
+      const { volume } = action.payload
+      return state.setIn(volumePath(action.payload), volume)
     }
     case SELF_ASSESSMENT_MUTE: {
-      const { assessmentName, questionId } = action.payload
-      const path = [assessmentName, 'responses', questionId, 'mute']
+      // Toggle mute state
+      const path = mutePath(action.payload)
       const currentMuteState = state.getIn(path)
       return state.setIn(path, !currentMuteState)
     }
