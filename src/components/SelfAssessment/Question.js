@@ -20,6 +20,7 @@ import styles from './Questions.module.scss'
 
 class Question extends PureComponent {
   static propTypes = {
+    assessmentName: PropTypes.string.isRequired,
     questionId: PropTypes.string.isRequired,
     questionText: PropTypes.string.isRequired,
     toggleMute: PropTypes.func.isRequired,
@@ -32,13 +33,13 @@ class Question extends PureComponent {
   }
 
   doToggleMute = () => {
-    const { questionId, toggleMute } = this.props
-    toggleMute({ questionId })
+    const { assessmentName, questionId, toggleMute } = this.props
+    toggleMute({ assessmentName, questionId })
   }
 
   doSetVolume = value => {
-    const { questionId, setVolume } = this.props
-    setVolume({ volume: value, questionId })
+    const { assessmentName, questionId, setVolume } = this.props
+    setVolume({ assessmentName, volume: value, questionId })
   }
 
   render() {
@@ -107,9 +108,9 @@ export default connect(
     }
   },
   dispatch => ({
-    toggleMute: ({ questionId }) =>
-      dispatch(actions.toggleMute({ questionId })),
-    setVolume: ({ questionId, volume }) =>
-      dispatch(actions.setVolume({ questionId, volume }))
+    toggleMute: ({ assessmentName, questionId }) =>
+      dispatch(actions.toggleMute({ assessmentName, questionId })),
+    setVolume: ({ assessmentName, questionId, volume }) =>
+      dispatch(actions.setVolume({ assessmentName, questionId, volume }))
   })
 )(Question)

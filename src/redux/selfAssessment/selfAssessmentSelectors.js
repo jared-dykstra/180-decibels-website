@@ -2,7 +2,15 @@ import { createSelector } from 'reselect'
 import { mountPoint } from '.'
 import resultsGenerator from './ResultsGenerator'
 
-const selfAssessmentSelector = state => state[mountPoint]
+const selfAssessmentSelector = (state, props) => {
+  const { assessmentName } = props
+  return state[mountPoint][assessmentName]
+}
+
+const currentQuestionIdSelector = (state, props) => {
+  const { questionId } = props || {}
+  return questionId
+}
 
 const configSelector = createSelector(
   selfAssessmentSelector,
@@ -18,11 +26,6 @@ export const questionListSelector = createSelector(
   selfAssessmentSelector,
   selfAssessment => selfAssessment.questionList
 )
-
-const currentQuestionIdSelector = (state, props) => {
-  const { questionId } = props
-  return questionId
-}
 
 const currentResponseSelector = createSelector(
   selfAssessmentSelector,

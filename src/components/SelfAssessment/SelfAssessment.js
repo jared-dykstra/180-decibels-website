@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   Carousel,
@@ -22,6 +23,7 @@ import Results from './Results'
 
 class SelfAssessment extends Component {
   static propTypes = {
+    assessmentName: PropTypes.string.isRequired,
     questions: questionsPropType.isRequired
   }
 
@@ -67,7 +69,7 @@ class SelfAssessment extends Component {
   }
 
   render() {
-    const { questions } = this.props
+    const { assessmentName, questions } = this.props
     const { currentIndex } = this.state
 
     const slides = [
@@ -84,7 +86,11 @@ class SelfAssessment extends Component {
           onExited={this.onExited}
           key={question.id}
         >
-          <Question questionId={question.id} questionText={question.text} />
+          <Question
+            assessmentName={assessmentName}
+            questionId={question.id}
+            questionText={question.text}
+          />
         </CarouselItem>
       )),
       <CarouselItem
@@ -92,7 +98,7 @@ class SelfAssessment extends Component {
         onExited={this.onExited}
         key="results"
       >
-        <Results />
+        <Results assessmentName={assessmentName} />
       </CarouselItem>
     ]
 
@@ -133,7 +139,7 @@ class SelfAssessment extends Component {
                 />
               )}
             </Carousel>
-            <Results />
+            <Results assessmentName={assessmentName} />
           </Col>
           <Col md={4} />
         </Row>
@@ -142,6 +148,6 @@ class SelfAssessment extends Component {
   }
 }
 
-export default connect(state => ({
-  questions: questionListSelector(state)
+export default connect((state, props) => ({
+  questions: questionListSelector(state, props)
 }))(SelfAssessment)

@@ -16,6 +16,6 @@ export default () => (
       These questions are enough to create an initial report, which will contain
       concrete, actionable steps that you can immediately use.
     </p>
-    <SelfAssessment />
+    <SelfAssessment assessmentName="helpMe" />
   </Template>
 )
