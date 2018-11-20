@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   Carousel,
   CarouselItem,
@@ -13,11 +14,13 @@ import styles from './SelfAssessment.module.scss'
 
 import { questionsPropType } from '../../propTypes'
 
+import { questionListSelector } from '../../redux/selfAssessment/selfAssessmentSelectors'
+
 import Intro from './Intro'
 import Question from './Question'
 import Results from './Results'
 
-export default class SelfAssessment extends Component {
+class SelfAssessment extends Component {
   static propTypes = {
     questions: questionsPropType.isRequired
   }
@@ -138,3 +141,7 @@ export default class SelfAssessment extends Component {
     )
   }
 }
+
+export default connect(state => ({
+  questions: questionListSelector(state)
+}))(SelfAssessment)

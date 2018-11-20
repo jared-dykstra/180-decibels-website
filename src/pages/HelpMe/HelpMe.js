@@ -1,11 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { questionListSelector } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
 import { SelfAssessment, Template } from '../../components'
-import { questionsPropType } from '../../propTypes'
 
-const HelpMe = ({ questions }) => (
+export default () => (
   <Template>
     <h1>Help Me</h1>
     <p>
@@ -19,14 +16,6 @@ const HelpMe = ({ questions }) => (
       These questions are enough to create an initial report, which will contain
       concrete, actionable steps that you can immediately use.
     </p>
-    <SelfAssessment questions={questions} />
+    <SelfAssessment />
   </Template>
 )
-
-HelpMe.propTypes = {
-  questions: questionsPropType.isRequired
-}
-
-export default connect(state => ({
-  questions: questionListSelector(state)
-}))(HelpMe)
