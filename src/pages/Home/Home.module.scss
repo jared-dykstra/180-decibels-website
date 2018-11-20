@@ -1,4 +1,4 @@
-@import '../../styles/_colors.scss';
+@import '../../styles/colors';
 
 .home {
   :global {
@@ -8,19 +8,19 @@
   }
 }
 
-.sectionSplash {
-  text-align: center;
+.section-splash {
   color: $decibels-red;
+  text-align: center;
 
   svg {
-    height: 20em;
     fill: currentColor;
+    height: 20em;
     margin-bottom: 1em;
   }
 
   h1 {
+    color: $decibels-teal;
     font-size: 3.5rem;
     font-weight: 800;
-    color: $decibels-teal;
   }
 }

@@ -4,7 +4,7 @@ import { Container, Navbar } from 'reactstrap'
 import styles from './Footer.module.scss'
 
 export default () => [
-  <div key="footer-spacing" className={styles.footerSpacing} />,
+  <div key="footer-spacing" className={styles['footer-spacing']} />,
   <Navbar
     key="footer"
     color="faded"

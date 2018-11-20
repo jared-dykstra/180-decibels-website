@@ -15,7 +15,7 @@ import { Logo, Template } from '../../components'
 
 const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <Template className={styles.home}>
-    <section className={styles.sectionSplash}>
+    <section className={styles['section-splash']}>
       <Logo />
       <h1>180 Decibels</h1>
       <h3>Management Consulting for the Modern Manager</h3>

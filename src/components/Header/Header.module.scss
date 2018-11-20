@@ -1,13 +1,13 @@
-@import '../../styles/_colors.scss';
+@import '../../styles/colors';
 
-.miniBrand {
+.mini-brand {
   svg {
-    margin-top: -0.5em;
-    height: 2em;
     fill: $decibels-red;
+    height: 2em;
+    margin-top: -0.5em;
   }
 }
 
-.navAction {
+.nav-action {
   margin-right: 40px;
 }

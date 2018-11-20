@@ -1,7 +1,7 @@
 // See: https://getbootstrap.com/docs/4.0/getting-started/theming
 
 // Local
-@import "_colors.scss";
+@import './colors';
 
 // Overrides values from _variables.scss
 
@@ -19,7 +19,7 @@ $font-weight-bold: 600;
 // $font-size-lg:   ($font-size-base * 1.25);
 // $font-size-sm:   ($font-size-base * 0.875);
 
-@import "_fonts.scss";
+@import './fonts';
 
 // Nav
 // Default padding is 0.5em.  Set to 1em so that Header.module.scss can set a negative margin on the logo
@@ -33,7 +33,7 @@ $link-hover-color: $decibels-red;
 $headings-color: $decibels-red;
 
 // Option A: Include all of Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap";
+@import 'node_modules/bootstrap/scss/bootstrap';
 
 // // Option B: Include parts of Bootstrap
 
@@ -60,8 +60,8 @@ $headings-color: $decibels-red;
 
 // Buttons
 .btn-primary {
-  color: $white;
   border-color: $decibels-red;
+  color: $white;
 
   :hover {
     color: $link-hover-color;

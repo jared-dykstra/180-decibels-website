@@ -1,11 +1,7 @@
-@import '../../styles/_colors';
+@import '../../styles/colors';
 
-@import './constants.scss';
+@import './constants';
 
 .results {
-  pre {
-    color: green;
-    margin-left: $carousel-padding;
-    margin-right: $carousel-padding;
-  }
+  // Nothing yet
 }
