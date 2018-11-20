@@ -11,7 +11,6 @@ const emptyResponses = configuration.questions.reduce((acc, v) => {
 const questionList = _shuffle(configuration.questions)
 
 export default Immutable.from({
-  currentIndex: 0,
   questionList,
   responses: emptyResponses,
   configuration

@@ -1,4 +1,3 @@
-import { findIndex as _findIndex } from 'lodash'
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
 import resultsGenerator from './ResultsGenerator'
@@ -20,38 +19,15 @@ export const questionListSelector = createSelector(
   selfAssessment => selfAssessment.questionList
 )
 
-export const currentIndexSelector = createSelector(
-  selfAssessmentSelector,
-  selfAssessment => selfAssessment.currentIndex
-)
-
-export const isFirstQuestionSelector = createSelector(
-  currentIndexSelector,
-  currentIndex => currentIndex <= 0
-)
-
-export const isLastQuestionSelector = createSelector(
-  currentIndexSelector,
-  questionListSelector,
-  (currentIndex, questionList) => currentIndex >= questionList.length - 1
-)
-
-// Get the index in questionList of props.questionId
-const questionIndexSelector = (state, props) => {
+const currentQuestionIdSelector = (state, props) => {
   const { questionId } = props
-  const questionList = questionListSelector(state)
-  const index = _findIndex(questionList, q => q.id === questionId)
-  return index
+  return questionId
 }
 
 const currentResponseSelector = createSelector(
   selfAssessmentSelector,
-  questionIndexSelector,
-  questionListSelector,
-  (selfAssessment, questionIndex, questionList) => {
-    const questionId = questionList[questionIndex].id
-    return selfAssessment.responses[questionId]
-  }
+  currentQuestionIdSelector,
+  (selfAssessment, questionId) => selfAssessment.responses[questionId]
 )
 
 export const maxVolumeSelector = createSelector(

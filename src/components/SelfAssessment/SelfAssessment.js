@@ -11,13 +11,7 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 
-import { actions } from '../../redux/selfAssessment'
-import {
-  questionListSelector,
-  currentIndexSelector,
-  isFirstQuestionSelector,
-  isLastQuestionSelector
-} from '../../redux/selfAssessment/selfAssessmentSelectors'
+import { questionListSelector } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
 import styles from './SelfAssessment.module.scss'
 
@@ -27,14 +21,16 @@ import Results from './Results'
 
 class SelfAssessment extends Component {
   static propTypes = {
-    activeIndex: PropTypes.number.isRequired,
-    nextQuestion: PropTypes.func.isRequired,
-    previousQuestion: PropTypes.func.isRequired,
     questions: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.string, text: PropTypes.string })
-    ).isRequired,
-    isFirstQuestion: PropTypes.bool.isRequired,
-    isLastQuestion: PropTypes.bool.isRequired
+    ).isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentIndex: 0
+    }
   }
 
   onExiting = () => {
@@ -49,14 +45,19 @@ class SelfAssessment extends Component {
     if (this.animating) {
       return
     }
-    this.props.nextQuestion()
+
+    this.setState(currentState => ({
+      currentIndex: currentState.currentIndex + 1
+    }))
   }
 
   previous = () => {
     if (this.animating) {
       return
     }
-    this.props.previousQuestion()
+    this.setState(currentState => ({
+      currentIndex: currentState.currentIndex - 1
+    }))
   }
 
   goToIndex(newIndex) {
@@ -67,12 +68,8 @@ class SelfAssessment extends Component {
   }
 
   render() {
-    const {
-      questions,
-      activeIndex,
-      isFirstQuestion,
-      isLastQuestion
-    } = this.props
+    const { questions } = this.props
+    const { currentIndex } = this.state
 
     const slides = [
       <CarouselItem
@@ -100,6 +97,9 @@ class SelfAssessment extends Component {
       </CarouselItem>
     ]
 
+    const isFirstSlide = currentIndex <= 0
+    const isLastSlide = currentIndex >= slides.length - 1
+
     return (
       <Container>
         <Row>
@@ -107,26 +107,26 @@ class SelfAssessment extends Component {
           <Col md={10}>
             <Carousel
               interval={false}
-              activeIndex={activeIndex}
+              activeIndex={currentIndex}
               next={this.next}
               previous={this.previous}
               className={styles.carousel}
             >
               <CarouselIndicators
                 // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
-                items={questions.map(q => ({ src: q.id }))}
-                activeIndex={activeIndex}
+                items={slides.map(s => ({ src: s.key }))}
+                activeIndex={currentIndex}
                 onClickHandler={this.goToIndex}
               />
               {slides}
-              {!isFirstQuestion && (
+              {!isFirstSlide && (
                 <CarouselControl
                   direction="prev"
                   directionText="Previous"
                   onClickHandler={this.previous}
                 />
               )}
-              {!isLastQuestion && (
+              {!isLastSlide && (
                 <CarouselControl
                   direction="next"
                   directionText="Next"
@@ -143,15 +143,6 @@ class SelfAssessment extends Component {
   }
 }
 
-export default connect(
-  (state /* , ownProps */) => ({
-    questions: questionListSelector(state),
-    activeIndex: currentIndexSelector(state),
-    isFirstQuestion: isFirstQuestionSelector(state),
-    isLastQuestion: isLastQuestionSelector(state)
-  }),
-  dispatch => ({
-    nextQuestion: () => dispatch(actions.nextQuestion()),
-    previousQuestion: () => dispatch(actions.prevQuestion())
-  })
-)(SelfAssessment)
+export default connect(state => ({
+  questions: questionListSelector(state)
+}))(SelfAssessment)
