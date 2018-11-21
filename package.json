@@ -11,19 +11,23 @@
   },
   "private": true,
   "dependencies": {
-    "serve": "^10.0.2"
+    "compression": "^1.7.3",
+    "express": "^4.16.4",
+    "serve-static": "^1.13.2"
   },
   "devDependencies": {
+    "babel-eslint": "^9.0.0",
     "cross-env": "^5.2.0",
     "eslint": "5.6.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-config-prettier": "3.1.0",
+    "eslint-config-react-app": "^3.0.5",
+    "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-prettier": "3.0.0",
     "eslint-plugin-react": "7.11.1",
-    "eslint-plugin-redux-saga": "0.9.0",
     "prettier": "^1.14.3"
   },
   "scripts": {
@@ -31,9 +35,11 @@
     "dev": "yarn --cwd client dev",
     "build": "yarn --cwd client build",
     "test": "yarn --cwd client test",
-    "start": "serve -s client/build",
+    "start": "node main.js",
     "heroku-postbuild": "yarn run build",
     "ci": "yarn --cwd client ci",
-    "lint": "yarn --cwd client lint"
+    "lint": "yarn run lint:server && yarn run lint:client",
+    "lint:server": "eslint server.js",
+    "lint:client": "yarn --cwd client lint"
   }
 }
