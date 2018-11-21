@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-      "baseUrl": "."
+    "baseUrl": "."
   },
   "exclude": [
-    "node_modules",
-    "build",
-    "dist"
+    "client/node_modules",
+    "client/build",
+    "client/dist",
+    "node_modules"
   ]
 }
