@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SelfAssessment, Template } from '../../components'
+import { SelfAssessment, Template } from 'components'
 
 export default () => (
   <Template>
