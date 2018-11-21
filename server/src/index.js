@@ -1,5 +1,5 @@
 const path = require('path')
-const express = require('express')
+const restify = require('restify')
 const compression = require('compression')
 const serveStatic = require('serve-static')
 const graphqlHTTP = require('express-graphql')
@@ -7,12 +7,21 @@ const graphqlHTTP = require('express-graphql')
 const apiSchema = require('./apiSchema')
 
 const server = ({ clientRoot }) => {
-  const app = express()
+  const app = restify.createServer()
+
   app.use(compression())
 
   app.use(serveStatic(clientRoot, { immutable: true }))
 
-  app.use(
+  app.post(
+    '/api',
+    graphqlHTTP({
+      schema: apiSchema,
+      graphiql: false
+    })
+  )
+
+  app.get(
     '/api',
     graphqlHTTP({
       schema: apiSchema,
@@ -33,7 +42,7 @@ const server = ({ clientRoot }) => {
   app.listen(port)
 
   // eslint-disable-next-line no-console
-  console.log(`App is listening on port ${port}`)
+  console.log(`Server is listening on port ${port}`)
 }
 
 module.exports = server

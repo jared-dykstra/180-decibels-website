@@ -12,9 +12,9 @@
   "private": true,
   "dependencies": {
     "compression": "^1.7.3",
-    "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.0.2",
+    "restify": "^7.2.3",
     "serve-static": "^1.13.2"
   },
   "devDependencies": {

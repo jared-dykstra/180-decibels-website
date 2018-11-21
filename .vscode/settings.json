@@ -5,7 +5,6 @@
     "node_modules": true
   },
   "files.associations": {
-    "*.json": "jsonc", // <== Allow comments in JSON
     ".stylelintrc": "jsonc"
   },
   "javascript.validate.enable": true,

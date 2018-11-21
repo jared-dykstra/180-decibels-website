@@ -1,7 +1,7 @@
 {
   "buildpacks": [
     {
-      "url": "mars/create-react-app"
+      "url": "heroku/heroku-buildpack-nodejs"
     }
   ],
   "env": {
@@ -12,8 +12,8 @@
         "CI": "true"
       },
       "scripts": {
-        "test-setup": "npm run build",
-        "test": "npm run ci"
+        "test-setup": "yarn run build",
+        "test": "yarn run ci"
       }
     }
   }
