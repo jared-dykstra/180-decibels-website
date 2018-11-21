@@ -1,5 +1,5 @@
 {
-  "name": "180-decibels-server",
+  "name": "180-decibels",
   "repository": {
     "type": "github",
     "url": "https://github.com/jared-dykstra/180-decibels"
@@ -11,9 +11,6 @@
   },
   "private": true,
   "dependencies": {
-    "compression": "^1.7.3",
-    "express": "^4.16.4",
-    "serve-static": "^1.13.2"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
@@ -31,15 +28,15 @@
     "prettier": "^1.14.3"
   },
   "scripts": {
-    "postinstall": "yarn --cwd client",
+    "postinstall": "yarn --cwd server && yarn --cwd client",
+    "heroku-postbuild": "yarn run build",
     "dev": "yarn --cwd client dev",
     "build": "yarn --cwd client build",
     "test": "yarn --cwd client test",
-    "start": "node main.js",
-    "heroku-postbuild": "yarn run build",
+    "start": "yarn --cwd server start",
     "ci": "yarn --cwd client ci",
     "lint": "yarn run lint:server && yarn run lint:client",
-    "lint:server": "eslint server.js",
+    "lint:server": "yarn --cwd server lint",
     "lint:client": "yarn --cwd client lint"
   }
 }

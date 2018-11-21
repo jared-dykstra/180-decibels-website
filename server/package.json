@@ -1,0 +1,25 @@
+{
+  "name": "180-decibels-server",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/jared-dykstra/180-decibels"
+  },
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=10.9.0",
+    "yarn": ">=1.12.3"
+  },
+  "private": true,
+  "dependencies": {
+    "compression": "^1.7.3",
+    "express": "^4.16.4",
+    "serve-static": "^1.13.2"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "start": "node main.js",
+    "lint": "eslint --ignore-path ../.gitignore .",
+    "lint:fix": "eslint --ignore-path ../.gitignore --fix ."
+  }
+}
