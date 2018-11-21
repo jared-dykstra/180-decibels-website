@@ -2,12 +2,23 @@ const path = require('path')
 const express = require('express')
 const compression = require('compression')
 const serveStatic = require('serve-static')
+const graphqlHTTP = require('express-graphql')
+
+const apiSchema = require('./apiSchema')
 
 const server = ({ clientRoot }) => {
   const app = express()
   app.use(compression())
 
   app.use(serveStatic(clientRoot, { immutable: true }))
+
+  app.use(
+    '/api',
+    graphqlHTTP({
+      schema: apiSchema,
+      graphiql: true
+    })
+  )
 
   // Handles any requests that don't match the ones above, so react-router routes work
   app.get('*', async (req, res, next) => {
