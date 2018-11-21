@@ -1,11 +1,8 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": "stylelint-config-sass-guidelines",
   "rules": {
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["global", "local"],
-      }
-    ]
+    "number-leading-zero": null,
+    "max-nesting-depth": 3,
+    "selector-max-compound-selectors": 4
   }
 }

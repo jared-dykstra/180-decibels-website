@@ -1,9 +1,9 @@
-@import '../../styles/_colors.scss';
+@import '../../styles/custom';
 
-.footerSpacing {
+.footer-spacing {
   height: 2em;
 }
 
 .footer {
-  background-color: $helix-white;
+  background-color: $white;
 }

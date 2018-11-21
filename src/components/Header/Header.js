@@ -24,14 +24,12 @@ class Header extends Component {
 
   constructor(props) {
     super(props)
-
-    this.toggleNavbar = this.toggleNavbar.bind(this)
     this.state = {
       isOpen: false
     }
   }
 
-  toggleNavbar() {
+  toggleNavbar = () => {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }))
@@ -53,7 +51,7 @@ class Header extends Component {
       }
     ].map(({ url, text }) => (
       <NavItem key={url}>
-        <Link className={`${styles.navAction} nav-link`} to={url}>
+        <Link className={`${styles['nav-action']} nav-link`} to={url}>
           {text}
         </Link>
       </NavItem>
@@ -62,7 +60,7 @@ class Header extends Component {
     return (
       <Navbar color="faded" light expand="md">
         {showBrand && (
-          <Link className={`${styles.miniBrand} nav-link`} to={ROUTE_HOME}>
+          <Link className={`${styles['mini-brand']} nav-link`} to={ROUTE_HOME}>
             <Logo />
             180 Decibels
           </Link>

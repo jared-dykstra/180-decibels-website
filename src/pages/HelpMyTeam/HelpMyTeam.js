@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Template } from '../../components'
+import { SelfAssessment, Template } from '../../components'
 
 export default () => (
   <Template>
@@ -45,5 +45,7 @@ export default () => (
       and substantially shift a manager’s confidence in their team’s ability to
       execute.
     </p>
+
+    <SelfAssessment assessmentName="helpMyTeam" />
   </Template>
 )

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -17,7 +17,6 @@ class ScrollToTop extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('componentDidUpdate')
     if (this.props.location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0)
     }
@@ -28,11 +27,6 @@ class ScrollToTop extends Component {
   }
 }
 
-export default connect(
-  (state /* , ownProps */) => ({
-    location: locationSelector(state)
-  }),
-  dispatch => ({
-    // No events
-  })
-)(ScrollToTop)
+export default connect(state => ({
+  location: locationSelector(state)
+}))(ScrollToTop)

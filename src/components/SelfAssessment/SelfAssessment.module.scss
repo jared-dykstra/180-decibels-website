@@ -1,0 +1,27 @@
+@import '~styles/custom';
+
+.carousel :global {
+  .carousel-inner {
+    // See: https://github.com/reactstrap/reactstrap/issues/677
+    // Eventually this will be fixed in reactstrap and this can be removed
+    height: 450px;
+  }
+
+  .carousel-item {
+    background-color: $decibels-dark-grey;
+    height: 500px;
+    padding: 30px;
+    padding-bottom: 40px;
+
+    @include media-breakpoint-up(sm) {
+      h2 {
+        height: 3em;
+      }
+    }
+
+    h2 {
+      color: $decibels-teal;
+      text-align: center;
+    }
+  }
+}

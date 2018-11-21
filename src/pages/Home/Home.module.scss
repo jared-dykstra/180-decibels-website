@@ -1,4 +1,4 @@
-@import '../../styles/_colors.scss';
+@import '~styles/custom';
 
 .home {
   :global {
@@ -8,28 +8,19 @@
   }
 }
 
-.sectionSplash {
+.section-splash {
+  color: $decibels-red;
   text-align: center;
-  color: $helix-red;
 
   svg {
-    height: 20em;
     fill: currentColor;
+    height: 20em;
     margin-bottom: 1em;
   }
 
   h1 {
+    color: $decibels-teal;
     font-size: 3.5rem;
     font-weight: 800;
-    color: $helix-teal;
   }
 }
-
-/*
-.carousel{
-  img {
-    max-height: 100px;
-    width: initial !important;
-  }
-}
-*/

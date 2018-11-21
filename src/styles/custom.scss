@@ -1,15 +1,14 @@
 // See: https://getbootstrap.com/docs/4.0/getting-started/theming
 
-// Local
-@import "_colors.scss";
+$decibels-red: rgb(146, 26, 15);
+$decibels-teal: rgb(54, 207, 218);
+$decibels-light-grey: rgb(100, 100, 100);
+$decibels-dark-grey: rgb(50, 50, 50);
 
 // Overrides values from _variables.scss
 
-$white: $helix-white;
 
-// Fonts
-// Self-host Fonts
-// @import url('https://fonts.googleapis.com/css?family=Ubuntu:200,300,600');
+// Fonts - Fonts are already imported into index.js
 $font-family-sans-serif: 'Ubuntu', sans-serif;
 $font-weight-light: 200;
 $font-weight-normal: 300;
@@ -19,21 +18,19 @@ $font-weight-bold: 600;
 // $font-size-lg:   ($font-size-base * 1.25);
 // $font-size-sm:   ($font-size-base * 0.875);
 
-@import "_fonts.scss";
-
 // Nav
 // Default padding is 0.5em.  Set to 1em so that Header.module.scss can set a negative margin on the logo
 $navbar-padding-y: 1em;
 
 // Links
-$primary: $helix-teal;
-$link-hover-color: $helix-red;
+$primary: $decibels-teal;
+$link-hover-color: $decibels-red;
 
 // Headings
-$headings-color: $helix-red;
+$headings-color: $decibels-red;
 
 // Option A: Include all of Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap";
+@import 'node_modules/bootstrap/scss/bootstrap';
 
 // // Option B: Include parts of Bootstrap
 
@@ -49,6 +46,7 @@ $headings-color: $helix-red;
 // @import "node_modules/bootstrap/scss/code";
 // @import "node_modules/bootstrap/scss/grid";
 
+
 // Navbar
 .navbar {
   font-size: $font-size-lg;
@@ -60,8 +58,8 @@ $headings-color: $helix-red;
 
 // Buttons
 .btn-primary {
+  border-color: $decibels-red;
   color: $white;
-  border-color: $helix-red;
 
   :hover {
     color: $link-hover-color;
