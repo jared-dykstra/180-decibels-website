@@ -1,18 +1,22 @@
-# EOS Block Viewer
+# 180 Decibels
 
-A create-react-app based application to view latest EOS blocks.
-
-## Developers
-
-Recommend using VSCode.  VSCode will prompt for recommended extensions.  Install/enable these extensions for the best developer experience
-
-To run:
+To Run:
 
 1. `yarn`
-1. `yarn start`
+1. `yarn run build`
+1. `yarn run start`
 
-A browser will be opened on [localhost:3000](http://localhost:3000)
+Developers:
 
-### Continuous Integration & Deployment
+Use VSCode as an editor
 
-Not setup.  Recommend using Heroku CI and invoking `yarn run ci`  In lieu of CI, a precommit hook can be used.
+1. `yarn`
+1. `yarn run dev`
+
+## Client
+
+Create-React-App 2.0 based website, using redux, redux-saga, and modular sass
+
+## Server
+
+Express based server
