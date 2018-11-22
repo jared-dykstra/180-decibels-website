@@ -10,7 +10,7 @@ import { Container } from 'reactstrap'
 import { Header, Footer } from '..'
 
 const Template = ({ className, children }) => (
-  <Container>
+  <Container fluid>
     <Header />
     <div className={className}>{children}</div>
     <Footer />

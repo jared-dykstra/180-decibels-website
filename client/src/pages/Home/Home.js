@@ -11,7 +11,7 @@ import {
 
 import styles from './Home.module.scss'
 
-import { Logo, Template } from '../../components'
+import { Logo, Template, Register } from '../../components'
 
 const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <Template className={styles.home}>
@@ -44,12 +44,8 @@ const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
         Discover how 180 Decibels can help you
       </Button>
     </section>
-    {/*
-      <section>
-        <h2>Organizations using 180 Decibels</h2>
-        <Carousel />
-      </section>
-    */}
+
+    <Register />
   </Template>
 )
 

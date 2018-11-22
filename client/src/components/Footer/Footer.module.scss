@@ -1,9 +1,12 @@
-@import '../../styles/custom';
+@import '~styles/custom';
 
 .footer-spacing {
-  height: 2em;
+  height: $decibels-footer-height;
+  margin-bottom: $decibels-footer-height;
 }
 
 .footer {
   background-color: $white;
+  height: $decibels-footer-height;
+  padding: 0;
 }
