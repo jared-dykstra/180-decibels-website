@@ -17,6 +17,12 @@ const server = ({ clientRoot }) => {
 
   app.use(favicon(path.join(clientRoot, 'favicon.ico')))
 
+  app.get('/robots.txt', (req, res) => {
+    res.type('text/plain')
+    // TODO: Currently disallowing everything.  Change to "Disallow: " before going live
+    res.send('User-agent: *\nDisallow: /')
+  })
+
   const isProduction = process.env.NODE_ENV === 'production'
   const unhashedCacheDuration = isProduction ? 3600 : 0
 
