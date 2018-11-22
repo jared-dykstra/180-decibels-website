@@ -5,7 +5,6 @@
     "node_modules": true
   },
   "files.associations": {
-    "*.json": "jsonc", // <== Allow comments in JSON
     ".stylelintrc": "jsonc"
   },
   "javascript.validate.enable": true,
@@ -21,14 +20,11 @@
   "markdown.extension.toc.updateOnSave": true,
   "markdown.extension.orderedList.marker": "one",
   "cSpell.words": [
-    "blockchain",
-    "blockchains",
-    "eosjs",
     "mailto",
     "parallelize",
     "reactstrap",
     "reselect",
-    "ricardian",
+    "unhashed",
     "unmount"
   ]
 }
