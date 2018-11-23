@@ -60,15 +60,7 @@ class Register extends PureComponent {
   static propTypes = propTypes
 
   render() {
-    const {
-      valid,
-      handleSubmit,
-      pristine,
-      reset,
-      submitting,
-      register
-    } = this.props
-    console.log(`Register rendering.  submitting=${submitting}`)
+    const { handleSubmit, pristine, reset, submitting, register } = this.props
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
