@@ -1,6 +1,6 @@
 import { USER_MANAGEMENT_REGISTER } from './userManagementConstants'
 
-export const register = ({ company, firstName, lastName, email, phone }) => ({
+export const register = user => ({
   type: USER_MANAGEMENT_REGISTER,
-  payload: { company, firstName, lastName, email, phone }
+  payload: { user }
 })

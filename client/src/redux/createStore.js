@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 
-import { reducer as formReducer } from 'redux-form'
+import { reducer as formReducer } from 'redux-form/immutable'
 import createSagaMiddleware from 'redux-saga'
 
 import { reducers, rootSaga } from '.'

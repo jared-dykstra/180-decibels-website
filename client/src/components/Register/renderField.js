@@ -44,7 +44,6 @@ const renderSelectField = ({
 export default props => {
   // See: https://github.com/reactstrap/reactstrap/issues/707#issuecomment-351593584
   const { type, ...rest } = props
-  console.log(`Render Type: ${type}`)
   switch (type) {
     case 'text':
       return renderTextField(rest)
