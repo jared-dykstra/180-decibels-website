@@ -11,7 +11,7 @@ import {
   REGISTER_FORM_LAST_NAME_KEY,
   REGISTER_FORM_EMAIL_KEY,
   REGISTER_FORM_PHONE_KEY
-} from '../../redux/userManagement/userManagementConstants'
+} from 'redux/userManagement/userManagementConstants'
 
 import renderField from './renderField'
 

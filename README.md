@@ -10,8 +10,12 @@ Developers:
 
 Use VSCode as an editor
 
-1. `yarn`
-1. `yarn run dev`
+- Run Both the client and server in development mode
+  1. `yarn`
+  1. `yarn run dev`
+- Run only the client in development mode
+  1. `cd client`
+  1. `yarn run dev`
 
 ## Client
 
