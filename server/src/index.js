@@ -7,17 +7,20 @@ const graphqlHTTP = require('express-graphql')
 
 const apiSchema = require('./apiSchema')
 
-const server = ({ clientRoot }) => {
-  const app = restify.createServer()
+const makeServer = ({ clientRoot }) => {
+  const server = restify.createServer()
+
+  server.use(restify.plugins.bodyParser())
+  server.use(restify.plugins.queryParser())
 
   // Use gzip compression for static resources (files, etc)
-  app.use(compression())
+  server.use(compression())
   // use gzip compression for GraphQL API calls
-  app.use(restify.plugins.gzipResponse())
+  server.use(restify.plugins.gzipResponse())
 
-  app.use(favicon(path.join(clientRoot, 'favicon.ico')))
+  server.use(favicon(path.join(clientRoot, 'favicon.ico')))
 
-  app.get('/robots.txt', (req, res) => {
+  server.get('/robots.txt', (req, res) => {
     res.type('text/plain')
     // TODO: Currently disallowing everything.  Change to "Disallow: " before going live
     res.send('User-agent: *\nDisallow: /')
@@ -27,7 +30,7 @@ const server = ({ clientRoot }) => {
   const unhashedCacheDuration = isProduction ? 3600 : 0
 
   // serve-static middleware for all files in the clientRoot directory
-  app.use(
+  server.use(
     serveStatic(clientRoot, {
       index: false,
       immutable: true,
@@ -45,14 +48,14 @@ const server = ({ clientRoot }) => {
   )
 
   // GraphQL API
-  app.post(
+  server.post(
     '/api',
     graphqlHTTP({
       schema: apiSchema,
       graphiql: false
     })
   )
-  app.get(
+  server.get(
     '/api',
     graphqlHTTP({
       schema: apiSchema,
@@ -62,7 +65,7 @@ const server = ({ clientRoot }) => {
 
   // Handles any requests that don't match the ones above, so react-router routes work
   // This includes the bare URL
-  app.get(
+  server.get(
     '*',
     // TODO: restify.plugins.serveStatic is not generating an ETag header
     restify.plugins.serveStatic({
@@ -73,10 +76,10 @@ const server = ({ clientRoot }) => {
   )
 
   const port = process.env.PORT || 5000
-  app.listen(port)
+  server.listen(port)
 
   // eslint-disable-next-line no-console
   console.log(`Server is listening on port ${port}`)
 }
 
-module.exports = server
+module.exports = makeServer
