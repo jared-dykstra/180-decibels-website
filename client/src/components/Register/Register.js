@@ -68,7 +68,8 @@ class Register extends PureComponent {
       submitting,
       register
     } = this.props
-    const isSubmitDisabled = !valid || submitting
+    console.log(`Register rendering.  submitting=${submitting}`)
+    const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
       <Form onSubmit={handleSubmit(register)}>

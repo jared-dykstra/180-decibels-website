@@ -1,4 +1,4 @@
-import { all /* , fork */ } from 'redux-saga/effects'
+import { all, fork } from 'redux-saga/effects'
 import {
   mountPoint as selfAssessmentMountPoint,
   reducer as selfAssessmentReducer
@@ -6,8 +6,8 @@ import {
 } from './selfAssessment'
 import {
   mountPoint as userManagementMountPoint,
-  reducer as userManagementReducer
-  // , saga as userManagementSaga
+  reducer as userManagementReducer,
+  saga as userManagementSaga
 } from './userManagement'
 
 export const reducers = {
@@ -16,6 +16,6 @@ export const reducers = {
 }
 
 export function* rootSaga() {
-  // yield all([fork(selfAssessmentSaga)])
+  yield all([fork(userManagementSaga)])
   yield all()
 }
