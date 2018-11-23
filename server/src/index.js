@@ -3,9 +3,9 @@ const restify = require('restify')
 const favicon = require('serve-favicon')
 const compression = require('compression')
 const serveStatic = require('serve-static')
-const graphqlHTTP = require('express-graphql')
+const { graphqlRestify, graphiqlRestify } = require('apollo-server-restify')
 
-const apiSchema = require('./apiSchema')
+const schema = require('./apiSchema')
 
 const makeServer = ({ clientRoot }) => {
   const server = restify.createServer()
@@ -48,20 +48,10 @@ const makeServer = ({ clientRoot }) => {
   )
 
   // GraphQL API
-  server.post(
-    '/api',
-    graphqlHTTP({
-      schema: apiSchema,
-      graphiql: false
-    })
-  )
-  server.get(
-    '/api',
-    graphqlHTTP({
-      schema: apiSchema,
-      graphiql: true
-    })
-  )
+  const graphQLOptions = { schema }
+  server.post('/graphql', graphqlRestify(graphQLOptions))
+  server.get('/graphql', graphqlRestify(graphQLOptions))
+  server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphql' }))
 
   // Handles any requests that don't match the ones above, so react-router routes work
   // This includes the bare URL
