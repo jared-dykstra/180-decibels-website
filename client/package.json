@@ -52,7 +52,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "yarn run build",
     "ci": "cross-env yarn run lint && yarn run test:ci",
     "lint": "yarn run lint:eslint && yarn run lint:stylelint",
     "lint:eslint": "eslint --ignore-path ../.gitignore .",

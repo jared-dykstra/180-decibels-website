@@ -1,13 +1,13 @@
-const path = require('path')
-const restify = require('restify')
-const favicon = require('serve-favicon')
-const compression = require('compression')
-const serveStatic = require('serve-static')
-const { graphqlRestify, graphiqlRestify } = require('apollo-server-restify')
+import path from 'path'
+import restify from 'restify'
+import favicon from 'serve-favicon'
+import compression from 'compression'
+import serveStatic from 'serve-static'
+import { graphqlRestify, graphiqlRestify } from 'apollo-server-restify'
 
 const schema = require('./apiSchema')
 
-const makeServer = ({ clientRoot }) => {
+export const makeServer = ({ clientRoot }) => {
   const server = restify.createServer()
 
   server.use(restify.plugins.bodyParser())
@@ -71,5 +71,3 @@ const makeServer = ({ clientRoot }) => {
   // eslint-disable-next-line no-console
   console.log(`Server is listening on port ${port}`)
 }
-
-module.exports = makeServer

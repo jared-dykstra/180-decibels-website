@@ -15,7 +15,6 @@
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "concurrently": "^4.1.0",
-    "cross-env": "^5.2.0",
     "eslint": "5.6.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-airbnb-base": "13.1.0",
@@ -32,10 +31,12 @@
     "postinstall": "yarn --cwd server && yarn --cwd client",
     "heroku-postbuild": "yarn run build",
     "dev": "concurrently \"yarn --cwd server dev\" \"yarn --cwd client dev\"",
-    "build": "yarn --cwd client build",
-    "test": "yarn --cwd client test",
+    "build": "yarn run build:client && yarn run build:server",
+    "build:server": "yarn --cwd server build",
+    "build:client": "yarn --cwd client build",
+    "test": "yarn --cwd server test && yarn --cwd client test",
     "start": "yarn --cwd server start",
-    "ci": "yarn --cwd client ci",
+    "ci": "yarn --cwd server ci && yarn --cwd client ci",
     "lint": "yarn run lint:server && yarn run lint:client",
     "lint:server": "yarn --cwd server lint",
     "lint:client": "yarn --cwd client lint"

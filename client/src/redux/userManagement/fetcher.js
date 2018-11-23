@@ -1,4 +1,4 @@
-import config from 'config'
+import { get as configGet } from 'config'
 
 import { REGISTER_FORM_EMAIL_KEY } from './userManagementConstants'
 
@@ -11,7 +11,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 export const registerUser = async payload => {
   const { user } = payload
   console.log(`TODO: Register user=${JSON.stringify(user)}`)
-  console.log(`API Endpoint=${config.get('apiEndpoint')}`)
+  console.log(`API Endpoint=${configGet('apiEndpoint')}`)
   await sleep(2 * 1000)
   throw {
     [REGISTER_FORM_EMAIL_KEY]:
