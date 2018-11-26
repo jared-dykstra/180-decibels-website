@@ -1,4 +1,5 @@
 import { createApolloFetch } from 'apollo-fetch'
+import gql from 'graphql-tag.macro'
 
 import { get as configGet } from 'config'
 
@@ -18,7 +19,18 @@ export const registerUser = async payload => {
     const { user } = payload
     console.log(`TODO: Register user=${JSON.stringify(user)}`)
 
-    const retval = await fetcher({ query: { hello: '' } })
+    const query = gql`
+      {
+        assessment(name: "helpMe") {
+          name
+          questions {
+            id
+            text
+          }
+        }
+      }
+    `
+    const retval = await fetcher({ query })
     console.log(`retval=${retval}`)
 
     await sleep(2 * 1000)

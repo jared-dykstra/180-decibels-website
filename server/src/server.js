@@ -1,22 +1,18 @@
 import path from 'path'
-import restify from 'restify'
+import express from 'express'
 import favicon from 'serve-favicon'
 import compression from 'compression'
-import serveStatic from 'serve-static'
-import { graphqlRestify, graphiqlRestify } from 'apollo-server-restify'
+import { ApolloServer } from 'apollo-server-express'
 
-const schema = require('./apiSchema')
+import AssessmentAPI from './datasources/assessment'
+import typeDefs from './schema'
+import resolvers from './resolvers'
 
 export const makeServer = ({ clientRoot }) => {
-  const server = restify.createServer()
-
-  server.use(restify.plugins.bodyParser())
-  server.use(restify.plugins.queryParser())
+  const server = express()
 
   // Use gzip compression for static resources (files, etc)
   server.use(compression())
-  // use gzip compression for GraphQL API calls
-  server.use(restify.plugins.gzipResponse())
 
   server.use(favicon(path.join(clientRoot, 'favicon.ico')))
 
@@ -31,7 +27,7 @@ export const makeServer = ({ clientRoot }) => {
 
   // serve-static middleware for all files in the clientRoot directory
   server.use(
-    serveStatic(clientRoot, {
+    express.static(clientRoot, {
       index: false,
       immutable: true,
       maxAge: 31536000000, // <== serve-static accepts 'ms' and converts it to 's' for Cache-Control
@@ -47,23 +43,40 @@ export const makeServer = ({ clientRoot }) => {
     })
   )
 
-  // GraphQL API
-  const graphQLOptions = { schema }
-  server.post('/graphql', graphqlRestify(graphQLOptions))
-  server.get('/graphql', graphqlRestify(graphQLOptions))
-  server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphql' }))
+  // // // API Begin
+  // // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/index.js
+  const dataSources = () => ({
+    assessmentAPI: new AssessmentAPI({ store: 'intentionally undefined' })
+  })
+
+  // // the function that sets up the global context for each resolver, using the req
+  // const context = async ({ req }) =>
+  //   // // simple auth check on every request
+  //   // const auth = (req.headers && req.headers.authorization) || ''
+  //   // const email = new Buffer(auth, 'base64').toString('ascii')
+
+  //   // // if the email isn't formatted validly, return null for user
+  //   // if (!isEmail.validate(email)) return { user: null }
+  //   // // find a user by their email
+  //   // const users = await store.users.findOrCreate({ where: { email } })
+  //   // const user = users && users[0] ? users[0] : null
+
+  //   // return { user: { ...user.dataValues } }
+  //   ({ user: {} })
+
+  // TODO: use gzip compression for GraphQL API calls
+
+  const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources })
+  apolloServer.applyMiddleware({ app: server })
+
+  // // // API END
 
   // Handles any requests that don't match the ones above, so react-router routes work
   // This includes the bare URL
-  server.get(
-    '*',
-    // TODO: restify.plugins.serveStatic is not generating an ETag header
-    restify.plugins.serveStatic({
-      directory: clientRoot,
-      file: 'index.html',
-      maxAge: unhashedCacheDuration
-    })
-  )
+  server.get('*', (req, res) => {
+    // TODO: Add ETag generation
+    res.sendFile(path.join(clientRoot, 'index.html'))
+  })
 
   const port = process.env.PORT || 5000
   server.listen(port)

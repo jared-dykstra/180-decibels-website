@@ -10,6 +10,11 @@ Developers:
 
 Use VSCode as an editor
 
+Use Chrome as a browser, with the following extensions:
+- Redux DevTools
+- React DevTools
+- Apollo Client Developer Tools
+
 - Run Both the client and server in development mode
   1. `yarn`
   1. `yarn run dev`

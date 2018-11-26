@@ -1,0 +1,245 @@
+{
+  "helpMyTeam": {
+    "dimensions": {
+      "accountability": {
+        "highComment": "Great job with the accountability.  Use <this technique> to keep it up",
+        "lowComment": "Improving accountability will make a big difference.  Use <these these techniques> to get started right away",
+        "threshold": "50%"
+      },
+      "scoreKeeping": {
+        "highComment": "Great job with score-keeping.  Use <this technique> to continue improving",
+        "lowComment": "Try <this technique> to improve score-keeping",
+        "threshold": "50%"
+      }
+    },
+    "volume": {
+      "min": 0,
+      "max": 10,
+      "step": 2
+    },
+    "questions": {
+      "f7ca272e-6c96-4ee9-96a2-6e5d33012478": {
+        "text": "Do you know where your kids are right now?",
+        "accountability": 20,
+        "scoreKeeping": 0
+      },
+      "2e18a618-2cf0-4bc2-bb46-49669d68fe37": {
+        "text": "Have you defined measurable targets for this quarter?",
+        "accountability": 0,
+        "scoreKeeping": 20
+      }
+    }
+  },
+  "helpMe": {
+    "dimensions": {
+      "toneDeaf": {
+        "highComment": "You are very tone deaf.  Consider <this technique to address it>",
+        "lowComment": "Sounds like you've got good pitch",
+        "threshold": "50%"
+      },
+      "monoTone": {
+        "highComment": "You're signing the same song, and it's getting tiresome.  Try <insert technique here>",
+        "lowComment": "You've been responding to your team's needs, and that's super.",
+        "threshold": "50%"
+      },
+      "risingStar": {
+        "highComment": "You're a rising star: But to avoid becoming overburdened, use <insert technique>",
+        "lowComment": "Either you already are a rising star, or you've yet to become one.  Do you have your own wikipedia page yet?",
+        "threshold": "50%"
+      },
+      "greatnessInSight": {
+        "highComment": "You have greatness in sight: To avoid distractions, use <insert technique>",
+        "lowComment": "If you can <insert technique here>, you'll have greatness in sight",
+        "threshold": "50%"
+      },
+      "rockStar": {
+        "highComment": "Congratulations, you're a rock star!  Use <this set of tools> to keep developing yourself and your team",
+        "lowComment": "You're not yet a rock star, but we can turn you into one.  Use <insert technique> or <insert technique>",
+        "threshold": "50%"
+      }
+    },
+    "volume": {
+      "min": 0,
+      "max": 10,
+      "step": 2
+    },
+    "questions": {
+      "9a36cc7b-af54-4fcb-a827-f2c18949c075": {
+        "text": "Are your customers raving fans?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 10
+      },
+      "bf75f9ad-ae76-4b85-b29e-e1f16eadf721": {
+        "text": "Do people know how they win?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 10
+      },
+      "043f1759-a49e-4dfd-951b-6ed618f26232": {
+        "text": "Do you hit deadlines 90% of the time?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 10
+      },
+      "312b9570-28e6-4b36-9ab6-5a54f8840b6f": {
+        "text": "Do people know what they are uniquely on the hook for?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 20
+      },
+      "fd23fabf-071f-483e-bb2a-45bb29460cc4": {
+        "text": "Do they know what everybody else is uniquely on the hook for?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 20
+      },
+      "3bdd035d-87d4-48f5-995a-93458e60f691": {
+        "text": "Is there anyone on the team that causes a lot of drama?",
+        "toneDeaf": 20,
+        "monoTone": 0,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "c263bec7-5212-4fb2-8ff6-036d5a666e2e": {
+        "text": "Can you think of someone on your team who is regularly overwhelmed?",
+        "toneDeaf": 10,
+        "monoTone": 10,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "ea734344-11fa-4b12-a20c-b0971930ae87": {
+        "text": "In the past three months, have you taken any work off your team&apos;s plate?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 10,
+        "greatnessInSight": 10,
+        "rockStar": 0
+      },
+      "d054bb75-80c3-4662-892a-c23f23d3115f": {
+        "text": "Can everyone recite what business you are in? (the same way)",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 10
+      },
+      "98b4709c-280f-47a6-b13c-768fcf7c3dfd": {
+        "text": "Can everyone define who your ideal customer is?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 10
+      },
+      "e6fc37e3-989e-4d49-9236-76f4abba446d": {
+        "text": "Do you have the same complaints and conversations over and over?",
+        "toneDeaf": 5,
+        "monoTone": 15,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "553804ce-5150-4a59-b317-28ab670226ef": {
+        "text": "Does everyone know and follow the on-boarding process?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 20
+      },
+      "5a800950-3357-40d6-ab13-d558667e3960": {
+        "text": "Do people throw eachother under the bus regularly?",
+        "toneDeaf": 15,
+        "monoTone": 5,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "98059c95-4c31-4655-bd6a-3b5486b83343": {
+        "text": "Do you give regular feedback?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 10
+      },
+      "7f0ca0b0-039c-4d37-ad44-43abda9c0581": {
+        "text": "Do you do quarterly reviews?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 20
+      },
+      "358324a8-eb63-48c0-ad12-4cca61c24aa4": {
+        "text": "Do people have action items at the end of a meeting?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 20
+      },
+      "34ed4110-82be-4443-a033-d32672875dfa": {
+        "text": "Does your team get stuff done as expected?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 4,
+        "greatnessInSight": 6,
+        "rockStar": 20
+      },
+      "7c72d3dd-fa1a-4751-9f23-e1f2fd09b2cb": {
+        "text": "Do you have to tell people what to do?",
+        "toneDeaf": 10,
+        "monoTone": 10,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "09330aeb-037b-4b1c-b3fe-6b4b9e2a5d38": {
+        "text": "Do you witness more than 2 blow-ups a week?",
+        "toneDeaf": 15,
+        "monoTone": 5,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "ceefe5ea-2fa8-43c1-af00-653687ea8dac": {
+        "text": "How happy are you with your team&apos;s productivity?",
+        "toneDeaf": 0,
+        "monoTone": 0,
+        "risingStar": 10,
+        "greatnessInSight": 6,
+        "rockStar": 4
+      },
+      "3e8abfa9-ce7c-497b-b0f9-edcd79ee6f5d": {
+        "text": "Do you work over 50 hours a week?",
+        "toneDeaf": 15,
+        "monoTone": 5,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      },
+      "43072319-a6d9-4457-8ac1-04180f77228e": {
+        "text": "Have you lost staff in the last three months?",
+        "toneDeaf": 10,
+        "monoTone": 10,
+        "risingStar": 0,
+        "greatnessInSight": 0,
+        "rockStar": 0
+      }
+    }
+  }
+}
