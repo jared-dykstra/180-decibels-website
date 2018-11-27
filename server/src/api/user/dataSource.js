@@ -20,5 +20,6 @@ export default class UserAPI extends DataSource {
 
   async registerUser(user) {
     console.log(`JARED - REGISTER USER.  user=${JSON.stringify(user)}`)
+    return 'hello'
   }
 }
