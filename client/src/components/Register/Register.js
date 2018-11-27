@@ -1,3 +1,4 @@
+import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
@@ -12,6 +13,8 @@ import {
   REGISTER_FORM_EMAIL_KEY,
   REGISTER_FORM_PHONE_KEY
 } from 'redux/userManagement/userManagementConstants'
+
+import { isEmailInUse } from 'redux/userManagement/fetcher'
 
 import renderField from './renderField'
 
@@ -53,6 +56,21 @@ const validate = values => {
     [REGISTER_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
     [REGISTER_FORM_PHONE_KEY]:
       validateRequired(phone) || validatePhoneNumber(phone)
+  }
+}
+
+const asyncValidate = async values => {
+  // Values is immutableJS instance
+  const email = values.get(REGISTER_FORM_EMAIL_KEY)
+  const isTaken = await isEmailInUse(email)
+
+  const errors = {}
+  if (isTaken) {
+    errors[REGISTER_FORM_EMAIL_KEY] = 'That email address is already in use'
+  }
+
+  if (!_isEmpty(errors)) {
+    throw errors
   }
 }
 
@@ -142,6 +160,6 @@ const ConnectedRegister = connect(
   })
 )(Register)
 
-export default reduxForm({ form: REGISTER_FORM_KEY, validate })(
+export default reduxForm({ form: REGISTER_FORM_KEY, validate, asyncValidate })(
   ConnectedRegister
 )

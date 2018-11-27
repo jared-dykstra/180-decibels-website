@@ -1,3 +1,4 @@
+import { get as _get } from 'lodash'
 import { ApolloLink, execute, makePromise } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import gql from 'graphql-tag.macro'
@@ -42,4 +43,24 @@ export const registerUser = async payload => {
   // See: https://www.apollographql.com/docs/link/index.html#standalone
   const retval = await clientExecuteAsync(link, operation)
   return retval
+}
+
+export const isEmailInUse = async email => {
+  const operation = {
+    query: gql`
+      query IsEmailInUse($email: String!) {
+        isEmailInUse(email: $email)
+      }
+    `,
+    variables: {
+      email
+    }
+  }
+
+  // See: https://www.apollographql.com/docs/link/index.html#standalone
+  const retval = await clientExecuteAsync(link, operation)
+
+  const path = 'data.isEmailInUse'
+  const inUse = _get(retval, path)
+  return inUse
 }

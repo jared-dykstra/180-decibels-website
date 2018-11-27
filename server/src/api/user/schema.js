@@ -7,7 +7,8 @@ import resolvers from './resolvers'
 
 const typeDefs = gql`
   type Query {
-    getUser(id: ID): String!
+    isEmailInUse(email: String!): Boolean!
+    getUser(id: ID!): String!
   }
 
   type Mutation {

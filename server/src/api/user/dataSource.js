@@ -15,6 +15,15 @@ export default class UserAPI extends DataSource {
     this.context = config.context
   }
 
+  async isEmailInUse({ email }) {
+    // TODO: Not implemented
+    if (email.endsWith('hotmail.com')) {
+      return true
+    }
+
+    return false
+  }
+
   async getUser(user) {
     const { id } = user
     console.log(`JARED - TODO: GET USER id=${id}`)
@@ -28,7 +37,6 @@ export default class UserAPI extends DataSource {
 
     // Temporary Test of validation logic -- replace with logic if email has already been registered
     if (email.endsWith('hotmail.com')) {
-      console.log('JARED - Throwing error')
       throw new UserInputError('Hotmail is not accepted here', {
         invalidArgs: ['email']
       })
