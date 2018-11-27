@@ -1,15 +1,18 @@
-const dsSelector = dataSources => dataSources.userAPI
+const dsSelector = context => {
+  const { dataSources } = context
+  return dataSources.userAPI
+}
 
 export default {
   Query: {
-    getUser: async (_, { id }, { dataSources }) => {
-      const user = dsSelector(dataSources).getUser(id)
+    getUser: async (parent, args, context, info) => {
+      const user = dsSelector(context).getUser(args)
       return user
     }
   },
   Mutation: {
-    registerUser: async (_, { name }, { dataSources }) => {
-      const result = dsSelector(dataSources).registerUser(name)
+    registerUser: async (parent, args, context, info) => {
+      const result = dsSelector(context).registerUser(args)
       return result
     }
   }
