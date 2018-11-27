@@ -4,9 +4,7 @@ import favicon from 'serve-favicon'
 import compression from 'compression'
 import { ApolloServer } from 'apollo-server-express'
 
-import AssessmentAPI from './datasources/assessment'
-import typeDefs from './schema'
-import resolvers from './resolvers'
+import { schema, dataSources } from './api'
 
 export const makeServer = ({ clientRoot }) => {
   const server = express()
@@ -44,10 +42,6 @@ export const makeServer = ({ clientRoot }) => {
   )
 
   // // // API Begin
-  // // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/index.js
-  const dataSources = () => ({
-    assessmentAPI: new AssessmentAPI({ store: 'intentionally undefined' })
-  })
 
   // // the function that sets up the global context for each resolver, using the req
   // const context = async ({ req }) =>
@@ -66,7 +60,7 @@ export const makeServer = ({ clientRoot }) => {
 
   // TODO: use gzip compression for GraphQL API calls
 
-  const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources })
+  const apolloServer = new ApolloServer({ schema, dataSources })
   apolloServer.applyMiddleware({ app: server })
 
   // // // API END

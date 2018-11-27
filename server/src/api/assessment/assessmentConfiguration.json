@@ -1,5 +1,11 @@
 {
   "helpMyTeam": {
+    "version": "0.1.0",
+    "configuration": {
+      "volumeMin": 0,
+      "volumeMax": 10,
+      "volumeStep": 2
+    },
     "dimensions": {
       "accountability": {
         "highComment": "Great job with the accountability.  Use <this technique> to keep it up",
@@ -11,11 +17,6 @@
         "lowComment": "Try <this technique> to improve score-keeping",
         "threshold": "50%"
       }
-    },
-    "volume": {
-      "min": 0,
-      "max": 10,
-      "step": 2
     },
     "questions": {
       "f7ca272e-6c96-4ee9-96a2-6e5d33012478": {
@@ -31,6 +32,12 @@
     }
   },
   "helpMe": {
+    "version": "0.1.0",
+    "configuration": {
+      "volumeMin": 0,
+      "volumeMax": 10,
+      "volumeStep": 2
+    },
     "dimensions": {
       "toneDeaf": {
         "highComment": "You are very tone deaf.  Consider <this technique to address it>",
@@ -57,11 +64,6 @@
         "lowComment": "You're not yet a rock star, but we can turn you into one.  Use <insert technique> or <insert technique>",
         "threshold": "50%"
       }
-    },
-    "volume": {
-      "min": 0,
-      "max": 10,
-      "step": 2
     },
     "questions": {
       "9a36cc7b-af54-4fcb-a827-f2c18949c075": {

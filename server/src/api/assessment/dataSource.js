@@ -5,9 +5,8 @@ import assessmentConfig from './assessmentConfiguration.json'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-class AssessmentAPI extends DataSource {
+export default class AssessmentApi extends DataSource {
   constructor({ store }) {
-    console.log('Datasource Constructor')
     super()
     this.store = store
     this.delay = 1000
@@ -15,7 +14,6 @@ class AssessmentAPI extends DataSource {
 
   initialize(config) {
     this.context = config.context
-    console.log(`initialize method.  delay=${this.delay}`)
   }
 
   async getAssessment(name) {
@@ -25,14 +23,17 @@ class AssessmentAPI extends DataSource {
       id: k,
       ...v
     }))
-    const retval = { name, questions }
+    const retval = {
+      name,
+      version: config.version,
+      configuration: config.configuration,
+      questions
+    }
     return retval
   }
 
-  async createAssessmentResultset() {
+  async createAssessmentResultSet() {
     await sleep(this.delay)
     return ['message 1', 'message 2']
   }
 }
-
-export default AssessmentAPI

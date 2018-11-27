@@ -1,3 +1,5 @@
+// TODO: Move logic server-side
+
 import { isNil as _isNil } from 'lodash'
 
 /**
