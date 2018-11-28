@@ -2,7 +2,7 @@ import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
-import { Button, Form, FormGroup, Label } from 'reactstrap'
+import { Button, Col, Container, Form, FormGroup, Label, Row } from 'reactstrap'
 
 import { actions } from 'redux/userManagement'
 import {
@@ -13,9 +13,9 @@ import {
   REGISTER_FORM_EMAIL_KEY,
   REGISTER_FORM_PHONE_KEY
 } from 'redux/userManagement/userManagementConstants'
-
 import { isEmailInUse } from 'redux/userManagement/fetcher'
 
+import styles from './Register.module.scss'
 import renderField from './renderField'
 
 const validate = values => {
@@ -81,74 +81,131 @@ class Register extends PureComponent {
     const { handleSubmit, pristine, reset, submitting, register } = this.props
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
+    const labelWidth = 2
     return (
-      <Form onSubmit={handleSubmit(register)}>
-        <FormGroup>
-          <Label for={REGISTER_FORM_FIRST_NAME_KEY}>First Name</Label>
-          <Field
-            id={REGISTER_FORM_FIRST_NAME_KEY}
-            name={REGISTER_FORM_FIRST_NAME_KEY}
-            type="text"
-            component={renderField}
-            placeholder="Wiley, E"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for={REGISTER_FORM_LAST_NAME_KEY}>Last Name</Label>
-          <Field
-            id={REGISTER_FORM_LAST_NAME_KEY}
-            name={REGISTER_FORM_LAST_NAME_KEY}
-            type="text"
-            component={renderField}
-            placeholder="Coyote"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for={REGISTER_FORM_COMPANY_KEY}>Company</Label>
-          <Field
-            id={REGISTER_FORM_COMPANY_KEY}
-            name={REGISTER_FORM_COMPANY_KEY}
-            type="text"
-            component={renderField}
-            placeholder="ACME"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for={REGISTER_FORM_EMAIL_KEY}>Email</Label>
-          <Field
-            id={REGISTER_FORM_EMAIL_KEY}
-            name={REGISTER_FORM_EMAIL_KEY}
-            type="text"
-            component={renderField}
-            placeholder="wiley@acme.com"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for={REGISTER_FORM_PHONE_KEY}>Phone</Label>
-          <Field
-            id={REGISTER_FORM_PHONE_KEY}
-            name={REGISTER_FORM_PHONE_KEY}
-            type="text"
-            component={renderField}
-            placeholder="403.555.1212"
-          />
-        </FormGroup>
-        <Button
-          type="submit"
-          color={!isSubmitDisabled ? 'primary' : undefined}
-          disabled={isSubmitDisabled}
-        >
-          Submit
-        </Button>
-        <Button
-          type="reset"
-          color="link"
-          disabled={isResetDisabled}
-          onClick={reset}
-        >
-          Reset
-        </Button>
-      </Form>
+      <Container fluid className={styles.register}>
+        <Form onSubmit={handleSubmit(register)}>
+          <FormGroup>
+            <Row>
+              <Col xs={labelWidth}>
+                <Label
+                  for={REGISTER_FORM_FIRST_NAME_KEY}
+                  className={styles.required}
+                >
+                  First Name
+                </Label>
+              </Col>
+              <Col>
+                <Field
+                  id={REGISTER_FORM_FIRST_NAME_KEY}
+                  name={REGISTER_FORM_FIRST_NAME_KEY}
+                  type="text"
+                  component={renderField}
+                  placeholder="Wiley, E"
+                />
+              </Col>
+              <Col xs={labelWidth}>
+                <Label
+                  for={REGISTER_FORM_LAST_NAME_KEY}
+                  className={styles.required}
+                >
+                  Last Name
+                </Label>
+              </Col>
+              <Col>
+                <Field
+                  id={REGISTER_FORM_LAST_NAME_KEY}
+                  name={REGISTER_FORM_LAST_NAME_KEY}
+                  type="text"
+                  component={renderField}
+                  placeholder="Coyote"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
+              <Col xs={labelWidth}>
+                <Label
+                  for={REGISTER_FORM_COMPANY_KEY}
+                  className={styles.required}
+                >
+                  Company
+                </Label>
+              </Col>
+              <Col>
+                <Field
+                  id={REGISTER_FORM_COMPANY_KEY}
+                  name={REGISTER_FORM_COMPANY_KEY}
+                  type="text"
+                  component={renderField}
+                  placeholder="ACME"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
+              <Col xs={labelWidth}>
+                <Label
+                  for={REGISTER_FORM_EMAIL_KEY}
+                  className={styles.required}
+                >
+                  Email
+                </Label>
+              </Col>
+              <Col>
+                <Field
+                  id={REGISTER_FORM_EMAIL_KEY}
+                  name={REGISTER_FORM_EMAIL_KEY}
+                  type="text"
+                  component={renderField}
+                  placeholder="wiley@acme.com"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
+              <Col xs={labelWidth}>
+                <Label for={REGISTER_FORM_PHONE_KEY}>Phone</Label>
+              </Col>
+              <Col>
+                <Field
+                  id={REGISTER_FORM_PHONE_KEY}
+                  name={REGISTER_FORM_PHONE_KEY}
+                  type="text"
+                  component={renderField}
+                  placeholder="403.555.1212"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+          <FormGroup>
+            <Row>
+              <Col>
+                <Button
+                  type="submit"
+                  color={!isSubmitDisabled ? 'primary' : undefined}
+                  disabled={isSubmitDisabled}
+                  className="float-right"
+                >
+                  Submit
+                </Button>
+                <Button
+                  type="reset"
+                  color="link"
+                  disabled={isResetDisabled}
+                  onClick={reset}
+                  className="float-right"
+                >
+                  Reset
+                </Button>
+              </Col>
+            </Row>
+          </FormGroup>
+        </Form>
+      </Container>
     )
   }
 }
