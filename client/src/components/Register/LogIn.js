@@ -5,6 +5,9 @@ import { Col, FormGroup, Input, Label, Row } from 'reactstrap'
 import Register from './Register'
 import SignIn from './SignIn'
 
+const signInValue = 'signIn'
+const registerValue = 'register'
+
 class LogIn extends Component {
   constructor(props) {
     super(props)
@@ -13,9 +16,9 @@ class LogIn extends Component {
     }
   }
 
-  setRegisterMode = registerMode => {
+  setRegisterMode = value => {
     this.setState(() => ({
-      registerMode
+      registerMode: value === registerValue
     }))
   }
 
@@ -28,8 +31,8 @@ class LogIn extends Component {
             <Label check>
               <Input
                 type="radio"
-                name="signIn"
-                onChange={() => this.setRegisterMode(false)}
+                value={signInValue}
+                onChange={e => this.setRegisterMode(e.target.value)}
                 checked={!registerMode}
               />
               &nbsp;Sign In
@@ -39,14 +42,15 @@ class LogIn extends Component {
             <Label check>
               <Input
                 type="radio"
-                name="signIn"
-                onChange={() => this.setRegisterMode(true)}
+                value={registerValue}
+                onChange={e => this.setRegisterMode(e.target.value)}
                 checked={registerMode}
               />
               &nbsp;Register
             </Label>
           </Col>
         </Row>
+        <hr />
         {!registerMode && <SignIn />}
         {registerMode && <Register />}
       </FormGroup>

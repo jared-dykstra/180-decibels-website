@@ -18,6 +18,7 @@ const typeDefs = gql`
       company: String!
       email: String!
       phone: String!
+      password: String!
     ): String!
   }
 `

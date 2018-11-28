@@ -4,6 +4,7 @@ import { Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 
 import styles from './LogIn.module.scss'
 import { labelWidth } from './constants'
+import Buttons from './Buttons'
 
 export default () => (
   <Form className={styles['sign-in']}>
@@ -43,5 +44,8 @@ export default () => (
         </Col>
       </Row>
     </FormGroup>
+    <Buttons
+      {...{ isSubmitDisabled: false, isResetDisabled: true, reset: () => {} }}
+    />
   </Form>
 )

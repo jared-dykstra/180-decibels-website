@@ -43,16 +43,17 @@ const renderSelectField = ({
 
 export default props => {
   // See: https://github.com/reactstrap/reactstrap/issues/707#issuecomment-351593584
-  const { type, ...rest } = props
+  const { type } = props
   switch (type) {
+    case 'password':
     case 'text':
-      return renderTextField(rest)
+      return renderTextField(props)
     // case 'radio':
     //   return renderRadioField(rest)
     // case 'checkbox':
     //   return renderCheckbox(rest)
     case 'select':
-      return renderSelectField(rest)
+      return renderSelectField(props)
     default:
       throw new Error(
         `Unrecognized type: "${type}".  Augment renderField to render the new type`

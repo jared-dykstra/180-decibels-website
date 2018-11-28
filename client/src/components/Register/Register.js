@@ -2,7 +2,7 @@ import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
-import { Button, Col, Container, Form, FormGroup, Label, Row } from 'reactstrap'
+import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
 
 import { actions } from 'redux/userManagement'
 import {
@@ -11,13 +11,16 @@ import {
   REGISTER_FORM_FIRST_NAME_KEY,
   REGISTER_FORM_LAST_NAME_KEY,
   REGISTER_FORM_EMAIL_KEY,
-  REGISTER_FORM_PHONE_KEY
+  REGISTER_FORM_PHONE_KEY,
+  REGISTER_FORM_PASSWORD1_KEY,
+  REGISTER_FORM_PASSWORD2_KEY
 } from 'redux/userManagement/userManagementConstants'
 import { isEmailInUse } from 'redux/userManagement/fetcher'
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'
 import { labelWidth } from './constants'
+import Buttons from './Buttons'
 
 const validate = values => {
   const validateRequired = value =>
@@ -41,12 +44,19 @@ const validate = values => {
     !/^(\+?\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i.test(value)
       ? 'Invalid phone number, must be 10 digits'
       : undefined
+  const validateEqual = (value1, value2) =>
+    value1 && value2 && value1 !== value2 ? 'Must match' : undefined
 
   const company = values.get(REGISTER_FORM_COMPANY_KEY)
   const firstName = values.get(REGISTER_FORM_FIRST_NAME_KEY)
   const lastName = values.get(REGISTER_FORM_LAST_NAME_KEY)
   const email = values.get(REGISTER_FORM_EMAIL_KEY)
   const phone = values.get(REGISTER_FORM_PHONE_KEY)
+  const password1 = values.get(REGISTER_FORM_PASSWORD1_KEY)
+  const password2 = values.get(REGISTER_FORM_PASSWORD2_KEY)
+
+  const minPasswordLength = 8
+
   return {
     [REGISTER_FORM_COMPANY_KEY]:
       validateRequired(company) || validateMinLength(4)(company),
@@ -56,7 +66,15 @@ const validate = values => {
       validateRequired(lastName) || ValidateAlphaNumeric(lastName),
     [REGISTER_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
     [REGISTER_FORM_PHONE_KEY]:
-      validateRequired(phone) || validatePhoneNumber(phone)
+      validateRequired(phone) || validatePhoneNumber(phone),
+    [REGISTER_FORM_PASSWORD1_KEY]:
+      validateRequired(password1) ||
+      validateMinLength(minPasswordLength)(password1) ||
+      validateEqual(password1, password2),
+    [REGISTER_FORM_PASSWORD2_KEY]:
+      validateRequired(password2) ||
+      validateMinLength(minPasswordLength)(password2) ||
+      validateEqual(password1, password2)
   }
 }
 
@@ -186,27 +204,37 @@ class Register extends PureComponent {
         </FormGroup>
         <FormGroup>
           <Row>
+            <Col xs={labelWidth}>
+              <Label
+                for={REGISTER_FORM_PASSWORD1_KEY}
+                className={styles.required}
+              >
+                Password
+              </Label>
+            </Col>
             <Col>
-              <Button
-                type="submit"
-                color={!isSubmitDisabled ? 'primary' : undefined}
-                disabled={isSubmitDisabled}
-                className="float-right"
-              >
-                Submit
-              </Button>
-              <Button
-                type="reset"
-                color="link"
-                disabled={isResetDisabled}
-                onClick={reset}
-                className="float-right"
-              >
-                Reset
-              </Button>
+              <Field
+                id={REGISTER_FORM_PASSWORD1_KEY}
+                name={REGISTER_FORM_PASSWORD1_KEY}
+                type="password"
+                component={renderField}
+                placeholder="new password"
+                autoComplete="new-password"
+              />
+            </Col>
+            <Col>
+              <Field
+                id={REGISTER_FORM_PASSWORD2_KEY}
+                name={REGISTER_FORM_PASSWORD2_KEY}
+                type="password"
+                component={renderField}
+                placeholder="confirm"
+                autoComplete="new-password"
+              />
             </Col>
           </Row>
         </FormGroup>
+        <Buttons {...{ isSubmitDisabled, isResetDisabled, reset }} />
       </Form>
     )
   }
