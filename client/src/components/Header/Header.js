@@ -4,16 +4,17 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Collapse, Nav, Navbar, NavbarToggler, NavItem } from 'reactstrap'
 
-import { isHomePageSelector } from '../../redux/routes/routesSelectors'
+import { Logo } from 'components'
+import { isHomePageSelector } from 'redux/routes/routesSelectors'
 import {
   ROUTE_HOME,
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM
-} from '../../redux/routes/routesConstants'
-
-import { Logo, SocialLinks } from '..'
+} from 'redux/routes/routesConstants'
 
 import styles from './Header.module.scss'
+
+import LoginModal from './LoginModal'
 
 // TODO: Use Redux for state and change to PureComponent
 
@@ -70,9 +71,9 @@ class Header extends Component {
           {isHomePage && <Nav navbar>{navItems}</Nav>}
           <Nav className="ml-auto" navbar>
             {!isHomePage && navItems}
-            <span className="d-none d-md-flex">
-              <SocialLinks />
-            </span>
+            <NavItem>
+              <LoginModal />
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>

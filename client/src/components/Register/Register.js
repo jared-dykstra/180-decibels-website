@@ -15,8 +15,9 @@ import {
 } from 'redux/userManagement/userManagementConstants'
 import { isEmailInUse } from 'redux/userManagement/fetcher'
 
-import styles from './Register.module.scss'
+import styles from './LogIn.module.scss'
 import renderField from './renderField'
+import { labelWidth } from './constants'
 
 const validate = values => {
   const validateRequired = value =>
@@ -81,131 +82,132 @@ class Register extends PureComponent {
     const { handleSubmit, pristine, reset, submitting, register } = this.props
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
-    const labelWidth = 2
     return (
-      <Container fluid className={styles.register}>
-        <Form onSubmit={handleSubmit(register)}>
-          <FormGroup>
-            <Row>
-              <Col xs={labelWidth}>
-                <Label
-                  for={REGISTER_FORM_FIRST_NAME_KEY}
-                  className={styles.required}
-                >
-                  First Name
-                </Label>
-              </Col>
-              <Col>
-                <Field
-                  id={REGISTER_FORM_FIRST_NAME_KEY}
-                  name={REGISTER_FORM_FIRST_NAME_KEY}
-                  type="text"
-                  component={renderField}
-                  placeholder="Wiley, E"
-                />
-              </Col>
-              <Col xs={labelWidth}>
-                <Label
-                  for={REGISTER_FORM_LAST_NAME_KEY}
-                  className={styles.required}
-                >
-                  Last Name
-                </Label>
-              </Col>
-              <Col>
-                <Field
-                  id={REGISTER_FORM_LAST_NAME_KEY}
-                  name={REGISTER_FORM_LAST_NAME_KEY}
-                  type="text"
-                  component={renderField}
-                  placeholder="Coyote"
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup>
-            <Row>
-              <Col xs={labelWidth}>
-                <Label
-                  for={REGISTER_FORM_COMPANY_KEY}
-                  className={styles.required}
-                >
-                  Company
-                </Label>
-              </Col>
-              <Col>
-                <Field
-                  id={REGISTER_FORM_COMPANY_KEY}
-                  name={REGISTER_FORM_COMPANY_KEY}
-                  type="text"
-                  component={renderField}
-                  placeholder="ACME"
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup>
-            <Row>
-              <Col xs={labelWidth}>
-                <Label
-                  for={REGISTER_FORM_EMAIL_KEY}
-                  className={styles.required}
-                >
-                  Email
-                </Label>
-              </Col>
-              <Col>
-                <Field
-                  id={REGISTER_FORM_EMAIL_KEY}
-                  name={REGISTER_FORM_EMAIL_KEY}
-                  type="text"
-                  component={renderField}
-                  placeholder="wiley@acme.com"
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup>
-            <Row>
-              <Col xs={labelWidth}>
-                <Label for={REGISTER_FORM_PHONE_KEY}>Phone</Label>
-              </Col>
-              <Col>
-                <Field
-                  id={REGISTER_FORM_PHONE_KEY}
-                  name={REGISTER_FORM_PHONE_KEY}
-                  type="text"
-                  component={renderField}
-                  placeholder="403.555.1212"
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup>
-            <Row>
-              <Col>
-                <Button
-                  type="submit"
-                  color={!isSubmitDisabled ? 'primary' : undefined}
-                  disabled={isSubmitDisabled}
-                  className="float-right"
-                >
-                  Submit
-                </Button>
-                <Button
-                  type="reset"
-                  color="link"
-                  disabled={isResetDisabled}
-                  onClick={reset}
-                  className="float-right"
-                >
-                  Reset
-                </Button>
-              </Col>
-            </Row>
-          </FormGroup>
-        </Form>
-      </Container>
+      <Form onSubmit={handleSubmit(register)} className={styles.register}>
+        <FormGroup>
+          <Row>
+            <Col xs={labelWidth}>
+              <Label
+                for={REGISTER_FORM_FIRST_NAME_KEY}
+                className={styles.required}
+              >
+                First Name
+              </Label>
+            </Col>
+            <Col>
+              <Field
+                id={REGISTER_FORM_FIRST_NAME_KEY}
+                name={REGISTER_FORM_FIRST_NAME_KEY}
+                type="text"
+                component={renderField}
+                placeholder="Wiley, E"
+                autoComplete="given-name"
+              />
+            </Col>
+            <Col xs={labelWidth}>
+              <Label
+                for={REGISTER_FORM_LAST_NAME_KEY}
+                className={styles.required}
+              >
+                Last Name
+              </Label>
+            </Col>
+            <Col>
+              <Field
+                id={REGISTER_FORM_LAST_NAME_KEY}
+                name={REGISTER_FORM_LAST_NAME_KEY}
+                type="text"
+                component={renderField}
+                placeholder="Coyote"
+                autoComplete="family-name"
+              />
+            </Col>
+          </Row>
+        </FormGroup>
+        <FormGroup>
+          <Row>
+            <Col xs={labelWidth}>
+              <Label
+                for={REGISTER_FORM_COMPANY_KEY}
+                className={styles.required}
+              >
+                Company
+              </Label>
+            </Col>
+            <Col>
+              <Field
+                id={REGISTER_FORM_COMPANY_KEY}
+                name={REGISTER_FORM_COMPANY_KEY}
+                type="text"
+                component={renderField}
+                placeholder="ACME"
+                autoComplete="organization"
+              />
+            </Col>
+          </Row>
+        </FormGroup>
+        <FormGroup>
+          <Row>
+            <Col xs={labelWidth}>
+              <Label for={REGISTER_FORM_EMAIL_KEY} className={styles.required}>
+                Email
+              </Label>
+            </Col>
+            <Col>
+              <Field
+                id={REGISTER_FORM_EMAIL_KEY}
+                name={REGISTER_FORM_EMAIL_KEY}
+                type="text"
+                component={renderField}
+                placeholder="wiley@acme.com"
+                autoComplete="email"
+              />
+            </Col>
+          </Row>
+        </FormGroup>
+        <FormGroup>
+          <Row>
+            <Col xs={labelWidth}>
+              <Label for={REGISTER_FORM_PHONE_KEY} className={styles.required}>
+                Phone
+              </Label>
+            </Col>
+            <Col>
+              <Field
+                id={REGISTER_FORM_PHONE_KEY}
+                name={REGISTER_FORM_PHONE_KEY}
+                type="text"
+                component={renderField}
+                placeholder="403.555.1212"
+                autoComplete="tel"
+              />
+            </Col>
+          </Row>
+        </FormGroup>
+        <FormGroup>
+          <Row>
+            <Col>
+              <Button
+                type="submit"
+                color={!isSubmitDisabled ? 'primary' : undefined}
+                disabled={isSubmitDisabled}
+                className="float-right"
+              >
+                Submit
+              </Button>
+              <Button
+                type="reset"
+                color="link"
+                disabled={isResetDisabled}
+                onClick={reset}
+                className="float-right"
+              >
+                Reset
+              </Button>
+            </Col>
+          </Row>
+        </FormGroup>
+      </Form>
     )
   }
 }
@@ -217,6 +219,9 @@ const ConnectedRegister = connect(
   })
 )(Register)
 
-export default reduxForm({ form: REGISTER_FORM_KEY, validate, asyncValidate })(
-  ConnectedRegister
-)
+export default reduxForm({
+  form: REGISTER_FORM_KEY,
+  validate,
+  asyncValidate,
+  destroyOnUnmount: false
+})(ConnectedRegister)

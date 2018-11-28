@@ -9,4 +9,12 @@
   background-color: $white;
   height: $decibels-footer-height;
   padding: 0;
+
+  li {
+    color: $decibels-light-grey;
+  }
+
+  li a {
+    color: $decibels-light-grey;
+  }
 }

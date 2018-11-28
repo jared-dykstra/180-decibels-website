@@ -11,7 +11,7 @@ import {
   Row
 } from 'reactstrap'
 
-import { Register } from 'components'
+import { LogIn } from 'components'
 import { questionsPropType } from 'propTypes'
 import { questionListSelector } from 'redux/selfAssessment/selfAssessmentSelectors'
 
@@ -102,7 +102,7 @@ class SelfAssessment extends Component {
           start using today!
         </h2>
         <div className={styles.register}>
-          <Register />
+          <LogIn />
         </div>
       </CarouselItem>,
       <CarouselItem
