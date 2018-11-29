@@ -1,20 +1,48 @@
 import path from 'path'
 import express from 'express'
+import Session from 'express-session'
+import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
 import compression from 'compression'
 import { ApolloServer } from 'apollo-server-express'
+import passport from 'passport'
+import config from 'config'
+
+import './auth/passport'
+import auth from './auth/auth'
+
+import user from './user'
 
 import { schema, dataSources } from './api'
 
 export const makeServer = ({ clientRoot }) => {
-  const server = express()
+  const app = express()
+
+  // Setup Session Middleware
+  app.use(
+    Session({
+      secret: config.get('sessionSecret'),
+      resave: true,
+      saveUninitialized: true
+    })
+  )
+
+  // Parse application/x-www-form-urlencoded
+  // app.use(bodyParser.urlencoded({ extended: false }))
+
+  // Allow JSON in POST body
+  // TODO: See if this can be removed--or moved to only the routes that need it
+  app.use(bodyParser.json())
 
   // Use gzip compression for static resources (files, etc)
-  server.use(compression())
+  app.use(compression())
 
-  server.use(favicon(path.join(clientRoot, 'favicon.ico')))
+  app.use(passport.initialize())
+  app.use(passport.session())
 
-  server.get('/robots.txt', (req, res) => {
+  app.use(favicon(path.join(clientRoot, 'favicon.ico')))
+
+  app.get('/robots.txt', (req, res) => {
     res.type('text/plain')
     // TODO: Currently disallowing everything.  Change to "Disallow: " before going live
     res.send('User-agent: *\nDisallow: /')
@@ -24,7 +52,7 @@ export const makeServer = ({ clientRoot }) => {
   const unhashedCacheDuration = isProduction ? 3600 : 0
 
   // serve-static middleware for all files in the clientRoot directory
-  server.use(
+  app.use(
     express.static(clientRoot, {
       index: false,
       immutable: true,
@@ -40,6 +68,9 @@ export const makeServer = ({ clientRoot }) => {
       }
     })
   )
+
+  app.use('/auth', auth)
+  // app.use('/user', passport.authenticate('jwt', { session: false }), user)
 
   // // // API Begin
 
@@ -61,19 +92,19 @@ export const makeServer = ({ clientRoot }) => {
   // TODO: use gzip compression for GraphQL API calls
 
   const apolloServer = new ApolloServer({ schema, dataSources })
-  apolloServer.applyMiddleware({ app: server })
+  apolloServer.applyMiddleware({ app })
 
   // // // API END
 
   // Handles any requests that don't match the ones above, so react-router routes work
   // This includes the bare URL
-  server.get('*', (req, res) => {
+  app.get('*', (req, res) => {
     // TODO: Add ETag generation
     res.sendFile(path.join(clientRoot, 'index.html'))
   })
 
   const port = process.env.PORT || 5000
-  server.listen(port)
+  app.listen(port)
 
   // eslint-disable-next-line no-console
   console.log(`Server is listening on port ${port}`)

@@ -20,13 +20,17 @@
   "markdown.extension.toc.updateOnSave": true,
   "markdown.extension.orderedList.marker": "one",
   "cSpell.words": [
+    "form",
     "gitignore",
     "graphiql",
+    "key",
     "mailto",
     "parallelize",
     "reactstrap",
+    "resave",
     "reselect",
     "retval",
+    "signin",
     "unhashed",
     "unmount"
   ],

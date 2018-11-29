@@ -1,31 +1,26 @@
-import React, { Component } from 'react'
+import Immutable from 'seamless-immutable'
+import React, { PureComponent } from 'react'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
 
 import { LogIn } from 'components'
 
-class LogInModal extends Component {
+class LogInModal extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {
-      isModalOpen: false,
-      registerMode: false
-    }
+    this.state = Immutable.from({
+      isModalOpen: false
+    })
   }
 
-  toggleModal = () => {
-    this.setState(prevState => ({
-      isModalOpen: !prevState.isModalOpen
-    }))
-  }
+  toggleModal = () =>
+    this.setState(prevState =>
+      Immutable.from({
+        isModalOpen: !prevState.isModalOpen
+      })
+    )
 
-  setRegisterMode = registerMode => {
-    this.setState(() => ({
-      registerMode
-    }))
-  }
-
-  render() {
-    const { isModalOpen, registerMode } = this.state
+  render = () => {
+    const { isModalOpen } = this.state
     const signIn = 'Sign In'
     return (
       <div className="nav-link">

@@ -10,21 +10,51 @@ import {
   REGISTER_FORM_LAST_NAME_KEY,
   REGISTER_FORM_EMAIL_KEY,
   REGISTER_FORM_PHONE_KEY,
-  REGISTER_FORM_PASSWORD1_KEY
+  REGISTER_FORM_PASSWORD1_KEY,
+  SIGNIN_FORM_EMAIL_KEY,
+  SIGNIN_FORM_PASSWORD_KEY
 } from 'redux/userManagement/userManagementConstants'
 
 const uri = configGet('apiEndpoint')
+
+export const signIn = async credentials => {
+  // TODO: Switch to GraphQL, if GraphQL can set a cookie/session
+  const response = await fetch('http://localhost:3000/auth/login', {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    body: JSON.stringify({
+      [SIGNIN_FORM_EMAIL_KEY]: credentials.get(SIGNIN_FORM_EMAIL_KEY),
+      [SIGNIN_FORM_PASSWORD_KEY]: credentials.get(SIGNIN_FORM_PASSWORD_KEY)
+    })
+  })
+
+  let data = null
+  try {
+    data = await response.json()
+  } catch (ignore) {
+    // Ignore
+  }
+
+  if (!response.ok) {
+    throw data || `HTTP error, status = ${response.status}`
+  }
+
+  return data
+}
+
+// GraphQL Client
 const httpLink = new HttpLink({ uri })
 const link = ApolloLink.from([httpLink])
-
 const clientExecuteAsync = (l, o) => makePromise(execute(l, o))
 
 // If thrown errors are wrapped with `new Error()`,  the payload isn't available via redux-saga
 // see: https://github.com/erikras/redux-form/issues/2442
 // ...Since apollo-link doesn't throw errors, but includes them in the result, do any error handling in a higher level
 
-export const registerUser = async payload => {
-  const { user } = payload
+export const registerUser = async user => {
   const operation = {
     query: gql`
       mutation RegisterSurveyUser(

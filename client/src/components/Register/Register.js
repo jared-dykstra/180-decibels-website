@@ -1,5 +1,6 @@
 import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
@@ -21,32 +22,18 @@ import styles from './LogIn.module.scss'
 import renderField from './renderField'
 import { labelWidth } from './constants'
 import Buttons from './Buttons'
+import {
+  minCompanyLength,
+  minPasswordLength,
+  validateAlphaNumeric,
+  validateEmail,
+  validateEqual,
+  validateMinLength,
+  validatePhoneNumber,
+  validateRequired
+} from './formValidators'
 
 const validate = values => {
-  const validateRequired = value =>
-    value || typeof value === 'number' ? undefined : 'Required'
-
-  const validateMinLength = min => value =>
-    value && value.length < min
-      ? `Must be ${min} characters or more`
-      : undefined
-
-  const validateEmail = value =>
-    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-      ? 'Invalid email address'
-      : undefined
-  const ValidateAlphaNumeric = value =>
-    value && /[^a-zA-Z0-9 ]/i.test(value)
-      ? 'Punctuation is not permitted'
-      : undefined
-  const validatePhoneNumber = value =>
-    value &&
-    !/^(\+?\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i.test(value)
-      ? 'Invalid phone number, must be 10 digits'
-      : undefined
-  const validateEqual = (value1, value2) =>
-    value1 && value2 && value1 !== value2 ? 'Must match' : undefined
-
   const company = values.get(REGISTER_FORM_COMPANY_KEY)
   const firstName = values.get(REGISTER_FORM_FIRST_NAME_KEY)
   const lastName = values.get(REGISTER_FORM_LAST_NAME_KEY)
@@ -55,15 +42,13 @@ const validate = values => {
   const password1 = values.get(REGISTER_FORM_PASSWORD1_KEY)
   const password2 = values.get(REGISTER_FORM_PASSWORD2_KEY)
 
-  const minPasswordLength = 8
-
   return {
     [REGISTER_FORM_COMPANY_KEY]:
-      validateRequired(company) || validateMinLength(4)(company),
+      validateRequired(company) || validateMinLength(minCompanyLength)(company),
     [REGISTER_FORM_FIRST_NAME_KEY]:
-      validateRequired(firstName) || ValidateAlphaNumeric(firstName),
+      validateRequired(firstName) || validateAlphaNumeric(firstName),
     [REGISTER_FORM_LAST_NAME_KEY]:
-      validateRequired(lastName) || ValidateAlphaNumeric(lastName),
+      validateRequired(lastName) || validateAlphaNumeric(lastName),
     [REGISTER_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
     [REGISTER_FORM_PHONE_KEY]:
       validateRequired(phone) || validatePhoneNumber(phone),
@@ -94,14 +79,17 @@ const asyncValidate = async values => {
 }
 
 class Register extends PureComponent {
-  static propTypes = propTypes
+  static propTypes = {
+    doRegister: PropTypes.func.isRequired,
+    ...propTypes
+  }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, register } = this.props
+    const { handleSubmit, pristine, reset, submitting, doRegister } = this.props
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
-      <Form onSubmit={handleSubmit(register)} className={styles.register}>
+      <Form onSubmit={handleSubmit(doRegister)} className={styles.register}>
         <FormGroup>
           <Row>
             <Col xs={labelWidth}>
@@ -243,7 +231,7 @@ class Register extends PureComponent {
 const ConnectedRegister = connect(
   null,
   dispatch => ({
-    register: values => dispatch(actions.register(values))
+    doRegister: values => dispatch(actions.register(values))
   })
 )(Register)
 
