@@ -1,7 +1,7 @@
 // Adapt the fetcher to redux & redux-form using redux-saga.
 import { get as _get } from 'lodash'
 import { all, call, put, takeLatest } from 'redux-saga/effects'
-import { startSubmit, stopSubmit } from 'redux-form'
+import { clearFields, startSubmit, stopSubmit } from 'redux-form'
 
 import {
   REGISTER_FORM_KEY,
@@ -9,7 +9,9 @@ import {
   USER_MANAGEMENT_REGISTER,
   USER_MANAGEMENT_SIGNIN,
   SIGNIN_FORM_EMAIL_KEY,
-  SIGNIN_FORM_PASSWORD_KEY
+  SIGNIN_FORM_PASSWORD_KEY,
+  REGISTER_FORM_PASSWORD1_KEY,
+  REGISTER_FORM_PASSWORD2_KEY
 } from './userManagementConstants'
 import { signInSuccess } from './userManagementPrivateActions'
 import { signIn, registerUser } from './fetcher'
@@ -40,11 +42,14 @@ function* signInHandler(action) {
     yield put(stopSubmit(SIGNIN_FORM_KEY, {}))
     const { user, token } = response
     yield put(signInSuccess({ user, token }))
+    yield put(
+      clearFields(SIGNIN_FORM_KEY, true, true, SIGNIN_FORM_PASSWORD_KEY)
+    )
   } catch (err) {
     yield put(
       stopSubmit(SIGNIN_FORM_KEY, {
         [SIGNIN_FORM_EMAIL_KEY]: ' ',
-        [SIGNIN_FORM_PASSWORD_KEY]: 'Invalid email or password'
+        [SIGNIN_FORM_PASSWORD_KEY]: err.message
       })
     )
     console.error(`User SignIn Error. err=${JSON.stringify(err)}`)
@@ -59,6 +64,15 @@ function* registerHandler(action) {
     const result = yield call(registerUser, user)
     const validationErrors = getValidationErrors(result)
     yield put(stopSubmit(REGISTER_FORM_KEY, validationErrors || {}))
+    yield put(
+      clearFields(
+        SIGNIN_FORM_KEY,
+        true,
+        true,
+        REGISTER_FORM_PASSWORD1_KEY,
+        REGISTER_FORM_PASSWORD2_KEY
+      )
+    )
   } catch (err) {
     yield put(stopSubmit(REGISTER_FORM_KEY, {}))
     console.error(`User Registration Error. err=${JSON.stringify(err)}`)

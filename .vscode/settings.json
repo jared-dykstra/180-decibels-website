@@ -20,19 +20,23 @@
   "markdown.extension.toc.updateOnSave": true,
   "markdown.extension.orderedList.marker": "one",
   "cSpell.words": [
+    "dropdown",
     "form",
     "gitignore",
     "graphiql",
     "key",
     "mailto",
+    "management",
     "parallelize",
     "reactstrap",
     "resave",
     "reselect",
     "retval",
     "signin",
+    "signout",
     "unhashed",
-    "unmount"
+    "unmount",
+    "user"
   ],
   "cSpell.language": "en"
 }

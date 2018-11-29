@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
     if (err1 || !user) {
       console.log(`Login Attempt user=${JSON.stringify(user)}`)
       res.status(400).json({
-        message: 'Something is not right',
+        message: 'Invalid email or password',
         user
       })
       return

@@ -35,7 +35,7 @@ class LogIn extends Component {
                 onChange={e => this.setRegisterMode(e.target.value)}
                 checked={!registerMode}
               />
-              &nbsp;Sign In
+              &nbsp;Returning User
             </Label>
           </Col>
           <Col>
@@ -46,7 +46,7 @@ class LogIn extends Component {
                 onChange={e => this.setRegisterMode(e.target.value)}
                 checked={registerMode}
               />
-              &nbsp;Register
+              &nbsp;New User
             </Label>
           </Col>
         </Row>
