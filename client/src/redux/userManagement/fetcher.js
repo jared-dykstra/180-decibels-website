@@ -66,13 +66,21 @@ export const registerUser = async user => {
         $password: String!
       ) {
         registerUser(
-          firstName: $firstName
-          lastName: $lastName
-          company: $company
-          email: $email
-          phone: $phone
-          password: $password
-        )
+          user: {
+            firstName: $firstName
+            lastName: $lastName
+            company: $company
+            email: $email
+            phone: $phone
+            password: $password
+          }
+        ) {
+          firstName
+          lastName
+          company
+          email
+          phone
+        }
       }
     `,
     variables: {

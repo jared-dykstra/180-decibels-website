@@ -9,20 +9,7 @@ import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt'
 // const JWTStrategy = passportJWT.Strategy
 // const ExtractJWT = passportJWT.ExtractJwt
 
-const findUser = email => {
-  // TODO: Change to a database call
-  if (email === 'jared.dykstra@gmail.com') {
-    return {
-      firstName: 'Jared',
-      lastName: 'Dykstra',
-      email,
-      tel: '403.837.4544',
-      company: 'Shef Services, Inc'
-    }
-  }
-
-  return null
-}
+import { findUser } from './dbAdapter'
 
 // Configure the local strategy for use by Passport.
 //
@@ -40,7 +27,6 @@ passport.use(
     },
     (req, email, password, cb) => {
       try {
-        console.log('JARED WAS HERE')
         const user = findUser(email)
         if (!user) {
           return cb(null, false, { message: 'Incorrect email or password.' })
@@ -72,12 +58,6 @@ passport.deserializeUser((email, cb) => {
   } catch (err) {
     return cb(err)
   }
-  // db.users.findById(id, (err, user) => {
-  //   if (err) {
-  //     return cb(err)
-  //   }
-  //   cb(null, user)
-  // })
 })
 
 // passport.use(

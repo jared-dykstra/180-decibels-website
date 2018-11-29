@@ -5,18 +5,13 @@ const dsSelector = context => {
 
 export default {
   Query: {
-    isEmailInUse: async (parent, args, context, info) =>
+    isEmailInUse: (parent, args, context, info) =>
       dsSelector(context).isEmailInUse(args),
 
-    getUser: async (parent, args, context, info) => {
-      const user = dsSelector(context).getUser(args)
-      return user
-    }
+    getUser: (parent, args, context, info) => dsSelector(context).getUser(args)
   },
   Mutation: {
-    registerUser: async (parent, args, context, info) => {
-      const result = dsSelector(context).registerUser(args)
-      return result
-    }
+    registerUser: (parent, args, context, info) =>
+      dsSelector(context).registerUser(args)
   }
 }
