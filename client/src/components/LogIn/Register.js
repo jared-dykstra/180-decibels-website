@@ -66,7 +66,7 @@ const validate = values => {
 const asyncValidate = async values => {
   // Values is immutableJS instance
   const email = values.get(REGISTER_FORM_EMAIL_KEY)
-  const isTaken = await isEmailInUse(email)
+  const isTaken = email ? await isEmailInUse(email) : false
 
   const errors = {}
   if (isTaken) {
