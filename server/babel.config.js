@@ -9,5 +9,7 @@ module.exports = {
       }
     ]
   ],
-  plugins: ['macros']
+  plugins: ['macros'],
+  sourceMaps: true,
+  retainLines: true
 }

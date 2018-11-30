@@ -19,7 +19,7 @@ const uri = configGet('apiEndpoint')
 
 export const signIn = async credentials => {
   // TODO: Switch to GraphQL, if GraphQL can set a cookie/session
-  const response = await fetch('http://localhost:3000/auth/login', {
+  const response = await fetch('/auth/login', {
     method: 'POST',
     cache: 'no-cache',
     headers: {

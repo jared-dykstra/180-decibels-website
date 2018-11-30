@@ -18,7 +18,9 @@
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "config": "^3.0.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
     "graphql": "^0.13.2",
     "graphql-tag.macro": "^2.0.0",
@@ -41,6 +43,7 @@
   },
   "scripts": {
     "start": "node build/main.js",
+    "debug": "babel-node src/main.js",
     "build": "babel src -d build -s --copy-files",
     "dev": "nodemon --config nodemon.json ./src/main.js",
     "lint": "eslint --ignore-path ../.gitignore .",

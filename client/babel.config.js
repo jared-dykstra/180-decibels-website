@@ -1,3 +1,5 @@
 module.exports = {
-  presets: ['@babel/preset-react-app']
+  presets: ['@babel/preset-react-app'],
+  sourceMaps: true,
+  retainLines: true
 }

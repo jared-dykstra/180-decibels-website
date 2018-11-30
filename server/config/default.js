@@ -1,4 +1,4 @@
 module.exports = {
-  sessionSecret: 'JaredWasHere',
+  jwtCookieName: 'user-jwt',
   jwtSecret: 'your-jwt-secret'
 }

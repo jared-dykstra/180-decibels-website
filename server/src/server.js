@@ -1,21 +1,20 @@
 import path from 'path'
 import express from 'express'
-import Session from 'express-session'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
+import expressJwt from 'express-jwt'
 import favicon from 'serve-favicon'
 import compression from 'compression'
-import passport from 'passport'
 import config from 'config'
 
-import './auth/passport'
 import auth from './auth/auth'
-
 import { createApi } from './api'
 
 export const makeServer = ({ clientRoot }) => {
   const app = express()
 
+  // Logging middleware
   // morgan.token('graphql-query', req => {
   //   const { operationName } = req.body
   //   return `GRAPHQL: Operation Name: ${operationName}`
@@ -23,27 +22,24 @@ export const makeServer = ({ clientRoot }) => {
   // app.use(morgan(':graphql-query'))
   app.use(morgan('tiny'))
 
-  // Setup Session Middleware
+  app.use(cookieParser())
+  // Allow JSON in POST body - including for GraphQL
+  app.use(bodyParser.json())
+
+  // Sets req.user from the JWT
   app.use(
-    Session({
-      secret: config.get('sessionSecret'),
-      resave: true,
-      saveUninitialized: true
+    expressJwt({
+      secret: config.get('jwtSecret'),
+      credentialsRequired: false,
+      getToken: req => {
+        const jwtCookie = req.cookies[config.get('jwtCookieName')]
+        return jwtCookie
+      }
     })
   )
 
-  // Parse application/x-www-form-urlencoded
-  // app.use(bodyParser.urlencoded({ extended: false }))
-
-  // Allow JSON in POST body
-  // TODO: See if this can be removed--or moved to only the routes that need it
-  app.use(bodyParser.json())
-
   // Use gzip compression for static resources (files, etc)
   app.use(compression())
-
-  app.use(passport.initialize())
-  app.use(passport.session())
 
   app.use(favicon(path.join(clientRoot, 'favicon.ico')))
 

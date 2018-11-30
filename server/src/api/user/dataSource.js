@@ -21,13 +21,12 @@ export default class UserAPI extends DataSource {
   }
 
   async getUser(parent, args, context, info) {
-    console.log(`JARED - TODO: GET user or user ID from context`)
-    const id = 'jared.dykstra@gmail.com'
-    const user = findUser(id)
+    const { user, token } = context
+    // TODO: did express-jwt already validate the token when it parsed the user?  Need a test
     if (user) {
       return {
         user,
-        token: 'TODO: Get JWT Token'
+        token
       }
     }
     throw new Error('User not found')

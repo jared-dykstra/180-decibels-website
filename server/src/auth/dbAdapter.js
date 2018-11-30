@@ -16,6 +16,9 @@ const users = [
 ]
 
 export const findUser = email => {
+  if (!email) {
+    return null
+  }
   const user = _find(users, u => u.email === email)
   return user || null
 }
