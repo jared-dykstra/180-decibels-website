@@ -1,13 +1,9 @@
 // see: https://github.com/passport/express-4.x-local-example/blob/master/server.js
 
+import config from 'config'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt'
-
-// import passportJWT from 'passport-jwt'
-
-// const JWTStrategy = passportJWT.Strategy
-// const ExtractJWT = passportJWT.ExtractJwt
 
 import { findUser } from './dbAdapter'
 
@@ -48,10 +44,12 @@ passport.use(
 // serializing, and querying the user record by ID from the database when
 // deserializing.
 passport.serializeUser((user, cb) => {
+  console.log('JARED - serializeUser')
   cb(null, user.email)
 })
 
 passport.deserializeUser((email, cb) => {
+  console.log('JARED - deserializeUser')
   try {
     const user = findUser(email)
     return cb(null, user)
@@ -60,21 +58,23 @@ passport.deserializeUser((email, cb) => {
   }
 })
 
-// passport.use(
-//   new JWTStrategy(
-//     {
-//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//       secretOrKey: 'your_jwt_secret'
-//     },
-//     (jwtPayload, cb) => {
-//       try {
-//         // find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-//         const email = jwtPayload.id
-//         const user = findUser(email)
-//         cb(null, user)
-//       } catch (err) {
-//         cb(err)
-//       }
-//     }
-//   )
-// )
+passport.use(
+  new JWTStrategy(
+    {
+      // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: () => 'some fake JWT',
+      secretOrKey: config.get('jwtSecret')
+    },
+    (jwtPayload, cb) => {
+      console.log(`JARED: LOOKUP: jwtPayload=${JSON.stringify(jwtPayload)}`)
+      try {
+        // find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+        const email = jwtPayload.id
+        const user = findUser(email)
+        cb(null, user)
+      } catch (err) {
+        cb(err)
+      }
+    }
+  )
+)

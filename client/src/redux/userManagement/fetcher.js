@@ -46,7 +46,11 @@ export const signIn = async credentials => {
 }
 
 // GraphQL Client - See: https://www.apollographql.com/docs/link/index.html#standalone
-const httpLink = new HttpLink({ uri })
+// See this for an example of authenticating via a token in localstore:  https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#middleware
+const httpLink = new HttpLink({
+  uri,
+  credentials: 'same-origin'
+})
 const link = ApolloLink.from([httpLink])
 const clientExecuteAsync = (l, o) => makePromise(execute(l, o))
 

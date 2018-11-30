@@ -2,21 +2,26 @@ import path from 'path'
 import express from 'express'
 import Session from 'express-session'
 import bodyParser from 'body-parser'
+import morgan from 'morgan'
 import favicon from 'serve-favicon'
 import compression from 'compression'
-import { ApolloServer } from 'apollo-server-express'
 import passport from 'passport'
 import config from 'config'
 
 import './auth/passport'
 import auth from './auth/auth'
 
-import user from './user'
-
-import { schema, dataSources } from './api'
+import { createApi } from './api'
 
 export const makeServer = ({ clientRoot }) => {
   const app = express()
+
+  // morgan.token('graphql-query', req => {
+  //   const { operationName } = req.body
+  //   return `GRAPHQL: Operation Name: ${operationName}`
+  // })
+  // app.use(morgan(':graphql-query'))
+  app.use(morgan('tiny'))
 
   // Setup Session Middleware
   app.use(
@@ -73,26 +78,9 @@ export const makeServer = ({ clientRoot }) => {
   // app.use('/user', passport.authenticate('jwt', { session: false }), user)
 
   // // // API Begin
-
-  // // the function that sets up the global context for each resolver, using the req
-  // const context = async ({ req }) =>
-  //   // // simple auth check on every request
-  //   // const auth = (req.headers && req.headers.authorization) || ''
-  //   // const email = new Buffer(auth, 'base64').toString('ascii')
-
-  //   // // if the email isn't formatted validly, return null for user
-  //   // if (!isEmail.validate(email)) return { user: null }
-  //   // // find a user by their email
-  //   // const users = await store.users.findOrCreate({ where: { email } })
-  //   // const user = users && users[0] ? users[0] : null
-
-  //   // return { user: { ...user.dataValues } }
-  //   ({ user: {} })
+  createApi(app, '/graphql')
 
   // TODO: use gzip compression for GraphQL API calls
-
-  const apolloServer = new ApolloServer({ schema, dataSources })
-  apolloServer.applyMiddleware({ app })
 
   // // // API END
 
