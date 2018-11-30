@@ -45,7 +45,7 @@ export const signIn = async credentials => {
   return data
 }
 
-// GraphQL Client
+// GraphQL Client - See: https://www.apollographql.com/docs/link/index.html#standalone
 const httpLink = new HttpLink({ uri })
 const link = ApolloLink.from([httpLink])
 const clientExecuteAsync = (l, o) => makePromise(execute(l, o))
@@ -53,6 +53,28 @@ const clientExecuteAsync = (l, o) => makePromise(execute(l, o))
 // If thrown errors are wrapped with `new Error()`,  the payload isn't available via redux-saga
 // see: https://github.com/erikras/redux-form/issues/2442
 // ...Since apollo-link doesn't throw errors, but includes them in the result, do any error handling in a higher level
+
+export const authenticate = async () => {
+  const operation = {
+    query: gql`
+      query authenticate {
+        authenticate {
+          user {
+            firstName
+            lastName
+            company
+            email
+            phone
+          }
+          token
+        }
+      }
+    `
+  }
+  const retval = await clientExecuteAsync(link, operation)
+  const response = _get(retval, 'data.authenticate')
+  return response || retval
+}
 
 export const registerUser = async user => {
   const operation = {
@@ -75,11 +97,14 @@ export const registerUser = async user => {
             password: $password
           }
         ) {
-          firstName
-          lastName
-          company
-          email
-          phone
+          user {
+            firstName
+            lastName
+            company
+            email
+            phone
+          }
+          token
         }
       }
     `,
@@ -92,10 +117,9 @@ export const registerUser = async user => {
       password: user.get(REGISTER_FORM_PASSWORD1_KEY)
     }
   }
-
-  // See: https://www.apollographql.com/docs/link/index.html#standalone
   const retval = await clientExecuteAsync(link, operation)
-  return retval
+  const response = _get(retval, 'data.registerUser')
+  return response || retval
 }
 
 export const isEmailInUse = async email => {
@@ -109,11 +133,7 @@ export const isEmailInUse = async email => {
       email
     }
   }
-
-  // See: https://www.apollographql.com/docs/link/index.html#standalone
   const retval = await clientExecuteAsync(link, operation)
-
-  const path = 'data.isEmailInUse'
-  const inUse = _get(retval, path)
+  const inUse = _get(retval, 'data.isEmailInUse')
   return inUse
 }

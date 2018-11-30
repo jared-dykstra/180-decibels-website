@@ -10,7 +10,7 @@ const users = [
     email: 'jared.dykstra@gmail.com',
     firstName: 'Jared',
     lastName: 'Dykstra',
-    tel: '403.837.4544',
+    phone: '403.837.4544',
     company: 'Shef Services, Inc'
   }
 ]

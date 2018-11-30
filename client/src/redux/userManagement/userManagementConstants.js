@@ -1,4 +1,5 @@
 // Public Actions
+export const USER_MANAGEMENT_AUTHENTICATE = 'userManagement/authenticate'
 export const USER_MANAGEMENT_SIGNOUT = 'userManagement/signOut'
 export const USER_MANAGEMENT_SIGNIN = 'userManagement/signIn'
 export const USER_MANAGEMENT_REGISTER = 'userManagement/register'

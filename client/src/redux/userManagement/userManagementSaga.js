@@ -1,11 +1,12 @@
 // Adapt the fetcher to redux & redux-form using redux-saga.
-import { get as _get } from 'lodash'
+import { get as _get, isEmpty as _isEmpty } from 'lodash'
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { clearFields, startSubmit, stopSubmit } from 'redux-form'
 
 import {
   REGISTER_FORM_KEY,
   SIGNIN_FORM_KEY,
+  USER_MANAGEMENT_AUTHENTICATE,
   USER_MANAGEMENT_REGISTER,
   USER_MANAGEMENT_SIGNIN,
   SIGNIN_FORM_EMAIL_KEY,
@@ -14,7 +15,7 @@ import {
   REGISTER_FORM_PASSWORD2_KEY
 } from './userManagementConstants'
 import { signInSuccess } from './userManagementPrivateActions'
-import { signIn, registerUser } from './fetcher'
+import { authenticate, signIn, registerUser } from './fetcher'
 
 // Parses a GraphQL response
 const getValidationErrors = response => {
@@ -33,15 +34,24 @@ const getValidationErrors = response => {
   return null
 }
 
+function* authenticateHandler() {
+  try {
+    const response = yield call(authenticate)
+    yield put(signInSuccess(response))
+  } catch (err) {
+    console.warn(`Authentication Error.  err=${JSON.stringify(err)}`)
+  }
+}
+
 function* signInHandler(action) {
   try {
+    console.log('signIn handler')
     yield put(startSubmit(SIGNIN_FORM_KEY))
     const { payload } = action
     const { credentials } = payload
     const response = yield call(signIn, credentials)
     yield put(stopSubmit(SIGNIN_FORM_KEY, {}))
-    const { user, token } = response
-    yield put(signInSuccess({ user, token }))
+    yield put(signInSuccess(response))
     yield put(
       clearFields(SIGNIN_FORM_KEY, true, true, SIGNIN_FORM_PASSWORD_KEY)
     )
@@ -61,9 +71,13 @@ function* registerHandler(action) {
     yield put(startSubmit(REGISTER_FORM_KEY))
     const { payload } = action
     const { user } = payload
-    const result = yield call(registerUser, user)
-    const validationErrors = getValidationErrors(result)
+    const response = yield call(registerUser, user)
+    const validationErrors = getValidationErrors(response)
     yield put(stopSubmit(REGISTER_FORM_KEY, validationErrors || {}))
+    if (_isEmpty(validationErrors)) {
+      console.log(`response=${JSON.stringify(response)}`)
+      yield put(signInSuccess(response))
+    }
     yield put(
       clearFields(
         SIGNIN_FORM_KEY,
@@ -85,6 +99,7 @@ export default function*() {
   // It will be cancelled automatically on component unmount
 
   yield all([
+    takeLatest(USER_MANAGEMENT_AUTHENTICATE, authenticateHandler),
     takeLatest(USER_MANAGEMENT_SIGNIN, signInHandler),
     takeLatest(USER_MANAGEMENT_REGISTER, registerHandler)
   ])

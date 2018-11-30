@@ -7,8 +7,8 @@ export default {
   Query: {
     isEmailInUse: (parent, args, context, info) =>
       dsSelector(context).isEmailInUse(args),
-
-    getUser: (parent, args, context, info) => dsSelector(context).getUser(args)
+    authenticate: (parent, args, context, info) =>
+      dsSelector(context).getUser(parent, args, context, info)
   },
   Mutation: {
     registerUser: (parent, args, context, info) =>

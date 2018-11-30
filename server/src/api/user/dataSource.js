@@ -1,7 +1,7 @@
 // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/datasources/user.js
 import { DataSource } from 'apollo-datasource'
 
-import { addUser } from '../../auth/dbAdapter'
+import { addUser, findUser } from '../../auth/dbAdapter'
 
 /* eslint-disable class-methods-use-this */
 export default class UserAPI extends DataSource {
@@ -23,15 +23,26 @@ export default class UserAPI extends DataSource {
     return false
   }
 
-  async getUser(user) {
-    const { id } = user
-    console.log(`JARED - TODO: GET USER id=${id}`)
+  async getUser(parent, args, context, info) {
+    console.log(`JARED - TODO: GET user or user ID from context`)
+    const id = 'jared.dykstra@gmail.com'
+    const user = findUser(id)
+    if (user) {
+      return {
+        user,
+        token: 'TODO: Get JWT Token'
+      }
+    }
     throw new Error('User not found')
   }
 
   async registerUser({ user }) {
     const result = await addUser(user)
     const { password, ...rest } = result
-    return rest
+    console.log(`registerUser rest=${JSON.stringify(rest)}`)
+    return {
+      user: rest,
+      token: 'TODO: Get JWT Token'
+    }
   }
 }

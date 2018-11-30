@@ -1,4 +1,5 @@
 import {
+  USER_MANAGEMENT_AUTHENTICATE,
   USER_MANAGEMENT_SIGNOUT,
   USER_MANAGEMENT_SIGNIN,
   USER_MANAGEMENT_REGISTER,
@@ -13,6 +14,11 @@ export const openDialog = () => ({
 
 export const closeDialog = () => ({
   type: USER_MANAGEMENT_CLOSE_SIGNIN_MODAL,
+  payload: {}
+})
+
+export const authenticate = () => ({
+  type: USER_MANAGEMENT_AUTHENTICATE,
   payload: {}
 })
 

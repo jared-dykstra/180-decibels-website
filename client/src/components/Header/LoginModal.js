@@ -21,6 +21,7 @@ import {
 import {
   closeDialog,
   openDialog,
+  authenticate,
   signOut
 } from 'redux/userManagement/userManagementActions'
 
@@ -31,6 +32,7 @@ class LogInModal extends PureComponent {
     isModalOpen: PropTypes.bool.isRequired,
     doCloseDialog: PropTypes.func.isRequired,
     doOpenDialog: PropTypes.func.isRequired,
+    doAuthenticate: PropTypes.func.isRequired,
     doSignOut: PropTypes.func.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
     name: PropTypes.string
@@ -45,6 +47,12 @@ class LogInModal extends PureComponent {
     this.state = Immutable.from({
       menuOpen: false
     })
+  }
+
+  componentDidMount = () => {
+    // Trigger an automatic authentication attempt when the page loads
+    const { doAuthenticate } = this.props
+    doAuthenticate(null)
   }
 
   toggleModal = () => {
@@ -66,14 +74,14 @@ class LogInModal extends PureComponent {
 
   renderSignInButton = () => {
     const { isModalOpen } = this.props
-    const signIn = 'Sign In'
+    const signInText = 'Sign In'
     return (
       <div className="nav-link">
         <Button color="primary" onClick={this.toggleModal}>
-          {signIn}
+          {signInText}
         </Button>
         <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>{signIn}</ModalHeader>
+          <ModalHeader toggle={this.toggleModal}>{signInText}</ModalHeader>
           <ModalBody>
             <LogIn />
           </ModalBody>
@@ -112,6 +120,7 @@ export default connect(
   dispatch => ({
     doCloseDialog: () => dispatch(closeDialog()),
     doOpenDialog: () => dispatch(openDialog()),
+    doAuthenticate: () => dispatch(authenticate()),
     doSignOut: () => dispatch(signOut())
   })
 )(LogInModal)

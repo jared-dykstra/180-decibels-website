@@ -14,6 +14,11 @@ const typeDefs = gql`
     phone: String!
   }
 
+  type AuthResponse {
+    user: User!
+    token: String!
+  }
+
   input UserInput {
     firstName: String!
     lastName: String!
@@ -24,12 +29,12 @@ const typeDefs = gql`
   }
 
   type Query {
+    authenticate: AuthResponse!
     isEmailInUse(email: String!): Boolean!
-    getUser(id: ID!): User!
   }
 
   type Mutation {
-    registerUser(user: UserInput!): User!
+    registerUser(user: UserInput!): AuthResponse!
   }
 `
 
