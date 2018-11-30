@@ -71,8 +71,8 @@ class Header extends Component {
           {isHomePage && <Nav navbar>{navItems}</Nav>}
           <Nav className="ml-auto" navbar>
             {!isHomePage && navItems}
-            <NavItem>
-              <LoginModal />
+            <NavItem className={styles.login}>
+              <LoginModal className="float-right" />
             </NavItem>
           </Nav>
         </Collapse>

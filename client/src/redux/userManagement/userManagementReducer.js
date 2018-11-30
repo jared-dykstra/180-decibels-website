@@ -1,5 +1,6 @@
 import initialState from './userManagementInitialState'
 import {
+  USER_MANAGEMENT_AUTHENTICATE,
   USER_MANAGEMENT_SIGNIN_SUCCESS,
   USER_MANAGEMENT_OPEN_SIGNIN_MODAL,
   USER_MANAGEMENT_CLOSE_SIGNIN_MODAL,
@@ -9,6 +10,10 @@ import {
 // Does nothing
 export default (state = initialState, action) => {
   switch (action.type) {
+    case USER_MANAGEMENT_AUTHENTICATE: {
+      return state.setIn(['isAuthenticating'], true)
+    }
+
     case USER_MANAGEMENT_OPEN_SIGNIN_MODAL: {
       return state.setIn(['signInModalIsOpen'], true)
     }
@@ -31,6 +36,7 @@ export default (state = initialState, action) => {
         .setIn(['user'], user)
         .setIn(['token'], token)
         .setIn(['signInModalIsOpen'], false)
+        .setIn(['isAuthenticating'], false)
     }
     default:
       return state

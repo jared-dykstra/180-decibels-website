@@ -14,6 +14,11 @@ const userSelector = createSelector(
   userManagement => userManagement.user
 )
 
+export const isAuthenticatingSelector = createSelector(
+  userManagementSelector,
+  userManagement => userManagement.isAuthenticating
+)
+
 export const isSignedInSelector = createSelector(
   userSelector,
   user => !!user

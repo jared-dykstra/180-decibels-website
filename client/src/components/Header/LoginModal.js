@@ -14,6 +14,7 @@ import {
 } from 'reactstrap'
 
 import {
+  isAuthenticatingSelector,
   signInModalIsOpenSelector,
   isSignedInSelector,
   nameSelector
@@ -29,6 +30,8 @@ import { LogIn } from 'components'
 
 class LogInModal extends PureComponent {
   static propTypes = {
+    className: PropTypes.string,
+    isAuthenticating: PropTypes.bool.isRequired,
     isModalOpen: PropTypes.bool.isRequired,
     doCloseDialog: PropTypes.func.isRequired,
     doOpenDialog: PropTypes.func.isRequired,
@@ -39,20 +42,17 @@ class LogInModal extends PureComponent {
   }
 
   static defaultProps = {
-    name: null
+    name: null,
+    className: undefined
   }
 
   constructor(props) {
     super(props)
+    const { doAuthenticate } = props
+    doAuthenticate(null)
     this.state = Immutable.from({
       menuOpen: false
     })
-  }
-
-  componentDidMount = () => {
-    // Trigger an automatic authentication attempt when the page loads
-    const { doAuthenticate } = this.props
-    doAuthenticate(null)
   }
 
   toggleModal = () => {
@@ -76,7 +76,7 @@ class LogInModal extends PureComponent {
     const { isModalOpen } = this.props
     const signInText = 'Sign In'
     return (
-      <div className="nav-link">
+      <div>
         <Button color="primary" onClick={this.toggleModal}>
           {signInText}
         </Button>
@@ -98,7 +98,9 @@ class LogInModal extends PureComponent {
         <DropdownToggle tag="a" className="nav-link" caret>
           {name}
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu right>
+          <DropdownItem disabled>Change Password</DropdownItem>
+          <DropdownItem divider />
           <DropdownItem onClick={doSignOut}>Sign Out</DropdownItem>
         </DropdownMenu>
       </Dropdown>
@@ -106,13 +108,20 @@ class LogInModal extends PureComponent {
   }
 
   render = () => {
-    const { isSignedIn } = this.props
-    return isSignedIn ? this.renderUserButton() : this.renderSignInButton()
+    const { isAuthenticating, isSignedIn, className } = this.props
+    // During the authentication process, it's unclear whether to display a login button or not, so display nothing
+    return (
+      <div className={className}>
+        {!isAuthenticating &&
+          (isSignedIn ? this.renderUserButton() : this.renderSignInButton())}
+      </div>
+    )
   }
 }
 
 export default connect(
   (state /* , ownProps */) => ({
+    isAuthenticating: isAuthenticatingSelector(state),
     isModalOpen: signInModalIsOpenSelector(state),
     isSignedIn: isSignedInSelector(state),
     name: nameSelector(state)
