@@ -83,16 +83,16 @@ function* registerHandler(action) {
     yield put(stopSubmit(REGISTER_FORM_KEY, validationErrors || {}))
     if (_isEmpty(validationErrors)) {
       yield put(signInSuccess(response))
-    }
-    yield put(
-      clearFields(
-        SIGNIN_FORM_KEY,
-        true,
-        true,
-        REGISTER_FORM_PASSWORD1_KEY,
-        REGISTER_FORM_PASSWORD2_KEY
+      yield put(
+        clearFields(
+          REGISTER_FORM_KEY,
+          true,
+          true,
+          REGISTER_FORM_PASSWORD1_KEY,
+          REGISTER_FORM_PASSWORD2_KEY
+        )
       )
-    )
+    }
   } catch (err) {
     yield put(stopSubmit(REGISTER_FORM_KEY, {}))
     console.error(`User Registration Error. err=${JSON.stringify(err)}`)
