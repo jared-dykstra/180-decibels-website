@@ -45,7 +45,6 @@ function* authenticateHandler() {
 
 function* signInHandler(action) {
   try {
-    console.log('signIn handler')
     yield put(startSubmit(SIGNIN_FORM_KEY))
     const { payload } = action
     const { credentials } = payload
@@ -75,7 +74,6 @@ function* registerHandler(action) {
     const validationErrors = getValidationErrors(response)
     yield put(stopSubmit(REGISTER_FORM_KEY, validationErrors || {}))
     if (_isEmpty(validationErrors)) {
-      console.log(`response=${JSON.stringify(response)}`)
       yield put(signInSuccess(response))
     }
     yield put(

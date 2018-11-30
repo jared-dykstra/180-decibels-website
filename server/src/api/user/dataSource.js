@@ -15,12 +15,9 @@ export default class UserAPI extends DataSource {
   }
 
   async isEmailInUse({ email }) {
-    // TODO: Not implemented
-    if (email.endsWith('bar.com')) {
-      return true
-    }
-
-    return false
+    // If a user is found, the email is in use
+    const user = findUser(email)
+    return !!user
   }
 
   async getUser(parent, args, context, info) {
@@ -39,7 +36,6 @@ export default class UserAPI extends DataSource {
   async registerUser({ user }) {
     const result = await addUser(user)
     const { password, ...rest } = result
-    console.log(`registerUser rest=${JSON.stringify(rest)}`)
     return {
       user: rest,
       token: 'TODO: Get JWT Token'
