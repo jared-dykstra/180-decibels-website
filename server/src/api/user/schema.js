@@ -29,12 +29,12 @@ const typeDefs = gql`
   }
 
   type Query {
-    authenticate: AuthResponse!
+    authenticate: AuthResponse! @cacheControl(scope: PRIVATE)
     isEmailInUse(email: String!): Boolean!
   }
 
   type Mutation {
-    registerUser(user: UserInput!): AuthResponse!
+    registerUser(user: UserInput!): AuthResponse! @cacheControl(scope: PRIVATE)
   }
 `
 

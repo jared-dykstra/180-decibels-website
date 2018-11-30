@@ -36,6 +36,10 @@ export const createApi = (app, path) => {
   const apolloServer = new ApolloServer({
     schema,
     dataSources,
+    tracing: true,
+    cacheControl: {
+      defaultMaxAge: 5 // <-- Seconds
+    },
     context: ({ req }) => ({
       // Use the user which has already been parsed by express-jwt middleware
       user: req.user,

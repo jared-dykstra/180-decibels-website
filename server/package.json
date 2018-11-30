@@ -13,7 +13,6 @@
   "private": true,
   "dependencies": {
     "apollo-datasource": "^0.2.1",
-    "apollo-server": "^2.2.3",
     "apollo-server-express": "^2.2.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
@@ -21,16 +20,12 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
-    "express-session": "^1.15.6",
     "graphql": "^0.13.2",
     "graphql-tag.macro": "^2.0.0",
     "graphql-tools": "^4.0.3",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {

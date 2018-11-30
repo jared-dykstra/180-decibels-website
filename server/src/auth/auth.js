@@ -1,5 +1,3 @@
-// See: https://medium.com/front-end-hacking/learn-using-jwt-with-passport-authentication-9761539c4314
-
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import config from 'config'
@@ -41,11 +39,12 @@ router.post('/login', (req, res, next) => {
   // )
   // // .decode() does not require a public key--but the signature is not verified
   // console.log(`decoded: ${JSON.stringify(jwt.decode(token))}`)
-  // res.cookie(config.get('jwtCookieName'), token, {
-  //   maxAge: authDuration,
-  //   httpOnly: true
-  //   // httpOnly: false // <-- Allow the cookie to be accessed via javascript
-  // })
+
+  res.cookie(config.get('jwtCookieName'), token, {
+    maxAge: authDuration,
+    httpOnly: true
+    // httpOnly: false // <-- Allow the cookie to be accessed via javascript
+  })
   res.json({ user, token })
 })
 

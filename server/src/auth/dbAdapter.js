@@ -1,7 +1,7 @@
 // TODO: This get replaced with a proper DB
 
 import { find as _find } from 'lodash'
-import { UserInputError } from 'apollo-server'
+import { UserInputError } from 'apollo-server-express'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
