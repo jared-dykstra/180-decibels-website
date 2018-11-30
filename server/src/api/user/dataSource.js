@@ -1,4 +1,5 @@
 import config from 'config'
+import { compare } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { DataSource } from 'apollo-datasource'
 import { UserInputError } from 'apollo-server-express'
@@ -53,7 +54,7 @@ export default class UserAPI extends DataSource {
    */
   async isEmailInUse({ email }) {
     // If a user is found, the email is in use
-    const user = findUser(email)
+    const { user } = findUser(email)
     return !!user
   }
 
@@ -76,21 +77,30 @@ export default class UserAPI extends DataSource {
    * If the response `res` is available in the context, the new token is also set as a cookie
    */
   async signIn(args, context) {
-    const { email /* , password */ } = args
+    const { email, password } = args
     const { res } = context
-    const user = findUser(email)
+    const { user, hashedPassword } = findUser(email)
 
     const errorMessage = 'Invalid email or password'
 
+    // Does the user exist?
     if (!user) {
-      // throw new Error(errorMessage)
+      console.warn('signIn: user not found')
       throw new UserInputError(errorMessage, {
         invalidArgs: ['password', 'email']
       })
     }
 
-    // TODO: Validate hashed/salted password
+    // Validate hashed/salted password
+    const isPasswordOK = await compare(password, hashedPassword)
+    if (!isPasswordOK) {
+      console.warn('signIn: bad password')
+      throw new UserInputError(errorMessage, {
+        invalidArgs: ['password', 'email']
+      })
+    }
 
+    // Everything is OK
     const token = getAndSetToken({ user, res })
     return {
       user,
