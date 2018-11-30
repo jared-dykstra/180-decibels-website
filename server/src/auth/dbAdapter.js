@@ -26,6 +26,7 @@ export const findUser = email => {
 export const addUser = async user => {
   const { email } = user
 
+  // eslint-disable-next-line no-console
   console.log(`JARED - TODO: REGISTER USER.  user=${JSON.stringify(user)}`)
   await sleep(100)
 

@@ -76,7 +76,7 @@ export default class UserAPI extends DataSource {
    * If the response `res` is available in the context, the new token is also set as a cookie
    */
   async signIn(args, context) {
-    const { email, password } = args
+    const { email /* , password */ } = args
     const { res } = context
     const user = findUser(email)
 

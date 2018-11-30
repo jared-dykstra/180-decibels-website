@@ -37,6 +37,8 @@ const getValidationErrors = response => {
   return null
 }
 
+/* eslint-disable no-console */
+
 function* authenticateHandler() {
   try {
     const response = yield call(authenticate)
@@ -96,6 +98,8 @@ function* registerHandler(action) {
     console.error(`User Registration Error. err=${JSON.stringify(err)}`)
   }
 }
+
+/* eslint-enable no-console */
 
 export default function*() {
   // By using `takeLatest` only the result of the latest API call is applied.
