@@ -12,6 +12,8 @@ import {
   ModalHeader,
   ModalBody
 } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 import {
   isAuthenticatingSelector,
@@ -27,6 +29,8 @@ import {
 } from 'redux/userManagement/userManagementActions'
 
 import { LogIn } from 'components'
+
+import styles from './LogInModal.module.scss'
 
 class LogInModal extends PureComponent {
   static propTypes = {
@@ -78,6 +82,8 @@ class LogInModal extends PureComponent {
     return (
       <div>
         <Button color="primary" onClick={this.toggleModal}>
+          <FontAwesomeIcon icon={faUser} />
+          &nbsp;
           {signInText}
         </Button>
         <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
@@ -94,9 +100,15 @@ class LogInModal extends PureComponent {
     const { name, doSignOut } = this.props
     const { dropdownOpen } = this.state
     return (
-      <Dropdown isOpen={dropdownOpen} toggle={this.toggleMenu} inNavbar>
+      <Dropdown
+        isOpen={dropdownOpen}
+        toggle={this.toggleMenu}
+        inNavbar
+        className={styles['profile-button']}
+      >
         <DropdownToggle tag="a" className="nav-link" caret>
-          {name}
+          <FontAwesomeIcon icon={faUser} />
+          &nbsp;{name}
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem disabled>Change Password</DropdownItem>

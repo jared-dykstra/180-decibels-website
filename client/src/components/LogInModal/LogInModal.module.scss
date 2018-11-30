@@ -1,0 +1,13 @@
+@import '~styles/custom';
+
+.profile-button {
+  border: 1px solid $decibels-red;
+  border-radius: 4px; // <-- copied $border-radius-base
+
+  a {
+    font-size: 1rem; // <-- copied from .btn
+    line-height: 1.5; // <-- copied from .btn
+    padding-bottom: 6px;
+    padding-top: 6px;
+  }
+}

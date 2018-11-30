@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Collapse, Nav, Navbar, NavbarToggler, NavItem } from 'reactstrap'
 
-import { Logo } from 'components'
+import { LogInModal, Logo } from 'components'
 import { isHomePageSelector } from 'redux/routes/routesSelectors'
 import {
   ROUTE_HOME,
@@ -13,10 +13,6 @@ import {
 } from 'redux/routes/routesConstants'
 
 import styles from './Header.module.scss'
-
-import LoginModal from './LoginModal'
-
-// TODO: Use Redux for state and change to PureComponent
 
 class Header extends Component {
   static propTypes = {
@@ -72,7 +68,7 @@ class Header extends Component {
           <Nav className="ml-auto" navbar>
             {!isHomePage && navItems}
             <NavItem className={styles.login}>
-              <LoginModal className="float-right" />
+              <LogInModal className="float-right" />
             </NavItem>
           </Nav>
         </Collapse>
