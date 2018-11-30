@@ -1,4 +1,4 @@
-// TODO: This get replaced with a proper DB
+// TODO: This gets replaced with a proper DB
 
 import { find as _find } from 'lodash'
 import { UserInputError } from 'apollo-server-express'
@@ -30,12 +30,15 @@ export const addUser = async user => {
   await sleep(100)
 
   // Temporary Test of validation logic -- replace with logic if email has already been registered
-  if (email.endsWith('hotmail.com')) {
+  if (findUser(email)) {
     throw new UserInputError('Hotmail is not accepted here', {
       invalidArgs: ['email']
     })
   }
 
   users.push(user)
-  return user
+
+  // Exclude the password from the return value
+  const { password, ...rest } = user
+  return rest
 }

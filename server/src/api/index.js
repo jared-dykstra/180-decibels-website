@@ -40,11 +40,18 @@ export const createApi = (app, path) => {
     cacheControl: {
       defaultMaxAge: 5 // <-- Seconds
     },
-    context: ({ req }) => ({
-      // Use the user which has already been parsed by express-jwt middleware
-      user: req.user,
-      token: req.cookies[config.get('jwtCookieName')]
-    })
+    context: args => {
+      const { req, res } = args
+      // For now the token will be supplied via a cookie.  It the future, it could also come from an authorization header
+      const token = req.cookies[config.get('jwtCookieName')]
+      return {
+        // Use the user which has already been parsed by express-jwt middleware
+        user: req.user,
+        token,
+        req,
+        res
+      }
+    }
   })
   apolloServer.applyMiddleware({ app, path })
 }

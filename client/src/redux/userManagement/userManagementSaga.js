@@ -29,6 +29,9 @@ const getValidationErrors = response => {
         const errors = { [field]: firstError.message }
         return errors
       }
+    } else {
+      // Error cannot be associated with a specific user-input field.  Just return the first error as a string
+      return firstError.message
     }
   }
   return null
@@ -49,11 +52,14 @@ function* signInHandler(action) {
     const { payload } = action
     const { credentials } = payload
     const response = yield call(signIn, credentials)
-    yield put(stopSubmit(SIGNIN_FORM_KEY, {}))
-    yield put(signInSuccess(response))
-    yield put(
-      clearFields(SIGNIN_FORM_KEY, true, true, SIGNIN_FORM_PASSWORD_KEY)
-    )
+    const validationErrors = getValidationErrors(response)
+    yield put(stopSubmit(SIGNIN_FORM_KEY, validationErrors || {}))
+    if (_isEmpty(validationErrors)) {
+      yield put(signInSuccess(response))
+      yield put(
+        clearFields(SIGNIN_FORM_KEY, true, true, SIGNIN_FORM_PASSWORD_KEY)
+      )
+    }
   } catch (err) {
     yield put(
       stopSubmit(SIGNIN_FORM_KEY, {

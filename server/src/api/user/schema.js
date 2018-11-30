@@ -14,7 +14,7 @@ const typeDefs = gql`
     phone: String!
   }
 
-  type AuthResponse {
+  type AuthResponse @cacheControl(scope: PRIVATE) {
     user: User!
     token: String!
   }
@@ -28,13 +28,19 @@ const typeDefs = gql`
     password: String!
   }
 
+  input SignInInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
-    authenticate: AuthResponse! @cacheControl(scope: PRIVATE)
+    authenticate: AuthResponse!
     isEmailInUse(email: String!): Boolean!
   }
 
   type Mutation {
-    registerUser(user: UserInput!): AuthResponse! @cacheControl(scope: PRIVATE)
+    signIn(email: String!, password: String!): AuthResponse!
+    registerUser(user: UserInput!): AuthResponse!
   }
 `
 

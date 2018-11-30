@@ -8,21 +8,17 @@ import favicon from 'serve-favicon'
 import compression from 'compression'
 import config from 'config'
 
-import auth from './auth/auth'
 import { createApi } from './api'
 
 export const makeServer = ({ clientRoot }) => {
   const app = express()
 
   // Logging middleware
-  // morgan.token('graphql-query', req => {
-  //   const { operationName } = req.body
-  //   return `GRAPHQL: Operation Name: ${operationName}`
-  // })
-  // app.use(morgan(':graphql-query'))
   app.use(morgan('tiny'))
 
+  // We're using a cookie-based authentication mechanism
   app.use(cookieParser())
+
   // Allow JSON in POST body - including for GraphQL
   app.use(bodyParser.json())
 
@@ -70,15 +66,8 @@ export const makeServer = ({ clientRoot }) => {
     })
   )
 
-  app.use('/auth', auth)
-  // app.use('/user', passport.authenticate('jwt', { session: false }), user)
-
-  // // // API Begin
+  // API
   createApi(app, '/graphql')
-
-  // TODO: use gzip compression for GraphQL API calls
-
-  // // // API END
 
   // Handles any requests that don't match the ones above, so react-router routes work
   // This includes the bare URL

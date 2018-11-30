@@ -17,34 +17,6 @@ import {
 
 const uri = configGet('apiEndpoint')
 
-export const signIn = async credentials => {
-  // TODO: Switch to GraphQL, if GraphQL can set a cookie/session
-  const response = await fetch('/auth/login', {
-    method: 'POST',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify({
-      [SIGNIN_FORM_EMAIL_KEY]: credentials.get(SIGNIN_FORM_EMAIL_KEY),
-      [SIGNIN_FORM_PASSWORD_KEY]: credentials.get(SIGNIN_FORM_PASSWORD_KEY)
-    })
-  })
-
-  let data = null
-  try {
-    data = await response.json()
-  } catch (ignore) {
-    // Ignore
-  }
-
-  if (!response.ok) {
-    throw data || `HTTP error, status = ${response.status}`
-  }
-
-  return data
-}
-
 // GraphQL Client - See: https://www.apollographql.com/docs/link/index.html#standalone
 // See this for an example of authenticating via a token in localstore:  https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#middleware
 const httpLink = new HttpLink({
@@ -57,6 +29,32 @@ const clientExecuteAsync = (l, o) => makePromise(execute(l, o))
 // If thrown errors are wrapped with `new Error()`,  the payload isn't available via redux-saga
 // see: https://github.com/erikras/redux-form/issues/2442
 // ...Since apollo-link doesn't throw errors, but includes them in the result, do any error handling in a higher level
+
+export const signIn = async credentials => {
+  const operation = {
+    query: gql`
+      mutation signIn($email: String!, $password: String!) {
+        signIn(email: $email, password: $password) {
+          user {
+            firstName
+            lastName
+            company
+            email
+            phone
+          }
+          token
+        }
+      }
+    `,
+    variables: {
+      [SIGNIN_FORM_EMAIL_KEY]: credentials.get(SIGNIN_FORM_EMAIL_KEY),
+      [SIGNIN_FORM_PASSWORD_KEY]: credentials.get(SIGNIN_FORM_PASSWORD_KEY)
+    }
+  }
+  const retval = await clientExecuteAsync(link, operation)
+  const response = _get(retval, 'data.signIn')
+  return response || retval
+}
 
 export const authenticate = async () => {
   const operation = {
