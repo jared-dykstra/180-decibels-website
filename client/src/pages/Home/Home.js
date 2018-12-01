@@ -4,14 +4,10 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Button } from 'reactstrap'
 
-import {
-  ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM
-} from '../../redux/routes/routesConstants'
+import { Logo, Template } from 'components'
+import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
 import styles from './Home.module.scss'
-
-import { Logo, Template } from '../../components'
 
 const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <Template className={styles.home}>
@@ -44,12 +40,6 @@ const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
         Discover how 180 Decibels can help you
       </Button>
     </section>
-    {/*
-      <section>
-        <h2>Organizations using 180 Decibels</h2>
-        <Carousel />
-      </section>
-    */}
   </Template>
 )
 

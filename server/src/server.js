@@ -1,19 +1,41 @@
-const path = require('path')
-const restify = require('restify')
-const favicon = require('serve-favicon')
-const compression = require('compression')
-const serveStatic = require('serve-static')
-const graphqlHTTP = require('express-graphql')
+import path from 'path'
+import express from 'express'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
+import expressJwt from 'express-jwt'
+import favicon from 'serve-favicon'
+import compression from 'compression'
+import config from 'config'
 
-const apiSchema = require('./apiSchema')
+import { createApi } from './api'
 
-const server = ({ clientRoot }) => {
-  const app = restify.createServer()
+export const makeServer = ({ clientRoot }) => {
+  const app = express()
+
+  // Logging middleware
+  app.use(morgan('tiny'))
+
+  // We're using a cookie-based authentication mechanism
+  app.use(cookieParser())
+
+  // Allow JSON in POST body - including for GraphQL
+  app.use(bodyParser.json())
+
+  // Sets req.user from the JWT
+  app.use(
+    expressJwt({
+      secret: config.get('jwtSecret'),
+      credentialsRequired: false,
+      getToken: req => {
+        const jwtCookie = req.cookies[config.get('jwtCookieName')]
+        return jwtCookie
+      }
+    })
+  )
 
   // Use gzip compression for static resources (files, etc)
   app.use(compression())
-  // use gzip compression for GraphQL API calls
-  app.use(restify.plugins.gzipResponse())
 
   app.use(favicon(path.join(clientRoot, 'favicon.ico')))
 
@@ -28,7 +50,7 @@ const server = ({ clientRoot }) => {
 
   // serve-static middleware for all files in the clientRoot directory
   app.use(
-    serveStatic(clientRoot, {
+    express.static(clientRoot, {
       index: false,
       immutable: true,
       maxAge: 31536000000, // <== serve-static accepts 'ms' and converts it to 's' for Cache-Control
@@ -44,33 +66,15 @@ const server = ({ clientRoot }) => {
     })
   )
 
-  // GraphQL API
-  app.post(
-    '/api',
-    graphqlHTTP({
-      schema: apiSchema,
-      graphiql: false
-    })
-  )
-  app.get(
-    '/api',
-    graphqlHTTP({
-      schema: apiSchema,
-      graphiql: true
-    })
-  )
+  // API
+  createApi(app, '/graphql')
 
   // Handles any requests that don't match the ones above, so react-router routes work
   // This includes the bare URL
-  app.get(
-    '*',
-    // TODO: restify.plugins.serveStatic is not generating an ETag header
-    restify.plugins.serveStatic({
-      directory: clientRoot,
-      file: 'index.html',
-      maxAge: unhashedCacheDuration
-    })
-  )
+  app.get('*', (req, res) => {
+    // TODO: Add ETag generation
+    res.sendFile(path.join(clientRoot, 'index.html'))
+  })
 
   const port = process.env.PORT || 5000
   app.listen(port)
@@ -78,5 +82,3 @@ const server = ({ clientRoot }) => {
   // eslint-disable-next-line no-console
   console.log(`Server is listening on port ${port}`)
 }
-
-module.exports = server

@@ -17,6 +17,18 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug Server",
+      "cwd": "${workspaceFolder}/server",
+      "program": "${workspaceFolder}/server/src/main.js",
+      "runtimeExecutable": "${workspaceFolder}/server/node_modules/.bin/babel-node",
+      "runtimeArgs": ["--nolazy"],
+      "env": {
+        "NODE_ENV": "debug"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Jest All",
       "program": "${workspaceFolder}/node_modules/.bin/jest",
       "args": ["--runInBand"],

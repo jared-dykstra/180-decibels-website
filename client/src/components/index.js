@@ -1,5 +1,7 @@
 export { default as Header } from './Header/Header'
 export { default as Footer } from './Footer/Footer'
+export { default as LogIn } from './LogIn/LogIn'
+export { default as LogInModal } from './LogInModal/LogInModal'
 export { default as Logo } from './Logo/Logo'
 export { default as SelfAssessment } from './SelfAssessment/SelfAssessment'
 export { default as ScrollToTop } from './ScrollToTop/ScrollToTop'

@@ -4,12 +4,12 @@
   .carousel-inner {
     // See: https://github.com/reactstrap/reactstrap/issues/677
     // Eventually this will be fixed in reactstrap and this can be removed
-    height: 450px;
+    height: 550px;
   }
 
   .carousel-item {
     background-color: $decibels-dark-grey;
-    height: 500px;
+    height: 600px;
     padding: 30px;
     padding-bottom: 40px;
 
@@ -24,4 +24,12 @@
       text-align: center;
     }
   }
+}
+
+.register {
+  background-color: $white;
+  border-radius: .5em;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 1em;
 }

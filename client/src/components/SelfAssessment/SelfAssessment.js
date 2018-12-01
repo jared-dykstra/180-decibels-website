@@ -11,12 +11,11 @@ import {
   Row
 } from 'reactstrap'
 
+import { LogIn } from 'components'
+import { questionsPropType } from 'propTypes'
+import { questionListSelector } from 'redux/selfAssessment/selfAssessmentSelectors'
+
 import styles from './SelfAssessment.module.scss'
-
-import { questionsPropType } from '../../propTypes'
-
-import { questionListSelector } from '../../redux/selfAssessment/selfAssessmentSelectors'
-
 import Intro from './Intro'
 import Question from './Question'
 import Results from './Results'
@@ -93,6 +92,19 @@ class SelfAssessment extends Component {
           />
         </CarouselItem>
       )),
+      <CarouselItem
+        onExiting={this.onExiting}
+        onExited={this.onExited}
+        key="register"
+      >
+        <h2>
+          Tell us a bit about yourself. We will send a report with tools you can
+          start using today!
+        </h2>
+        <div className={styles.register}>
+          <LogIn />
+        </div>
+      </CarouselItem>,
       <CarouselItem
         onExiting={this.onExiting}
         onExited={this.onExited}

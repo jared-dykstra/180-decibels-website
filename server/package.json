@@ -12,20 +12,39 @@
   },
   "private": true,
   "dependencies": {
+    "apollo-datasource": "^0.2.1",
+    "apollo-server-express": "^2.2.3",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
     "compression": "^1.7.3",
-    "express-graphql": "^0.7.1",
-    "graphql": "^14.0.2",
-    "restify": "^7.2.3",
-    "serve-favicon": "^2.5.0",
-    "serve-static": "^1.13.2"
+    "config": "^3.0.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "graphql": "^0.13.2",
+    "graphql-tag.macro": "^2.0.0",
+    "graphql-tools": "^4.0.3",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.1",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "babel-plugin-macros": "^2.4.2",
     "nodemon": "^1.18.6"
   },
   "scripts": {
-    "start": "node main.js",
-    "dev": "nodemon --config ./nodemon.json main.js",
+    "start": "node build/main.js",
+    "debug": "babel-node src/main.js",
+    "build": "babel src -d build -s --copy-files",
+    "dev": "nodemon --config nodemon.json ./src/main.js",
     "lint": "eslint --ignore-path ../.gitignore .",
-    "lint:fix": "eslint --ignore-path ../.gitignore --fix ."
+    "lint:fix": "eslint --ignore-path ../.gitignore --fix .",
+    "test": "echo WARNING: no tests defined yet",
+    "ci": "yarn run lint && yarn run test"
   }
 }

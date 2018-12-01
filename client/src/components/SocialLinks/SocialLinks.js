@@ -28,11 +28,14 @@ const social = [
   }
 ]
 
-export default () =>
-  Object.entries(social).map(([i, s]) => (
-    <NavItem key={i}>
-      <NavLink href={s.url}>
-        <FontAwesomeIcon icon={s.icon} />
-      </NavLink>
-    </NavItem>
-  ))
+export default () => (
+  <span className="d-none d-md-flex">
+    {Object.entries(social).map(([i, s]) => (
+      <NavItem key={i}>
+        <NavLink href={s.url}>
+          <FontAwesomeIcon icon={s.icon} />
+        </NavLink>
+      </NavItem>
+    ))}
+  </span>
+)
