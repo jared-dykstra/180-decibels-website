@@ -11,7 +11,7 @@ const Intro = ({ next }) => (
         Set the volume for each question, or mute it if you feel it doesn&apos;t
         apply.
       </h2>
-      <Button color="primary" onClick={next}>
+      <Button size="lg" color="primary" onClick={next}>
         Start
       </Button>
     </div>

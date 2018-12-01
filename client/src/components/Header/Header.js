@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import Immutable from 'seamless-immutable'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -14,22 +15,24 @@ import {
 
 import styles from './Header.module.scss'
 
-class Header extends Component {
+class Header extends PureComponent {
   static propTypes = {
     isHomePage: PropTypes.bool.isRequired
   }
 
   constructor(props) {
     super(props)
-    this.state = {
+    this.state = Immutable.from({
       isOpen: false
-    }
+    })
   }
 
   toggleNavbar = () => {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
-    }))
+    this.setState(prevState =>
+      Immutable.from({
+        isOpen: !prevState.isOpen
+      })
+    )
   }
 
   render() {

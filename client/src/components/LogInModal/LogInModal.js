@@ -52,11 +52,14 @@ class LogInModal extends PureComponent {
 
   constructor(props) {
     super(props)
-    const { doAuthenticate } = props
-    doAuthenticate(null)
     this.state = Immutable.from({
       menuOpen: false
     })
+  }
+
+  componentDidMount = () => {
+    const { doAuthenticate } = this.props
+    doAuthenticate(null)
   }
 
   toggleModal = () => {

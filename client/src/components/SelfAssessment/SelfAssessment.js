@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import Immutable from 'seamless-immutable'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -20,7 +21,7 @@ import Intro from './Intro'
 import Question from './Question'
 import Results from './Results'
 
-class SelfAssessment extends Component {
+class SelfAssessment extends PureComponent {
   static propTypes = {
     assessmentName: PropTypes.string.isRequired,
     questions: questionsPropType.isRequired
@@ -28,9 +29,9 @@ class SelfAssessment extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
+    this.state = Immutable.from({
       currentIndex: 0
-    }
+    })
   }
 
   onExiting = () => {
@@ -46,18 +47,22 @@ class SelfAssessment extends Component {
       return
     }
 
-    this.setState(currentState => ({
-      currentIndex: currentState.currentIndex + 1
-    }))
+    this.setState(currentState =>
+      Immutable.from({
+        currentIndex: currentState.currentIndex + 1
+      })
+    )
   }
 
   previous = () => {
     if (this.animating) {
       return
     }
-    this.setState(currentState => ({
-      currentIndex: currentState.currentIndex - 1
-    }))
+    this.setState(currentState =>
+      Immutable.from({
+        currentIndex: currentState.currentIndex - 1
+      })
+    )
   }
 
   goToIndex(newIndex) {

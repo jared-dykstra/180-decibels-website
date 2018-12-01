@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import Immutable from 'seamless-immutable'
+import React, { PureComponent } from 'react'
 
 import { Col, FormGroup, Input, Label, Row } from 'reactstrap'
 
@@ -8,18 +9,20 @@ import SignIn from './SignIn'
 const signInValue = 'signIn'
 const registerValue = 'register'
 
-class LogIn extends Component {
+class LogIn extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {
+    this.state = Immutable.from({
       registerMode: false
-    }
+    })
   }
 
   setRegisterMode = value => {
-    this.setState(() => ({
-      registerMode: value === registerValue
-    }))
+    this.setState(() =>
+      Immutable.from({
+        registerMode: value === registerValue
+      })
+    )
   }
 
   render() {
