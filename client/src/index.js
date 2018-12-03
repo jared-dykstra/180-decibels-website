@@ -2,22 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
-import { Route, Switch } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
-import 'bootstrap'
 
-import 'styles/fonts.scss'
-import 'styles/custom.scss'
+import createStore from 'redux/createStore'
 
-import createStore from './redux/createStore'
-import { HelpMe, HelpMyTeam, Home, NotFound } from './pages'
-import { ScrollToTop } from './components'
-import {
-  ROUTE_HOME,
-  ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM
-} from './redux/routes/routesConstants'
 import * as serviceWorker from './serviceWorker'
+import App from './App'
 
 const history = createBrowserHistory()
 const store = createStore(history)
@@ -25,18 +15,7 @@ const store = createStore(history)
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <ScrollToTop>
-        <Switch>
-          <Route exact path={ROUTE_HOME} render={() => <Home />} />
-          <Route exact path={ROUTE_HELP_ME} render={() => <HelpMe />} />
-          <Route
-            exact
-            path={ROUTE_HELP_MY_TEAM}
-            render={() => <HelpMyTeam />}
-          />
-          <Route render={() => <NotFound />} />
-        </Switch>
-      </ScrollToTop>
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
