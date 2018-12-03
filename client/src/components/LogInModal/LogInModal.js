@@ -21,12 +21,7 @@ import {
   isSignedInSelector,
   nameSelector
 } from 'redux/auth/authSelectors'
-import {
-  closeDialog,
-  openDialog,
-  signOut
-} from 'redux/auth/authActions'
-
+import { closeDialog, openDialog, signOut } from 'redux/auth/authActions'
 import { LogIn } from 'components'
 
 import styles from './LogInModal.module.scss'

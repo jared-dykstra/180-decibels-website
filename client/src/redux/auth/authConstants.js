@@ -3,10 +3,8 @@ export const AUTH_AUTHENTICATE = 'auth/authenticate'
 export const AUTH_SIGNOUT = 'auth/signOut'
 export const AUTH_SIGNIN = 'auth/signIn'
 export const AUTH_REGISTER = 'auth/register'
-export const AUTH_OPEN_SIGNIN_MODAL =
-  'auth/signInModalOpen'
-export const AUTH_CLOSE_SIGNIN_MODAL =
-  'auth/signInModalClose'
+export const AUTH_OPEN_SIGNIN_MODAL = 'auth/signInModalOpen'
+export const AUTH_CLOSE_SIGNIN_MODAL = 'auth/signInModalClose'
 
 // Private Actions
 export const AUTH_SIGNIN_SUCCESS = 'auth/signInSuccess'

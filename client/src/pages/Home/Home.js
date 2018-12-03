@@ -9,7 +9,7 @@ import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
 import styles from './Home.module.scss'
 
-const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
+export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <Template className={styles.home}>
     <section className={styles['section-splash']}>
       <Logo />

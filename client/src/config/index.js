@@ -5,7 +5,6 @@
 import { defaultsDeep as _defaultsDeep, get as _get, has as _has } from 'lodash'
 import defaultConfig from './default'
 import devConfig from './development'
-import testConfig from './test'
 import prodConfig from './production'
 
 // Include all environments, so "built" code can be run with any value of NODE_ENV without rebuilding
@@ -13,8 +12,7 @@ import prodConfig from './production'
 // ** DO NOT ** include passwords or other sensitive info.
 const environments = {
   development: devConfig,
-  production: prodConfig,
-  test: testConfig
+  production: prodConfig
 }
 const config = _defaultsDeep(environments[process.env.NODE_ENV], defaultConfig)
 
