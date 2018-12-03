@@ -81,6 +81,8 @@ const asyncValidate = async values => {
 class Register extends PureComponent {
   static propTypes = {
     doRegister: PropTypes.func.isRequired,
+    submitLabel: PropTypes.string.isRequired,
+    resetLabel: PropTypes.string.isRequired,
     ...propTypes
   }
 
