@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
 
-import { authenticate } from 'redux/userManagement/userManagementActions'
+import { authenticate } from 'redux/auth/authActions'
 import { HelpMe, HelpMyTeam, Home, NotFound } from 'pages'
 import { ScrollToTop } from 'components'
 import {

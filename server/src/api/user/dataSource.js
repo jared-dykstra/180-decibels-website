@@ -27,17 +27,6 @@ const getAndSetToken = ({
   return token
 }
 
-const verifyTokenAsync = async token =>
-  new Promise((resolve, reject) => {
-    jwt.verify(token, config.get('jwtSecret'), (err, decoded) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(decoded)
-      }
-    })
-  })
-
 /* eslint-disable class-methods-use-this */
 export default class UserAPI extends DataSource {
   // constructor(/* { store } */) {
@@ -62,7 +51,16 @@ export default class UserAPI extends DataSource {
    * Validate the current authentication token.  If valid, return the user & token.  Otherwise throw
    */
   async authenticate({ token }) {
-    const user = await verifyTokenAsync(token)
+    let user = null
+    try {
+      user = await jwt.verify(token, config.get('jwtSecret'))
+    } catch (err) {
+      console.warn(
+        `Authentication token not found or expired: JWT error: ${err}`
+      )
+      throw new Error('Authentication token not found or expired.')
+    }
+
     if (!user) {
       throw new Error('User not found.  Sign in again?')
     }

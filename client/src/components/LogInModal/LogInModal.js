@@ -20,12 +20,12 @@ import {
   signInModalIsOpenSelector,
   isSignedInSelector,
   nameSelector
-} from 'redux/userManagement/userManagementSelectors'
+} from 'redux/auth/authSelectors'
 import {
   closeDialog,
   openDialog,
   signOut
-} from 'redux/userManagement/userManagementActions'
+} from 'redux/auth/authActions'
 
 import { LogIn } from 'components'
 

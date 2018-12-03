@@ -13,7 +13,7 @@ import {
   REGISTER_FORM_PASSWORD1_KEY,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from 'redux/userManagement/userManagementConstants'
+} from 'redux/auth/authConstants'
 
 const uri = configGet('apiEndpoint')
 

@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 
-import { actions } from 'redux/userManagement'
+import { actions } from 'redux/auth'
 import {
   SIGNIN_FORM_KEY,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from 'redux/userManagement/userManagementConstants'
+} from 'redux/auth/authConstants'
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'

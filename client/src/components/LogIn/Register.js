@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
 
-import { actions } from 'redux/userManagement'
+import { actions } from 'redux/auth'
 import {
   REGISTER_FORM_KEY,
   REGISTER_FORM_COMPANY_KEY,
@@ -15,8 +15,8 @@ import {
   REGISTER_FORM_PHONE_KEY,
   REGISTER_FORM_PASSWORD1_KEY,
   REGISTER_FORM_PASSWORD2_KEY
-} from 'redux/userManagement/userManagementConstants'
-import { isEmailInUse } from 'redux/userManagement/fetcher'
+} from 'redux/auth/authConstants'
+import { isEmailInUse } from 'redux/auth/fetcher'
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'

@@ -1,15 +1,15 @@
 // Public Actions
-export const USER_MANAGEMENT_AUTHENTICATE = 'userManagement/authenticate'
-export const USER_MANAGEMENT_SIGNOUT = 'userManagement/signOut'
-export const USER_MANAGEMENT_SIGNIN = 'userManagement/signIn'
-export const USER_MANAGEMENT_REGISTER = 'userManagement/register'
-export const USER_MANAGEMENT_OPEN_SIGNIN_MODAL =
-  'userManagement/signInModalOpen'
-export const USER_MANAGEMENT_CLOSE_SIGNIN_MODAL =
-  'userManagement/signInModalClose'
+export const AUTH_AUTHENTICATE = 'auth/authenticate'
+export const AUTH_SIGNOUT = 'auth/signOut'
+export const AUTH_SIGNIN = 'auth/signIn'
+export const AUTH_REGISTER = 'auth/register'
+export const AUTH_OPEN_SIGNIN_MODAL =
+  'auth/signInModalOpen'
+export const AUTH_CLOSE_SIGNIN_MODAL =
+  'auth/signInModalClose'
 
 // Private Actions
-export const USER_MANAGEMENT_SIGNIN_SUCCESS = 'userManagement/signInSuccess'
+export const AUTH_SIGNIN_SUCCESS = 'auth/signInSuccess'
 
 // User Registration Form
 export const REGISTER_FORM_KEY = 'registerForm'

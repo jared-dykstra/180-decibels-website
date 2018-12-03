@@ -5,17 +5,17 @@ import {
   // , saga as selfAssessmentSaga
 } from './selfAssessment'
 import {
-  mountPoint as userManagementMountPoint,
-  reducer as userManagementReducer,
-  saga as userManagementSaga
-} from './userManagement'
+  mountPoint as authMountPoint,
+  reducer as authReducer,
+  saga as authSaga
+} from './auth'
 
 export const reducers = {
   [selfAssessmentMountPoint]: selfAssessmentReducer,
-  [userManagementMountPoint]: userManagementReducer
+  [authMountPoint]: authReducer
 }
 
 export function* rootSaga() {
-  yield all([fork(userManagementSaga)])
+  yield all([fork(authSaga)])
   yield all()
 }

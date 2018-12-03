@@ -1,22 +1,22 @@
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
-import { REGISTER_FORM_FIRST_NAME_KEY } from './userManagementConstants'
+import { REGISTER_FORM_FIRST_NAME_KEY } from './authConstants'
 
-const userManagementSelector = state => state[mountPoint]
+const authSelector = state => state[mountPoint]
 
 export const signInModalIsOpenSelector = createSelector(
-  userManagementSelector,
-  userManagement => userManagement.signInModalIsOpen
+  authSelector,
+  auth => auth.signInModalIsOpen
 )
 
 const userSelector = createSelector(
-  userManagementSelector,
-  userManagement => userManagement.user
+  authSelector,
+  auth => auth.user
 )
 
 export const isAuthenticatingSelector = createSelector(
-  userManagementSelector,
-  userManagement => userManagement.isAuthenticating
+  authSelector,
+  auth => auth.isAuthenticating
 )
 
 export const isSignedInSelector = createSelector(

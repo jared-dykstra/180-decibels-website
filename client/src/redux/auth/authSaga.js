@@ -6,15 +6,15 @@ import { clearFields, startSubmit, stopSubmit } from 'redux-form'
 import {
   REGISTER_FORM_KEY,
   SIGNIN_FORM_KEY,
-  USER_MANAGEMENT_AUTHENTICATE,
-  USER_MANAGEMENT_REGISTER,
-  USER_MANAGEMENT_SIGNIN,
+  AUTH_AUTHENTICATE,
+  AUTH_REGISTER,
+  AUTH_SIGNIN,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY,
   REGISTER_FORM_PASSWORD1_KEY,
   REGISTER_FORM_PASSWORD2_KEY
-} from './userManagementConstants'
-import { signInSuccess } from './userManagementPrivateActions'
+} from './authConstants'
+import { signInSuccess } from './authPrivateActions'
 import { authenticate, signIn, registerUser } from './fetcher'
 
 // Parses a GraphQL response
@@ -107,8 +107,8 @@ export default function*() {
   // It will be cancelled automatically on component unmount
 
   yield all([
-    takeLatest(USER_MANAGEMENT_AUTHENTICATE, authenticateHandler),
-    takeLatest(USER_MANAGEMENT_SIGNIN, signInHandler),
-    takeLatest(USER_MANAGEMENT_REGISTER, registerHandler)
+    takeLatest(AUTH_AUTHENTICATE, authenticateHandler),
+    takeLatest(AUTH_SIGNIN, signInHandler),
+    takeLatest(AUTH_REGISTER, registerHandler)
   ])
 }
