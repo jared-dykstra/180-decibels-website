@@ -4,6 +4,8 @@ $slider-height: 1.25em;
 $slider-padding: .75em;
 
 .control-row {
+  height: calc(#{$slider-height} * 2);
+  padding-bottom: 1em;
   padding-left: 15%;
   padding-right: 15%;
 }

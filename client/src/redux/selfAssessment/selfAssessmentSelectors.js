@@ -1,3 +1,4 @@
+import { isNil as _isNil } from 'lodash'
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
 import resultsGenerator from './ResultsGenerator'
@@ -64,6 +65,12 @@ export const makeMuteSelector = () =>
   createSelector(
     currentResponseSelector,
     response => response.mute
+  )
+
+export const makeCanGoToNextQuestionSelector = () =>
+  createSelector(
+    currentResponseSelector,
+    response => (!_isNil(response) ? !_isNil(response.volume) : false)
   )
 
 export const makeResultsSelector = () =>

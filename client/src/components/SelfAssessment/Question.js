@@ -11,7 +11,8 @@ import {
   makeMuteSelector,
   makeMaxVolumeSelector,
   makeMinVolumeSelector,
-  makeVolumeStepSelector
+  makeVolumeStepSelector,
+  makeCanGoToNextQuestionSelector
 } from '../../redux/selfAssessment/selfAssessmentSelectors'
 
 import 'rc-slider/assets/index.css'
@@ -29,7 +30,9 @@ class Question extends PureComponent {
     minVolume: PropTypes.number.isRequired,
     maxVolume: PropTypes.number.isRequired,
     volumeStep: PropTypes.number.isRequired,
-    volume: PropTypes.number.isRequired
+    volume: PropTypes.number.isRequired,
+    canGoToNextQuestion: PropTypes.bool.isRequired,
+    next: PropTypes.func.isRequired
   }
 
   doToggleMute = () => {
@@ -49,10 +52,14 @@ class Question extends PureComponent {
       volume,
       minVolume,
       maxVolume,
-      volumeStep
+      volumeStep,
+      canGoToNextQuestion,
+      next
     } = this.props
+    /*
     const muteButtonColor = isMuted ? 'danger' : 'secondary'
     const muteButtonText = isMuted ? 'muted' : 'mute'
+    */
     return (
       <div>
         {/* The he library is used to decode HTML character entities like &apos; */}
@@ -67,7 +74,8 @@ class Question extends PureComponent {
           </span>
         </div>
         <Row className={styles['control-row']}>
-          <Col xs={3}>
+          {/*
+          <Col xs={2}>
             <Button
               color={muteButtonColor}
               active={isMuted}
@@ -77,6 +85,7 @@ class Question extends PureComponent {
               {muteButtonText}
             </Button>
           </Col>
+          */}
           <Col>
             <Slider
               value={volume}
@@ -88,6 +97,18 @@ class Question extends PureComponent {
               onChange={this.doSetVolume}
               className={styles.slider}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} className="text-center">
+            <Button
+              size="lg"
+              color="primary"
+              disabled={!canGoToNextQuestion}
+              onClick={next}
+            >
+              Next
+            </Button>
           </Col>
         </Row>
       </div>
@@ -102,12 +123,14 @@ export default connect(
     const volumeStepSelector = makeVolumeStepSelector()
     const minVolumeSelector = makeMinVolumeSelector()
     const maxVolumeSelector = makeMaxVolumeSelector()
+    const canGoToNextQuestionSelector = makeCanGoToNextQuestionSelector()
     return {
       volume: volumeSelector(state, props),
       isMuted: muteSelector(state, props),
       maxVolume: maxVolumeSelector(state, props),
       minVolume: minVolumeSelector(state, props),
-      volumeStep: volumeStepSelector(state, props)
+      volumeStep: volumeStepSelector(state, props),
+      canGoToNextQuestion: canGoToNextQuestionSelector(state, props)
     }
   },
   dispatch => ({
