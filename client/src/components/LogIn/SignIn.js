@@ -36,11 +36,21 @@ const validate = values => {
 class SignIn extends PureComponent {
   static propTypes = {
     doSignIn: PropTypes.func.isRequired,
+    submitLabel: PropTypes.string.isRequired,
+    resetLabel: PropTypes.string.isRequired,
     ...propTypes
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, doSignIn } = this.props
+    const {
+      handleSubmit,
+      pristine,
+      reset,
+      submitting,
+      doSignIn,
+      submitLabel,
+      resetLabel
+    } = this.props
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
@@ -83,7 +93,15 @@ class SignIn extends PureComponent {
             </Col>
           </Row>
         </FormGroup>
-        <Buttons {...{ isSubmitDisabled, isResetDisabled, reset }} />
+        <Buttons
+          {...{
+            isSubmitDisabled,
+            isResetDisabled,
+            reset,
+            submitLabel,
+            resetLabel
+          }}
+        />
       </Form>
     )
   }

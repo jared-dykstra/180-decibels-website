@@ -1,4 +1,5 @@
 import Immutable from 'seamless-immutable'
+import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
 import { Col, FormGroup, Input, Label, Row } from 'reactstrap'
@@ -10,6 +11,11 @@ const signInValue = 'signIn'
 const registerValue = 'register'
 
 class LogIn extends PureComponent {
+  static propTypes = {
+    signInText: PropTypes.string.isRequired,
+    resetText: PropTypes.string.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = Immutable.from({
@@ -27,6 +33,9 @@ class LogIn extends PureComponent {
 
   render() {
     const { registerMode } = this.state
+    const { signInText, resetText } = this.props
+    const submitLabel = signInText
+    const resetLabel = resetText
     return (
       <FormGroup check>
         <Row>
@@ -54,8 +63,8 @@ class LogIn extends PureComponent {
           </Col>
         </Row>
         <hr />
-        {!registerMode && <SignIn />}
-        {registerMode && <Register />}
+        {!registerMode && <SignIn {...{ submitLabel, resetLabel }} />}
+        {registerMode && <Register {...{ submitLabel, resetLabel }} />}
       </FormGroup>
     )
   }

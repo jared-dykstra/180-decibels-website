@@ -107,7 +107,7 @@ class SelfAssessment extends PureComponent {
           start using today!
         </h2>
         <div className={styles.register}>
-          <LogIn />
+          <LogIn signInText="Sign In" resetText="Reset" />
         </div>
       </CarouselItem>,
       <CarouselItem

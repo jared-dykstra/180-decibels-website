@@ -85,7 +85,15 @@ class Register extends PureComponent {
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, doRegister } = this.props
+    const {
+      handleSubmit,
+      pristine,
+      reset,
+      submitting,
+      doRegister,
+      submitLabel,
+      resetLabel
+    } = this.props
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
@@ -222,7 +230,15 @@ class Register extends PureComponent {
             </Col>
           </Row>
         </FormGroup>
-        <Buttons {...{ isSubmitDisabled, isResetDisabled, reset }} />
+        <Buttons
+          {...{
+            isSubmitDisabled,
+            isResetDisabled,
+            reset,
+            submitLabel,
+            resetLabel
+          }}
+        />
       </Form>
     )
   }

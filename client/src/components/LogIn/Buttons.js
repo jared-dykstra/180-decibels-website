@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 
 import { Button, Col, FormGroup, Row } from 'reactstrap'
 
-const Buttons = ({ isSubmitDisabled, isResetDisabled, reset }) => (
+const Buttons = ({
+  isSubmitDisabled,
+  isResetDisabled,
+  reset,
+  submitLabel,
+  resetLabel
+}) => (
   <FormGroup>
     <Row>
       <Col>
@@ -13,7 +19,7 @@ const Buttons = ({ isSubmitDisabled, isResetDisabled, reset }) => (
           disabled={isSubmitDisabled}
           className="float-right"
         >
-          Submit
+          {submitLabel}
         </Button>
         <Button
           type="reset"
@@ -22,7 +28,7 @@ const Buttons = ({ isSubmitDisabled, isResetDisabled, reset }) => (
           onClick={reset}
           className="float-right"
         >
-          Reset
+          {resetLabel}
         </Button>
       </Col>
     </Row>
@@ -32,7 +38,9 @@ const Buttons = ({ isSubmitDisabled, isResetDisabled, reset }) => (
 Buttons.propTypes = {
   isSubmitDisabled: PropTypes.bool.isRequired,
   isResetDisabled: PropTypes.bool.isRequired,
-  reset: PropTypes.func.isRequired
+  reset: PropTypes.func.isRequired,
+  submitLabel: PropTypes.string.isRequired,
+  resetLabel: PropTypes.string.isRequired
 }
 
 export default Buttons
