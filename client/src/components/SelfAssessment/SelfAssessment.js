@@ -69,13 +69,6 @@ class SelfAssessment extends PureComponent {
     )
   }
 
-  goToIndex(newIndex) {
-    if (this.animating) {
-      // return
-    }
-    // TODO: If arbitrary jumps are needed, dispatch an appropriate action here
-  }
-
   render() {
     const { assessmentName, questions, responses } = this.props
     const { currentIndex } = this.state
@@ -163,7 +156,6 @@ class SelfAssessment extends PureComponent {
                 // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
                 items={slides.map(s => ({ src: s.key }))}
                 activeIndex={currentIndex}
-                onClickHandler={this.goToIndex}
               />
               {slides}
               {!isFirstSlide && (
