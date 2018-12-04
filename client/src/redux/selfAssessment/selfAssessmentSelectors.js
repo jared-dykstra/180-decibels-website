@@ -1,4 +1,3 @@
-import { isNil as _isNil } from 'lodash'
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
 import resultsGenerator from './ResultsGenerator'
@@ -28,10 +27,15 @@ export const questionListSelector = createSelector(
   selfAssessment => selfAssessment.questionList
 )
 
-const currentResponseSelector = createSelector(
+export const responsesSelector = createSelector(
   selfAssessmentSelector,
+  selfAssessment => selfAssessment.responses
+)
+
+const currentResponseSelector = createSelector(
+  responsesSelector,
   currentQuestionIdSelector,
-  (selfAssessment, questionId) => selfAssessment.responses[questionId]
+  (responses, questionId) => responses[questionId]
 )
 
 export const makeMaxVolumeSelector = () =>
@@ -70,7 +74,7 @@ export const makeMuteSelector = () =>
 export const makeCanGoToNextQuestionSelector = () =>
   createSelector(
     currentResponseSelector,
-    response => (!_isNil(response) ? !_isNil(response.volume) : false)
+    response => response.hasBeenRespondedTo
   )
 
 export const makeResultsSelector = () =>

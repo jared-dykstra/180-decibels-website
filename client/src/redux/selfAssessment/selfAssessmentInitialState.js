@@ -24,7 +24,7 @@ const assessments = Object.keys(configuration)
 
 const buildEmptyResponses = currentConfig =>
   Object.keys(currentConfig.questions).reduce((acc, id) => {
-    acc[id] = { volume: undefined, mute: false }
+    acc[id] = { volume: undefined, mute: false, hasBeenRespondedTo: false }
     return acc
   }, {})
 

@@ -13,8 +13,11 @@ import {
 } from 'reactstrap'
 
 import { LogIn } from 'components'
-import { questionsPropType } from 'propTypes'
-import { questionListSelector } from 'redux/selfAssessment/selfAssessmentSelectors'
+import { questionsPropType, responsesPropType } from 'propTypes'
+import {
+  questionListSelector,
+  responsesSelector
+} from 'redux/selfAssessment/selfAssessmentSelectors'
 
 import styles from './SelfAssessment.module.scss'
 import Intro from './Intro'
@@ -24,7 +27,8 @@ import Results from './Results'
 class SelfAssessment extends PureComponent {
   static propTypes = {
     assessmentName: PropTypes.string.isRequired,
-    questions: questionsPropType.isRequired
+    questions: questionsPropType.isRequired,
+    responses: responsesPropType.isRequired
   }
 
   constructor(props) {
@@ -73,30 +77,20 @@ class SelfAssessment extends PureComponent {
   }
 
   render() {
-    const { assessmentName, questions } = this.props
+    const { assessmentName, questions, responses } = this.props
     const { currentIndex } = this.state
 
-    const slides = [
+    const introSlides = [
       <CarouselItem
         onExiting={this.onExiting}
         onExited={this.onExited}
         key="intro"
       >
         <Intro next={this.next} />
-      </CarouselItem>,
-      ...questions.map(question => (
-        <CarouselItem
-          onExiting={this.onExiting}
-          onExited={this.onExited}
-          key={question.id}
-        >
-          <Question
-            assessmentName={assessmentName}
-            questionId={question.id}
-            questionText={question.text}
-          />
-        </CarouselItem>
-      )),
+      </CarouselItem>
+    ]
+
+    const resultSlides = [
       <CarouselItem
         onExiting={this.onExiting}
         onExited={this.onExited}
@@ -119,8 +113,39 @@ class SelfAssessment extends PureComponent {
       </CarouselItem>
     ]
 
+    const slides = [
+      ...introSlides,
+      ...questions.map(question => (
+        <CarouselItem
+          onExiting={this.onExiting}
+          onExited={this.onExited}
+          key={question.id}
+        >
+          <Question
+            assessmentName={assessmentName}
+            questionId={question.id}
+            questionText={question.text}
+            next={this.next}
+          />
+        </CarouselItem>
+      )),
+      ...resultSlides
+    ]
+
+    // TODO: Get some unit test coverage on this block of logic by refactoring it out of render()
     const isFirstSlide = currentIndex <= 0
-    const isLastSlide = currentIndex >= slides.length - 1
+    const currentQuestion =
+      currentIndex >= introSlides.length &&
+      currentIndex < questions.length + introSlides.length
+        ? questions[currentIndex - introSlides.length]
+        : undefined
+    const currentResponse = currentQuestion
+      ? responses[currentQuestion.id]
+      : undefined
+    const currentQuestionHasBeenRespondedTo = currentResponse
+      ? currentResponse.hasBeenRespondedTo
+      : undefined
+    const canAdvanceSlide = isFirstSlide || currentQuestionHasBeenRespondedTo
 
     return (
       <Container>
@@ -148,7 +173,7 @@ class SelfAssessment extends PureComponent {
                   onClickHandler={this.previous}
                 />
               )}
-              {!isLastSlide && (
+              {canAdvanceSlide && (
                 <CarouselControl
                   direction="next"
                   directionText="Next"
@@ -165,5 +190,6 @@ class SelfAssessment extends PureComponent {
 }
 
 export default connect((state, props) => ({
-  questions: questionListSelector(state, props)
+  questions: questionListSelector(state, props),
+  responses: responsesSelector(state, props)
 }))(SelfAssessment)

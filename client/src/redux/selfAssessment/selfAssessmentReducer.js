@@ -18,6 +18,13 @@ const volumePath = ({ assessmentName, questionId }) => [
   'volume'
 ]
 
+const respondedPath = ({ assessmentName, questionId }) => [
+  assessmentName,
+  'responses',
+  questionId,
+  'hasBeenRespondedTo'
+]
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case SELF_ASSESSMENT_SET_VOLUME: {
@@ -29,13 +36,17 @@ export default (state = initialState, action) => {
 
       // Set the volume
       const { volume } = action.payload
-      return state.setIn(volumePath(action.payload), volume)
+      return state
+        .setIn(volumePath(action.payload), volume)
+        .setIn(respondedPath(action.payload), true)
     }
     case SELF_ASSESSMENT_MUTE: {
       // Toggle mute state
       const path = mutePath(action.payload)
       const currentMuteState = state.getIn(path)
-      return state.setIn(path, !currentMuteState)
+      return state
+        .setIn(path, !currentMuteState)
+        .setIn(respondedPath(action.payload), true)
     }
     default:
       return state
