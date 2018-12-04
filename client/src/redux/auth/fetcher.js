@@ -42,7 +42,7 @@ export const signIn = async credentials => {
             email
             phone
           }
-          token
+          userProfileToken
         }
       }
     `,
@@ -68,7 +68,7 @@ export const authenticate = async () => {
             email
             phone
           }
-          token
+          userProfileToken
         }
       }
     `
@@ -106,7 +106,7 @@ export const registerUser = async user => {
             email
             phone
           }
-          token
+          userProfileToken
         }
       }
     `,

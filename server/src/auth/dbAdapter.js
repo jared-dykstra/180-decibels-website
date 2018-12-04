@@ -8,6 +8,11 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const users = [
   {
+    id: '5ea90acf-9f79-405d-9648-69c2b2014557',
+    aliases: [
+      'ae45a5d6-f66f-468b-8124-434a71cb0c89',
+      'e895dfb9-ead5-47d7-b490-4c9b4f5a3468'
+    ],
     email: 'jared.dykstra@gmail.com',
     firstName: 'Jared',
     lastName: 'Dykstra',

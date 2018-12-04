@@ -43,12 +43,13 @@ export const createApi = (app, path) => {
     context: args => {
       const { req, res } = args
       // For now the token will be supplied via a cookie.  It the future, it could also come from an authorization header
-      const token = req.cookies[config.get('jwtCookieName')]
+      const userId = req.cookies[config.get('idCookieName')]
+      const userProfileToken = req.cookies[config.get('profileCookieName')]
       return {
         // Use the user which has already been parsed by express-jwt middleware
         user: req.user,
-        token,
-        req,
+        userId,
+        userProfileToken,
         res
       }
     }

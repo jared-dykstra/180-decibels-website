@@ -156,6 +156,7 @@ class SelfAssessment extends PureComponent {
                 // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
                 items={slides.map(s => ({ src: s.key }))}
                 activeIndex={currentIndex}
+                onClickHandler={e => e.stopPropagation()}
               />
               {slides}
               {!isFirstSlide && (

@@ -17,7 +17,7 @@ const getAndSetToken = ({
 
   // If invoked via the web, set the auth token in a cookie
   if (res) {
-    res.cookie(config.get('jwtCookieName'), token, {
+    res.cookie(config.get('profileCookieName'), token, {
       maxAge: authDuration,
       httpOnly: true
       // httpOnly: false // <-- Allow the cookie to be accessed via javascript
@@ -50,10 +50,10 @@ export default class UserAPI extends DataSource {
   /**
    * Validate the current authentication token.  If valid, return the user & token.  Otherwise throw
    */
-  async authenticate({ token }) {
+  async authenticate({ userProfileToken }) {
     let user = null
     try {
-      user = await jwt.verify(token, config.get('jwtSecret'))
+      user = await jwt.verify(userProfileToken, config.get('jwtSecret'))
     } catch (err) {
       console.warn(
         `Authentication token not found or expired: JWT error: ${err}`
@@ -66,7 +66,7 @@ export default class UserAPI extends DataSource {
     }
     return {
       user,
-      token
+      userProfileToken
     }
   }
 
@@ -99,10 +99,10 @@ export default class UserAPI extends DataSource {
     }
 
     // Everything is OK
-    const token = getAndSetToken({ user, res })
+    const userProfileToken = getAndSetToken({ user, res })
     return {
       user,
-      token
+      userProfileToken
     }
   }
 
@@ -114,10 +114,10 @@ export default class UserAPI extends DataSource {
     const { user } = args
     const { res } = context
     const newUser = await addUser(user)
-    const token = getAndSetToken({ user: newUser, res })
+    const userProfileToken = getAndSetToken({ user: newUser, res })
     return {
       user: newUser,
-      token
+      userProfileToken
     }
   }
 }

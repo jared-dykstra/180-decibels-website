@@ -25,16 +25,16 @@ export default (state = initialState, action) => {
     case AUTH_SIGNOUT: {
       return state
         .setIn(['user'], initialState.user)
-        .setIn(['token'], initialState.token)
+        .setIn(['userProfileToken'], initialState.userProfileToken)
     }
 
     // Set user data in the store and close the signin Modal, if open
     case AUTH_SIGNIN_SUCCESS: {
       const { payload } = action
-      const { user, token } = payload
+      const { user, userProfileToken } = payload
       return state
         .setIn(['user'], user)
-        .setIn(['token'], token)
+        .setIn(['userProfileToken'], userProfileToken)
         .setIn(['signInModalIsOpen'], false)
         .setIn(['isAuthenticating'], false)
     }
