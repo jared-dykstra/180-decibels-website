@@ -56,6 +56,17 @@ export const signIn = async credentials => {
   return response || retval
 }
 
+export const signOut = async () => {
+  const operation = {
+    query: gql`
+      mutation signOut {
+        signOut
+      }
+    `
+  }
+  await clientExecuteAsync(link, operation)
+}
+
 export const authenticate = async () => {
   const operation = {
     query: gql`
