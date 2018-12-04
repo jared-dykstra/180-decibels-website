@@ -23,7 +23,7 @@ const users = [
   }
 ]
 
-export const findUser = email => {
+export const findUser = async email => {
   console.log('dbAdapter::FindUser')
   if (!email) {
     return null
@@ -53,7 +53,7 @@ export const addUser = async (userId, userIn) => {
   }
 
   // Ensure the email isn't already in use
-  const existingUserByEmail = findUser(normalizedEmail)
+  const existingUserByEmail = await findUser(normalizedEmail)
   if (existingUserByEmail.user) {
     throw new UserInputError(
       `The email address ${normalizedEmail} is already in use`,

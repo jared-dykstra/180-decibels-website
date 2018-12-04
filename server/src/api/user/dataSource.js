@@ -58,7 +58,7 @@ export default class UserAPI extends DataSource {
    */
   async isEmailInUse({ email }) {
     // If a user is found, the email is in use
-    const { user } = findUser(email)
+    const { user } = await findUser(email)
     return !!user
   }
 
