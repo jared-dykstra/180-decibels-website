@@ -25,20 +25,26 @@
 }
 
 .section-splash {
-  color: $decibels-red;
+  background-image: url('/teal-mountains.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 30vh;
+  position: relative;
   text-align: center;
 
-  svg {
-    fill: currentColor;
-    height: 20em;
-    margin-bottom: 1em;
-  }
-
   h1 {
-    color: $decibels-teal;
-    font-size: 3.5rem;
+    bottom: 10vh;
+    color: $decibels-red;
+    font-size: 3rem;
     font-weight: 800;
+    position: absolute;
+    width: 100%;
   }
+}
+
+.section-get-started {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .video-row {

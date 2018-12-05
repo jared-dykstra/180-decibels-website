@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
+  Button,
   Collapse,
   Nav,
   Navbar,
@@ -78,13 +79,22 @@ class Header extends PureComponent {
             180 Decibels
           </div>
         )}
-        <NavLink href="tel:+18883214531">1-888-321-4531</NavLink>
         <NavbarToggler onClick={this.toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink className="float-right" href="tel:+18883214531">
+                1-888-321-4531
+              </NavLink>
+            </NavItem>
             {navItems}
             <NavItem className={styles.login}>
               <LogInModal className="float-right" />
+            </NavItem>
+            <NavItem>
+              <Button color="primary" className="float-right">
+                Get Started
+              </Button>
             </NavItem>
           </Nav>
         </Collapse>

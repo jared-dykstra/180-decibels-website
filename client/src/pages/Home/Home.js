@@ -2,10 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { Button, Col, Jumbotron, Row } from 'reactstrap'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  Col,
+  Jumbotron,
+  Row
+} from 'reactstrap'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 
-import { Logo, Template } from 'components'
+import { Template } from 'components'
 import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
 import styles from './Home.module.scss'
@@ -14,19 +22,21 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <Template className={styles.home}>
     <Row>
       <Col>
-        <section className={styles['section-splash']}>
-          <Logo />
-          <h1>180 Decibels</h1>
-          <h3>Management Consulting for the Modern Manager</h3>
+        <section className={`align-text-bottom ${styles['section-splash']}`}>
+          <h1>Management Consulting for the Modern Manager</h1>
         </section>
       </Col>
     </Row>
     <Row>
       <Col>
-        <Jumbotron>
-          <h1>Get Started with a Free Hour!</h1>
-          <Button color="primary">Get Started</Button>
-        </Jumbotron>
+        <section className={styles['section-get-started']}>
+          <Card body inverse>
+            <CardTitle>Get Started with a Free Hour!</CardTitle>
+            <CardBody>
+              <Button color="primary">Get Started</Button>
+            </CardBody>
+          </Card>
+        </section>
       </Col>
     </Row>
     <Row>
@@ -92,7 +102,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Col>
       <Col sm="4">
         <blockquote>
-          We are not <i>meeting</i> goals. We are <i>beating</i> them
+          We are not <i>meeting</i> goals; We are <i>crushing</i> them
         </blockquote>
         <cite>– George Orwell</cite>
       </Col>
