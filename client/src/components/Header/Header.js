@@ -3,14 +3,21 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Collapse, Nav, Navbar, NavbarToggler, NavItem } from 'reactstrap'
+import {
+  Collapse,
+  Nav,
+  Navbar,
+  NavbarToggler,
+  NavItem,
+  NavLink
+} from 'reactstrap'
 
 import { LogInModal, Logo } from 'components'
 import { isHomePageSelector } from 'redux/routes/routesSelectors'
 import {
-  ROUTE_HOME,
-  ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM
+  ROUTE_HOME
+  // ROUTE_HELP_ME,
+  // ROUTE_HELP_MY_TEAM
 } from 'redux/routes/routesConstants'
 
 import styles from './Header.module.scss'
@@ -38,17 +45,16 @@ class Header extends PureComponent {
   render() {
     const { isOpen } = this.state
     const { isHomePage } = this.props
-    const showBrand = !isHomePage
 
     const navItems = [
-      {
-        url: ROUTE_HELP_MY_TEAM,
-        text: 'Help My Team'
-      },
-      {
-        url: ROUTE_HELP_ME,
-        text: 'Help Me'
-      }
+      // {
+      //   url: ROUTE_HELP_MY_TEAM,
+      //   text: 'Help My Team'
+      // },
+      // {
+      //   url: ROUTE_HELP_ME,
+      //   text: 'Help Me'
+      // }
     ].map(({ url, text }) => (
       <NavItem key={url}>
         <Link className={`${styles['nav-action']} nav-link`} to={url}>
@@ -57,19 +63,26 @@ class Header extends PureComponent {
       </NavItem>
     ))
 
+    const brandLinkClassName = `${styles['mini-brand']}`
     return (
       <Navbar color="faded" light expand="md">
-        {showBrand && (
-          <Link className={`${styles['mini-brand']} nav-link`} to={ROUTE_HOME}>
+        {!isHomePage && (
+          <Link className={brandLinkClassName} to={ROUTE_HOME}>
             <Logo />
             180 Decibels
           </Link>
         )}
+        {isHomePage && (
+          <div className={brandLinkClassName}>
+            <Logo />
+            180 Decibels
+          </div>
+        )}
+        <NavLink href="tel:+18883214531">1-888-321-4531</NavLink>
         <NavbarToggler onClick={this.toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          {isHomePage && <Nav navbar>{navItems}</Nav>}
           <Nav className="ml-auto" navbar>
-            {!isHomePage && navItems}
+            {navItems}
             <NavItem className={styles.login}>
               <LogInModal className="float-right" />
             </NavItem>
@@ -80,11 +93,6 @@ class Header extends PureComponent {
   }
 }
 
-export default connect(
-  (state /* , ownProps */) => ({
-    isHomePage: isHomePageSelector(state)
-  }),
-  dispatch => ({
-    // No events
-  })
-)(Header)
+export default connect(state => ({
+  isHomePage: isHomePageSelector(state)
+}))(Header)
