@@ -1,7 +1,7 @@
 // TODO: This gets replaced with a proper DB
 import uuid from 'uuid/v1'
 import config from 'config'
-import { find as _find } from 'lodash'
+import { find as _find, isObject as _isObject } from 'lodash'
 import { hash } from 'bcrypt'
 import { UserInputError } from 'apollo-server-express'
 
@@ -23,8 +23,26 @@ const users = [
   }
 ]
 
+const eventLog = []
+
+export const eventSources = {
+  AUTH: 'AUTH'
+}
+
+export const appendLogEvent = async ({ userId, source, event }) => {
+  const now = new Date()
+  const eventObj = _isObject(event) ? event : { message: JSON.stringify(event) }
+  const log = {
+    userId,
+    timestamp: now.getTime(),
+    source,
+    event: eventObj
+  }
+  eventLog.push(log)
+  console.log(`Event: ${JSON.stringify(log)}`)
+}
+
 export const findUser = async email => {
-  console.log('dbAdapter::FindUser')
   if (!email) {
     return null
   }
@@ -44,13 +62,6 @@ export const addUser = async (userId, userIn) => {
   // eslint-disable-next-line no-console
   console.log(`JARED - TODO: REGISTER USER.  user=${JSON.stringify(userIn)}`)
   await sleep(100)
-
-  // Temporary Test of validation logic -- replace with logic if email has already been registered
-  if (normalizedEmail.endsWith('hotmail.com')) {
-    throw new UserInputError('Hotmail is not accepted here', {
-      invalidArgs: ['email']
-    })
-  }
 
   // Ensure the email isn't already in use
   const existingUserByEmail = await findUser(normalizedEmail)
