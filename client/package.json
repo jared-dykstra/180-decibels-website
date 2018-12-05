@@ -43,7 +43,8 @@
     "redux-form": "^7.4.2",
     "redux-saga": "^0.16.2",
     "reselect": "^4.0.0",
-    "seamless-immutable": "^7.1.4"
+    "seamless-immutable": "^7.1.4",
+    "video-react": "^0.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

@@ -1,7 +1,6 @@
 @import '~styles/custom';
 
-$decibels-footer-height: 20em;
-$decibels-footer-spacing: 5em;
+$decibels-footer-spacing: 15em;
 
 .footer-spacing {
   margin-bottom: $decibels-footer-spacing;
@@ -9,8 +8,11 @@ $decibels-footer-spacing: 5em;
 
 .footer {
   background-color: $decibels-dark-grey;
-  height: $decibels-footer-height;
-  padding: 0;
+  padding-top: 2rem;
+
+  b {
+    font-weight: 800;
+  }
 
   li {
     color: $decibels-light-grey;
@@ -18,5 +20,13 @@ $decibels-footer-spacing: 5em;
 
   li a {
     color: $decibels-light-grey;
+  }
+
+  hr {
+    border-color: $decibels-red;
+  }
+
+  :global .navbar {
+    padding: 0 !important;
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
+import { Player, ControlBar, BigPlayButton } from 'video-react'
 
 import { Logo, Template } from 'components'
 import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
@@ -59,37 +60,41 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Col>
     </Row>
     <Row className={styles['video-row']}>
-      <Col sm={{ size: 8, offset: 4 }}>
-        <div className="embed-responsive embed-responsive-16by9">
-          <iframe
-            title="From Surviving to Excelling"
-            className="embed-responsive-item"
-            scrolling="no"
-            frameBorder="0"
-            type="text/html"
-            src="https://www.screencast.com/users/dayton.foster/folders/Camtasia/media/14e25118-5cf7-4ae8-9048-2ce0b6dad758/embed"
-            webkitallowfullscreen
-            mozallowfullscreen
-            allowFullScreen
-          />
-        </div>
+      <Col sm="4">
+        <blockquote>
+          180 Decibels increased my team&apos;s output by 25%
+        </blockquote>
+        <cite>– Aldous Huxley</cite>
+      </Col>
+      <Col sm="8">
+        <Player
+          preload="auto"
+          aspectRatio="16:9"
+          poster="/intro-video-poster.png"
+        >
+          <source src="https://content.screencast.com/users/dayton.foster/folders/Camtasia/media/14e25118-5cf7-4ae8-9048-2ce0b6dad758/180Voiceover2.mp4" />
+          <BigPlayButton position="center" />
+          <ControlBar autoHide />
+        </Player>
       </Col>
     </Row>
     <Row className={styles['video-row']}>
-      <Col sm={{ size: 8 }}>
-        <div className="embed-responsive embed-responsive-16by9">
-          <iframe
-            title="From Surviving to Excelling"
-            className="embed-responsive-item"
-            scrolling="no"
-            frameBorder="0"
-            type="text/html"
-            src="https://www.screencast.com/users/dayton.foster/folders/Camtasia/media/14e25118-5cf7-4ae8-9048-2ce0b6dad758/embed"
-            webkitallowfullscreen
-            mozallowfullscreen
-            allowFullScreen
-          />
-        </div>
+      <Col sm="8">
+        <Player
+          preload="auto"
+          aspectRatio="16:9"
+          poster="/sun-video-poster.png"
+        >
+          <source src="https://content.screencast.com/users/dayton.foster/folders/Camtasia/media/49dc876d-a7c5-4c55-bae5-f4e1abd4c084/180DecibelsSunMetaphor.mp4" />
+          <BigPlayButton position="center" />
+          <ControlBar autoHide />
+        </Player>
+      </Col>
+      <Col sm="4">
+        <blockquote>
+          We are not <i>meeting</i> goals. We are <i>beating</i> them
+        </blockquote>
+        <cite>– George Orwell</cite>
       </Col>
     </Row>
   </Template>

@@ -12,12 +12,12 @@ export default () => [
       <Col sm={{ size: '4', offset: '2' }}>
         <Navbar>
           <Nav vertical>
-            <NavItem>About</NavItem>
+            <NavItem>
+              <b>What We Do</b>
+            </NavItem>
             <ul>
-              <NavItem>Why Us</NavItem>
-              <NavItem>How We Work</NavItem>
-              <NavItem>Our Team</NavItem>
-              <NavItem>Confidentiality</NavItem>
+              <NavItem>Help Me</NavItem>
+              <NavItem>Help My Team</NavItem>
             </ul>
           </Nav>
         </Navbar>
@@ -25,7 +25,9 @@ export default () => [
       <Col sm={{ size: '4' }}>
         <Navbar>
           <Nav vertical>
-            <NavItem>Company</NavItem>
+            <NavItem>
+              <b>Who We Are</b>
+            </NavItem>
             <ul>
               <NavItem>Why Us</NavItem>
               <NavItem>How We Work</NavItem>
@@ -36,6 +38,7 @@ export default () => [
         </Navbar>
       </Col>
     </Row>
+    <hr />
     <Row>
       <Col>
         <Navbar>
