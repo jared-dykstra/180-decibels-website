@@ -30,9 +30,13 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
     <Row>
       <Col>
         <section className={styles['section-get-started']}>
-          <Card body inverse>
+          <Card body>
             <CardTitle>Get Started with a Free Hour!</CardTitle>
             <CardBody>
+              <p>
+                Start today and see how you can immediately benefit from what we
+                have to offer
+              </p>
               <Button color="primary">Get Started</Button>
             </CardBody>
           </Card>
@@ -72,13 +76,13 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
     <Row className={styles['video-row']}>
       <Col sm="4">
         <blockquote>
-          180 Decibels increased my team&apos;s output by 25%
+          180 Decibels increased my team&apos;s soma by 25%
         </blockquote>
         <cite>– Aldous Huxley</cite>
       </Col>
       <Col sm="8">
         <Player
-          preload="auto"
+          // preload="auto"
           aspectRatio="16:9"
           poster="/intro-video-poster.png"
         >
@@ -91,7 +95,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
     <Row className={styles['video-row']}>
       <Col sm="8">
         <Player
-          preload="auto"
+          // preload="auto"
           aspectRatio="16:9"
           poster="/sun-video-poster.png"
         >
