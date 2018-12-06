@@ -27,27 +27,26 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           <LazyHero
             imageSrc="/teal-mountains.jpg"
             parallaxOffset={150}
-            opacity={0.5}
+            opacity={0.4}
             minHeight="50vh"
+            className={styles.banner}
           >
             <h1>Management Consulting for the Modern Manager</h1>
-          </LazyHero>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <section className={styles['section-get-started']}>
             <Card body>
               <CardTitle>Get Started with a Free Hour!</CardTitle>
               <CardBody>
-                <p>
-                  Start today and see how you can immediately benefit from what
-                  we have to offer
-                </p>
-                <Button color="primary">Get Started</Button>
+                <Row>
+                  <Col lg="8">
+                    Start today and see how you can immediately benefit from
+                    what we have to offer
+                  </Col>
+                  <Col lg="4">
+                    <Button color="primary">Get Started</Button>
+                  </Col>
+                </Row>
               </CardBody>
             </Card>
-          </section>
+          </LazyHero>
         </Col>
       </Row>
       <Row>
