@@ -8,7 +8,7 @@ $decibels-footer-spacing: 15em;
 
 .footer {
   background-color: $decibels-dark-grey;
-  padding-top: 2rem;
+  padding-top: 2em;
 
   b {
     font-weight: 800;
@@ -23,7 +23,7 @@ $decibels-footer-spacing: 15em;
   }
 
   hr {
-    border-color: $decibels-red;
+    border-color: $decibels-light-grey;
   }
 
   :global .navbar {
