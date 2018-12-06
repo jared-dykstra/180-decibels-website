@@ -1,13 +1,14 @@
 @import '~styles/custom';
 
 .home {
+  :global .video-react {
+    border: 1px solid $decibels-red;
+  }
 
-  // :global {
-  //   .jumbotron:hover {
-  //     background-color: #f9f9f9 !important;
-  //     transition: background-color 0.5s ease;
-  //   }
-  // }
+  :global .jumbotron:hover {
+    background-color: $decibels-soft-white !important;
+    transition: background-color 0.5s ease;
+  }
 }
 
 
