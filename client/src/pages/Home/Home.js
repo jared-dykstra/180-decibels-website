@@ -14,7 +14,7 @@ import {
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import LazyHero from 'react-lazy-hero'
 
-import { Template } from 'components'
+import { Quote, Template } from 'components'
 import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
 import styles from './Home.module.scss'
@@ -82,10 +82,9 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Row>
       <Row className={styles['video-row']}>
         <Col md="4" className="d-none d-md-block">
-          <blockquote>
+          <Quote cite="Aldous Huxley">
             180 Decibels increased my team&apos;s soma by 25%
-          </blockquote>
-          <cite>– Aldous Huxley</cite>
+          </Quote>
         </Col>
         <Col md="8">
           <Player
@@ -112,10 +111,9 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           </Player>
         </Col>
         <Col md="4" className="d-none d-md-block">
-          <blockquote>
+          <Quote cite="George Orwell">
             We are not <i>meeting</i> goals; We are <i>crushing</i> them
-          </blockquote>
-          <cite>– George Orwell</cite>
+          </Quote>
         </Col>
       </Row>
     </Template>

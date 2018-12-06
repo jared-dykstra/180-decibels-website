@@ -1,0 +1,26 @@
+@import '~styles/custom';
+
+.quote {
+  blockquote {
+    background: $decibels-soft-white;
+    border-left: 10px solid $decibels-red;
+    font-size: 2em;
+    margin: 1.5em 10px;
+    margin-top: 0;
+    padding: 0.5em 10px;
+    quotes: '\201C''\201D''\2018''\2019';
+  }
+
+  blockquote:before {
+    color: $decibels-light-grey;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+
+  blockquote p {
+    display: inline;
+  }
+}
