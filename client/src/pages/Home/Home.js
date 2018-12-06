@@ -31,7 +31,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
             minHeight="35em"
             className={styles.banner}
           >
-            <h1>Management Consulting for the Modern Manager</h1>
+            <h1>Removing the complexity from managing your team.</h1>
             <Card body>
               <CardTitle>Get Started with a Free Hour!</CardTitle>
               <CardBody>
