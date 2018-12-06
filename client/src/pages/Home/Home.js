@@ -74,13 +74,13 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Col>
     </Row>
     <Row className={styles['video-row']}>
-      <Col sm="4">
+      <Col md="4" className="d-none d-md-block">
         <blockquote>
           180 Decibels increased my team&apos;s soma by 25%
         </blockquote>
         <cite>– Aldous Huxley</cite>
       </Col>
-      <Col sm="8">
+      <Col md="8">
         <Player
           // preload="auto"
           aspectRatio="16:9"
@@ -93,7 +93,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Col>
     </Row>
     <Row className={styles['video-row']}>
-      <Col sm="8">
+      <Col md="8">
         <Player
           // preload="auto"
           aspectRatio="16:9"
@@ -104,7 +104,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           <ControlBar autoHide />
         </Player>
       </Col>
-      <Col sm="4">
+      <Col md="4" className="d-none d-md-block">
         <blockquote>
           We are not <i>meeting</i> goals; We are <i>crushing</i> them
         </blockquote>

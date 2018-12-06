@@ -15,11 +15,7 @@ import {
 
 import { LogInModal, Logo } from 'components'
 import { isHomePageSelector } from 'redux/routes/routesSelectors'
-import {
-  ROUTE_HOME
-  // ROUTE_HELP_ME,
-  // ROUTE_HELP_MY_TEAM
-} from 'redux/routes/routesConstants'
+import { ROUTE_HOME } from 'redux/routes/routesConstants'
 
 import styles from './Header.module.scss'
 
@@ -47,23 +43,6 @@ class Header extends PureComponent {
     const { isOpen } = this.state
     const { isHomePage } = this.props
 
-    const navItems = [
-      // {
-      //   url: ROUTE_HELP_MY_TEAM,
-      //   text: 'Help My Team'
-      // },
-      // {
-      //   url: ROUTE_HELP_ME,
-      //   text: 'Help Me'
-      // }
-    ].map(({ url, text }) => (
-      <NavItem key={url}>
-        <Link className={`${styles['nav-action']} nav-link`} to={url}>
-          {text}
-        </Link>
-      </NavItem>
-    ))
-
     const brandLinkClassName = `${styles['mini-brand']}`
     return (
       <Navbar color="faded" light expand="md">
@@ -87,7 +66,6 @@ class Header extends PureComponent {
                 1-888-321-4531
               </NavLink>
             </NavItem>
-            {navItems}
             <NavItem className={styles.login}>
               <LogInModal className="float-right" />
             </NavItem>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Col, Container, Nav, Navbar, NavItem, Row } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
+import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 import { SocialLinks } from 'components'
 
 import styles from './Footer.module.scss'
@@ -16,8 +18,12 @@ export default () => [
               <b>What We Do</b>
             </NavItem>
             <ul>
-              <NavItem>Help Me</NavItem>
-              <NavItem>Help My Team</NavItem>
+              <NavItem>
+                <Link to={ROUTE_HELP_ME}>Help Me</Link>
+              </NavItem>
+              <NavItem>
+                <Link to={ROUTE_HELP_MY_TEAM}>Help My Team</Link>
+              </NavItem>
             </ul>
           </Nav>
         </Navbar>
