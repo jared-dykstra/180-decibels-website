@@ -11,7 +11,7 @@ export default () => [
   <div key="footer-spacing" className={styles['footer-spacing']} />,
   <Container key="footer" fluid className={styles.footer}>
     <Row className={styles['site-map']}>
-      <Col sm={{ size: '4', offset: '2' }}>
+      <Col xs="6" sm={{ size: '4', offset: '2' }}>
         <Navbar>
           <Nav vertical>
             <NavItem>
@@ -28,7 +28,7 @@ export default () => [
           </Nav>
         </Navbar>
       </Col>
-      <Col sm={{ size: '4' }}>
+      <Col xs="6" sm={{ size: '4' }}>
         <Navbar>
           <Nav vertical>
             <NavItem>
