@@ -13,11 +13,14 @@ import {
 } from 'reactstrap'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import LazyHero from 'react-lazy-hero'
+import { get as configGet } from 'config'
 
 import { Quote, Template } from 'components'
 import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
 import styles from './Home.module.scss'
+
+const CDN = configGet('cdn')
 
 export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
   <div>
@@ -25,7 +28,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       <Row>
         <Col>
           <LazyHero
-            imageSrc="/teal-mountains.jpg"
+            imageSrc={`${CDN}/teal-mountains.jpg`}
             parallaxOffset={150}
             opacity={0.4}
             minHeight="35em"
@@ -90,9 +93,9 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           <Player
             // preload="auto"
             aspectRatio="16:9"
-            poster="/intro-video-poster.jpg"
+            poster={`${CDN}/intro-video-poster.jpg`}
           >
-            <source src="https://content.screencast.com/users/dayton.foster/folders/Camtasia/media/14e25118-5cf7-4ae8-9048-2ce0b6dad758/180Voiceover2.mp4" />
+            <source src={`${CDN}/180Voiceover2.mp4`} />
             <BigPlayButton position="center" />
             <ControlBar autoHide />
           </Player>
@@ -103,9 +106,9 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           <Player
             // preload="auto"
             aspectRatio="16:9"
-            poster="/sun-video-poster.jpg"
+            poster={`${CDN}/sun-video-poster.jpg`}
           >
-            <source src="https://content.screencast.com/users/dayton.foster/folders/Camtasia/media/49dc876d-a7c5-4c55-bae5-f4e1abd4c084/180DecibelsSunMetaphor.mp4" />
+            <source src={`${CDN}/180DecibelsSunMetaphor.mp4`} />
             <BigPlayButton position="center" />
             <ControlBar autoHide />
           </Player>
