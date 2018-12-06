@@ -9,7 +9,7 @@ import styles from './Footer.module.scss'
 
 export default () => [
   <div key="footer-spacing" className={styles['footer-spacing']} />,
-  <Container fluid className={`${styles.footer}`}>
+  <Container key="footer" fluid className={`${styles.footer}`}>
     <Row>
       <Col sm={{ size: '4', offset: '2' }}>
         <Navbar>
