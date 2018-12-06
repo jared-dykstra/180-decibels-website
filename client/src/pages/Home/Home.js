@@ -90,7 +90,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           <Player
             // preload="auto"
             aspectRatio="16:9"
-            poster="/intro-video-poster.png"
+            poster="/intro-video-poster.jpg"
           >
             <source src="https://content.screencast.com/users/dayton.foster/folders/Camtasia/media/14e25118-5cf7-4ae8-9048-2ce0b6dad758/180Voiceover2.mp4" />
             <BigPlayButton position="center" />
@@ -103,7 +103,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           <Player
             // preload="auto"
             aspectRatio="16:9"
-            poster="/sun-video-poster.png"
+            poster="/sun-video-poster.jpg"
           >
             <source src="https://content.screencast.com/users/dayton.foster/folders/Camtasia/media/49dc876d-a7c5-4c55-bae5-f4e1abd4c084/180DecibelsSunMetaphor.mp4" />
             <BigPlayButton position="center" />
