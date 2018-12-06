@@ -24,7 +24,12 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
     <Template className={styles.home}>
       <Row>
         <Col>
-          <LazyHero imageSrc="/teal-mountains.jpg" parallaxOffset={150}>
+          <LazyHero
+            imageSrc="/teal-mountains.jpg"
+            parallaxOffset={150}
+            opacity={0.5}
+            minHeight="50vh"
+          >
             <h1>Management Consulting for the Modern Manager</h1>
           </LazyHero>
         </Col>
