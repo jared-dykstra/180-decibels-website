@@ -26,6 +26,15 @@ $decibels-footer-spacing: 10em;
 .site-map {
   color: $decibels-soft-white;
 
+  ul {
+    list-style: none;
+    padding: 0;
+
+    ul {
+      padding-left: 1em;
+    }
+  }
+
   a {
     color: $decibels-soft-white;
   }
