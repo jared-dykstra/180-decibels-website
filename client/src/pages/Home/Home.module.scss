@@ -4,7 +4,7 @@
   blockquote {
     background: #f9f9f9;
     border-left: 10px solid $decibels-red;
-    font-size: 2rem;
+    font-size: 2em;
     margin: 1.5em 10px;
     margin-top: 0;
     padding: 0.5em 10px;
@@ -25,24 +25,24 @@
   }
 }
 
-.section-splash {
-  background-image: url('/teal-mountains.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 30vh;
-  min-height: 6rem;
-  position: relative;
-  text-align: center;
+// .section-splash {
+//   background-image: url('/teal-mountains.jpg');
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   height: 30vh;
+//   min-height: 6rem;
+//   position: relative;
+//   text-align: center;
 
-  h1 {
-    bottom: 10vh;
-    color: $decibels-red;
-    font-size: 3rem;
-    font-weight: 800;
-    position: absolute;
-    width: 100%;
-  }
-}
+//   h1 {
+//     bottom: 10vh;
+//     color: $decibels-red;
+//     font-size: 3rem;
+//     font-weight: 800;
+//     position: absolute;
+//     width: 100%;
+//   }
+// }
 
 .section-get-started {
   margin-bottom: 2rem;
