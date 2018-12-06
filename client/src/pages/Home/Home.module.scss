@@ -17,6 +17,13 @@
 
   h1 {
     margin-bottom: 2em;
+    text-shadow: 0 0 25px rgba(255, 255, 255, 1);
+  }
+
+  :global .card {
+    background-color: rgba($decibels-soft-white, 0.9);
+    border-radius: 2em;
+    padding: 0.25em;
   }
 }
 

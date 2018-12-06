@@ -28,7 +28,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
             imageSrc="/teal-mountains.jpg"
             parallaxOffset={150}
             opacity={0.4}
-            minHeight="50vh"
+            minHeight="40vh"
             className={styles.banner}
           >
             <h1>Management Consulting for the Modern Manager</h1>
