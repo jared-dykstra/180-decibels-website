@@ -60,7 +60,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
               and more confident--getting huge productivity gains out of your
               team.
             </p>
-            <Button block color="primary" onClick={doClickHelpMe}>
+            <Button size="lg" block color="primary" onClick={doClickHelpMe}>
               Discover how 180 Decibels can help you
             </Button>
           </Jumbotron>
@@ -74,7 +74,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
               team members KNOW what they need to do EACH DAY to meet targets?
               IF THIS SOUNDS LIKE YOUR COMPANY, WE GET IT AND WE CAN HELP.
             </p>
-            <Button block color="primary" onClick={doClickHelpMyTeam}>
+            <Button size="lg" block color="primary" onClick={doClickHelpMyTeam}>
               Discover what 180 Decibels can do for your team
             </Button>
           </Jumbotron>

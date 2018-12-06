@@ -70,9 +70,11 @@ class Header extends PureComponent {
               <LogInModal className="float-right" />
             </NavItem>
             <NavItem>
-              <Button color="primary" className="float-right">
-                Get Started
-              </Button>
+              {!isHomePage && (
+                <Button color="primary" className="float-right">
+                  Get Started
+                </Button>
+              )}
             </NavItem>
           </Nav>
         </Collapse>
