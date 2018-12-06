@@ -9,8 +9,8 @@ import styles from './Footer.module.scss'
 
 export default () => [
   <div key="footer-spacing" className={styles['footer-spacing']} />,
-  <Container key="footer" fluid className={`${styles.footer}`}>
-    <Row>
+  <Container key="footer" fluid className={styles.footer}>
+    <Row className={styles['site-map']}>
       <Col sm={{ size: '4', offset: '2' }}>
         <Navbar>
           <Nav vertical>
@@ -45,7 +45,7 @@ export default () => [
       </Col>
     </Row>
     <hr />
-    <Row>
+    <Row className={styles.bottom}>
       <Col>
         <Navbar>
           <Nav>

@@ -14,19 +14,33 @@ $decibels-footer-spacing: 15em;
     font-weight: 800;
   }
 
-  li {
-    color: $decibels-light-grey;
-  }
-
-  li a {
-    color: $decibels-light-grey;
-  }
-
   hr {
     border-color: $decibels-light-grey;
   }
 
   :global .navbar {
     padding: 0 !important;
+  }
+}
+
+.site-map {
+  color: $decibels-soft-white;
+
+  a {
+    color: $decibels-soft-white;
+  }
+
+  a:hover {
+    color: $decibels-teal !important;
+  }
+}
+
+.bottom {
+  li {
+    color: $decibels-soft-white;
+  }
+
+  li a {
+    color: $decibels-soft-white;
   }
 }
