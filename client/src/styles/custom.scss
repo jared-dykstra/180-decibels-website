@@ -2,6 +2,7 @@
 
 $decibels-red: rgb(146, 26, 15);
 $decibels-teal: rgb(54, 207, 218);
+$decibels-soft-white: rgb(249, 249, 249);
 $decibels-light-grey: rgb(100, 100, 100);
 $decibels-dark-grey: rgb(50, 50, 50);
 
@@ -20,7 +21,7 @@ $font-weight-bold: 600;
 
 // Nav
 // Default padding is 0.5em.  Set to 1em so that Header.module.scss can set a negative margin on the logo
-$navbar-padding-y: 1em;
+// $navbar-padding-y: 1em;
 
 // Links
 $primary: $decibels-teal;
