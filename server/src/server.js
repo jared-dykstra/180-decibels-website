@@ -28,7 +28,7 @@ export const makeServer = ({ clientRoot }) => {
       secret: config.get('jwtSecret'),
       credentialsRequired: false,
       getToken: req => {
-        const jwtCookie = req.cookies[config.get('jwtCookieName')]
+        const jwtCookie = req.cookies[config.get('profileCookieName')]
         return jwtCookie
       }
     })

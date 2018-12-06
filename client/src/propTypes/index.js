@@ -5,4 +5,4 @@ export const questionsPropType = PropTypes.arrayOf(
 )
 
 // hash object, with question ids as keys
-export const responsesPropType = PropTypes.objectOf(PropTypes.string)
+export const responsesPropType = PropTypes.object

@@ -1,26 +1,36 @@
 @import '~styles/custom';
 
 .home {
-  :global {
-    section {
-      margin-bottom: 5em;
-    }
+  :global .video-react {
+    border: 1px solid $decibels-red;
+  }
+
+  :global .jumbotron:hover {
+    background-color: $decibels-soft-white !important;
+    transition: background-color 0.5s ease;
   }
 }
 
-.section-splash {
-  color: $decibels-red;
-  text-align: center;
 
-  svg {
-    fill: currentColor;
-    height: 20em;
-    margin-bottom: 1em;
-  }
+.banner {
+  margin-bottom: 2em;
 
   h1 {
-    color: $decibels-teal;
-    font-size: 3.5rem;
-    font-weight: 800;
+    margin-bottom: 2em;
+    margin-left: .5em;
+    margin-right: .5em;
+    text-shadow: 0 0 25px rgba(255, 255, 255, 1);
   }
+
+  :global .card {
+    background-color: rgba($decibels-soft-white, 0.9);
+    border-radius: 2em;
+    margin-left: .5em;
+    margin-right: .5em;
+    padding: 0.25em;
+  }
+}
+
+.video-row {
+  margin-top: 5em;
 }

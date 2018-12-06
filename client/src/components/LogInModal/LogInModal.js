@@ -72,7 +72,7 @@ class LogInModal extends PureComponent {
     const signInText = 'Sign In'
     return (
       <div>
-        <Button color="primary" onClick={this.toggleModal}>
+        <Button color="primary" outline onClick={this.toggleModal}>
           <FontAwesomeIcon icon={faUser} />
           &nbsp;
           {signInText}

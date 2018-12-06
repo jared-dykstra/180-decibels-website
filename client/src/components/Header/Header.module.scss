@@ -1,6 +1,8 @@
 @import '~styles/custom';
 
 .mini-brand {
+  color: $decibels-red;
+
   svg {
     fill: $decibels-red;
     height: 2em;

@@ -16,6 +16,7 @@ import {
 import 'bootstrap'
 import 'styles/fonts.scss'
 import 'styles/custom.scss'
+import 'video-react/dist/video-react.css'
 
 class App extends PureComponent {
   static propTypes = {

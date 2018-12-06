@@ -9,13 +9,14 @@ import {
   AUTH_AUTHENTICATE,
   AUTH_REGISTER,
   AUTH_SIGNIN,
+  AUTH_SIGNOUT,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY,
   REGISTER_FORM_PASSWORD1_KEY,
   REGISTER_FORM_PASSWORD2_KEY
 } from './authConstants'
 import { signInSuccess } from './authPrivateActions'
-import { authenticate, signIn, registerUser } from './fetcher'
+import { authenticate, signIn, signOut, registerUser } from './fetcher'
 
 // Parses a GraphQL response
 const getValidationErrors = response => {
@@ -46,6 +47,10 @@ function* authenticateHandler() {
   } catch (err) {
     console.warn(`Authentication Error.  err=${JSON.stringify(err)}`)
   }
+}
+
+function* signOutHandler() {
+  yield call(signOut)
 }
 
 function* signInHandler(action) {
@@ -109,6 +114,7 @@ export default function*() {
   yield all([
     takeLatest(AUTH_AUTHENTICATE, authenticateHandler),
     takeLatest(AUTH_SIGNIN, signInHandler),
+    takeLatest(AUTH_SIGNOUT, signOutHandler),
     takeLatest(AUTH_REGISTER, registerHandler)
   ])
 }

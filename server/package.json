@@ -27,7 +27,8 @@
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

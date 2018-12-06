@@ -42,7 +42,7 @@ export const signIn = async credentials => {
             email
             phone
           }
-          token
+          userProfileToken
         }
       }
     `,
@@ -54,6 +54,17 @@ export const signIn = async credentials => {
   const retval = await clientExecuteAsync(link, operation)
   const response = _get(retval, 'data.signIn')
   return response || retval
+}
+
+export const signOut = async () => {
+  const operation = {
+    query: gql`
+      mutation signOut {
+        signOut
+      }
+    `
+  }
+  await clientExecuteAsync(link, operation)
 }
 
 export const authenticate = async () => {
@@ -68,7 +79,7 @@ export const authenticate = async () => {
             email
             phone
           }
-          token
+          userProfileToken
         }
       }
     `
@@ -106,7 +117,7 @@ export const registerUser = async user => {
             email
             phone
           }
-          token
+          userProfileToken
         }
       }
     `,

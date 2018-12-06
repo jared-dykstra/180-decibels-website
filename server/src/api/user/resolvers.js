@@ -11,9 +11,11 @@ export default {
       dsSelector(context).authenticate(context)
   },
   Mutation: {
+    registerUser: (parent, args, context, info) =>
+      dsSelector(context).registerUser(args, context),
     signIn: (parent, args, context, info) =>
       dsSelector(context).signIn(args, context),
-    registerUser: (parent, args, context, info) =>
-      dsSelector(context).registerUser(args, context)
+    signOut: (parent, args, context, info) =>
+      dsSelector(context).signOut(args, context)
   }
 }

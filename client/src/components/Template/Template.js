@@ -7,15 +7,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Container } from 'reactstrap'
 
-import { Header, Footer } from '..'
+import { Header, Footer } from 'components'
+import styles from './template.module.scss'
 
-const Template = ({ className, children }) => (
-  <Container>
+const Template = ({ className, children }) => [
+  <Container key="container" className={styles.page}>
     <Header />
     <div className={className}>{children}</div>
-    <Footer />
-  </Container>
-)
+  </Container>,
+  <Footer key="footer" />
+]
 
 Template.propTypes = {
   className: PropTypes.string,

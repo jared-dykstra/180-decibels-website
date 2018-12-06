@@ -7,6 +7,7 @@ import resolvers from './resolvers'
 
 const typeDefs = gql`
   type User {
+    id: ID!
     firstName: String!
     lastName: String!
     company: String!
@@ -16,7 +17,7 @@ const typeDefs = gql`
 
   type AuthResponse @cacheControl(scope: PRIVATE) {
     user: User!
-    token: String!
+    userProfileToken: String!
   }
 
   input UserInput {
@@ -39,8 +40,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    signIn(email: String!, password: String!): AuthResponse!
     registerUser(user: UserInput!): AuthResponse!
+    signIn(email: String!, password: String!): AuthResponse!
+    signOut: String
   }
 `
 
