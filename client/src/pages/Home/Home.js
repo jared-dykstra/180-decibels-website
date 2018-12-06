@@ -83,7 +83,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       <Row className={styles['video-row']}>
         <Col md="4" className="d-none d-md-block">
           <Quote cite="Aldous Huxley">
-            180 Decibels increased my team&apos;s soma by 25%
+            180 Decibels increased my team&apos;s results by 25%
           </Quote>
         </Col>
         <Col md="8">
