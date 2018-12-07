@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import {
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM,
+  ROUTE_HOME,
   ROUTE_OUR_TEAM
 } from 'redux/routes/routesConstants'
 import { SocialLinks } from 'components'
@@ -19,7 +20,9 @@ export default () => [
         <Navbar>
           <Nav vertical>
             <NavItem>
-              <b>What We Do</b>
+              <Link to={ROUTE_HOME}>
+                <b>What We Do</b>
+              </Link>
             </NavItem>
             <ul>
               <NavItem>
@@ -36,7 +39,9 @@ export default () => [
         <Navbar>
           <Nav vertical>
             <NavItem>
-              <b>Who We Are</b>
+              <Link to={ROUTE_HOME}>
+                <b>Who We Are</b>
+              </Link>
             </NavItem>
             <ul>
               <NavItem>Why Us</NavItem>
