@@ -4,6 +4,6 @@
     "number-leading-zero": null,
     "max-nesting-depth": 3,
     "selector-max-compound-selectors": 4,
-    "scss/at-extend-no-missing-placeholder": false
+    "scss/at-extend-no-missing-placeholder": null
   }
 }
