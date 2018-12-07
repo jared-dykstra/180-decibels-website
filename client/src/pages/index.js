@@ -1,5 +1,6 @@
 export { default as Home } from './Home/Home'
 export { default as HelpMe } from './HelpMe/HelpMe'
 export { default as HelpMyTeam } from './HelpMyTeam/HelpMyTeam'
-export { default as OurTeam } from './OurTeam/OurTeam'
 export { default as NotFound } from './NotFound/NotFound'
+export { default as OurTeam } from './OurTeam/OurTeam'
+export { default as Privacy } from './Privacy/Privacy'

@@ -1,7 +1,9 @@
 import React from 'react'
 
+import { Template } from 'components'
+
 export default () => (
-  <div>
+  <Template>
     <h1>Privacy Policy</h1>
 
     <p>Effective date: November 14, 2018</p>
@@ -261,5 +263,5 @@ export default () => (
     <ul>
       <li>By email: info@180decibels.com</li>
     </ul>
-  </div>
+  </Template>
 )

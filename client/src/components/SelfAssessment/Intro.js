@@ -9,7 +9,11 @@ const Intro = ({ next }) => (
     <h2>Set the Volume.</h2>
     <div className={`text-center ${styles['control-row']}`}>
       <h2>How loudly will each of the following questions resonate?</h2>
-      <Button size="lg" color="primary" onClick={next}>
+      <Button
+        size="lg"
+        color="primary"
+        onClick={e => next || e.stopPropagation()}
+      >
         Begin Self Assessment
       </Button>
     </div>

@@ -5,13 +5,14 @@ import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
 
 import { authenticate } from 'redux/auth/authActions'
-import { HelpMe, HelpMyTeam, Home, NotFound, OurTeam } from 'pages'
+import { HelpMe, HelpMyTeam, Home, NotFound, OurTeam, Privacy } from 'pages'
 import { ScrollToTop } from 'components'
 import {
   ROUTE_HOME,
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM,
-  ROUTE_OUR_TEAM
+  ROUTE_OUR_TEAM,
+  ROUTE_PRIVACY
 } from './redux/routes/routesConstants'
 
 import 'bootstrap'
@@ -41,6 +42,7 @@ class App extends PureComponent {
             render={() => <HelpMyTeam />}
           />
           <Route exact path={ROUTE_OUR_TEAM} render={() => <OurTeam />} />
+          <Route exact path={ROUTE_PRIVACY} render={() => <Privacy />} />
           <Route render={() => <NotFound />} />
         </Switch>
       </ScrollToTop>
