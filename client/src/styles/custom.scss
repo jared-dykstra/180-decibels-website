@@ -13,11 +13,9 @@ $decibels-dark-grey: rgb(50, 50, 50);
 $font-family-sans-serif: 'Ubuntu', sans-serif;
 $font-weight-light: 200;
 $font-weight-normal: 300;
-$font-weight-bold: 600;
+$font-weight-bold: 800;
 
-// $font-size-base: 1rem; // Assumes the browser default, typically `16px`
-// $font-size-lg:   ($font-size-base * 1.25);
-// $font-size-sm:   ($font-size-base * 0.875);
+$line-height-base: 1.75;
 
 // Links
 $primary: $decibels-teal;
@@ -42,7 +40,6 @@ $headings-color: $decibels-red;
 // @import "node_modules/bootstrap/scss/images";
 // @import "node_modules/bootstrap/scss/code";
 // @import "node_modules/bootstrap/scss/grid";
-
 
 // Navbar
 .navbar {

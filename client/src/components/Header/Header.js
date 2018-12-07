@@ -71,7 +71,10 @@ class Header extends PureComponent {
             </NavItem>
             <NavItem>
               {!isHomePage && (
-                <Button color="primary" className="float-right">
+                <Button
+                  color="primary"
+                  className={`${styles['nav-action']} float-right`}
+                >
                   Get Started
                 </Button>
               )}

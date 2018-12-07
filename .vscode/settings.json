@@ -20,12 +20,15 @@
   "markdown.extension.toc.updateOnSave": true,
   "markdown.extension.orderedList.marker": "one",
   "cSpell.words": [
+    "architected",
+    "blockchain",
     "dropdown",
     "form",
     "gitignore",
     "graphiql",
     "key",
     "mailto",
+    "nbsp",
     "parallelize",
     "reactstrap",
     "resave",
@@ -33,6 +36,7 @@
     "retval",
     "signin",
     "signout",
+    "underperforming",
     "unhashed",
     "unmount",
     "user"

@@ -3,24 +3,53 @@
 .quote {
   blockquote {
     background: $decibels-soft-white;
-    border-left: 10px solid $decibels-red;
-    font-size: 2em;
+    font-size: 1em;
     margin: 1.5em 10px;
     margin-top: 0;
     padding: 0.5em 10px;
-    quotes: '\201C''\201D''\2018''\2019';
   }
 
-  blockquote::before {
-    color: $decibels-light-grey;
-    content: open-quote;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-  }
-
-  blockquote p {
-    display: inline;
-  }
+  color: $decibels-red !important;
 }
+
+.left {
+  border-left: 10px solid $decibels-red;
+}
+
+.right {
+  border-right: 10px solid $decibels-red;
+}
+
+.glyph {
+  color: $decibels-light-grey;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+// .quote {
+//   color: red;
+//   font-size: 1rem;
+// }
+
+// @include media-breakpoint-up(sm) {
+//   .quote {
+//     color: green;
+//     font-size: 1.2rem;
+//   }
+// }
+
+// @include media-breakpoint-up(md) {
+//   .quote {
+//     color: blue;
+//     font-size: 1.4rem;
+//   }
+// }
+
+// @include media-breakpoint-up(lg) {
+//   .quote {
+//     color: yellow;
+//     font-size: 2em;
+//   }
+// }

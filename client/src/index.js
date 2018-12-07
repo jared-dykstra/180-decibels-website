@@ -19,6 +19,9 @@ ReactGA.initialize(configGet('googleTrackingId'))
 const logPageView = location => {
   const { search } = location
   const uri = window.location.pathname + search
+  // TODO: Read the UserID from the cookie
+  // TODO: Send event to our own API
+  // TODO: Set the ReactGA UserID parameter - https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference
   ReactGA.pageview(uri)
 }
 

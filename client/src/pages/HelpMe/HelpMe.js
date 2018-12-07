@@ -6,11 +6,8 @@ export default () => (
   <Template>
     <h1>Help Me</h1>
     <p>
-      <i>Situational Awareness...</i>
-    </p>
-    <p>
-      Use this self-assessment to understand your situation. It only takes one
-      minute to get concrete next steps.
+      It only takes one minute to get concrete next steps. Use this
+      self-assessment to understand your situation.
     </p>
     <p>
       These questions are enough to create an initial report, which will contain

@@ -2,7 +2,11 @@ import React from 'react'
 import { Col, Container, Nav, Navbar, NavItem, Row } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
+import {
+  ROUTE_HELP_ME,
+  ROUTE_HELP_MY_TEAM,
+  ROUTE_OUR_TEAM
+} from 'redux/routes/routesConstants'
 import { SocialLinks } from 'components'
 
 import styles from './Footer.module.scss'
@@ -37,7 +41,9 @@ export default () => [
             <ul>
               <NavItem>Why Us</NavItem>
               <NavItem>How We Work</NavItem>
-              <NavItem>Our Team</NavItem>
+              <NavItem>
+                <Link to={ROUTE_OUR_TEAM}>Our Team</Link>
+              </NavItem>
               <NavItem>Confidentiality</NavItem>
             </ul>
           </Nav>

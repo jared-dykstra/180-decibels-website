@@ -70,21 +70,19 @@ class LogInModal extends PureComponent {
   renderSignInButton = () => {
     const { isModalOpen } = this.props
     const signInText = 'Sign In'
-    return (
-      <div>
-        <Button color="primary" outline onClick={this.toggleModal}>
-          <FontAwesomeIcon icon={faUser} />
-          &nbsp;
-          {signInText}
-        </Button>
-        <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>{signInText}</ModalHeader>
-          <ModalBody>
-            <LogIn signInText={signInText} resetText="Reset" />
-          </ModalBody>
-        </Modal>
-      </div>
-    )
+    return [
+      <Button key="button" color="primary" outline onClick={this.toggleModal}>
+        <FontAwesomeIcon icon={faUser} />
+        &nbsp;
+        {signInText}
+      </Button>,
+      <Modal key="modal" isOpen={isModalOpen} toggle={this.toggleModal}>
+        <ModalHeader toggle={this.toggleModal}>{signInText}</ModalHeader>
+        <ModalBody>
+          <LogIn signInText={signInText} resetText="Reset" />
+        </ModalBody>
+      </Modal>
+    ]
   }
 
   renderUserButton = () => {
@@ -114,10 +112,10 @@ class LogInModal extends PureComponent {
     const { isAuthenticating, isSignedIn, className } = this.props
     // During the authentication process, it's unclear whether to display a login button or not, so display nothing
     return (
-      <div className={className}>
+      <span className={className}>
         {!isAuthenticating &&
           (isSignedIn ? this.renderUserButton() : this.renderSignInButton())}
-      </div>
+      </span>
     )
   }
 }

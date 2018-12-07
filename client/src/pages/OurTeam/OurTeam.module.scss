@@ -1,0 +1,20 @@
+@import '~styles/custom';
+
+.our-team {
+  h2 {
+    margin-top: 2em;
+  }
+
+  h3 {
+    color: rgb(0,0,0);
+  }
+}
+
+.quote {
+  @extend .h5;
+  margin-top: 2em;
+}
+
+.founder {
+  margin-bottom: 6em;
+}
