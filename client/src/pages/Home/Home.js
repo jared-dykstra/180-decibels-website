@@ -28,27 +28,23 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       <Row>
         <Col>
           <LazyHero
-            imageSrc={`${CDN}/teal-mountains.jpg`}
+            imageSrc={`${CDN}/noisy-kid.jpg`}
             parallaxOffset={150}
-            opacity={0.4}
             minHeight="35em"
+            opacity={0.1}
+            color="rgb(54, 207, 218)" // <-- Teal
+            // opacity={0.1}
+            // color="rgb(0,0,0)"
             className={styles.banner}
           >
-            <h1>Removing the complexity from managing your team</h1>
-            <Card body>
-              <CardTitle>Get Started with a Free Hour!</CardTitle>
-              <CardBody>
-                <Row>
-                  <Col lg="8">
-                    Start today and see how you can immediately benefit from
-                    what we have to offer
-                  </Col>
-                  <Col lg="4">
-                    <Button color="primary">Get Started</Button>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
+            <div className={styles.overlay}>
+              <h1>
+                <b>Removing the complexity from managing your team</b>
+              </h1>
+              <Button color="primary">
+                Schedule a Complimentary Results Coaching Session Now
+              </Button>
+            </div>
           </LazyHero>
         </Col>
       </Row>

@@ -2,5 +2,6 @@
 
 export default {
   apiEndpoint: '/graphql',
-  cdn: 'https://dm88nuc3kw2st.cloudfront.net'
+  cdn: 'https://dm88nuc3kw2st.cloudfront.net',
+  googleTrackingId: 'UA-129693169-2'
 }

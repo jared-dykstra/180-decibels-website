@@ -14,20 +14,20 @@
 
 .banner {
   margin-bottom: 2em;
+}
 
-  h1 {
-    margin-bottom: 2em;
+.overlay {
+  // background-color: rgba(0, 0, 0, .6);
+  padding-bottom: 1em;
+
+  h1 > b {
+    color: rgb(255, 255, 255);
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-bottom: 1em;
     margin-left: .5em;
     margin-right: .5em;
-    text-shadow: 0 0 25px rgba(255, 255, 255, 1);
-  }
-
-  :global .card {
-    background-color: rgba($decibels-soft-white, 0.9);
-    border-radius: 2em;
-    margin-left: .5em;
-    margin-right: .5em;
-    padding: 0.25em;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 1);
   }
 }
 

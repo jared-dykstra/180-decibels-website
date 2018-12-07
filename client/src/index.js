@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
+import ReactGA from 'react-ga'
 
+import { get as configGet } from 'config'
 import createStore from 'redux/createStore'
 
 import * as serviceWorker from './serviceWorker'
@@ -12,14 +14,36 @@ import App from './App'
 const history = createBrowserHistory()
 const store = createStore(history)
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById('root')
-)
+ReactGA.initialize(configGet('googleTrackingId'))
+
+const logPageView = location => {
+  const { search } = location
+  const uri = window.location.pathname + search
+  ReactGA.pageview(uri)
+}
+
+history.listen(location => {
+  logPageView(location)
+})
+
+class Router extends PureComponent {
+  componentDidMount = () => {
+    const { pathname, search } = window.location
+    logPageView({ pathname, search })
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </Provider>
+    )
+  }
+}
+
+ReactDOM.render(<Router />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
