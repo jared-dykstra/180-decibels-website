@@ -22,19 +22,11 @@ class Header extends PureComponent {
     return (
       <Navbar color="faded" light expand="md" className={styles.header}>
         <Col xs="6" md="4" className={styles.brand}>
-          {!isHomePage && (
+          <span className="text-nowrap">
             <Link className={brandLinkClassName} to={ROUTE_HOME}>
-              <span className="text-nowrap">
-                <Logo /> 180 Decibels
-              </span>
+              <Logo /> 180 Decibels
             </Link>
-          )}
-          {isHomePage && (
-            <div className={brandLinkClassName}>
-              <Logo />
-              180 Decibels
-            </div>
-          )}
+          </span>
         </Col>
         <Col xs="6" md="3">
           <a className="text-nowrap float-right" href="tel:+18883214531">

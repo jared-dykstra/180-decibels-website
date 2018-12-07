@@ -55,12 +55,16 @@ export default () => [
       <Col>
         <Navbar>
           <Nav>
-            <a href="mailto:info@180decibels.com">info@180decibels.com</a>
+            <a href="mailto:info@180decibels.com" className="text-nowrap">
+              info@180decibels.com
+            </a>
           </Nav>
           <Nav>
             <SocialLinks />
           </Nav>
-          <a href="tel:+18883214531">1-888-321-4531</a>
+          <a href="tel:+18883214531" className="text-nowrap">
+            1-888-321-4531
+          </a>
         </Navbar>
       </Col>
     </Row>

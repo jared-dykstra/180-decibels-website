@@ -41,6 +41,10 @@ $headings-color: $decibels-red;
 // @import "node_modules/bootstrap/scss/code";
 // @import "node_modules/bootstrap/scss/grid";
 
+b {
+  font-weight: $font-weight-bold;
+}
+
 // Navbar
 .navbar {
   font-size: $font-size-lg;

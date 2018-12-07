@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTwitter,
   faLinkedin,
-  faFacebook,
-  faMedium
+  faFacebook
 } from '@fortawesome/free-brands-svg-icons'
 import { NavItem, NavLink } from 'reactstrap'
 
@@ -21,10 +20,8 @@ const social = [
     icon: faTwitter
   },
   {
-    icon: faFacebook
-  },
-  {
-    icon: faMedium
+    icon: faFacebook,
+    url: 'https://www.facebook.com/180Decibels/'
   }
 ]
 

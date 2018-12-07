@@ -88,6 +88,15 @@ $slider-padding: .75em;
     height: calc(#{$slider-height} + #{$slider-padding});
     margin-top: calc(#{$slider-padding} / 2);
   }
+
+}
+
+:global .rc-slider-rail {
+  box-shadow: 0 0 $slider-padding .1em $decibels-teal;
+}
+
+:global .rc-slider-rail:hover {
+  box-shadow: 0 0 $slider-padding .3em $decibels-teal;
 }
 
 :global .rc-slider-disabled {
