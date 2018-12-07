@@ -1,17 +1,8 @@
-import Immutable from 'seamless-immutable'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {
-  Button,
-  Collapse,
-  Nav,
-  Navbar,
-  NavbarToggler,
-  NavItem,
-  NavLink
-} from 'reactstrap'
+import { Button, Col, Navbar } from 'reactstrap'
 
 import { LogInModal, Logo } from 'components'
 import { isHomePageSelector } from 'redux/routes/routesSelectors'
@@ -24,63 +15,46 @@ class Header extends PureComponent {
     isHomePage: PropTypes.bool.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    this.state = Immutable.from({
-      isOpen: false
-    })
-  }
-
-  toggleNavbar = () => {
-    this.setState(prevState =>
-      Immutable.from({
-        isOpen: !prevState.isOpen
-      })
-    )
-  }
-
   render() {
-    const { isOpen } = this.state
     const { isHomePage } = this.props
 
     const brandLinkClassName = `${styles['mini-brand']}`
     return (
-      <Navbar color="faded" light expand="md">
-        {!isHomePage && (
-          <Link className={brandLinkClassName} to={ROUTE_HOME}>
-            <Logo />
-            180 Decibels
-          </Link>
-        )}
-        {isHomePage && (
-          <div className={brandLinkClassName}>
-            <Logo />
-            180 Decibels
-          </div>
-        )}
-        <NavbarToggler onClick={this.toggleNavbar} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink className="float-right" href="tel:+18883214531">
-                1-888-321-4531
-              </NavLink>
-            </NavItem>
-            <NavItem className={styles.login}>
-              <LogInModal className="float-right" />
-            </NavItem>
-            <NavItem>
-              {!isHomePage && (
-                <Button
-                  color="primary"
-                  className={`${styles['nav-action']} float-right`}
-                >
-                  Get Started
-                </Button>
-              )}
-            </NavItem>
-          </Nav>
-        </Collapse>
+      <Navbar color="faded" light expand="md" className={styles.header}>
+        <Col xs="6" md="4" className={styles.brand}>
+          {!isHomePage && (
+            <Link className={brandLinkClassName} to={ROUTE_HOME}>
+              <span className="text-nowrap">
+                <Logo /> 180 Decibels
+              </span>
+            </Link>
+          )}
+          {isHomePage && (
+            <div className={brandLinkClassName}>
+              <Logo />
+              180 Decibels
+            </div>
+          )}
+        </Col>
+        <Col xs="6" md="3">
+          <a className="text-nowrap float-right" href="tel:+18883214531">
+            1-888-321-4531
+          </a>
+        </Col>
+        <Col
+          xs={{ size: 12, offset: 0 }}
+          md={{ size: 5, offset: 0 }}
+          className={styles.buttons}
+        >
+          <span className="float-right">
+            <LogInModal />
+            {!isHomePage && (
+              <span>
+                &nbsp;&nbsp;<Button color="primary">Get Started</Button>
+              </span>
+            )}
+          </span>
+        </Col>
       </Navbar>
     )
   }
