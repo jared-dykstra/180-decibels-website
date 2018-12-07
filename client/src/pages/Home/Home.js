@@ -50,7 +50,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Row>
       <Row>
         <Col sm="6">
-          <Jumbotron className="shadow-lg">
+          <Jumbotron className="shadow-lg" onClick={doClickHelpMe}>
             <h2>I am an Owner Operator</h2>
             <p>
               We re-focus managers on driving to outcome and on creating
@@ -65,7 +65,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           </Jumbotron>
         </Col>
         <Col sm="6">
-          <Jumbotron className="shadow-lg">
+          <Jumbotron className="shadow-lg" onClick={doClickHelpMyTeam}>
             <h2>I am a Manager</h2>
             <p>
               Are you a manager or leader who is frustrated by your team’s

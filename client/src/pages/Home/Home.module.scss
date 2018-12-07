@@ -5,8 +5,12 @@
     border: 1px solid $decibels-red;
   }
 
+  :global .jumbotron {
+    background-color: darken($decibels-soft-white, 7);
+  }
+
   :global .jumbotron:hover {
-    background-color: $decibels-soft-white !important;
+    background-color: darken($decibels-soft-white, 2);
     transition: background-color 0.5s ease;
   }
 }
