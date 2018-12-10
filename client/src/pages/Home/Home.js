@@ -86,7 +86,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
               block
               color="primary"
               onClick={e => {
-                doClickHelpMe()
+                doClickHelpMyTeam()
                 e.stopPropagation()
               }}
             >

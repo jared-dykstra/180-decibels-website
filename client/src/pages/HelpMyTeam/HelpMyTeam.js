@@ -6,7 +6,7 @@ import styles from './HelpMyTeam.module.scss'
 
 export default () => (
   <Template>
-    <h1>Help Me</h1>
+    <h1>Help My Team</h1>
     <p className="lead">
       We re-focus managers on driving to outcome and on creating urgency. We
       offer a practical, results-oriented process to build a high-performing
