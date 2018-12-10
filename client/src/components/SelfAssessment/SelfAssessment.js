@@ -6,10 +6,7 @@ import {
   Carousel,
   CarouselItem,
   CarouselControl,
-  CarouselIndicators,
-  Container,
-  Col,
-  Row
+  CarouselIndicators
 } from 'reactstrap'
 
 import { LogIn } from 'components'
@@ -141,43 +138,35 @@ class SelfAssessment extends PureComponent {
     const canAdvanceSlide = isFirstSlide || currentQuestionHasBeenRespondedTo
 
     return (
-      <Container>
-        <Row>
-          <Col md={1} />
-          <Col md={10}>
-            <Carousel
-              interval={false}
-              activeIndex={currentIndex}
-              next={this.next}
-              previous={this.previous}
-              className={styles.carousel}
-            >
-              <CarouselIndicators
-                // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
-                items={slides.map(s => ({ src: s.key }))}
-                activeIndex={currentIndex}
-                onClickHandler={e => e.stopPropagation()}
-              />
-              {slides}
-              {!isFirstSlide && (
-                <CarouselControl
-                  direction="prev"
-                  directionText="Previous"
-                  onClickHandler={this.previous}
-                />
-              )}
-              {canAdvanceSlide && (
-                <CarouselControl
-                  direction="next"
-                  directionText="Next"
-                  onClickHandler={this.next}
-                />
-              )}
-            </Carousel>
-          </Col>
-          <Col md={4} />
-        </Row>
-      </Container>
+      <Carousel
+        interval={false}
+        activeIndex={currentIndex}
+        next={this.next}
+        previous={this.previous}
+        className={styles.carousel}
+      >
+        <CarouselIndicators
+          // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
+          items={slides.map(s => ({ src: s.key }))}
+          activeIndex={currentIndex}
+          onClickHandler={e => e.stopPropagation()}
+        />
+        {slides}
+        {!isFirstSlide && (
+          <CarouselControl
+            direction="prev"
+            directionText="Previous"
+            onClickHandler={this.previous}
+          />
+        )}
+        {canAdvanceSlide && (
+          <CarouselControl
+            direction="next"
+            directionText="Next"
+            onClickHandler={this.next}
+          />
+        )}
+      </Carousel>
     )
   }
 }

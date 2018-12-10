@@ -1,35 +1,45 @@
 import React from 'react'
+import { Row, Col } from 'reactstrap'
 
 import { Quote, SelfAssessment, Template } from 'components'
 
 import styles from './HelpMe.module.scss'
 
 export default () => (
-  <Template>
-    <h1>Help Me</h1>
-    <p className="lead">
-      We generate real ROI and substantially grow confidence team&apos;s ability
-      to execute.
-    </p>
-    <Quote cite="John, Executive Director" className={styles.quote}>
-      “My very first sit down with 180Decibels was eye opening, to say the
-      least. From the first few questions I knew that I had much to discover and
-      was about to enter a learning cycle that would take me to a great future.
-      I am discovering new aspects of myself and how I can cooperate and lead my
-      team.”
-    </Quote>
-    <p>
-      We let you set the direction while we saturate your organization with a
-      proven process for getting where you want to go. Our mission is to
-      measurably improve team productivity with tactical operational tools and
-      processes.
-    </p>
-    <p>
-      <b>It only takes one minute to get results you can use.</b> Use this
-      self-assessment to understand your situation. These questions are enough
-      to create an initial report, which will contain concrete, actionable steps
-      that you can immediately use.
-    </p>
-    <SelfAssessment assessmentName="helpMe" />
+  <Template className={styles['help-me']}>
+    <Row>
+      <Col md={{ size: 10, offset: 1 }}>
+        <h1>Help Me</h1>
+
+        <p className="lead">
+          We re-focus managers on driving to outcome and on creating urgency.
+        </p>
+        <p>
+          We offer a practical, results-oriented process to build a
+          high-performing culture so you can start feeling more competent and
+          more confident and see huge productivity gains from your team.
+        </p>
+        <Quote cite="Patrick, Technical Lead" className={styles.quote}>
+          I have much more confidence and feel like I am achieving something in
+          a day. I have a tonne more motivation to work on what I am supposed to
+          be working on.
+        </Quote>
+        <p>
+          <b>It only takes one minute to get results you can use.</b> Use this
+          self-assessment to understand your situation. These questions are
+          enough to create an initial report, which will contain concrete,
+          actionable steps that you can immediately use.
+        </p>
+        <SelfAssessment assessmentName="helpMe" />
+        <p>
+          Maybe your company grew very quickly or maybe you have people in seats
+          that were never trained to manage…that is all very normal. But an
+          undirected team operates naturally in survival mode which quickly
+          leads to overwhelm. Without clear accountability and day-to-day
+          discipline, teams get bogged down and performance suffers (along with
+          morale).
+        </p>
+      </Col>
+    </Row>
   </Template>
 )

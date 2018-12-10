@@ -6,13 +6,14 @@ import { withRouter } from 'react-router-dom'
 
 import { authenticate } from 'redux/auth/authActions'
 import {
+  Confidentiality,
   HelpMe,
   HelpMyTeam,
   Home,
+  HowWeWork,
   NotFound,
   OurTeam,
-  Privacy,
-  Confidentiality
+  Privacy
 } from 'pages'
 import { ScrollToTop } from 'components'
 import {
@@ -21,7 +22,8 @@ import {
   ROUTE_HELP_MY_TEAM,
   ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
-  ROUTE_CONFIDENTIALITY
+  ROUTE_CONFIDENTIALITY,
+  ROUTE_HOW_WE_WORK
 } from './redux/routes/routesConstants'
 
 import 'bootstrap'
@@ -50,6 +52,7 @@ class App extends PureComponent {
             path={ROUTE_HELP_MY_TEAM}
             render={() => <HelpMyTeam />}
           />
+          <Route exact path={ROUTE_HOW_WE_WORK} render={() => <HowWeWork />} />
           <Route exact path={ROUTE_OUR_TEAM} render={() => <OurTeam />} />
           <Route
             exact

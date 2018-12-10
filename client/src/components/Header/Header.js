@@ -28,7 +28,7 @@ class Header extends PureComponent {
             </Link>
           </span>
         </Col>
-        <Col xs="6" md="3">
+        <Col xs="6" md="3" className={styles.tel}>
           <a className="text-nowrap float-right" href="tel:+18883214531">
             1-888-321-4531
           </a>
