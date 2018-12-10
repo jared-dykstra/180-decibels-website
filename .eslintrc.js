@@ -13,6 +13,7 @@ module.exports = {
     'prettier/prettier': ['error', prettierOptions],
     'import/prefer-default-export': 'off',
     'react/jsx-filename-extension': 'off',
+    'jsx-a11y/anchor-is-valid': 'off'
   },
   settings: {
     "import/resolver": {
