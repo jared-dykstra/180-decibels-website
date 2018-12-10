@@ -33,9 +33,11 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
               <h1>
                 <b>Removing the complexity from managing your team</b>
               </h1>
-              <Button size="lg" color="primary">
-                Schedule a Complimentary Results Coaching Session Now
-              </Button>
+              <Col>
+                <Button size="lg" color="primary">
+                  Schedule a Complimentary Results Coaching Session Now
+                </Button>
+              </Col>
             </div>
           </LazyHero>
         </Col>
