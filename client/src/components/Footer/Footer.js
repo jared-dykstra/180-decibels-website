@@ -3,6 +3,7 @@ import { Col, Container, Nav, Navbar, NavItem, Row } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 import {
+  ROUTE_CONFIDENTIALITY,
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM,
   ROUTE_HOME,
@@ -32,6 +33,7 @@ export default () => [
               <NavItem>
                 <Link to={ROUTE_HELP_MY_TEAM}>Help My Team</Link>
               </NavItem>
+              <NavItem>How We Work</NavItem>
             </ul>
           </Nav>
         </Navbar>
@@ -45,12 +47,12 @@ export default () => [
               </Link>
             </NavItem>
             <ul>
-              <NavItem>Why Us</NavItem>
-              <NavItem>How We Work</NavItem>
               <NavItem>
                 <Link to={ROUTE_OUR_TEAM}>Our Team</Link>
               </NavItem>
-              <NavItem>Confidentiality</NavItem>
+              <NavItem>
+                <Link to={ROUTE_CONFIDENTIALITY}>Confidentiality</Link>
+              </NavItem>
               <NavItem>
                 <Link to={ROUTE_PRIVACY}>Privacy</Link>
               </NavItem>

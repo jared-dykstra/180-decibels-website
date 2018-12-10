@@ -6,11 +6,12 @@ export default () => (
   <Template>
     <h1>Privacy Policy</h1>
 
-    <p>Effective date: November 14, 2018</p>
+    <p>Effective date: December 10, 2018</p>
 
     <p>
       180 Decibels (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;) operates
-      the http://180decibels.com website (the &quot;Service&quot;).
+      the <a href="http://180decibels.com">http://180decibels.com</a> website
+      (the &quot;Service&quot;).
     </p>
 
     <p>
@@ -24,7 +25,8 @@ export default () => (
       you agree to the collection and use of information in accordance with this
       policy. Unless otherwise defined in this Privacy Policy, terms used in
       this Privacy Policy have the same meanings as in our Terms and Conditions,
-      accessible from http://180decibels.com
+      accessible from
+      <a href="http://180decibels.com">http://180decibels.com</a>
     </p>
 
     <h2>Information Collection And Use</h2>
@@ -261,7 +263,18 @@ export default () => (
       If you have any questions about this Privacy Policy, please contact us:
     </p>
     <ul>
-      <li>By email: info@180decibels.com</li>
+      <li>
+        By email:&nbsp;
+        <a href="mailto:info@180decibels.com" className="text-nowrap">
+          info@180decibels.com
+        </a>
+      </li>
+      <li>
+        By phone:&nbsp;
+        <a href="tel:+18883214531" className="text-nowrap">
+          1-888-321-4531
+        </a>
+      </li>
     </ul>
   </Template>
 )
