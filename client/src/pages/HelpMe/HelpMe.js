@@ -8,9 +8,8 @@ export default () => (
   <Template>
     <h1>Help Me</h1>
     <p className="lead">
-      Our mission is to measurably improve team productivity with tactical
-      operational tools and processes. We generate real ROI and substantially
-      grow confidence team&apos;s ability to execute.
+      We generate real ROI and substantially grow confidence team&apos;s ability
+      to execute.
     </p>
     <Quote cite="John, Executive Director" className={styles.quote}>
       “My very first sit down with 180Decibels was eye opening, to say the
@@ -20,8 +19,10 @@ export default () => (
       team.”
     </Quote>
     <p>
-      At 180, we let you set the direction while we saturate your organization
-      with a proven process for getting where you want to go.
+      We let you set the direction while we saturate your organization with a
+      proven process for getting where you want to go. Our mission is to
+      measurably improve team productivity with tactical operational tools and
+      processes.
     </p>
     <p>
       <b>It only takes one minute to get results you can use.</b> Use this
