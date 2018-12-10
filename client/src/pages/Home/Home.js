@@ -102,28 +102,32 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           </Quote>
         </Col>
         <Col md="8">
-          <Player
-            // preload="auto"
-            aspectRatio="16:9"
-            poster={`${CDN}/intro-video-poster.jpg`}
-          >
-            <source src={`${CDN}/180Voiceover2.mp4`} />
-            <BigPlayButton position="center" />
-            <ControlBar autoHide />
-          </Player>
+          <a name="intro">
+            <Player
+              // preload="auto"
+              aspectRatio="16:9"
+              poster={`${CDN}/intro-video-poster.jpg`}
+            >
+              <source src={`${CDN}/180Voiceover2.mp4`} />
+              <BigPlayButton position="center" />
+              <ControlBar autoHide />
+            </Player>
+          </a>
         </Col>
       </Row>
       <Row className={styles['video-row']}>
         <Col md="8">
-          <Player
-            // preload="auto"
-            aspectRatio="16:9"
-            poster={`${CDN}/sun-video-poster.jpg`}
-          >
-            <source src={`${CDN}/180DecibelsSunMetaphor.mp4`} />
-            <BigPlayButton position="center" />
-            <ControlBar autoHide />
-          </Player>
+          <a name="focus">
+            <Player
+              // preload="auto"
+              aspectRatio="16:9"
+              poster={`${CDN}/sun-video-poster.jpg`}
+            >
+              <source src={`${CDN}/180DecibelsSunMetaphor.mp4`} />
+              <BigPlayButton position="center" />
+              <ControlBar autoHide />
+            </Player>
+          </a>
         </Col>
         <Col md="4" className="d-none d-md-block">
           <Quote right className="h2" cite="George Orwell">
