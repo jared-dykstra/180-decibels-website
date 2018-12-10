@@ -42,7 +42,10 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Row>
       <Row>
         <Col sm="6">
-          <Jumbotron className="shadow-lg" onClick={doClickHelpMe}>
+          <Jumbotron
+            className={`shadow-lg ${styles.persona} ${styles.owner}`}
+            onClick={doClickHelpMe}
+          >
             <h2>I am an Owner Operator</h2>
             <p>
               We re-focus managers on driving to outcome and on creating
@@ -51,13 +54,24 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
               and more confident--getting huge productivity gains out of your
               team.
             </p>
-            <Button size="lg" block color="primary" onClick={doClickHelpMe}>
+            <Button
+              size="lg"
+              block
+              color="primary"
+              onClick={e => {
+                doClickHelpMe()
+                e.stopPropagation()
+              }}
+            >
               Discover how 180 Decibels can help you
             </Button>
           </Jumbotron>
         </Col>
         <Col sm="6">
-          <Jumbotron className="shadow-lg" onClick={doClickHelpMyTeam}>
+          <Jumbotron
+            className={`shadow-lg ${styles.persona} ${styles.manager}`}
+            onClick={doClickHelpMyTeam}
+          >
             <h2>I am a Manager</h2>
             <p>
               Are you a manager or leader who is frustrated by your team’s
@@ -65,7 +79,15 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
               team members KNOW what they need to do EACH DAY to meet targets?
               IF THIS SOUNDS LIKE YOUR COMPANY, WE GET IT AND WE CAN HELP.
             </p>
-            <Button size="lg" block color="primary" onClick={doClickHelpMyTeam}>
+            <Button
+              size="lg"
+              block
+              color="primary"
+              onClick={e => {
+                doClickHelpMe()
+                e.stopPropagation()
+              }}
+            >
               Discover what 180 Decibels can do for your team
             </Button>
           </Jumbotron>
