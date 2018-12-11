@@ -54,7 +54,11 @@ export default () => (
       </Row>
       <Row>
         <Col md={{ size: 6, offset: 3 }}>
-          <Quote right className={styles.quote} cite="Chris, Board Chair">
+          <Quote
+            right
+            className={`h5 ${styles.quote}`}
+            cite="Chris, Board Chair"
+          >
             Dayton brings an abundance of obvious business experience in a well
             thought out package and exposed us to the kinds of questions we
             should be asking. He helped us focus on the most important issues
@@ -89,7 +93,7 @@ export default () => (
       </Row>
       <Row>
         <Col md={{ size: 6, offset: 3 }}>
-          <Quote right className={styles.quote} cite="Derek, CEO">
+          <Quote right className={`h5 ${styles.quote}`} cite="Derek, CEO">
             Kerri is an exceptionally talented individual who expertly seized
             and and excelled with any aspect of the business that I asked her to
             tackle. She has a remarkable ability to connect with her team, her
@@ -124,7 +128,7 @@ export default () => (
       </Row>
       <Row>
         <Col md={{ size: 6, offset: 3 }}>
-          <Quote right className={styles.quote} cite="Mike, CTO">
+          <Quote right className={`h5 ${styles.quote}`} cite="Mike, CTO">
             Jared is passionate about software development and has a broad and
             deep range of technical skills spanning hardware, software,
             infrastructure, and the processes to support solution development.

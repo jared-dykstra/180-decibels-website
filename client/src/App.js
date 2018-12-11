@@ -28,7 +28,7 @@ import {
 
 import 'bootstrap'
 import 'styles/fonts.scss'
-import 'styles/custom.scss'
+import 'styles/theme.scss'
 import 'video-react/dist/video-react.css'
 
 class App extends PureComponent {

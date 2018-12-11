@@ -13,11 +13,11 @@
     padding: 30px;
     padding-bottom: 40px;
 
-    @include media-breakpoint-up(sm) {
-      h2 {
-        height: 3em;
-      }
-    }
+    // @include media-breakpoint-up(sm) {
+    //   h2 {
+    //     height: 3em;
+    //   }
+    // }
 
     h2 {
       color: $decibels-teal;

@@ -24,13 +24,13 @@
   padding-bottom: 1em;
 
   h1 > b {
-    color: rgb(255, 255, 255);
+    color: $white;
     font-size: 1.5em;
     font-weight: 800;
     margin-bottom: 1em;
     margin-left: .5em;
     margin-right: .5em;
-    text-shadow: 0 0 15px rgba(0, 0, 0, 1);
+    text-shadow: 0 0 15px rgba($black, 1);
   }
 }
 

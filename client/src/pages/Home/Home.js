@@ -97,7 +97,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
       </Row>
       <Row className={styles['video-row']}>
         <Col md="4" className="d-none d-md-block">
-          <Quote className="h2" cite="Aldous Huxley">
+          <Quote className="h3" cite="Aldous Huxley">
             180 Decibels increased my team&apos;s results by 25%
           </Quote>
         </Col>
@@ -130,7 +130,7 @@ export const Home = ({ doClickHelpMe, doClickHelpMyTeam }) => (
           </a>
         </Col>
         <Col md="4" className="d-none d-md-block">
-          <Quote right className="h2" cite="George Orwell">
+          <Quote right className="h3" cite="George Orwell">
             We are not <i>meeting</i> goals; We are <i>crushing</i> them
           </Quote>
         </Col>
