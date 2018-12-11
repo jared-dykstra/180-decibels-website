@@ -7,11 +7,11 @@
 
   :global .jumbotron {
     background-color: darken($decibels-soft-white, 7);
-  }
 
-  :global .jumbotron:hover {
-    background-color: darken($decibels-soft-white, 2);
-    transition: background-color 0.5s ease;
+    &:hover {
+      background-color: darken($decibels-soft-white, 2);
+      transition: background-color 0.5s ease;
+    }
   }
 }
 

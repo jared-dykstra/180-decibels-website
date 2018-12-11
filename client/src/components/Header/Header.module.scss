@@ -1,7 +1,11 @@
 @import '~styles/custom';
 
 .mini-brand {
-  color: $decibels-teal;
+  color: $decibels-red;
+
+  &:hover {
+    color: $decibels-teal !important;
+  }
 
   svg {
     fill: $decibels-red;

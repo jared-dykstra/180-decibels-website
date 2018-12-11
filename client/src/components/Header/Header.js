@@ -18,12 +18,11 @@ class Header extends PureComponent {
   render() {
     const { isHomePage } = this.props
 
-    const brandLinkClassName = `${styles['mini-brand']}`
     return (
       <Navbar color="faded" light expand="md" className={styles.header}>
         <Col xs="6" md="4" className={styles.brand}>
           <span className="text-nowrap">
-            <Link className={brandLinkClassName} to={ROUTE_HOME}>
+            <Link className={styles['mini-brand']} to={ROUTE_HOME}>
               <Logo /> 180 Decibels
             </Link>
           </span>

@@ -38,11 +38,12 @@ $decibels-footer-spacing: 10em;
 
   a {
     color: $decibels-soft-white;
+
+    &:hover {
+      color: $decibels-teal !important;
+    }
   }
 
-  a:hover {
-    color: $decibels-teal !important;
-  }
 }
 
 .bottom {

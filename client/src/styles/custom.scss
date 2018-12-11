@@ -59,13 +59,9 @@ b {
   border-color: $decibels-red;
   color: $white;
 
-  :hover {
+  &:hover {
     color: $link-hover-color;
   }
-}
-
-.btn-primary:hover {
-  color: $link-hover-color;
 }
 
 // Links
