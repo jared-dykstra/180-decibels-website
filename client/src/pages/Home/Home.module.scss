@@ -1,5 +1,14 @@
 @import '~styles/custom';
 
+$banner-height: 35em;
+
+:export {
+  // stylelint-disable
+  decibelsTeal: $decibels-teal;
+  bannerHeight: $banner-height;
+  // stylelint-enable
+}
+
 .home {
   :global .video-react {
     border: 1px solid $decibels-red;

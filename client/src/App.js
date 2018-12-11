@@ -45,21 +45,41 @@ class App extends PureComponent {
     return (
       <ScrollToTop {...this.props}>
         <Switch>
-          <Route exact path={ROUTE_HOME} render={() => <Home />} />
-          <Route exact path={ROUTE_HELP_ME} render={() => <HelpMe />} />
+          <Route
+            exact
+            path={ROUTE_HOME}
+            render={() => <Home {...this.props} />}
+          />
+          <Route
+            exact
+            path={ROUTE_HELP_ME}
+            render={() => <HelpMe {...this.props} />}
+          />
           <Route
             exact
             path={ROUTE_HELP_MY_TEAM}
-            render={() => <HelpMyTeam />}
+            render={() => <HelpMyTeam {...this.props} />}
           />
-          <Route exact path={ROUTE_HOW_WE_WORK} render={() => <HowWeWork />} />
-          <Route exact path={ROUTE_OUR_TEAM} render={() => <OurTeam />} />
+          <Route
+            exact
+            path={ROUTE_HOW_WE_WORK}
+            render={() => <HowWeWork {...this.props} />}
+          />
+          <Route
+            exact
+            path={ROUTE_OUR_TEAM}
+            render={() => <OurTeam {...this.props} />}
+          />
           <Route
             exact
             path={ROUTE_CONFIDENTIALITY}
-            render={() => <Confidentiality />}
+            render={() => <Confidentiality {...this.props} />}
           />
-          <Route exact path={ROUTE_PRIVACY} render={() => <Privacy />} />
+          <Route
+            exact
+            path={ROUTE_PRIVACY}
+            render={() => <Privacy {...this.props} />}
+          />
           <Route render={() => <NotFound />} />
         </Switch>
       </ScrollToTop>

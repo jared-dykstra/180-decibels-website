@@ -18,6 +18,16 @@ class ScrollToTop extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { location } = this.props
+    if (location.hash) {
+      const element = document.getElementById(location.hash)
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth'
+        })
+        return
+      }
+    }
+
     if (location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0)
     }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'reactstrap'
+import { Button, Row, Col } from 'reactstrap'
 
 import { Quote, Template } from 'components'
 
@@ -34,7 +34,9 @@ export default () => (
           person or online.
         </p>
         <p>
-          <a href="#">Get Started with our Unique Approach Today!</a>
+          <Button size="lg" color="primary">
+            Get Started with our Unique Approach Today!
+          </Button>
         </p>
       </Col>
     </Row>
@@ -83,7 +85,9 @@ export default () => (
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <p>
-          <a href="#">Experience a 180 Today!</a>
+          <Button size="lg" color="primary">
+            Experience a 180 Today!
+          </Button>
         </p>
         <Quote cite="Sarah, Manager">
           This process brought clarity and focus to our team. I was able to take
