@@ -9,10 +9,15 @@ import {
   reducer as authReducer,
   saga as authSaga
 } from './auth'
+import {
+  mountPoint as getStartedMountPoint,
+  reducer as getStartedReducer
+} from './getStarted'
 
 export const reducers = {
   [selfAssessmentMountPoint]: selfAssessmentReducer,
-  [authMountPoint]: authReducer
+  [authMountPoint]: authReducer,
+  [getStartedMountPoint]: getStartedReducer
 }
 
 export function* rootSaga() {

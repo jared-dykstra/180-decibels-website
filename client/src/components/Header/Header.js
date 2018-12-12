@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Col, Navbar } from 'reactstrap'
+import { Col, Navbar } from 'reactstrap'
 
-import { LogInModal, Logo } from 'components'
+import { GetStartedModal, LogInModal, Logo } from 'components'
 import { isHomePageSelector } from 'redux/routes/routesSelectors'
 import { ROUTE_HOME } from 'redux/routes/routesConstants'
 
@@ -41,7 +41,7 @@ class Header extends PureComponent {
             <LogInModal />
             {!isHomePage && (
               <span>
-                &nbsp;&nbsp;<Button color="primary">Get Started</Button>
+                &nbsp;&nbsp;<GetStartedModal>Get Started</GetStartedModal>
               </span>
             )}
           </span>

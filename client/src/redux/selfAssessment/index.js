@@ -3,7 +3,6 @@ import * as actions from './selfAssessmentActions'
 import * as selectors from './selfAssessmentSelectors'
 
 export { default as reducer } from './selfAssessmentReducer'
-// export { default as saga } from './eosSaga'
 export { actions }
 export { selectors }
 export const mountPoint = 'selfAssessment'

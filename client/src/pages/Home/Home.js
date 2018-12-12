@@ -8,7 +8,7 @@ import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
 import { get as configGet } from 'config'
 
-import { Quote, Template } from 'components'
+import { GetStartedModal, Quote, Template } from 'components'
 import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
 import styles from './Home.module.scss'
@@ -39,9 +39,9 @@ export class Home extends PureComponent {
               <div className={styles.overlay}>
                 <h1 className="pt-2 pt-sm-4 pt-lg-5">{tagline}</h1>
                 <div className={`mb-2 pb-sm-3 ${styles['btn-container']}`}>
-                  <Button size="lg" color="primary" className="p-lg-3">
+                  <GetStartedModal size="lg" className="p-lg-3">
                     Schedule a Complimentary Results Coaching Session Now
-                  </Button>
+                  </GetStartedModal>
                 </div>
               </div>
             </div>

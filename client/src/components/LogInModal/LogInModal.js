@@ -76,7 +76,12 @@ class LogInModal extends PureComponent {
         &nbsp;
         {signInText}
       </Button>,
-      <Modal key="modal" isOpen={isModalOpen} toggle={this.toggleModal}>
+      <Modal
+        key="modal"
+        isOpen={isModalOpen}
+        toggle={this.toggleModal}
+        className="modal-lg"
+      >
         <ModalHeader toggle={this.toggleModal}>{signInText}</ModalHeader>
         <ModalBody>
           <LogIn signInText={signInText} resetText="Reset" />
