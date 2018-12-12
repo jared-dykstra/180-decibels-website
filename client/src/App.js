@@ -13,7 +13,8 @@ import {
   HowWeWork,
   NotFound,
   OurTeam,
-  Privacy
+  Privacy,
+  Services
 } from 'pages'
 import { ScrollToTop } from 'components'
 import {
@@ -23,7 +24,8 @@ import {
   ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
   ROUTE_CONFIDENTIALITY,
-  ROUTE_HOW_WE_WORK
+  ROUTE_HOW_WE_WORK,
+  ROUTE_SERVICES
 } from './redux/routes/routesConstants'
 
 import 'bootstrap'
@@ -42,44 +44,29 @@ class App extends PureComponent {
   }
 
   render() {
+    const routes = {
+      [ROUTE_HOME]: Home,
+      [ROUTE_HELP_ME]: HelpMe,
+      [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
+      [ROUTE_HOW_WE_WORK]: HowWeWork,
+      [ROUTE_OUR_TEAM]: OurTeam,
+      [ROUTE_CONFIDENTIALITY]: Confidentiality,
+      [ROUTE_PRIVACY]: Privacy,
+      [ROUTE_SERVICES]: Services
+    }
+
     return (
       <ScrollToTop {...this.props}>
         <Switch>
-          <Route
-            exact
-            path={ROUTE_HOME}
-            render={() => <Home {...this.props} />}
-          />
-          <Route
-            exact
-            path={ROUTE_HELP_ME}
-            render={() => <HelpMe {...this.props} />}
-          />
-          <Route
-            exact
-            path={ROUTE_HELP_MY_TEAM}
-            render={() => <HelpMyTeam {...this.props} />}
-          />
-          <Route
-            exact
-            path={ROUTE_HOW_WE_WORK}
-            render={() => <HowWeWork {...this.props} />}
-          />
-          <Route
-            exact
-            path={ROUTE_OUR_TEAM}
-            render={() => <OurTeam {...this.props} />}
-          />
-          <Route
-            exact
-            path={ROUTE_CONFIDENTIALITY}
-            render={() => <Confidentiality {...this.props} />}
-          />
-          <Route
-            exact
-            path={ROUTE_PRIVACY}
-            render={() => <Privacy {...this.props} />}
-          />
+          {Object.entries(routes).map(([path, Component]) => (
+            <Route
+              exact
+              path={path}
+              key={path}
+              render={() => <Component {...this.props} />}
+            />
+          ))}
+
           <Route render={() => <NotFound />} />
         </Switch>
       </ScrollToTop>

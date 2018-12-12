@@ -9,7 +9,8 @@ import {
   ROUTE_HOME,
   ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
-  ROUTE_HOW_WE_WORK
+  ROUTE_HOW_WE_WORK,
+  ROUTE_SERVICES
 } from 'redux/routes/routesConstants'
 import { SocialLinks } from 'components'
 
@@ -40,6 +41,9 @@ export default () => [
               </NavItem>
               <NavItem>
                 <Link to={ROUTE_HOW_WE_WORK}>How We Work</Link>
+              </NavItem>
+              <NavItem>
+                <Link to={ROUTE_SERVICES}>Services</Link>
               </NavItem>
             </ul>
           </Nav>
