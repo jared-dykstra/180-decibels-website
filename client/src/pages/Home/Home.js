@@ -5,7 +5,6 @@ import { push } from 'connected-react-router'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
-import LazyHero from 'react-lazy-hero'
 import { get as configGet } from 'config'
 
 import { Quote, Template } from 'components'
@@ -30,29 +29,20 @@ export class Home extends PureComponent {
     return (
       <div>
         <Template className={styles.home}>
-          <Row>
-            <Col>
-              <LazyHero
-                imageSrc={`${CDN}/noisy-kid.jpg`}
-                parallaxOffset={150}
-                minHeight={styles.bannerHeight}
-                opacity={0.1}
-                color={styles.decibelsTeal}
-                className={styles.banner}
-              >
+          <Col>
+            <div className={styles.wrapper}>
+              <div className={styles.banner}>
                 <div className={styles.overlay}>
-                  <h1>
-                    <b>Removing the complexity from managing your team</b>
-                  </h1>
-                  <Col>
+                  <h1>Removing the complexity from managing your team</h1>
+                  <Col className={styles['btn-container']}>
                     <Button size="lg" color="primary">
                       Schedule a Complimentary Results Coaching Session Now
                     </Button>
                   </Col>
                 </div>
-              </LazyHero>
-            </Col>
-          </Row>
+              </div>
+            </div>
+          </Col>
           <Row id="i-am">
             <Col sm="6">
               <Jumbotron

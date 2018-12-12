@@ -1,14 +1,5 @@
 @import '~styles/custom';
 
-$banner-height: 35em;
-
-:export {
-  // stylelint-disable
-  decibelsTeal: $decibels-teal;
-  bannerHeight: $banner-height;
-  // stylelint-enable
-}
-
 .home {
   :global .video-react {
     border: 1px solid $decibels-red;
@@ -24,23 +15,44 @@ $banner-height: 35em;
   }
 }
 
+// .wrapper is used to control the aspect ratio of it's contents
+.wrapper {
+  margin-bottom: 3em;
+  min-height: 20em;
+  padding-bottom: 40%; // 56.25%;  // <-- 16:9 aspect ratio
+  width: 100%;
+}
 
 .banner {
-  margin-bottom: 2em;
+  background-image: url('./noisy-kid.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .overlay {
+  background-color: rgba($decibels-teal, .1);
+  height: 100%;
   padding-bottom: 1em;
+  text-align: center;
 
-  h1 > b {
+  h1 {
     color: $white;
-    font-size: 1.5em;
     font-weight: 800;
     margin-bottom: 1em;
-    margin-left: .5em;
-    margin-right: .5em;
+    padding-top: 2em;
     text-shadow: 0 0 15px rgba($black, 1);
   }
+}
+
+.btn-container {
+  bottom: 2em;
+  position: absolute !important;
 }
 
 .video-row {
