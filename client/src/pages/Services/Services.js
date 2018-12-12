@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Row, Col } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 
 import { Template } from 'components'
 
@@ -7,6 +8,13 @@ import styles from './Services.module.scss'
 
 export default () => (
   <Template className={styles.services}>
+    <Helmet>
+      <title>180 Decibels - Services</title>
+      <meta
+        name="description"
+        content="Operations, Organization and Team Health, Enterprise Performance Management, and People Advisory Services"
+      />
+    </Helmet>
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <h1>Services</h1>

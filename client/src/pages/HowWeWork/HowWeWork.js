@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Row, Col } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 
 import { Quote, Template } from 'components'
 
@@ -7,6 +8,13 @@ import styles from './HowWeWork.module.scss'
 
 export default () => (
   <Template className={styles['how-we-work']}>
+    <Helmet>
+      <title>180 Decibels - How We Work</title>
+      <meta
+        name="description"
+        content="Do you want more respect? less conflict? Get results without changing who you are as a person"
+      />
+    </Helmet>
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <section id="approach" className="p-3">

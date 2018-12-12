@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { Row, Col } from 'reactstrap'
 
 import { Quote, SelfAssessment, Template } from 'components'
@@ -7,12 +8,19 @@ import styles from './HelpMe.module.scss'
 
 export default () => (
   <Template className={styles['help-me']}>
+    <Helmet>
+      <title>180 Decibels - Help Me</title>
+      <meta
+        name="description"
+        content="We re-focus managers: driving to outcomes and creating urgency"
+      />
+    </Helmet>
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <h1>Help Me</h1>
 
         <p className="lead">
-          We re-focus managers on driving to outcome and on creating urgency.
+          We re-focus managers: driving to outcomes and creating urgency.
         </p>
         <p>
           We offer a practical, results-oriented process to build a

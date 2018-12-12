@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
 import { Template } from 'components'
 
@@ -7,6 +8,10 @@ import styles from './Confidentiality.module.scss'
 
 export default () => (
   <Template>
+    <Helmet>
+      <title>180 Decibels - Confidentiality</title>
+      <meta name="description" content="Your business is Your business" />
+    </Helmet>
     <img
       src={Sssh}
       alt="sssh"

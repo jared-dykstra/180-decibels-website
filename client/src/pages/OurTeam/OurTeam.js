@@ -1,5 +1,6 @@
 import React from 'react'
 import { Col, Row } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 
 import { Quote, Template } from 'components'
 
@@ -10,6 +11,13 @@ import jared from './jared.jpg'
 
 export default () => (
   <Template className={styles['our-team']}>
+    <Helmet>
+      <title>180 Decibels - Our Team</title>
+      <meta
+        name="description"
+        content="Our Founders: Dayton Foster, Kerri McGovern, Jared Dykstra"
+      />
+    </Helmet>
     <h1>Our Team</h1>
     <Row>
       <Col md={{ size: 10, offset: 1 }}>

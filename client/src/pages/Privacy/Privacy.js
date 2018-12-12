@@ -1,9 +1,14 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 
 import { Template } from 'components'
 
 export default () => (
   <Template>
+    <Helmet>
+      <title>180 Decibels - Privacy</title>
+      <meta name="description" content="Privacy Policy" />
+    </Helmet>
     <h1>Privacy Policy</h1>
 
     <p>Effective date: December 10, 2018</p>

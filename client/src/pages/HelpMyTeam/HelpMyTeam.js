@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { Row, Col } from 'reactstrap'
 
 import { Quote, SelfAssessment, Template } from 'components'
@@ -7,6 +8,14 @@ import styles from './HelpMyTeam.module.scss'
 
 export default () => (
   <Template className={styles['help-my-team']}>
+    <Helmet>
+      <title>180 Decibels - Help My Team</title>
+      <meta
+        name="description"
+        content="We generate real ROI and substantially grow confidence team's
+        ability to execute"
+      />
+    </Helmet>
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <h1>Help My Team</h1>
