@@ -68,9 +68,11 @@ export default () => (
             a high performing team.
           </p>
         </Col>
-        <Button size="lg" color="primary">
-          Get Started with 180 Decibels Today!
-        </Button>
+        <Col xs="12" className="d-flex">
+          <Button size="lg" color="primary" className="ml-auto">
+            Get Started with 180 Decibels Today!
+          </Button>
+        </Col>
       </Col>
     </Row>
   </Template>
