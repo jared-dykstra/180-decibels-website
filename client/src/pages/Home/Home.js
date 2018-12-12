@@ -27,7 +27,7 @@ export class Home extends PureComponent {
 
   render() {
     const { doClickHelpMe, doClickHelpMyTeam } = this.props
-    const tagline = 'Removing the complexity from managing your team'
+    const tagline = 'Removing the Complexity from Managing Your Team'
     return (
       <Template className={styles.home}>
         <Helmet>
