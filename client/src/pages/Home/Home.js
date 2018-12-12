@@ -33,12 +33,14 @@ export class Home extends PureComponent {
             <div className={styles.wrapper}>
               <div className={styles.banner}>
                 <div className={styles.overlay}>
-                  <h1>Removing the complexity from managing your team</h1>
-                  <Col className={styles['btn-container']}>
-                    <Button size="lg" color="primary">
+                  <h1 className="pt-2 pt-sm-4 pt-lg-5">
+                    Removing the complexity from managing your team
+                  </h1>
+                  <div className={`mb-2 pb-sm-3 ${styles['btn-container']}`}>
+                    <Button size="lg" color="primary" className="p-lg-3">
                       Schedule a Complimentary Results Coaching Session Now
                     </Button>
-                  </Col>
+                  </div>
                 </div>
               </div>
             </div>
