@@ -18,7 +18,7 @@ import {
   REGISTER_FORM_PHONE_KEY,
   REGISTER_FORM_PASSWORD1_KEY,
   REGISTER_FORM_PASSWORD2_KEY
-} from '180-decibels-shared'
+} from '180-decibels-shared/registration'
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'

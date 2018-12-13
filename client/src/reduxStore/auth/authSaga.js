@@ -5,10 +5,13 @@ import { clearFields, startSubmit, stopSubmit } from 'redux-form'
 
 import {
   REGISTER_FORM_PASSWORD1_KEY,
-  REGISTER_FORM_PASSWORD2_KEY,
+  REGISTER_FORM_PASSWORD2_KEY
+} from '180-decibels-shared/registration'
+
+import {
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from '180-decibels-shared'
+} from '180-decibels-shared/signIn'
 
 import {
   REGISTER_FORM_KEY,

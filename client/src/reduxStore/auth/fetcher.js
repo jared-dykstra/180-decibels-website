@@ -9,10 +9,13 @@ import {
   REGISTER_FORM_LAST_NAME_KEY,
   REGISTER_FORM_EMAIL_KEY,
   REGISTER_FORM_PHONE_KEY,
-  REGISTER_FORM_PASSWORD1_KEY,
+  REGISTER_FORM_PASSWORD1_KEY
+} from '180-decibels-shared/registration'
+
+import {
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from '180-decibels-shared'
+} from '180-decibels-shared/signIn'
 
 import { get as configGet } from '../../config'
 

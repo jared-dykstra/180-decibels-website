@@ -8,7 +8,7 @@ import {
   validateSignIn,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from '180-decibels-shared'
+} from '180-decibels-shared/signIn'
 
 import { actions } from 'reduxStore/auth'
 import { SIGNIN_FORM_KEY } from 'reduxStore/auth/authConstants'

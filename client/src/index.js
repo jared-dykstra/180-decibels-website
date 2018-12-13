@@ -11,8 +11,6 @@ import { get as configGet } from './config'
 import * as serviceWorker from './serviceWorker'
 import App from './App'
 
-/* eslint-enable import/first */
-
 const history = createBrowserHistory()
 const store = createStore(history)
 
