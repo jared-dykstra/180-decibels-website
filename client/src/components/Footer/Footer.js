@@ -11,7 +11,7 @@ import {
   ROUTE_PRIVACY,
   ROUTE_HOW_WE_WORK,
   ROUTE_SERVICES
-} from 'redux/routes/routesConstants'
+} from 'reduxStore/routes/routesConstants'
 import { SocialLinks } from 'components'
 
 import styles from './Footer.module.scss'

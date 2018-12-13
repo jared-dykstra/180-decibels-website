@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button } from 'reactstrap'
 
-import { toggleDialog } from 'redux/getStarted/getStartedActions'
+import { toggleDialog } from 'reduxStore/getStarted/getStartedActions'
 
 const GetStarted = ({ doToggleDialog, children, size, className }) => (
   <Button color="primary" onClick={doToggleDialog} {...{ size, className }}>

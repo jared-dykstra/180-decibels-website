@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
 
-import { actions } from 'redux/auth'
+import { actions } from 'reduxStore/auth'
 import {
   REGISTER_FORM_KEY,
   REGISTER_FORM_COMPANY_KEY,
@@ -15,8 +15,8 @@ import {
   REGISTER_FORM_PHONE_KEY,
   REGISTER_FORM_PASSWORD1_KEY,
   REGISTER_FORM_PASSWORD2_KEY
-} from 'redux/auth/authConstants'
-import { isEmailInUse } from 'redux/auth/fetcher'
+} from 'reduxStore/auth/authConstants'
+import { isEmailInUse } from 'reduxStore/auth/fetcher'
 
 import {
   minCompanyLength,

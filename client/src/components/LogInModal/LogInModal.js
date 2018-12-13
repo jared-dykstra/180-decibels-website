@@ -20,8 +20,8 @@ import {
   signInModalIsOpenSelector,
   isSignedInSelector,
   nameSelector
-} from 'redux/auth/authSelectors'
-import { closeDialog, openDialog, signOut } from 'redux/auth/authActions'
+} from 'reduxStore/auth/authSelectors'
+import { closeDialog, openDialog, signOut } from 'reduxStore/auth/authActions'
 import { LogIn } from 'components'
 
 import styles from './LogInModal.module.scss'

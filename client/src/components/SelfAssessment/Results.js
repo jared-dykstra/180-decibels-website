@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { makeResultsSelector } from '../../redux/selfAssessment/selfAssessmentSelectors'
+import { makeResultsSelector } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
 import styles from './Results.module.scss'
 

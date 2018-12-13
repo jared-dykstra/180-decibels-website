@@ -11,7 +11,7 @@ import {
   REGISTER_FORM_PASSWORD1_KEY,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from 'redux/auth/authConstants'
+} from 'reduxStore/auth/authConstants'
 
 import { get as configGet } from '../../config'
 

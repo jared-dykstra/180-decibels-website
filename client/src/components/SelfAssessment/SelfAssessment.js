@@ -14,7 +14,7 @@ import { questionsPropType, responsesPropType } from 'propTypes'
 import {
   questionListSelector,
   responsesSelector
-} from 'redux/selfAssessment/selfAssessmentSelectors'
+} from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
 import styles from './SelfAssessment.module.scss'
 import Intro from './Intro'

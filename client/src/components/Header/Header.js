@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import { Col, Navbar } from 'reactstrap'
 
 import { GetStarted, LogInModal, Logo } from 'components'
-import { isHomePageSelector } from 'redux/routes/routesSelectors'
-import { ROUTE_HOME } from 'redux/routes/routesConstants'
+import { isHomePageSelector } from 'reduxStore/routes/routesSelectors'
+import { ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 
 import styles from './Header.module.scss'
 

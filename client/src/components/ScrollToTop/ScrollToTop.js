@@ -2,7 +2,7 @@ import { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { locationSelector } from '../../redux/routes/routesSelectors'
+import { locationSelector } from 'reduxStore/routes/routesSelectors'
 
 // ScrollToTop - see https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/guides/scroll-restoration.md
 class ScrollToTop extends PureComponent {

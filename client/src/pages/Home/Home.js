@@ -8,7 +8,10 @@ import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
 
 import { GetStarted, Quote, Template } from 'components'
-import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
+import {
+  ROUTE_HELP_ME,
+  ROUTE_HELP_MY_TEAM
+} from 'reduxStore/routes/routesConstants'
 
 import { get as configGet } from '../../config'
 import styles from './Home.module.scss'

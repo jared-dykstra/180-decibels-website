@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
 import ReactGA from 'react-ga'
 
-import createStore from 'redux/createStore'
+import createStore from 'reduxStore/createStore'
 
 import { get as configGet } from './config'
 import * as serviceWorker from './serviceWorker'
