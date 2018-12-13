@@ -7,7 +7,7 @@ import { Button, Col, Jumbotron, Row } from 'reactstrap'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
 
-import { GetStarted, Quote, Template } from 'components'
+import { GetStartedButton, Quote, Template } from 'components'
 import {
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM
@@ -42,9 +42,9 @@ export class Home extends PureComponent {
               <div className={styles.overlay}>
                 <h1 className="pt-2 pt-sm-4 pt-lg-5">{tagline}</h1>
                 <div className={`mb-2 pb-sm-3 ${styles['btn-container']}`}>
-                  <GetStarted size="lg" className="p-lg-3">
+                  <GetStartedButton size="lg" className="p-lg-3">
                     Schedule a Complimentary Results Coaching Session Now
-                  </GetStarted>
+                  </GetStartedButton>
                 </div>
               </div>
             </div>
