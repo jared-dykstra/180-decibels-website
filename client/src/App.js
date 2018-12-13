@@ -17,7 +17,7 @@ import {
   Privacy,
   Services
 } from 'pages'
-import { ScrollToTop } from 'components'
+import { GetStartedModal, ScrollToTop } from 'components'
 import {
   ROUTE_HOME,
   ROUTE_HELP_ME,
@@ -72,9 +72,10 @@ class App extends PureComponent {
               render={() => <Component {...this.props} />}
             />
           ))}
-
           <Route render={() => <NotFound />} />
         </Switch>
+
+        <GetStartedModal />
       </ScrollToTop>
     )
   }

@@ -76,8 +76,10 @@ class LogInModal extends PureComponent {
         &nbsp;
         {signInText}
       </Button>,
+      // TODO: Split the modal into a separate component to avoid any chance of it being included in the DOM multiple times
       <Modal
         key="modal"
+        fade={false}
         isOpen={isModalOpen}
         toggle={this.toggleModal}
         className="modal-lg"
