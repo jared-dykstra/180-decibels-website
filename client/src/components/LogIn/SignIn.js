@@ -4,35 +4,19 @@ import { connect } from 'react-redux'
 import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 
-import { actions } from 'reduxStore/auth'
 import {
-  SIGNIN_FORM_KEY,
+  validateSignIn,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from 'reduxStore/auth/authConstants'
-
-import {
-  minPasswordLength,
-  validateEmail,
-  validateMinLength,
-  validateRequired
 } from '180-decibels-shared'
+
+import { actions } from 'reduxStore/auth'
+import { SIGNIN_FORM_KEY } from 'reduxStore/auth/authConstants'
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'
 import { labelWidth } from './constants'
 import Buttons from './Buttons'
-
-const validate = values => {
-  const email = values.get(SIGNIN_FORM_EMAIL_KEY)
-  const password = values.get(SIGNIN_FORM_PASSWORD_KEY)
-  return {
-    [SIGNIN_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
-    [SIGNIN_FORM_PASSWORD_KEY]:
-      validateRequired(password) ||
-      validateMinLength(minPasswordLength)(password)
-  }
-}
 
 class SignIn extends PureComponent {
   static propTypes = {
@@ -117,6 +101,6 @@ const ConnectedSignIn = connect(
 
 export default reduxForm({
   form: SIGNIN_FORM_KEY,
-  validate,
+  validate: validateSignIn,
   destroyOnUnmount: false
 })(ConnectedSignIn)

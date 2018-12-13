@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
+import { REGISTER_FORM_FIRST_NAME_KEY } from '180-decibels-shared'
 import { mountPoint } from '.'
-import { REGISTER_FORM_FIRST_NAME_KEY } from './authConstants'
 
 const authSelector = state => state[mountPoint]
 

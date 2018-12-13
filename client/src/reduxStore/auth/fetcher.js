@@ -2,6 +2,7 @@ import { get as _get } from 'lodash'
 import { ApolloLink, execute, makePromise } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import gql from 'graphql-tag.macro'
+
 import {
   REGISTER_FORM_COMPANY_KEY,
   REGISTER_FORM_FIRST_NAME_KEY,
@@ -11,7 +12,7 @@ import {
   REGISTER_FORM_PASSWORD1_KEY,
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from 'reduxStore/auth/authConstants'
+} from '180-decibels-shared'
 
 import { get as configGet } from '../../config'
 

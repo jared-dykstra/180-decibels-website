@@ -1,0 +1,10 @@
+export const REGISTER_FORM_COMPANY_KEY = 'company'
+export const REGISTER_FORM_FIRST_NAME_KEY = 'firstName'
+export const REGISTER_FORM_LAST_NAME_KEY = 'lastName'
+export const REGISTER_FORM_EMAIL_KEY = 'email'
+export const REGISTER_FORM_PHONE_KEY = 'phone'
+export const REGISTER_FORM_PASSWORD1_KEY = 'password1'
+export const REGISTER_FORM_PASSWORD2_KEY = 'password2'
+
+export const SIGNIN_FORM_EMAIL_KEY = 'email'
+export const SIGNIN_FORM_PASSWORD_KEY = 'password'

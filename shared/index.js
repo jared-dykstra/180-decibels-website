@@ -1,30 +1,66 @@
-// import * as formValidators from './src/formValidators'
+import {
+  minCompanyLength,
+  minPasswordLength,
+  validateAlphaNumeric,
+  validateEmail,
+  validateEqual,
+  validateMinLength,
+  validatePhoneNumber,
+  validateRequired
+} from './src/formValidators'
 
-// export { formValidators }
+import {
+  REGISTER_FORM_COMPANY_KEY,
+  REGISTER_FORM_FIRST_NAME_KEY,
+  REGISTER_FORM_LAST_NAME_KEY,
+  REGISTER_FORM_EMAIL_KEY,
+  REGISTER_FORM_PHONE_KEY,
+  REGISTER_FORM_PASSWORD1_KEY,
+  REGISTER_FORM_PASSWORD2_KEY,
+  SIGNIN_FORM_EMAIL_KEY,
+  SIGNIN_FORM_PASSWORD_KEY
+} from './src/constants'
 
-export const minPasswordLength = 8
-export const minCompanyLength = 4
+export * from './src/constants'
 
-export const validateRequired = value =>
-  value || typeof value === 'number' ? undefined : 'Required'
+// Validate contents of the registration form
+export const validateRegistration = values => {
+  const company = values.get(REGISTER_FORM_COMPANY_KEY)
+  const firstName = values.get(REGISTER_FORM_FIRST_NAME_KEY)
+  const lastName = values.get(REGISTER_FORM_LAST_NAME_KEY)
+  const email = values.get(REGISTER_FORM_EMAIL_KEY)
+  const phone = values.get(REGISTER_FORM_PHONE_KEY)
+  const password1 = values.get(REGISTER_FORM_PASSWORD1_KEY)
+  const password2 = values.get(REGISTER_FORM_PASSWORD2_KEY)
 
-export const validateMinLength = min => value =>
-  value && value.length < min ? `Must be ${min} characters or more` : undefined
+  return {
+    [REGISTER_FORM_COMPANY_KEY]:
+      validateRequired(company) || validateMinLength(minCompanyLength)(company),
+    [REGISTER_FORM_FIRST_NAME_KEY]:
+      validateRequired(firstName) || validateAlphaNumeric(firstName),
+    [REGISTER_FORM_LAST_NAME_KEY]:
+      validateRequired(lastName) || validateAlphaNumeric(lastName),
+    [REGISTER_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
+    [REGISTER_FORM_PHONE_KEY]:
+      validateRequired(phone) || validatePhoneNumber(phone),
+    [REGISTER_FORM_PASSWORD1_KEY]:
+      validateRequired(password1) ||
+      validateMinLength(minPasswordLength)(password1) ||
+      validateEqual(password1, password2),
+    [REGISTER_FORM_PASSWORD2_KEY]:
+      validateRequired(password2) ||
+      validateMinLength(minPasswordLength)(password2) ||
+      validateEqual(password1, password2)
+  }
+}
 
-export const validateEmail = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? 'Invalid email address'
-    : undefined
-
-export const validateAlphaNumeric = value =>
-  value && /[^a-zA-Z0-9 ]/i.test(value)
-    ? 'Punctuation is not permitted'
-    : undefined
-
-export const validatePhoneNumber = value =>
-  value && !/^(\+?\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i.test(value)
-    ? 'Invalid phone number, must be 10 digits'
-    : undefined
-
-export const validateEqual = (value1, value2) =>
-  value1 && value2 && value1 !== value2 ? 'Must match' : undefined
+export const validateSignIn = values => {
+  const email = values.get(SIGNIN_FORM_EMAIL_KEY)
+  const password = values.get(SIGNIN_FORM_PASSWORD_KEY)
+  return {
+    [SIGNIN_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
+    [SIGNIN_FORM_PASSWORD_KEY]:
+      validateRequired(password) ||
+      validateMinLength(minPasswordLength)(password)
+  }
+}
