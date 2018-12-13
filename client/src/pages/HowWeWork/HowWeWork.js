@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Row, Col } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { GetStarted, Quote, Template } from 'components'

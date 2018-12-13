@@ -1,41 +1,26 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 
 import { getStartedModalIsOpenSelector } from 'redux/getStarted/getStartedSelectors'
-import { closeDialog, openDialog } from 'redux/getStarted/getStartedActions'
+import { toggleDialog } from 'redux/getStarted/getStartedActions'
 
-class GetStarted extends PureComponent {
-  static propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
-    doCloseDialog: PropTypes.func.isRequired,
-    doOpenDialog: PropTypes.func.isRequired
-  }
+const GetStartedModal = ({ isModalOpen, doToggleDialog }) => (
+  <Modal
+    fade={false}
+    isOpen={isModalOpen}
+    toggle={doToggleDialog}
+    className="modal-lg"
+  >
+    <ModalHeader toggle={doToggleDialog}>Get Started</ModalHeader>
+    <ModalBody>TODO</ModalBody>
+  </Modal>
+)
 
-  toggleModal = () => {
-    const { isModalOpen, doCloseDialog, doOpenDialog } = this.props
-    if (isModalOpen) {
-      doCloseDialog()
-    } else {
-      doOpenDialog()
-    }
-  }
-
-  render = () => {
-    const { isModalOpen } = this.props
-    return (
-      <Modal
-        fade={false}
-        isOpen={isModalOpen}
-        toggle={this.toggleModal}
-        className="modal-lg"
-      >
-        <ModalHeader toggle={this.toggleModal}>Get Started</ModalHeader>
-        <ModalBody>TODO</ModalBody>
-      </Modal>
-    )
-  }
+GetStartedModal.propTypes = {
+  isModalOpen: PropTypes.bool.isRequired,
+  doToggleDialog: PropTypes.func.isRequired
 }
 
 export default connect(
@@ -43,7 +28,6 @@ export default connect(
     isModalOpen: getStartedModalIsOpenSelector(state)
   }),
   dispatch => ({
-    doCloseDialog: () => dispatch(closeDialog()),
-    doOpenDialog: () => dispatch(openDialog())
+    doToggleDialog: () => dispatch(toggleDialog())
   })
-)(GetStarted)
+)(GetStartedModal)
