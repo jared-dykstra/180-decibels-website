@@ -2,7 +2,6 @@ import { get as _get } from 'lodash'
 import { ApolloLink, execute, makePromise } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import gql from 'graphql-tag.macro'
-import { get as configGet } from 'config'
 
 import {
   REGISTER_FORM_COMPANY_KEY,
@@ -10,10 +9,15 @@ import {
   REGISTER_FORM_LAST_NAME_KEY,
   REGISTER_FORM_EMAIL_KEY,
   REGISTER_FORM_PHONE_KEY,
-  REGISTER_FORM_PASSWORD1_KEY,
+  REGISTER_FORM_PASSWORD1_KEY
+} from '180-decibels-shared/registration'
+
+import {
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
-} from 'redux/auth/authConstants'
+} from '180-decibels-shared/signIn'
+
+import { get as configGet } from '../../config'
 
 const uri = configGet('apiEndpoint')
 

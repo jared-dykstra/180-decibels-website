@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import he from 'he'
 import Slider from 'rc-slider'
 
-import { actions } from '../../redux/selfAssessment'
+import { actions } from 'reduxStore/selfAssessment'
 import {
   makeVolumeSelector,
   makeMuteSelector,
@@ -13,7 +13,7 @@ import {
   makeMinVolumeSelector,
   makeVolumeStepSelector,
   makeCanGoToNextQuestionSelector
-} from '../../redux/selfAssessment/selfAssessmentSelectors'
+} from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
 import 'rc-slider/assets/index.css'
 

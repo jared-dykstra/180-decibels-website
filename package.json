@@ -11,6 +11,7 @@
     "yarn": ">=1.10.0"
   },
   "private": true,
+  "workspaces": ["client", "server", "shared"],
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^9.0.0",

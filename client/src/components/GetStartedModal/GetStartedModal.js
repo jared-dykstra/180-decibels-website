@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 
-import { getStartedModalIsOpenSelector } from 'redux/getStarted/getStartedSelectors'
-import { toggleDialog } from 'redux/getStarted/getStartedActions'
+import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
+import { toggleDialog } from 'reduxStore/getStarted/getStartedActions'
 
 const GetStartedModal = ({ isModalOpen, doToggleDialog }) => (
   <Modal

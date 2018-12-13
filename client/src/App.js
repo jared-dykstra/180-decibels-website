@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { authenticate } from 'redux/auth/authActions'
+import { authenticate } from 'reduxStore/auth/authActions'
 import {
   Confidentiality,
   HelpMe,
@@ -27,7 +27,7 @@ import {
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
   ROUTE_SERVICES
-} from './redux/routes/routesConstants'
+} from 'reduxStore/routes/routesConstants'
 
 import 'bootstrap'
 import 'styles/fonts.scss'

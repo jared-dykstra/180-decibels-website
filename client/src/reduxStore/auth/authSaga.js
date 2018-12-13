@@ -4,16 +4,22 @@ import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { clearFields, startSubmit, stopSubmit } from 'redux-form'
 
 import {
+  REGISTER_FORM_PASSWORD1_KEY,
+  REGISTER_FORM_PASSWORD2_KEY
+} from '180-decibels-shared/registration'
+
+import {
+  SIGNIN_FORM_EMAIL_KEY,
+  SIGNIN_FORM_PASSWORD_KEY
+} from '180-decibels-shared/signIn'
+
+import {
   REGISTER_FORM_KEY,
   SIGNIN_FORM_KEY,
   AUTH_AUTHENTICATE,
   AUTH_REGISTER,
   AUTH_SIGNIN,
-  AUTH_SIGNOUT,
-  SIGNIN_FORM_EMAIL_KEY,
-  SIGNIN_FORM_PASSWORD_KEY,
-  REGISTER_FORM_PASSWORD1_KEY,
-  REGISTER_FORM_PASSWORD2_KEY
+  AUTH_SIGNOUT
 } from './authConstants'
 import { signInSuccess } from './authPrivateActions'
 import { authenticate, signIn, signOut, registerUser } from './fetcher'

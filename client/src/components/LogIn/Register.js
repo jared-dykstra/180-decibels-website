@@ -5,9 +5,12 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
 
-import { actions } from 'redux/auth'
+import { actions } from 'reduxStore/auth'
+import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
+import { isEmailInUse } from 'reduxStore/auth/fetcher'
+
 import {
-  REGISTER_FORM_KEY,
+  validateRegistration,
   REGISTER_FORM_COMPANY_KEY,
   REGISTER_FORM_FIRST_NAME_KEY,
   REGISTER_FORM_LAST_NAME_KEY,
@@ -15,53 +18,12 @@ import {
   REGISTER_FORM_PHONE_KEY,
   REGISTER_FORM_PASSWORD1_KEY,
   REGISTER_FORM_PASSWORD2_KEY
-} from 'redux/auth/authConstants'
-import { isEmailInUse } from 'redux/auth/fetcher'
+} from '180-decibels-shared/registration'
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'
 import { labelWidth } from './constants'
 import Buttons from './Buttons'
-import {
-  minCompanyLength,
-  minPasswordLength,
-  validateAlphaNumeric,
-  validateEmail,
-  validateEqual,
-  validateMinLength,
-  validatePhoneNumber,
-  validateRequired
-} from './formValidators'
-
-const validate = values => {
-  const company = values.get(REGISTER_FORM_COMPANY_KEY)
-  const firstName = values.get(REGISTER_FORM_FIRST_NAME_KEY)
-  const lastName = values.get(REGISTER_FORM_LAST_NAME_KEY)
-  const email = values.get(REGISTER_FORM_EMAIL_KEY)
-  const phone = values.get(REGISTER_FORM_PHONE_KEY)
-  const password1 = values.get(REGISTER_FORM_PASSWORD1_KEY)
-  const password2 = values.get(REGISTER_FORM_PASSWORD2_KEY)
-
-  return {
-    [REGISTER_FORM_COMPANY_KEY]:
-      validateRequired(company) || validateMinLength(minCompanyLength)(company),
-    [REGISTER_FORM_FIRST_NAME_KEY]:
-      validateRequired(firstName) || validateAlphaNumeric(firstName),
-    [REGISTER_FORM_LAST_NAME_KEY]:
-      validateRequired(lastName) || validateAlphaNumeric(lastName),
-    [REGISTER_FORM_EMAIL_KEY]: validateRequired(email) || validateEmail(email),
-    [REGISTER_FORM_PHONE_KEY]:
-      validateRequired(phone) || validatePhoneNumber(phone),
-    [REGISTER_FORM_PASSWORD1_KEY]:
-      validateRequired(password1) ||
-      validateMinLength(minPasswordLength)(password1) ||
-      validateEqual(password1, password2),
-    [REGISTER_FORM_PASSWORD2_KEY]:
-      validateRequired(password2) ||
-      validateMinLength(minPasswordLength)(password2) ||
-      validateEqual(password1, password2)
-  }
-}
 
 const asyncValidate = async values => {
   // Values is immutableJS instance
@@ -255,7 +217,7 @@ const ConnectedRegister = connect(
 
 export default reduxForm({
   form: REGISTER_FORM_KEY,
-  validate,
+  validate: validateRegistration,
   asyncValidate,
   destroyOnUnmount: false
 })(ConnectedRegister)

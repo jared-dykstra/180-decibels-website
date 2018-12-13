@@ -8,8 +8,19 @@ import { Home } from '../Home'
 it('renders without crashing', () => {
   const renderer = new ShallowRenderer()
   const identityFn = () => {}
+  const history = {
+    replace: identityFn
+  }
+  const location = {}
   renderer.render(
-    <Home doClickHelpMe={identityFn} doClickHelpMyTeam={identityFn} />
+    <Home
+      {...{
+        doClickHelpMe: identityFn,
+        doClickHelpMyTeam: identityFn,
+        history,
+        location
+      }}
+    />
   )
   // eslint-disable-next-line no-unused-vars
   const result = renderer.getRenderOutput()
