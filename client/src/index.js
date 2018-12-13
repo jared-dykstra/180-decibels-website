@@ -5,11 +5,13 @@ import { createBrowserHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
 import ReactGA from 'react-ga'
 
-import { get as configGet } from 'config'
 import createStore from 'redux/createStore'
 
+import { get as configGet } from './config'
 import * as serviceWorker from './serviceWorker'
 import App from './App'
+
+/* eslint-enable import/first */
 
 const history = createBrowserHistory()
 const store = createStore(history)

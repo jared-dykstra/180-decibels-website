@@ -6,11 +6,11 @@ import { Helmet } from 'react-helmet'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
-import { get as configGet } from 'config'
 
 import { GetStarted, Quote, Template } from 'components'
 import { ROUTE_HELP_ME, ROUTE_HELP_MY_TEAM } from 'redux/routes/routesConstants'
 
+import { get as configGet } from '../../config'
 import styles from './Home.module.scss'
 
 const CDN = configGet('cdn')

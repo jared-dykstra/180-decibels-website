@@ -11,16 +11,17 @@ import {
   SIGNIN_FORM_PASSWORD_KEY
 } from 'redux/auth/authConstants'
 
-import styles from './LogIn.module.scss'
-import renderField from './renderField'
-import { labelWidth } from './constants'
-import Buttons from './Buttons'
 import {
   minPasswordLength,
   validateEmail,
   validateMinLength,
   validateRequired
-} from './formValidators'
+} from '180-decibels-shared'
+
+import styles from './LogIn.module.scss'
+import renderField from './renderField'
+import { labelWidth } from './constants'
+import Buttons from './Buttons'
 
 const validate = values => {
   const email = values.get(SIGNIN_FORM_EMAIL_KEY)

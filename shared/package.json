@@ -1,0 +1,16 @@
+{
+  "name": "180-decibels-shared",
+  "version": "0.1.0",
+  "description": "180 Decibels shared",
+  "main": "index.js",
+  "license": "None",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/jared-dykstra/180-decibels"
+  },
+  "engines": {
+    "node": ">=10.9.0",
+    "npm": ">=6.4.0",
+    "yarn": ">=1.10.0"
+  }
+}

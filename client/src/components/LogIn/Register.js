@@ -18,10 +18,6 @@ import {
 } from 'redux/auth/authConstants'
 import { isEmailInUse } from 'redux/auth/fetcher'
 
-import styles from './LogIn.module.scss'
-import renderField from './renderField'
-import { labelWidth } from './constants'
-import Buttons from './Buttons'
 import {
   minCompanyLength,
   minPasswordLength,
@@ -31,7 +27,12 @@ import {
   validateMinLength,
   validatePhoneNumber,
   validateRequired
-} from './formValidators'
+} from '180-decibels-shared'
+
+import styles from './LogIn.module.scss'
+import renderField from './renderField'
+import { labelWidth } from './constants'
+import Buttons from './Buttons'
 
 const validate = values => {
   const company = values.get(REGISTER_FORM_COMPANY_KEY)
