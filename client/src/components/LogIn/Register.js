@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 
-import FormGroup from '@material-ui/core/FormGroup'
 import Grid from '@material-ui/core/Grid'
 
 import { actions } from 'reduxStore/auth'

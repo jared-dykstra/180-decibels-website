@@ -105,8 +105,8 @@ export class Home extends PureComponent {
         </Row>
         <Row className={styles['video-row']}>
           <Col md="4" className="d-none d-md-block">
-            <Quote className="h3" cite="Aldous Huxley">
-              180 Decibels increased my team&apos;s results by 25%
+            <Quote className="h3" cite="Vincent, CEO">
+              180 Decibels increased my team&apos;s results by 22%
             </Quote>
           </Col>
           <Col md="8">
@@ -143,7 +143,7 @@ export class Home extends PureComponent {
             </section>
           </Col>
           <Col md="4" className="d-none d-md-block">
-            <Quote right className="h3" cite="George Orwell">
+            <Quote right className="h3" cite="Patrick, Technical Lead">
               We are not <i>meeting</i> goals; We are <i>crushing</i> them
             </Quote>
           </Col>

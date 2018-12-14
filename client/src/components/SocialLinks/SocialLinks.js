@@ -26,7 +26,9 @@ const social = [
     url: 'https://www.facebook.com/180Decibels/'
   },
   {
-    icon: faYoutube
+    icon: faYoutube,
+    url:
+      'https://www.youtube.com/channel/UCtYhik05jpeBoxojuidHnow?view_as=subscriber'
   }
 ]
 

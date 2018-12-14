@@ -2,7 +2,8 @@ import Immutable from 'seamless-immutable'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
-import FormGroup from '@material-ui/core/FormGroup'
+import AppBar from '@material-ui/core/AppBar'
+import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
@@ -36,19 +37,21 @@ class LogIn extends PureComponent {
     const submitLabel = signInText
     const resetLabel = resetText
     return [
-      <Tabs
-        onChange={this.toggleRegisterMode}
-        fullWidth
-        key="mode"
-        value={registerMode ? 1 : 0}
-      >
-        <Tab label="Returning User" />
-        <Tab label="New User" />
-      </Tabs>,
-      <FormGroup row key="body">
+      <AppBar position="relative" color="default">
+        <Tabs
+          onChange={this.toggleRegisterMode}
+          fullWidth
+          key="tabs"
+          value={registerMode ? 1 : 0}
+        >
+          <Tab label="Returning User" />
+          <Tab label="New User" />
+        </Tabs>
+      </AppBar>,
+      <div key="body">
         {!registerMode && <SignIn {...{ submitLabel, resetLabel }} />}
         {registerMode && <Register {...{ submitLabel, resetLabel }} />}
-      </FormGroup>
+      </div>
     ]
   }
 }
