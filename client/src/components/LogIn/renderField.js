@@ -10,12 +10,17 @@ const renderTextField = ({
   meta: { touched, error, warning },
   label,
   id,
+  fullWidth,
   ...custom
 }) => (
-  <FormControl error={touched && !!error} aria-describedby={`${id}-error-text`}>
+  <FormControl
+    error={touched && !!error}
+    aria-describedby={`${id}-error-text`}
+    {...{ fullWidth }}
+  >
     <InputLabel htmlFor={id}>{label}</InputLabel>
-    <Input {...{ id }} {...input} {...custom} />
-    <FormHelperText id={`${id}-error-text`}>{error}</FormHelperText>
+    <Input {...{ id, fullWidth }} {...input} {...custom} />
+    <FormHelperText id={`${id}-error-text`}>{touched && error}</FormHelperText>
   </FormControl>
 )
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
 import AppBar from '@material-ui/core/AppBar'
-import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
@@ -37,7 +36,7 @@ class LogIn extends PureComponent {
     const submitLabel = signInText
     const resetLabel = resetText
     return [
-      <AppBar position="relative" color="default">
+      <AppBar key="tabs" position="relative" color="default">
         <Tabs
           onChange={this.toggleRegisterMode}
           fullWidth
@@ -48,10 +47,10 @@ class LogIn extends PureComponent {
           <Tab label="New User" />
         </Tabs>
       </AppBar>,
-      <div key="body">
-        {!registerMode && <SignIn {...{ submitLabel, resetLabel }} />}
-        {registerMode && <Register {...{ submitLabel, resetLabel }} />}
-      </div>
+      !registerMode && <SignIn key="signIn" {...{ submitLabel, resetLabel }} />,
+      registerMode && (
+        <Register key="register" {...{ submitLabel, resetLabel }} />
+      )
     ]
   }
 }

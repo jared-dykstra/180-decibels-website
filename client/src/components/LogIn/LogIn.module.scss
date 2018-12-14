@@ -2,10 +2,11 @@
 
 .register,
 .sign-in {
+  margin-top: 2em;
   width: 100%;
 }
 
-.required::after {
-  color: $decibels-red;
-  content: '*';
+.buttons {
+  margin-top: 1em;
 }
+
