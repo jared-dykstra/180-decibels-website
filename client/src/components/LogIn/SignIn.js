@@ -75,6 +75,7 @@ class SignIn extends PureComponent {
             component={renderField}
             placeholder="user@domain.com"
             autoComplete="email"
+            fullWidth
           />
         </FormGroup>
         <FormGroup>
@@ -86,6 +87,7 @@ class SignIn extends PureComponent {
             component={renderField}
             placeholder="password"
             autoComplete="current-password"
+            fullWidth
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
