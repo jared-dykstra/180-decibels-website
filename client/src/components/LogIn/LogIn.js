@@ -9,6 +9,9 @@ import Tab from '@material-ui/core/Tab'
 import Register from './Register'
 import SignIn from './SignIn'
 
+const TAB_REGISTER = 'register'
+const TAB_LOGIN = 'login'
+
 class LogIn extends PureComponent {
   static propTypes = {
     signInText: PropTypes.string.isRequired,
@@ -18,37 +21,34 @@ class LogIn extends PureComponent {
   constructor(props) {
     super(props)
     this.state = Immutable.from({
-      registerMode: false
+      activeTab: TAB_LOGIN
     })
   }
 
-  toggleRegisterMode = value => {
+  handleChangeTab = (event, value) => {
     this.setState(state =>
       Immutable.from({
-        registerMode: !state.registerMode
+        activeTab: value
       })
     )
   }
 
   render() {
-    const { registerMode } = this.state
+    const { activeTab } = this.state
     const { signInText, resetText } = this.props
     const submitLabel = signInText
     const resetLabel = resetText
     return [
       <AppBar key="tabs" position="relative" color="default">
-        <Tabs
-          onChange={this.toggleRegisterMode}
-          fullWidth
-          key="tabs"
-          value={registerMode ? 1 : 0}
-        >
-          <Tab label="Returning User" />
-          <Tab label="New User" />
+        <Tabs onChange={this.handleChangeTab} key="tabs" value={activeTab}>
+          <Tab value={TAB_LOGIN} label="Returning User" />
+          <Tab value={TAB_REGISTER} label="New User" />
         </Tabs>
       </AppBar>,
-      !registerMode && <SignIn key="signIn" {...{ submitLabel, resetLabel }} />,
-      registerMode && (
+      activeTab === TAB_LOGIN && (
+        <SignIn key="signIn" {...{ submitLabel, resetLabel }} />
+      ),
+      activeTab === TAB_REGISTER && (
         <Register key="register" {...{ submitLabel, resetLabel }} />
       )
     ]
