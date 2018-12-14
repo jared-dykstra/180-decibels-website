@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Button,
   Card,
   CardHeader,
   CardFooter,
@@ -8,6 +7,7 @@ import {
   CardTitle,
   CardText
 } from 'reactstrap'
+import Button from '@material-ui/core/Button'
 
 export default () => (
   <div>
@@ -15,11 +15,13 @@ export default () => (
     <Card>
       <CardHeader>Header</CardHeader>
       <CardBody>
-        <CardTitle>Special Title Treatment</CardTitle>
+        <CardTitle>Choose a Time that works for you...</CardTitle>
         <CardText>
           With supporting text below as a natural lead-in to additional content.
         </CardText>
-        <Button>Go somewhere</Button>
+        <Button variant="contained" color="primary">
+          Hello World
+        </Button>
       </CardBody>
       <CardFooter>Footer</CardFooter>
     </Card>

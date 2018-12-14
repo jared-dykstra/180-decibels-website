@@ -2,13 +2,12 @@ import Immutable from 'seamless-immutable'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
-import { Col, FormGroup, Input, Label, Row } from 'reactstrap'
+import FormGroup from '@material-ui/core/FormGroup'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 
 import Register from './Register'
 import SignIn from './SignIn'
-
-const signInValue = 'signIn'
-const registerValue = 'register'
 
 class LogIn extends PureComponent {
   static propTypes = {
@@ -23,10 +22,10 @@ class LogIn extends PureComponent {
     })
   }
 
-  setRegisterMode = value => {
-    this.setState(() =>
+  toggleRegisterMode = value => {
+    this.setState(state =>
       Immutable.from({
-        registerMode: value === registerValue
+        registerMode: !state.registerMode
       })
     )
   }
@@ -36,37 +35,21 @@ class LogIn extends PureComponent {
     const { signInText, resetText } = this.props
     const submitLabel = signInText
     const resetLabel = resetText
-    return (
-      <FormGroup check>
-        <Row>
-          <Col>
-            <Label check>
-              <Input
-                type="radio"
-                value={signInValue}
-                onChange={e => this.setRegisterMode(e.target.value)}
-                checked={!registerMode}
-              />
-              &nbsp;Returning User
-            </Label>
-          </Col>
-          <Col>
-            <Label check>
-              <Input
-                type="radio"
-                value={registerValue}
-                onChange={e => this.setRegisterMode(e.target.value)}
-                checked={registerMode}
-              />
-              &nbsp;New User
-            </Label>
-          </Col>
-        </Row>
-        <hr />
+    return [
+      <Tabs
+        onChange={this.toggleRegisterMode}
+        fullWidth
+        key="mode"
+        value={registerMode ? 1 : 0}
+      >
+        <Tab label="Returning User" />
+        <Tab label="New User" />
+      </Tabs>,
+      <FormGroup row key="body">
         {!registerMode && <SignIn {...{ submitLabel, resetLabel }} />}
         {registerMode && <Register {...{ submitLabel, resetLabel }} />}
       </FormGroup>
-    )
+    ]
   }
 }
 
