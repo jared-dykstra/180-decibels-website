@@ -66,7 +66,6 @@ class LogIn extends PureComponent {
       cancelText: cancelLabel,
       doCloseDialog
     } = this.props
-    const submitLabel = signInText
     return [
       <AppBar key="tabs" position="relative" color="default">
         <Toolbar variant="dense">
@@ -89,12 +88,15 @@ class LogIn extends PureComponent {
         </Toolbar>
       </AppBar>,
       activeTab === TAB_LOGIN && (
-        <SignIn key="signIn" {...{ submitLabel, cancelLabel, resetLabel }} />
+        <SignIn
+          key="signIn"
+          {...{ submitLabel: signInText, cancelLabel, resetLabel }}
+        />
       ),
       activeTab === TAB_REGISTER && (
         <Register
           key="register"
-          {...{ submitLabel, cancelLabel, resetLabel }}
+          {...{ submitLabel: registerText, cancelLabel, resetLabel }}
         />
       )
     ]
