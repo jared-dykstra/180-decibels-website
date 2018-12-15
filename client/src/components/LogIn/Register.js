@@ -44,6 +44,7 @@ class Register extends PureComponent {
   static propTypes = {
     doRegister: PropTypes.func.isRequired,
     submitLabel: PropTypes.string.isRequired,
+    cancelLabel: PropTypes.string.isRequired,
     resetLabel: PropTypes.string.isRequired,
     ...propTypes
   }
@@ -56,6 +57,7 @@ class Register extends PureComponent {
       submitting,
       doRegister,
       submitLabel,
+      cancelLabel,
       resetLabel
     } = this.props
     const isSubmitDisabled = submitting
@@ -154,6 +156,7 @@ class Register extends PureComponent {
                 isResetDisabled,
                 reset,
                 submitLabel,
+                cancelLabel,
                 resetLabel
               }}
             />

@@ -26,6 +26,7 @@ class SignIn extends PureComponent {
   static propTypes = {
     doSignIn: PropTypes.func.isRequired,
     submitLabel: PropTypes.string.isRequired,
+    cancelLabel: PropTypes.string.isRequired,
     resetLabel: PropTypes.string.isRequired,
     ...propTypes
   }
@@ -58,6 +59,7 @@ class SignIn extends PureComponent {
       submitting,
       doSignIn,
       submitLabel,
+      cancelLabel,
       resetLabel
     } = this.props
     const { showPassword } = this.state
@@ -107,6 +109,7 @@ class SignIn extends PureComponent {
               isResetDisabled,
               reset: this.handleClickReset,
               submitLabel,
+              cancelLabel,
               resetLabel
             }}
           />

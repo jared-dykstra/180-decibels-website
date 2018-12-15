@@ -34,6 +34,8 @@ const styles = {
 class LogIn extends PureComponent {
   static propTypes = {
     signInText: PropTypes.string.isRequired,
+    registerText: PropTypes.string.isRequired,
+    cancelText: PropTypes.string.isRequired,
     resetText: PropTypes.string.isRequired,
     doCloseDialog: PropTypes.func.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired
@@ -56,20 +58,26 @@ class LogIn extends PureComponent {
 
   render() {
     const { activeTab } = this.state
-    const { classes, signInText, resetText, doCloseDialog } = this.props
+    const {
+      classes,
+      signInText,
+      registerText,
+      resetText: resetLabel,
+      cancelText: cancelLabel,
+      doCloseDialog
+    } = this.props
     const submitLabel = signInText
-    const resetLabel = resetText
     return [
       <AppBar key="tabs" position="relative" color="default">
-        <Toolbar>
+        <Toolbar variant="dense">
           <Tabs
             onChange={this.handleChangeTab}
             key="tabs"
             value={activeTab}
             className={classes.grow}
           >
-            <Tab value={TAB_LOGIN} label="Returning User" />
-            <Tab value={TAB_REGISTER} label="New User" />
+            <Tab value={TAB_LOGIN} label={signInText} />
+            <Tab value={TAB_REGISTER} label={registerText} />
           </Tabs>
           <IconButton
             aria-label="Close"
@@ -81,10 +89,13 @@ class LogIn extends PureComponent {
         </Toolbar>
       </AppBar>,
       activeTab === TAB_LOGIN && (
-        <SignIn key="signIn" {...{ submitLabel, resetLabel }} />
+        <SignIn key="signIn" {...{ submitLabel, cancelLabel, resetLabel }} />
       ),
       activeTab === TAB_REGISTER && (
-        <Register key="register" {...{ submitLabel, resetLabel }} />
+        <Register
+          key="register"
+          {...{ submitLabel, cancelLabel, resetLabel }}
+        />
       )
     ]
   }

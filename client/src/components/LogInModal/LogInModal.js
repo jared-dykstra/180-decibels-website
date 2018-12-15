@@ -14,6 +14,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
+import { withStyles } from '@material-ui/core/styles'
 
 import {
   isAuthenticatingSelector,
@@ -26,6 +27,13 @@ import { LogIn } from 'components'
 
 import styles from './LogInModal.module.scss'
 
+const muiStyles = {
+  paper: {
+    // Preserve width on small screens.  maxWidth kicks in on 'md' screens
+    margin: 0
+  }
+}
+
 class LogInModal extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
@@ -35,7 +43,8 @@ class LogInModal extends PureComponent {
     doOpenDialog: PropTypes.func.isRequired,
     doSignOut: PropTypes.func.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
-    name: PropTypes.string
+    name: PropTypes.string,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   static defaultProps = {
@@ -68,7 +77,7 @@ class LogInModal extends PureComponent {
   }
 
   renderSignInButton = () => {
-    const { isModalOpen } = this.props
+    const { isModalOpen, classes } = this.props
     const signInText = 'Sign In'
     return [
       <Button key="button" color="primary" outline onClick={this.toggleModal}>
@@ -77,9 +86,20 @@ class LogInModal extends PureComponent {
         {signInText}
       </Button>,
       // TODO: Split the modal into a separate component to avoid any chance of it being included in the DOM multiple times
-      <Dialog key="modal" open={isModalOpen} onClose={this.toggleModal}>
+      <Dialog
+        key="modal"
+        open={isModalOpen}
+        onClose={this.toggleModal}
+        fullWidth
+        classes={classes}
+      >
         <DialogContent>
-          <LogIn signInText={signInText} resetText="Reset" />
+          <LogIn
+            signInText={signInText}
+            registerText="Register"
+            cancelText="Cancel"
+            resetText="Reset"
+          />
         </DialogContent>
       </Dialog>
     ]
@@ -89,6 +109,7 @@ class LogInModal extends PureComponent {
     const { name, doSignOut } = this.props
     const { dropdownOpen } = this.state
     return (
+      // TODO: Replace Bootstrap Dropdown with material-ui select
       <Dropdown
         isOpen={dropdownOpen}
         toggle={this.toggleMenu}
@@ -132,4 +153,4 @@ export default connect(
     doOpenDialog: () => dispatch(openDialog()),
     doSignOut: () => dispatch(signOut())
   })
-)(LogInModal)
+)(withStyles(muiStyles)(LogInModal))
