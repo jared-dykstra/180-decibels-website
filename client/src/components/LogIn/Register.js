@@ -137,7 +137,7 @@ class Register extends PureComponent {
           </Grid>
           <Grid item md={6}>
             <Field
-              label="Re-enter Password"
+              label="Confirm Password"
               id={REGISTER_FORM_PASSWORD2_KEY}
               name={REGISTER_FORM_PASSWORD2_KEY}
               type="password"

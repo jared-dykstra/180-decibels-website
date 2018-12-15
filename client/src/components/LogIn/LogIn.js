@@ -1,10 +1,17 @@
 import Immutable from 'seamless-immutable'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 
 import AppBar from '@material-ui/core/AppBar'
+import IconButton from '@material-ui/core/IconButton'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import CloseIcon from '@material-ui/icons/Close'
+import Toolbar from '@material-ui/core/Toolbar'
+import { withStyles } from '@material-ui/core/styles'
+
+import { closeDialog } from 'reduxStore/auth/authActions'
 
 import Register from './Register'
 import SignIn from './SignIn'
@@ -12,10 +19,24 @@ import SignIn from './SignIn'
 const TAB_REGISTER = 'register'
 const TAB_LOGIN = 'login'
 
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  grow: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginRight: -20
+  }
+}
+
 class LogIn extends PureComponent {
   static propTypes = {
     signInText: PropTypes.string.isRequired,
-    resetText: PropTypes.string.isRequired
+    resetText: PropTypes.string.isRequired,
+    doCloseDialog: PropTypes.func.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
@@ -35,15 +56,29 @@ class LogIn extends PureComponent {
 
   render() {
     const { activeTab } = this.state
-    const { signInText, resetText } = this.props
+    const { classes, signInText, resetText, doCloseDialog } = this.props
     const submitLabel = signInText
     const resetLabel = resetText
     return [
       <AppBar key="tabs" position="relative" color="default">
-        <Tabs onChange={this.handleChangeTab} key="tabs" value={activeTab}>
-          <Tab value={TAB_LOGIN} label="Returning User" />
-          <Tab value={TAB_REGISTER} label="New User" />
-        </Tabs>
+        <Toolbar>
+          <Tabs
+            onChange={this.handleChangeTab}
+            key="tabs"
+            value={activeTab}
+            className={classes.grow}
+          >
+            <Tab value={TAB_LOGIN} label="Returning User" />
+            <Tab value={TAB_REGISTER} label="New User" />
+          </Tabs>
+          <IconButton
+            aria-label="Close"
+            className={classes.menuButton}
+            onClick={doCloseDialog}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
       </AppBar>,
       activeTab === TAB_LOGIN && (
         <SignIn key="signIn" {...{ submitLabel, resetLabel }} />
@@ -55,4 +90,9 @@ class LogIn extends PureComponent {
   }
 }
 
-export default LogIn
+export default connect(
+  () => ({}),
+  dispatch => ({
+    doCloseDialog: () => dispatch(closeDialog())
+  })
+)(withStyles(styles)(LogIn))
