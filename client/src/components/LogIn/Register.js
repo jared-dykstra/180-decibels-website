@@ -3,7 +3,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
-import { Col, Form, FormGroup, Label, Row } from 'reactstrap'
+
+import Grid from '@material-ui/core/Grid'
 
 import { actions } from 'reduxStore/auth'
 import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
@@ -22,7 +23,6 @@ import {
 
 import styles from './LogIn.module.scss'
 import renderField from './renderField'
-import { labelWidth } from './constants'
 import Buttons from './Buttons'
 
 const asyncValidate = async values => {
@@ -61,149 +61,105 @@ class Register extends PureComponent {
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
-      <Form onSubmit={handleSubmit(doRegister)} className={styles.register}>
-        <FormGroup>
-          <Row>
-            <Col xs={labelWidth}>
-              <Label
-                for={REGISTER_FORM_FIRST_NAME_KEY}
-                className={styles.required}
-              >
-                First Name
-              </Label>
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_FIRST_NAME_KEY}
-                name={REGISTER_FORM_FIRST_NAME_KEY}
-                type="text"
-                component={renderField}
-                placeholder="Wiley, E"
-                autoComplete="given-name"
-              />
-            </Col>
-            <Col xs={labelWidth}>
-              <Label
-                for={REGISTER_FORM_LAST_NAME_KEY}
-                className={styles.required}
-              >
-                Last Name
-              </Label>
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_LAST_NAME_KEY}
-                name={REGISTER_FORM_LAST_NAME_KEY}
-                type="text"
-                component={renderField}
-                placeholder="Coyote"
-                autoComplete="family-name"
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col xs={labelWidth}>
-              <Label
-                for={REGISTER_FORM_COMPANY_KEY}
-                className={styles.required}
-              >
-                Company
-              </Label>
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_COMPANY_KEY}
-                name={REGISTER_FORM_COMPANY_KEY}
-                type="text"
-                component={renderField}
-                placeholder="ACME"
-                autoComplete="organization"
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col xs={labelWidth}>
-              <Label for={REGISTER_FORM_EMAIL_KEY} className={styles.required}>
-                Email
-              </Label>
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_EMAIL_KEY}
-                name={REGISTER_FORM_EMAIL_KEY}
-                type="text"
-                component={renderField}
-                placeholder="wiley@acme.com"
-                autoComplete="email"
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col xs={labelWidth}>
-              <Label for={REGISTER_FORM_PHONE_KEY} className={styles.required}>
-                Phone
-              </Label>
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_PHONE_KEY}
-                name={REGISTER_FORM_PHONE_KEY}
-                type="text"
-                component={renderField}
-                placeholder="403.555.1212"
-                autoComplete="tel"
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col xs={labelWidth}>
-              <Label
-                for={REGISTER_FORM_PASSWORD1_KEY}
-                className={styles.required}
-              >
-                Password
-              </Label>
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_PASSWORD1_KEY}
-                name={REGISTER_FORM_PASSWORD1_KEY}
-                type="password"
-                component={renderField}
-                placeholder="new password"
-                autoComplete="new-password"
-              />
-            </Col>
-            <Col>
-              <Field
-                id={REGISTER_FORM_PASSWORD2_KEY}
-                name={REGISTER_FORM_PASSWORD2_KEY}
-                type="password"
-                component={renderField}
-                placeholder="confirm"
-                autoComplete="new-password"
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <Buttons
-          {...{
-            isSubmitDisabled,
-            isResetDisabled,
-            reset,
-            submitLabel,
-            resetLabel
-          }}
-        />
-      </Form>
+      <form onSubmit={handleSubmit(doRegister)} className={styles.register}>
+        <Grid container spacing={24}>
+          <Grid item md={6}>
+            <Field
+              label="First Name"
+              id={REGISTER_FORM_FIRST_NAME_KEY}
+              name={REGISTER_FORM_FIRST_NAME_KEY}
+              type="text"
+              component={renderField}
+              placeholder="Wiley, E"
+              autoComplete="given-name"
+              fullWidth
+            />
+          </Grid>
+          <Grid item md={6}>
+            <Field
+              label="Last Name"
+              id={REGISTER_FORM_LAST_NAME_KEY}
+              name={REGISTER_FORM_LAST_NAME_KEY}
+              type="text"
+              component={renderField}
+              placeholder="Coyote"
+              autoComplete="family-name"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Field
+              label="Company"
+              id={REGISTER_FORM_COMPANY_KEY}
+              name={REGISTER_FORM_COMPANY_KEY}
+              type="text"
+              component={renderField}
+              placeholder="ACME"
+              autoComplete="organization"
+              fullWidth
+            />
+          </Grid>
+          <Grid item md={6}>
+            <Field
+              label="Email"
+              id={REGISTER_FORM_EMAIL_KEY}
+              name={REGISTER_FORM_EMAIL_KEY}
+              type="text"
+              component={renderField}
+              placeholder="wiley@acme.com"
+              autoComplete="email"
+              fullWidth
+            />
+          </Grid>
+          <Grid item md={6}>
+            <Field
+              label="Phone"
+              id={REGISTER_FORM_PHONE_KEY}
+              name={REGISTER_FORM_PHONE_KEY}
+              type="text"
+              component={renderField}
+              placeholder="403.555.1212"
+              autoComplete="tel"
+              fullWidth
+            />
+          </Grid>
+          <Grid item md={6}>
+            <Field
+              label="Password"
+              id={REGISTER_FORM_PASSWORD1_KEY}
+              name={REGISTER_FORM_PASSWORD1_KEY}
+              type="password"
+              component={renderField}
+              placeholder="new password"
+              autoComplete="new-password"
+              fullWidth
+            />
+          </Grid>
+          <Grid item md={6}>
+            <Field
+              label="Confirm Password"
+              id={REGISTER_FORM_PASSWORD2_KEY}
+              name={REGISTER_FORM_PASSWORD2_KEY}
+              type="password"
+              component={renderField}
+              placeholder="confirm"
+              autoComplete="new-password"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Buttons
+              {...{
+                isSubmitDisabled,
+                isResetDisabled,
+                reset,
+                submitLabel,
+                resetLabel
+              }}
+            />
+          </Grid>
+        </Grid>
+      </form>
     )
   }
 }

@@ -1,6 +1,8 @@
 export { default as Header } from './Header/Header'
 export { default as Footer } from './Footer/Footer'
-export { default as GetStarted } from './GetStarted/GetStarted'
+export {
+  default as GetStartedButton
+} from './GetStartedButton/GetStartedButton'
 export { default as GetStartedModal } from './GetStartedModal/GetStartedModal'
 export { default as LogIn } from './LogIn/LogIn'
 export { default as LogInModal } from './LogInModal/LogInModal'

@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Col, FormGroup, Row } from 'reactstrap'
+import Button from '@material-ui/core/Button'
+import DialogActions from '@material-ui/core/DialogActions'
+
+import styles from './LogIn.module.scss'
 
 const Buttons = ({
   isSubmitDisabled,
@@ -10,29 +13,20 @@ const Buttons = ({
   submitLabel,
   resetLabel
 }) => (
-  <FormGroup>
-    <Row>
-      <Col>
-        <Button
-          type="submit"
-          color={!isSubmitDisabled ? 'primary' : undefined}
-          disabled={isSubmitDisabled}
-          className="float-right"
-        >
-          {submitLabel}
-        </Button>
-        <Button
-          type="reset"
-          color="link"
-          disabled={isResetDisabled}
-          onClick={reset}
-          className="float-right"
-        >
-          {resetLabel}
-        </Button>
-      </Col>
-    </Row>
-  </FormGroup>
+  <DialogActions className={styles.buttons}>
+    <Button key="reset" type="reset" disabled={isResetDisabled} onClick={reset}>
+      {resetLabel}
+    </Button>
+    <Button
+      key="submit"
+      variant="contained"
+      type="submit"
+      color={!isSubmitDisabled ? 'primary' : undefined}
+      disabled={isSubmitDisabled}
+    >
+      {submitLabel}
+    </Button>
+  </DialogActions>
 )
 
 Buttons.propTypes = {

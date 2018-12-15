@@ -7,13 +7,13 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  Modal,
-  ModalHeader,
-  ModalBody
+  DropdownItem
 } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
+
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
 
 import {
   isAuthenticatingSelector,
@@ -77,18 +77,11 @@ class LogInModal extends PureComponent {
         {signInText}
       </Button>,
       // TODO: Split the modal into a separate component to avoid any chance of it being included in the DOM multiple times
-      <Modal
-        key="modal"
-        fade={false}
-        isOpen={isModalOpen}
-        toggle={this.toggleModal}
-        className="modal-lg"
-      >
-        <ModalHeader toggle={this.toggleModal}>{signInText}</ModalHeader>
-        <ModalBody>
+      <Dialog key="modal" open={isModalOpen} onClose={this.toggleModal}>
+        <DialogContent>
           <LogIn signInText={signInText} resetText="Reset" />
-        </ModalBody>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     ]
   }
 

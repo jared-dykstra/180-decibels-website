@@ -4,8 +4,12 @@ import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
 import ReactGA from 'react-ga'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { createMuiTheme } from '@material-ui/core/styles'
 
 import createStore from 'reduxStore/createStore'
+
+import styles from 'styles/custom.scss'
 
 import { get as configGet } from './config'
 import * as serviceWorker from './serviceWorker'
@@ -29,6 +33,26 @@ history.listen(location => {
   logPageView(location)
 })
 
+// NOTE: Keep in sync with bootstrap, until bootstrap is removed.
+const THEME = createMuiTheme({
+  palette: {
+    primary: {
+      main: styles['var-primary'],
+      contrastText: styles['var-white']
+    },
+    secondary: {
+      main: styles['var-secondary']
+    }
+  },
+  typography: {
+    useNextVariants: true,
+    fontFamily: styles['var-font-family-sans-serif'],
+    fontWeightLight: styles['var-font-weight-light'],
+    fontWeightRegular: styles['var-font-weight-normal'],
+    fontWeightMedium: styles['var-font-weight-bold']
+  }
+})
+
 class Router extends PureComponent {
   componentDidMount = () => {
     const { pathname, search } = window.location
@@ -37,11 +61,13 @@ class Router extends PureComponent {
 
   render() {
     return (
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </Provider>
+      <MuiThemeProvider theme={THEME}>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </Provider>
+      </MuiThemeProvider>
     )
   }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
-import { GetStarted, Template } from 'components'
+import { GetStartedButton, Template } from 'components'
 
 import styles from './Services.module.scss'
 
@@ -77,9 +77,9 @@ export default () => (
           </p>
         </Col>
         <Col xs="12" className="d-flex">
-          <GetStarted size="lg" className="ml-auto">
+          <GetStartedButton size="lg" className="ml-auto">
             Get Started with 180 Decibels Today!
-          </GetStarted>
+          </GetStartedButton>
         </Col>
       </Col>
     </Row>

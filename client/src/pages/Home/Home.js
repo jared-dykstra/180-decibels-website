@@ -7,7 +7,7 @@ import { Button, Col, Jumbotron, Row } from 'reactstrap'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
 
-import { GetStarted, Quote, Template } from 'components'
+import { GetStartedButton, Quote, Template } from 'components'
 import {
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM
@@ -42,9 +42,9 @@ export class Home extends PureComponent {
               <div className={styles.overlay}>
                 <h1 className="pt-2 pt-sm-4 pt-lg-5">{tagline}</h1>
                 <div className={`mb-2 pb-sm-3 ${styles['btn-container']}`}>
-                  <GetStarted size="lg" className="p-lg-3">
+                  <GetStartedButton size="lg" className="p-lg-3">
                     Schedule a Complimentary Results Coaching Session Now
-                  </GetStarted>
+                  </GetStartedButton>
                 </div>
               </div>
             </div>
@@ -105,8 +105,8 @@ export class Home extends PureComponent {
         </Row>
         <Row className={styles['video-row']}>
           <Col md="4" className="d-none d-md-block">
-            <Quote className="h3" cite="Aldous Huxley">
-              180 Decibels increased my team&apos;s results by 25%
+            <Quote className="h3" cite="Vincent, CEO">
+              180 Decibels increased my team&apos;s results by 22%
             </Quote>
           </Col>
           <Col md="8">
@@ -143,7 +143,7 @@ export class Home extends PureComponent {
             </section>
           </Col>
           <Col md="4" className="d-none d-md-block">
-            <Quote right className="h3" cite="George Orwell">
+            <Quote right className="h3" cite="Patrick, Technical Lead">
               We are not <i>meeting</i> goals; We are <i>crushing</i> them
             </Quote>
           </Col>

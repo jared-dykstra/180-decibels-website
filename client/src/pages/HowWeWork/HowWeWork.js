@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
-import { GetStarted, Quote, Template } from 'components'
+import { GetStartedButton, Quote, Template } from 'components'
 
 import styles from './HowWeWork.module.scss'
 
@@ -51,9 +51,9 @@ export default () => (
             </p>
           </Col>
           <Col xs="12" className="d-flex">
-            <GetStarted size="lg" className="ml-auto">
+            <GetStartedButton size="lg" className="ml-auto">
               Get Started with our Unique Approach Today!
-            </GetStarted>
+            </GetStartedButton>
           </Col>
         </section>
         <Quote cite="Sarah, Manager" className="pb-3 pt-5">
@@ -106,9 +106,9 @@ export default () => (
             </p>
           </Col>
           <Col xs="12" className="d-flex">
-            <GetStarted size="lg" className="ml-auto">
+            <GetStartedButton size="lg" className="ml-auto">
               Experience a 180 Today!
-            </GetStarted>
+            </GetStartedButton>
           </Col>
         </section>
       </Col>

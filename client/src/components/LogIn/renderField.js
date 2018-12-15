@@ -1,20 +1,27 @@
-import React, { Fragment } from 'react'
-import { Input, FormFeedback, FormText } from 'reactstrap'
+import React from 'react'
+
+import FormControl from '@material-ui/core/FormControl'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
 
 const renderTextField = ({
   input,
   meta: { touched, error, warning },
+  label,
+  id,
+  fullWidth,
   ...custom
 }) => (
-  <Fragment>
-    <Input
-      {...(touched ? { valid: !error, invalid: !!error } : {})}
-      {...input}
-      {...custom}
-    />
-    {error && <FormFeedback>{error}</FormFeedback>}
-    {!error && warning && <FormText>{warning}</FormText>}
-  </Fragment>
+  <FormControl
+    error={touched && !!error}
+    aria-describedby={`${id}-error-text`}
+    {...{ fullWidth }}
+  >
+    <InputLabel htmlFor={id}>{label}</InputLabel>
+    <Input {...{ id, fullWidth }} {...input} {...custom} />
+    <FormHelperText id={`${id}-error-text`}>{touched && error}</FormHelperText>
+  </FormControl>
 )
 
 // const renderRadioField = ({ value, input, ...custom }) => (

@@ -6,6 +6,8 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
 import { toggleDialog } from 'reduxStore/getStarted/getStartedActions'
 
+import GetStarted from './GetStarted'
+
 const GetStartedModal = ({ isModalOpen, doToggleDialog }) => (
   <Modal
     fade={false}
@@ -14,7 +16,9 @@ const GetStartedModal = ({ isModalOpen, doToggleDialog }) => (
     className="modal-lg"
   >
     <ModalHeader toggle={doToggleDialog}>Get Started</ModalHeader>
-    <ModalBody>TODO</ModalBody>
+    <ModalBody>
+      <GetStarted />
+    </ModalBody>
   </Modal>
 )
 
