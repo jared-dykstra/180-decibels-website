@@ -1,15 +1,11 @@
-import { filter as _filter } from 'lodash'
+import { intersection as _intersection } from 'lodash'
 import { createSelector } from 'reselect'
 import {
   getFormMeta,
   getFormSyncErrors,
   getFormAsyncErrors
 } from 'redux-form/immutable'
-import {
-  REGISTER_FORM_FIRST_NAME_KEY,
-  REGISTER_FORM_LAST_NAME_KEY
-} from '180-decibels-shared/registration'
-import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
+import { REGISTER_FORM_FIRST_NAME_KEY } from '180-decibels-shared/registration'
 import { mountPoint } from '.'
 
 const authSelector = state => state[mountPoint]
@@ -39,29 +35,79 @@ export const nameSelector = createSelector(
   user => (user ? user[REGISTER_FORM_FIRST_NAME_KEY] : null)
 )
 
-export const registerFormHasContactErrorSelector = createSelector(
-  getFormMeta(REGISTER_FORM_KEY),
-  getFormSyncErrors(REGISTER_FORM_KEY),
-  getFormAsyncErrors(REGISTER_FORM_KEY),
-  (meta, syncErrors, asyncErrors) => {
-    const touchedFields = Object.entries(meta.toJS()).reduce(
-      (acc, [id, info]) => {
-        if (info.touched) {
-          acc[id] = true
-        }
-        return acc
-      },
-      {}
-    )
-
-    const errorFields = Object.keys(touchedFields).reduce((acc, field) => {
-      acc[field] = syncErrors[field] || asyncErrors[field]
+// Get all fields the user has touched
+const getTouchedFields = meta => {
+  const touchedFields = Object.entries(meta.toJS()).reduce(
+    (acc, [id, info]) => {
+      if (info.touched) {
+        acc[id] = true
+      }
       return acc
-    }, {})
+    },
+    {}
+  )
+  return touchedFields
+}
 
-    // console.log(`touchedFields=${JSON.stringify(touchedFields)}`)
-    // console.log(`errorFields=${JSON.stringify(errorFields)}`)
+// Only consider it an error if the field has been touched, and if the field is listed in 'fields' array
+const getErrors = ({ touchedFields, syncErrors, asyncErrors, fields }) => {
+  const errorFields = _intersection(Object.keys(touchedFields), fields).reduce(
+    (acc, field) => {
+      const error = (syncErrors || {})[field] || (asyncErrors || {})[field]
+      if (error) {
+        // Ensure the accumulator is never set to undefined
+        acc[field] = error
+      }
+      return acc
+    },
+    {}
+  )
+  return errorFields
+}
 
-    return Object.keys(errorFields).length > 0
-  }
-)
+export const makeFormHasErrorSelector = ({ formId, fields }) =>
+  createSelector(
+    getFormMeta(formId),
+    getFormSyncErrors(formId),
+    getFormAsyncErrors(formId),
+    (meta, syncErrors, asyncErrors) => {
+      const touchedFields = getTouchedFields(meta)
+      const errorFields = getErrors({
+        touchedFields,
+        syncErrors,
+        asyncErrors,
+        fields
+      })
+
+      const hasErrors = Object.keys(errorFields).length > 0
+      return hasErrors
+    }
+  )
+
+export const makeFormSectionCompleteSelector = ({ formId, fields }) =>
+  createSelector(
+    getFormMeta(formId),
+    getFormSyncErrors(formId),
+    getFormAsyncErrors(formId),
+    (meta, syncErrors, asyncErrors) => {
+      const touchedFields = getTouchedFields(meta)
+      const errorFields = getErrors({
+        touchedFields,
+        syncErrors,
+        asyncErrors,
+        fields
+      })
+      const hasErrors = Object.keys(errorFields).length > 0
+
+      // If there are errors, it's not complete
+      if (hasErrors) {
+        return false
+      }
+
+      // It's complete if all of the specified fields have been touched
+      return (
+        _intersection(Object.keys(touchedFields), fields).length ===
+        fields.length
+      )
+    }
+  )

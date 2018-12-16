@@ -13,7 +13,10 @@ import StepContent from '@material-ui/core/StepContent'
 
 import { actions } from 'reduxStore/auth'
 import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
-import { registerFormHasContactErrorSelector } from 'reduxStore/auth/authSelectors'
+import {
+  makeFormHasErrorSelector,
+  makeFormSectionCompleteSelector
+} from 'reduxStore/auth/authSelectors'
 import { isEmailInUse } from 'reduxStore/auth/fetcher'
 
 import {
@@ -30,6 +33,25 @@ import {
 import styles from './LogIn.module.scss'
 import renderField from './renderField'
 import Buttons from './Buttons'
+
+const formSections = [
+  {
+    label: 'A bit about Yourself',
+    fields: [
+      REGISTER_FORM_FIRST_NAME_KEY,
+      REGISTER_FORM_LAST_NAME_KEY,
+      REGISTER_FORM_COMPANY_KEY
+    ]
+  },
+  {
+    label: 'How can you be reached?',
+    fields: [REGISTER_FORM_EMAIL_KEY, REGISTER_FORM_PHONE_KEY]
+  },
+  {
+    label: 'Choose a Password',
+    fields: [REGISTER_FORM_PASSWORD1_KEY, REGISTER_FORM_PASSWORD2_KEY]
+  }
+]
 
 const asyncValidate = async values => {
   // Values is immutableJS instance
@@ -52,6 +74,12 @@ class Register extends PureComponent {
     submitLabel: PropTypes.string.isRequired,
     cancelLabel: PropTypes.string.isRequired,
     resetLabel: PropTypes.string.isRequired,
+    aboutSectionHasError: PropTypes.bool.isRequired,
+    contactSectionHasError: PropTypes.bool.isRequired,
+    passwordSectionHasError: PropTypes.bool.isRequired,
+    aboutSectionComplete: PropTypes.bool.isRequired,
+    contactSectionComplete: PropTypes.bool.isRequired,
+    passwordSectionComplete: PropTypes.bool.isRequired,
     ...propTypes
   }
 
@@ -62,50 +90,99 @@ class Register extends PureComponent {
     })
   }
 
-  handleNext = () => {
-    this.setState(state =>
-      Immutable.from({
-        activeStep: state.activeStep + 1
-      })
-    )
+  // handleNext = () => {
+  //   this.setState(state =>
+  //     Immutable.from({
+  //       activeStep: state.activeStep + 1
+  //     })
+  //   )
+  // }
+
+  // handleBack = () => {
+  //   this.setState(state =>
+  //     Immutable.from({
+  //       activeStep: state.activeStep - 1
+  //     })
+  //   )
+  // }
+
+  handleFormSubmit = e => {
+    const {
+      handleSubmit,
+      doRegister,
+      aboutSectionComplete,
+      contactSectionComplete,
+      passwordSectionComplete
+    } = this.props
+    const { activeStep } = this.state
+
+    // Prevent default submit
+    e.preventDefault()
+    e.stopPropagation()
+
+    switch (activeStep) {
+      case 0:
+        if (aboutSectionComplete) {
+          this.setStep(1)
+        }
+        break
+      case 1:
+        if (contactSectionComplete) {
+          this.setStep(2)
+        }
+        break
+      case 2:
+        // if (passwordSectionComplete) {
+        // }
+        // Actually submit the form
+        return handleSubmit(doRegister)
+      default:
+    }
+
+    return false
   }
 
-  handleBack = () => {
-    this.setState(state =>
-      Immutable.from({
-        activeStep: state.activeStep - 1
-      })
-    )
-  }
-
-  handleReset = () => {
+  setStep = step => {
     this.setState(
       Immutable.from({
-        activeStep: 0
+        activeStep: step
       })
     )
   }
 
   render() {
     const {
-      handleSubmit,
       pristine,
       reset,
       submitting,
-      doRegister,
       submitLabel,
       cancelLabel,
       resetLabel,
-      contactSectionHasError
+      aboutSectionHasError,
+      contactSectionHasError,
+      passwordSectionHasError,
+      aboutSectionComplete,
+      contactSectionComplete,
+      passwordSectionComplete
     } = this.props
     const { activeStep } = this.state
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
+
+    const selectedStep = activeStep
+    const allSectionsComplete =
+      aboutSectionComplete && contactSectionComplete && passwordSectionComplete
+
     return (
-      <form onSubmit={handleSubmit(doRegister)} className={styles.register}>
-        <Stepper activeStep={activeStep} orientation="vertical">
-          <Step key="About Yourself">
-            <StepLabel error={contactSectionHasError}>About Yourself</StepLabel>
+      <form onSubmit={this.handleFormSubmit} className={styles.register}>
+        <Stepper activeStep={selectedStep} orientation="vertical">
+          <Step key={0} completed={aboutSectionComplete}>
+            <StepLabel
+              error={aboutSectionHasError}
+              onClick={() => this.setStep(0)}
+            >
+              {formSections[0].label}
+            </StepLabel>
             <StepContent>
               <Grid container spacing={24}>
                 <Grid item md={6}>
@@ -147,8 +224,13 @@ class Register extends PureComponent {
               </Grid>
             </StepContent>
           </Step>
-          <Step key="Contact Info" completed>
-            <StepLabel>Contact Info</StepLabel>
+          <Step key={1} completed={contactSectionComplete}>
+            <StepLabel
+              error={contactSectionHasError}
+              onClick={() => this.setStep(1)}
+            >
+              {formSections[1].label}
+            </StepLabel>
             <StepContent>
               <Grid container spacing={24}>
                 <Grid item md={6}>
@@ -175,6 +257,18 @@ class Register extends PureComponent {
                     fullWidth
                   />
                 </Grid>
+              </Grid>
+            </StepContent>
+          </Step>
+          <Step key={2} completed={passwordSectionComplete}>
+            <StepLabel
+              error={passwordSectionHasError}
+              onClick={() => this.setStep(2)}
+            >
+              {formSections[2].label}
+            </StepLabel>
+            <StepContent>
+              <Grid container spacing={24}>
                 <Grid item md={6}>
                   <Field
                     label="Password"
@@ -208,7 +302,7 @@ class Register extends PureComponent {
             isSubmitDisabled,
             isResetDisabled,
             reset,
-            submitLabel,
+            submitLabel: allSectionsComplete ? submitLabel : 'Next',
             cancelLabel,
             resetLabel
           }}
@@ -219,9 +313,42 @@ class Register extends PureComponent {
 }
 
 const ConnectedRegister = connect(
-  (state, props) => ({
-    contactSectionHasError: registerFormHasContactErrorSelector(state, props)
-  }),
+  (state, props) => {
+    const aboutSectionHasErrorSelector = makeFormHasErrorSelector({
+      formId: REGISTER_FORM_KEY,
+      fields: formSections[0].fields
+    })
+    const contactSectionHasErrorSelector = makeFormHasErrorSelector({
+      formId: REGISTER_FORM_KEY,
+      fields: formSections[1].fields
+    })
+    const passwordSectionHasErrorSelector = makeFormHasErrorSelector({
+      formId: REGISTER_FORM_KEY,
+      fields: formSections[2].fields
+    })
+
+    const aboutSectionCompleteSelector = makeFormSectionCompleteSelector({
+      formId: REGISTER_FORM_KEY,
+      fields: formSections[0].fields
+    })
+    const contactSectionCompleteSelector = makeFormSectionCompleteSelector({
+      formId: REGISTER_FORM_KEY,
+      fields: formSections[1].fields
+    })
+    const passwordSectionCompleteSelector = makeFormSectionCompleteSelector({
+      formId: REGISTER_FORM_KEY,
+      fields: formSections[2].fields
+    })
+
+    return {
+      aboutSectionHasError: aboutSectionHasErrorSelector(state, props),
+      contactSectionHasError: contactSectionHasErrorSelector(state, props),
+      passwordSectionHasError: passwordSectionHasErrorSelector(state, props),
+      aboutSectionComplete: aboutSectionCompleteSelector(state, props),
+      contactSectionComplete: contactSectionCompleteSelector(state, props),
+      passwordSectionComplete: passwordSectionCompleteSelector(state, props)
+    }
+  },
   dispatch => ({
     doRegister: values => dispatch(actions.register(values))
   })
