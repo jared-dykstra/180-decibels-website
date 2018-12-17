@@ -9,6 +9,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import CloseIcon from '@material-ui/icons/Close'
 import Toolbar from '@material-ui/core/Toolbar'
+import DialogContent from '@material-ui/core/DialogContent'
 import { withStyles } from '@material-ui/core/styles'
 
 import { closeDialog } from 'reduxStore/auth/authActions'
@@ -20,20 +21,23 @@ const TAB_REGISTER = 'register'
 const TAB_LOGIN = 'login'
 
 const styles = {
-  root: {
-    flexGrow: 1
-  },
+  root: {},
   grow: {
     flexGrow: 1
   },
   menuButton: {
     marginRight: -20
+  },
+  container: {
+    'padding-bottom': '5px'
   }
 }
 
 class LogIn extends PureComponent {
   static propTypes = {
     signInText: PropTypes.string.isRequired,
+    registerText: PropTypes.string.isRequired,
+    cancelText: PropTypes.string.isRequired,
     resetText: PropTypes.string.isRequired,
     doCloseDialog: PropTypes.func.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired
@@ -56,20 +60,30 @@ class LogIn extends PureComponent {
 
   render() {
     const { activeTab } = this.state
-    const { classes, signInText, resetText, doCloseDialog } = this.props
-    const submitLabel = signInText
-    const resetLabel = resetText
+    const {
+      classes,
+      signInText,
+      registerText,
+      resetText: resetLabel,
+      cancelText: cancelLabel,
+      doCloseDialog
+    } = this.props
     return [
-      <AppBar key="tabs" position="relative" color="default">
-        <Toolbar>
+      <AppBar
+        key="tabs"
+        position="relative"
+        color="default"
+        className={classes.root}
+      >
+        <Toolbar variant="dense">
           <Tabs
             onChange={this.handleChangeTab}
             key="tabs"
             value={activeTab}
             className={classes.grow}
           >
-            <Tab value={TAB_LOGIN} label="Returning User" />
-            <Tab value={TAB_REGISTER} label="New User" />
+            <Tab value={TAB_LOGIN} label={signInText} />
+            <Tab value={TAB_REGISTER} label={registerText} />
           </Tabs>
           <IconButton
             aria-label="Close"
@@ -80,12 +94,16 @@ class LogIn extends PureComponent {
           </IconButton>
         </Toolbar>
       </AppBar>,
-      activeTab === TAB_LOGIN && (
-        <SignIn key="signIn" {...{ submitLabel, resetLabel }} />
-      ),
-      activeTab === TAB_REGISTER && (
-        <Register key="register" {...{ submitLabel, resetLabel }} />
-      )
+      <DialogContent key="content" className={classes.container}>
+        {activeTab === TAB_LOGIN && (
+          <SignIn {...{ submitLabel: signInText, cancelLabel, resetLabel }} />
+        )}
+        {activeTab === TAB_REGISTER && (
+          <Register
+            {...{ submitLabel: registerText, cancelLabel, resetLabel }}
+          />
+        )}
+      </DialogContent>
     ]
   }
 }
