@@ -33,6 +33,7 @@ import {
 
 import renderField from './renderField'
 import Buttons from './Buttons'
+import PasswordField from './PasswordField'
 
 const formSections = [
   {
@@ -94,7 +95,8 @@ class Register extends PureComponent {
   constructor(props) {
     super(props)
     this.state = Immutable.from({
-      activeStep: 0
+      activeStep: 0,
+      resetTs: new Date().getTime()
     })
   }
 
@@ -134,7 +136,9 @@ class Register extends PureComponent {
   setStep = step => {
     this.setState(
       Immutable.from({
-        activeStep: step
+        activeStep: step,
+        // Hide the password whenever the step is changed (or form is reset)
+        resetTs: new Date().getTime()
       })
     )
   }
@@ -156,7 +160,9 @@ class Register extends PureComponent {
       contactSectionComplete,
       passwordSectionComplete
     } = this.props
-    const { activeStep } = this.state
+    // Whenever resetTs is changed, react elements using that value of a key are re-rendered, and their internal state is reset
+    // This resets the "show password" functionality when the form is reset
+    const { activeStep, resetTs } = this.state
     const isSubmitDisabled = submitting
     const isResetDisabled = (pristine && !anyTouched) || submitting
 
@@ -276,24 +282,20 @@ class Register extends PureComponent {
             <StepContent>
               <Grid container spacing={24}>
                 <Grid item md={6}>
-                  <Field
+                  <PasswordField
+                    key={resetTs}
                     label="Password"
-                    id={REGISTER_FORM_PASSWORD1_KEY}
-                    name={REGISTER_FORM_PASSWORD1_KEY}
-                    type="password"
-                    component={renderField}
+                    formKey={REGISTER_FORM_PASSWORD1_KEY}
                     placeholder="new password"
                     autoComplete="new-password"
                     fullWidth
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <Field
+                  <PasswordField
+                    key={resetTs}
                     label="Confirm Password"
-                    id={REGISTER_FORM_PASSWORD2_KEY}
-                    name={REGISTER_FORM_PASSWORD2_KEY}
-                    type="password"
-                    component={renderField}
+                    formKey={REGISTER_FORM_PASSWORD2_KEY}
                     placeholder="confirm"
                     autoComplete="new-password"
                     fullWidth
