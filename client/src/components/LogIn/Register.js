@@ -102,25 +102,23 @@ class Register extends PureComponent {
     const { handleSubmit, doRegister, touch } = this.props
     const { activeStep } = this.state
 
-    const preventDefault = () => {
-      // Prevent default submit
-      e.preventDefault()
-      e.stopPropagation()
-    }
-
-    preventDefault()
+    // Prevent default submit
+    e.preventDefault()
+    e.stopPropagation()
 
     switch (activeStep) {
       case 0:
-        // Run Validation on fields in the first section
+        // Invoke redux-form's validation on fields in the first section
         touch(...formSections[0].fields)
         this.setStep(1)
         break
       case 1:
+        // Invoke redux-form's validation on fields in the first two sections
         touch(...formSections[0].fields, ...formSections[1].fields)
         this.setStep(2)
         break
       case 2:
+        // Invoke redux-form's validation on fields in all the sections
         touch(
           ...formSections[0].fields,
           ...formSections[1].fields,
