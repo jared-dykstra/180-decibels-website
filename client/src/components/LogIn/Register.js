@@ -17,7 +17,7 @@ import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
 import {
   makeFormHasErrorSelector,
   makeFormSectionCompleteSelector
-} from 'reduxStore/auth/authSelectors'
+} from 'reduxStore/form/formSelectors'
 import { isEmailInUse } from 'reduxStore/auth/fetcher'
 
 import {
@@ -142,6 +142,7 @@ class Register extends PureComponent {
   render() {
     const {
       classes,
+      anyTouched,
       pristine,
       reset,
       submitting,
@@ -157,7 +158,7 @@ class Register extends PureComponent {
     } = this.props
     const { activeStep } = this.state
     const isSubmitDisabled = submitting
-    const isResetDisabled = pristine || submitting
+    const isResetDisabled = (pristine && !anyTouched) || submitting
 
     const getSelectedStep = () => {
       if (aboutSectionHasError) {
