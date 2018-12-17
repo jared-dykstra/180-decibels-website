@@ -73,6 +73,9 @@ const muiStyles = {
   root: {
     'padding-left': 0,
     'padding-right': 0
+  },
+  clickable: {
+    cursor: 'pointer !important'
   }
 }
 
@@ -191,6 +194,7 @@ class Register extends PureComponent {
             <StepLabel
               error={aboutSectionHasError}
               onClick={() => this.setStep(0)}
+              className={classes.clickable}
             >
               {formSections[0].label}
             </StepLabel>
@@ -239,6 +243,7 @@ class Register extends PureComponent {
             <StepLabel
               error={contactSectionHasError}
               onClick={() => this.setStep(1)}
+              className={classes.clickable}
             >
               {formSections[1].label}
             </StepLabel>
@@ -275,6 +280,7 @@ class Register extends PureComponent {
             <StepLabel
               error={passwordSectionHasError}
               onClick={() => this.setStep(2)}
+              className={classes.clickable}
             >
               {formSections[2].label}
             </StepLabel>
