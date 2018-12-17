@@ -36,7 +36,7 @@ import Buttons from './Buttons'
 
 const formSections = [
   {
-    label: 'A bit about Yourself',
+    label: 'A bit about Yourself...',
     fields: [
       REGISTER_FORM_FIRST_NAME_KEY,
       REGISTER_FORM_LAST_NAME_KEY,
@@ -98,51 +98,34 @@ class Register extends PureComponent {
     })
   }
 
-  // handleNext = () => {
-  //   this.setState(state =>
-  //     Immutable.from({
-  //       activeStep: state.activeStep + 1
-  //     })
-  //   )
-  // }
-
-  // handleBack = () => {
-  //   this.setState(state =>
-  //     Immutable.from({
-  //       activeStep: state.activeStep - 1
-  //     })
-  //   )
-  // }
-
   handleFormSubmit = e => {
-    const {
-      handleSubmit,
-      doRegister,
-      aboutSectionComplete,
-      contactSectionComplete,
-      passwordSectionComplete
-    } = this.props
+    const { handleSubmit, doRegister, touch } = this.props
     const { activeStep } = this.state
 
-    // Prevent default submit
-    e.preventDefault()
-    e.stopPropagation()
+    const preventDefault = () => {
+      // Prevent default submit
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    preventDefault()
 
     switch (activeStep) {
       case 0:
-        if (aboutSectionComplete) {
-          this.setStep(1)
-        }
+        // Run Validation on fields in the first section
+        touch(...formSections[0].fields)
+        this.setStep(1)
         break
       case 1:
-        if (contactSectionComplete) {
-          this.setStep(2)
-        }
+        touch(...formSections[0].fields, ...formSections[1].fields)
+        this.setStep(2)
         break
       case 2:
-        // if (passwordSectionComplete) {
-        // }
-        // Actually submit the form
+        touch(
+          ...formSections[0].fields,
+          ...formSections[1].fields,
+          ...formSections[2].fields
+        )
         return handleSubmit(doRegister)
       default:
     }
@@ -178,9 +161,20 @@ class Register extends PureComponent {
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
 
-    const selectedStep = activeStep
-    const allSectionsComplete =
-      aboutSectionComplete && contactSectionComplete && passwordSectionComplete
+    const getSelectedStep = () => {
+      if (aboutSectionHasError) {
+        return 0
+      }
+      if (contactSectionHasError) {
+        return 1
+      }
+      if (passwordSectionHasError) {
+        return 2
+      }
+      return activeStep
+    }
+
+    const selectedStep = getSelectedStep()
 
     return (
       <form onSubmit={this.handleFormSubmit}>
@@ -314,8 +308,12 @@ class Register extends PureComponent {
           {...{
             isSubmitDisabled,
             isResetDisabled,
-            reset,
-            submitLabel: allSectionsComplete ? submitLabel : 'Next',
+            reset: () => {
+              this.setStep(0)
+              reset()
+            },
+            submitLabel:
+              selectedStep === formSections.length - 1 ? submitLabel : 'Next',
             cancelLabel,
             resetLabel
           }}
