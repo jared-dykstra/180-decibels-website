@@ -10,6 +10,7 @@ import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import StepContent from '@material-ui/core/StepContent'
+import { withStyles } from '@material-ui/core/styles'
 
 import { actions } from 'reduxStore/auth'
 import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
@@ -30,7 +31,6 @@ import {
   REGISTER_FORM_PASSWORD2_KEY
 } from '180-decibels-shared/registration'
 
-import styles from './LogIn.module.scss'
 import renderField from './renderField'
 import Buttons from './Buttons'
 
@@ -68,6 +68,13 @@ const asyncValidate = async values => {
   }
 }
 
+const muiStyles = {
+  root: {
+    'padding-left': 0,
+    'padding-right': 0
+  }
+}
+
 class Register extends PureComponent {
   static propTypes = {
     doRegister: PropTypes.func.isRequired,
@@ -80,6 +87,7 @@ class Register extends PureComponent {
     aboutSectionComplete: PropTypes.bool.isRequired,
     contactSectionComplete: PropTypes.bool.isRequired,
     passwordSectionComplete: PropTypes.bool.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
     ...propTypes
   }
 
@@ -152,6 +160,7 @@ class Register extends PureComponent {
 
   render() {
     const {
+      classes,
       pristine,
       reset,
       submitting,
@@ -174,8 +183,12 @@ class Register extends PureComponent {
       aboutSectionComplete && contactSectionComplete && passwordSectionComplete
 
     return (
-      <form onSubmit={this.handleFormSubmit} className={styles.register}>
-        <Stepper activeStep={selectedStep} orientation="vertical">
+      <form onSubmit={this.handleFormSubmit}>
+        <Stepper
+          activeStep={selectedStep}
+          orientation="vertical"
+          classes={classes}
+        >
           <Step key={0} completed={aboutSectionComplete}>
             <StepLabel
               error={aboutSectionHasError}
@@ -352,7 +365,7 @@ const ConnectedRegister = connect(
   dispatch => ({
     doRegister: values => dispatch(actions.register(values))
   })
-)(Register)
+)(withStyles(muiStyles)(Register))
 
 export default reduxForm({
   form: REGISTER_FORM_KEY,

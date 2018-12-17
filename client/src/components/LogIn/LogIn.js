@@ -9,6 +9,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import CloseIcon from '@material-ui/icons/Close'
 import Toolbar from '@material-ui/core/Toolbar'
+import DialogContent from '@material-ui/core/DialogContent'
 import { withStyles } from '@material-ui/core/styles'
 
 import { closeDialog } from 'reduxStore/auth/authActions'
@@ -20,14 +21,15 @@ const TAB_REGISTER = 'register'
 const TAB_LOGIN = 'login'
 
 const styles = {
-  root: {
-    flexGrow: 1
-  },
+  root: {},
   grow: {
     flexGrow: 1
   },
   menuButton: {
     marginRight: -20
+  },
+  container: {
+    'padding-bottom': '5px'
   }
 }
 
@@ -67,7 +69,12 @@ class LogIn extends PureComponent {
       doCloseDialog
     } = this.props
     return [
-      <AppBar key="tabs" position="relative" color="default">
+      <AppBar
+        key="tabs"
+        position="relative"
+        color="default"
+        className={classes.root}
+      >
         <Toolbar variant="dense">
           <Tabs
             onChange={this.handleChangeTab}
@@ -87,18 +94,16 @@ class LogIn extends PureComponent {
           </IconButton>
         </Toolbar>
       </AppBar>,
-      activeTab === TAB_LOGIN && (
-        <SignIn
-          key="signIn"
-          {...{ submitLabel: signInText, cancelLabel, resetLabel }}
-        />
-      ),
-      activeTab === TAB_REGISTER && (
-        <Register
-          key="register"
-          {...{ submitLabel: registerText, cancelLabel, resetLabel }}
-        />
-      )
+      <DialogContent key="content" className={classes.container}>
+        {activeTab === TAB_LOGIN && (
+          <SignIn {...{ submitLabel: signInText, cancelLabel, resetLabel }} />
+        )}
+        {activeTab === TAB_REGISTER && (
+          <Register
+            {...{ submitLabel: registerText, cancelLabel, resetLabel }}
+          />
+        )}
+      </DialogContent>
     ]
   }
 }

@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 import Dialog from '@material-ui/core/Dialog'
-import DialogContent from '@material-ui/core/DialogContent'
 import { withStyles } from '@material-ui/core/styles'
 
 import {
@@ -28,6 +27,11 @@ import { LogIn } from 'components'
 import styles from './LogInModal.module.scss'
 
 const muiStyles = {
+  container: {
+    // Position the dialog near the top--the default is to center vertically
+    height: 'initial',
+    'margin-top': '93px'
+  },
   paper: {
     // Preserve width on small screens.  maxWidth kicks in on 'md' screens
     margin: 0
@@ -93,14 +97,12 @@ class LogInModal extends PureComponent {
         fullWidth
         classes={classes}
       >
-        <DialogContent>
-          <LogIn
-            signInText={signInText}
-            registerText="Register"
-            cancelText="Cancel"
-            resetText="Reset"
-          />
-        </DialogContent>
+        <LogIn
+          signInText={signInText}
+          registerText="Register"
+          cancelText="Cancel"
+          resetText="Reset"
+        />
       </Dialog>
     ]
   }
