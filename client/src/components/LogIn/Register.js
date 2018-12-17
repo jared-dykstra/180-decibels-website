@@ -95,12 +95,25 @@ class Register extends PureComponent {
   constructor(props) {
     super(props)
     this.state = Immutable.from({
-      activeStep: 0,
-      resetTs: new Date().getTime()
+      activeStep: 0
     })
   }
 
-  handleFormSubmit = e => {
+  componentDidUpdate = (prevProps, prevState) => {
+    const { aboutSectionHasError, contactSectionHasError } = this.props
+    const { activeStep } = this.state
+    const stepChanged = prevState.activeStep !== activeStep
+
+    if (stepChanged) {
+      if (aboutSectionHasError) {
+        this.setStep(0)
+      } else if (contactSectionHasError) {
+        this.setStep(1)
+      }
+    }
+  }
+
+  handleFormSubmit = (e, ...rest) => {
     const { handleSubmit, doRegister, touch } = this.props
     const { activeStep } = this.state
 
@@ -126,19 +139,22 @@ class Register extends PureComponent {
           ...formSections[1].fields,
           ...formSections[2].fields
         )
-        return handleSubmit(doRegister)
+        return handleSubmit(doRegister)(e, ...rest)
       default:
     }
 
     return false
   }
 
-  setStep = step => {
-    this.setState(
+  setStep = requestedStep => {
+    const { activeStep } = this.state
+    if (activeStep === requestedStep) {
+      return
+    }
+
+    this.setState(() =>
       Immutable.from({
-        activeStep: step,
-        // Hide the password whenever the step is changed (or form is reset)
-        resetTs: new Date().getTime()
+        activeStep: requestedStep
       })
     )
   }
@@ -160,31 +176,14 @@ class Register extends PureComponent {
       contactSectionComplete,
       passwordSectionComplete
     } = this.props
-    // Whenever resetTs is changed, react elements using that value of a key are re-rendered, and their internal state is reset
-    // This resets the "show password" functionality when the form is reset
-    const { activeStep, resetTs } = this.state
+    const { activeStep } = this.state
     const isSubmitDisabled = submitting
     const isResetDisabled = (pristine && !anyTouched) || submitting
-
-    const getSelectedStep = () => {
-      if (aboutSectionHasError) {
-        return 0
-      }
-      if (contactSectionHasError) {
-        return 1
-      }
-      if (passwordSectionHasError) {
-        return 2
-      }
-      return activeStep
-    }
-
-    const selectedStep = getSelectedStep()
 
     return (
       <form onSubmit={this.handleFormSubmit}>
         <Stepper
-          activeStep={selectedStep}
+          activeStep={activeStep}
           orientation="vertical"
           classes={classes}
         >
@@ -283,7 +282,9 @@ class Register extends PureComponent {
               <Grid container spacing={24}>
                 <Grid item md={6}>
                   <PasswordField
-                    key={resetTs}
+                    // Whenever activeStep is changed, react elements using that value of a key are re-rendered, and their internal state is reset
+                    // This resets the "show password" functionality when the form is reset
+                    key={activeStep}
                     label="Password"
                     formKey={REGISTER_FORM_PASSWORD1_KEY}
                     placeholder="new password"
@@ -293,7 +294,7 @@ class Register extends PureComponent {
                 </Grid>
                 <Grid item md={6}>
                   <PasswordField
-                    key={resetTs}
+                    key={activeStep}
                     label="Confirm Password"
                     formKey={REGISTER_FORM_PASSWORD2_KEY}
                     placeholder="confirm"
@@ -314,7 +315,7 @@ class Register extends PureComponent {
               reset()
             },
             submitLabel:
-              selectedStep === formSections.length - 1 ? submitLabel : 'Next',
+              activeStep === formSections.length - 1 ? submitLabel : 'Next',
             cancelLabel,
             resetLabel
           }}
