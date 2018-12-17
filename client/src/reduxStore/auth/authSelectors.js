@@ -53,7 +53,10 @@ const getTouchedFields = meta => {
 const getErrors = ({ touchedFields, syncErrors, asyncErrors, fields }) => {
   const errorFields = _intersection(Object.keys(touchedFields), fields).reduce(
     (acc, field) => {
-      const error = (syncErrors || {})[field] || (asyncErrors || {})[field]
+      // In the current version of redux-form, syncErrors is a vanilla object; asyncErrors is an Immutable Map
+      const error =
+        (syncErrors || {})[field] ||
+        (asyncErrors ? asyncErrors.get(field) : undefined)
       if (error) {
         // Ensure the accumulator is never set to undefined
         acc[field] = error
