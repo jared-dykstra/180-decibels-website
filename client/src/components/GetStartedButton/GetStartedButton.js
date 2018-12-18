@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button } from 'reactstrap'
 
-import { toggleDialog } from 'reduxStore/getStarted/getStartedActions'
+import { openDialog } from 'reduxStore/getStarted/getStartedActions'
 
-const GetStartedButton = ({ doToggleDialog, children, size, className }) => (
-  <Button color="primary" onClick={doToggleDialog} {...{ size, className }}>
+const GetStartedButton = ({ doOpenDialog, children, size, className }) => (
+  <Button color="primary" onClick={doOpenDialog} {...{ size, className }}>
     {children}
   </Button>
 )
@@ -25,6 +25,6 @@ GetStartedButton.defaultProps = {
 export default connect(
   () => ({}),
   dispatch => ({
-    doToggleDialog: () => dispatch(toggleDialog())
+    doOpenDialog: () => dispatch(openDialog())
   })
 )(GetStartedButton)
