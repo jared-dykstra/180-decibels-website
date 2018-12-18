@@ -13,7 +13,10 @@ import StepContent from '@material-ui/core/StepContent'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 
-import { actions } from 'reduxStore/auth'
+import {
+  register,
+  closeDialog as closeActionCreator
+} from 'reduxStore/auth/authActions'
 import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
 import {
   makeFormHasErrorSelector,
@@ -32,8 +35,9 @@ import {
   REGISTER_FORM_PASSWORD2_KEY
 } from '180-decibels-shared/registration'
 
+import { DialogFormButtons } from '..'
+
 import renderField from './renderField'
-import Buttons from './Buttons'
 import PasswordField from './PasswordField'
 
 const formSections = [
@@ -316,7 +320,7 @@ class Register extends PureComponent {
             </StepContent>
           </Step>
         </Stepper>
-        <Buttons
+        <DialogFormButtons
           {...{
             isSubmitDisabled,
             isResetDisabled,
@@ -327,7 +331,8 @@ class Register extends PureComponent {
             submitLabel:
               activeStep === formSections.length - 1 ? submitLabel : 'Next',
             cancelLabel,
-            resetLabel
+            resetLabel,
+            closeActionCreator
           }}
         />
       </form>
@@ -373,7 +378,7 @@ const ConnectedRegister = connect(
     }
   },
   dispatch => ({
-    doRegister: values => dispatch(actions.register(values))
+    doRegister: values => dispatch(register(values))
   })
 )(withStyles(muiStyles)(Register))
 

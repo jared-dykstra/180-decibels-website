@@ -5,10 +5,6 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 
-import { closeDialog } from 'reduxStore/auth/authActions'
-
-import styles from './LogIn.module.scss'
-
 const Buttons = ({
   isSubmitDisabled,
   isResetDisabled,
@@ -18,7 +14,7 @@ const Buttons = ({
   submitLabel,
   resetLabel
 }) => (
-  <DialogActions className={styles.buttons}>
+  <DialogActions>
     <Button key="reset" type="reset" disabled={isResetDisabled} onClick={reset}>
       {resetLabel}
     </Button>
@@ -44,12 +40,14 @@ Buttons.propTypes = {
   reset: PropTypes.func.isRequired,
   submitLabel: PropTypes.string.isRequired,
   cancelLabel: PropTypes.string.isRequired,
-  resetLabel: PropTypes.string.isRequired
+  resetLabel: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
+  closeActionCreator: PropTypes.func.isRequired // <== Used in mapDispatchToProps
 }
 
 export default connect(
   () => ({}),
-  dispatch => ({
-    doCloseDialog: () => dispatch(closeDialog())
+  (dispatch, props) => ({
+    doCloseDialog: () => dispatch(props.closeActionCreator())
   })
 )(Buttons)

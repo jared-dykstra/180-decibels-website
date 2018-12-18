@@ -14,10 +14,11 @@ import {
 
 import { actions } from 'reduxStore/auth'
 import { SIGNIN_FORM_KEY } from 'reduxStore/auth/authConstants'
+import { closeDialog as closeActionCreator } from 'reduxStore/auth/authActions'
 
-import styles from './LogIn.module.scss'
+import { DialogFormButtons } from '..'
+
 import renderField from './renderField'
-import Buttons from './Buttons'
 import PasswordField from './PasswordField'
 
 class SignIn extends PureComponent {
@@ -62,7 +63,7 @@ class SignIn extends PureComponent {
     const isSubmitDisabled = submitting
     const isResetDisabled = pristine || submitting
     return (
-      <form onSubmit={handleSubmit(doSignIn)} className={styles['sign-in']}>
+      <form onSubmit={handleSubmit(doSignIn)}>
         <FormGroup row>
           <Field
             label="Email"
@@ -85,18 +86,17 @@ class SignIn extends PureComponent {
             fullWidth
           />
         </FormGroup>
-        <FormGroup>
-          <Buttons
-            {...{
-              isSubmitDisabled,
-              isResetDisabled,
-              reset: this.handleClickReset,
-              submitLabel,
-              cancelLabel,
-              resetLabel
-            }}
-          />
-        </FormGroup>
+        <DialogFormButtons
+          {...{
+            isSubmitDisabled,
+            isResetDisabled,
+            reset: this.handleClickReset,
+            submitLabel,
+            cancelLabel,
+            resetLabel,
+            closeActionCreator
+          }}
+        />
       </form>
     )
   }

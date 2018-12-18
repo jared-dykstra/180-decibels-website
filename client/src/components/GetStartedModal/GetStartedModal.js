@@ -15,7 +15,9 @@ const GetStartedModal = ({ isModalOpen, doToggleDialog }) => (
     toggle={doToggleDialog}
     className="modal-lg"
   >
-    <ModalHeader toggle={doToggleDialog}>Get Started</ModalHeader>
+    <ModalHeader toggle={doToggleDialog}>
+      Book a free Clarity Session today
+    </ModalHeader>
     <ModalBody>
       <GetStarted />
     </ModalBody>
