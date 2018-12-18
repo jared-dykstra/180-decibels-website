@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import renderField from './renderField'
+import { renderField } from 'formUtils'
 
 export default class PasswordField extends PureComponent {
   static propTypes = {

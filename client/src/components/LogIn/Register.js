@@ -36,7 +36,7 @@ import {
 
 import { DialogFormButtons } from '..'
 
-import renderField from './renderField'
+import { renderField } from 'formUtils'
 import PasswordField from './PasswordField'
 
 const formSections = [

@@ -17,7 +17,7 @@ import { closeDialog as closeActionCreator } from 'reduxStore/auth/authActions'
 
 import { DialogFormButtons } from '..'
 
-import renderField from './renderField'
+import { renderField } from 'formUtils'
 import PasswordField from './PasswordField'
 
 class SignIn extends PureComponent {
@@ -61,7 +61,7 @@ class SignIn extends PureComponent {
     const isResetDisabled = pristine || submitting
     return (
       <form onSubmit={handleSubmit(doSignIn)}>
-        <FormGroup row>
+        <FormGroup row style={{ paddingTop: '1em' }}>
           <Field
             label="Email"
             id={SIGNIN_FORM_EMAIL_KEY}

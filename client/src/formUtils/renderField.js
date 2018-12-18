@@ -5,6 +5,8 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 
+import { FIELD_TYPE_PASSWORD, FIELD_TYPE_TEXT } from '.'
+
 const scrollIntoView = id => {
   const domElement = document.getElementById(id)
   if (domElement) {
@@ -73,8 +75,8 @@ export default props => {
   // See: https://github.com/reactstrap/reactstrap/issues/707#issuecomment-351593584
   const { type } = props
   switch (type) {
-    case 'password':
-    case 'text':
+    case FIELD_TYPE_PASSWORD:
+    case FIELD_TYPE_TEXT:
       return <CustomTextField {...props} />
     // case 'radio':
     //   return renderRadioField(rest)
