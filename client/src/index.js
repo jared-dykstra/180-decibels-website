@@ -6,6 +6,8 @@ import { ConnectedRouter } from 'connected-react-router'
 import ReactGA from 'react-ga'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { createMuiTheme } from '@material-ui/core/styles'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
 import createStore from 'reduxStore/createStore'
 
@@ -63,9 +65,11 @@ class Router extends PureComponent {
     return (
       <MuiThemeProvider theme={THEME}>
         <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <ConnectedRouter history={history}>
+              <App />
+            </ConnectedRouter>
+          </MuiPickersUtilsProvider>
         </Provider>
       </MuiThemeProvider>
     )

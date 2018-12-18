@@ -1,27 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
 import { toggleDialog } from 'reduxStore/getStarted/getStartedActions'
 
+import { DialogFormButtons } from '..'
+
 import GetStarted from './GetStarted'
 
 const GetStartedModal = ({ isModalOpen, doToggleDialog }) => (
-  <Modal
-    fade={false}
-    isOpen={isModalOpen}
-    toggle={doToggleDialog}
-    className="modal-lg"
+  <Dialog
+    open={isModalOpen}
+    onClose={doToggleDialog}
+    aria-labelledby="getStarted-dialog-title"
   >
-    <ModalHeader toggle={doToggleDialog}>
+    <DialogTitle id="getStarted-dialog-title">
       Book a free Clarity Session today
-    </ModalHeader>
-    <ModalBody>
+    </DialogTitle>
+    <DialogContent>
+      <DialogContentText>
+        A 15 minute conversation will help us understand your needs. Your
+        Clarity Session helps us understand your needs. You get tools that can
+        improve your business right away.
+      </DialogContentText>
       <GetStarted />
-    </ModalBody>
-  </Modal>
+    </DialogContent>
+    <DialogFormButtons
+      {...{
+        isSubmitDisabled: false,
+        isResetDisabled: false,
+        reset: () => {},
+        submitLabel: 'OK',
+        cancelLabel: 'cancel',
+        resetLabel: 'reset',
+        closeActionCreator: toggleDialog
+      }}
+    />
+  </Dialog>
 )
 
 GetStartedModal.propTypes = {
