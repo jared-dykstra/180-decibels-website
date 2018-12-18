@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import { renderField } from 'formUtils'
+import { renderField, FIELD_TYPE_TEXT, FIELD_TYPE_PASSWORD } from 'formUtils'
 
 export default class PasswordField extends PureComponent {
   static propTypes = {
@@ -43,7 +43,7 @@ export default class PasswordField extends PureComponent {
       <Field
         id={formKey}
         name={formKey}
-        type={showPassword ? 'text' : 'password'}
+        type={showPassword ? FIELD_TYPE_TEXT : FIELD_TYPE_PASSWORD}
         component={renderField}
         {...{ label, placeholder, autoComplete, fullWidth }}
         endAdornment={

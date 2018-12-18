@@ -17,7 +17,7 @@ import { closeDialog as closeActionCreator } from 'reduxStore/auth/authActions'
 
 import { DialogFormButtons } from '..'
 
-import { renderField } from 'formUtils'
+import { renderField, FIELD_TYPE_TEXT } from 'formUtils'
 import PasswordField from './PasswordField'
 
 class SignIn extends PureComponent {
@@ -66,7 +66,7 @@ class SignIn extends PureComponent {
             label="Email"
             id={SIGNIN_FORM_EMAIL_KEY}
             name={SIGNIN_FORM_EMAIL_KEY}
-            type="text"
+            type={FIELD_TYPE_TEXT}
             component={renderField}
             placeholder="user@domain.com"
             autoComplete="email"

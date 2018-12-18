@@ -36,7 +36,7 @@ import {
 
 import { DialogFormButtons } from '..'
 
-import { renderField } from 'formUtils'
+import { renderField, FIELD_TYPE_TEXT } from 'formUtils'
 import PasswordField from './PasswordField'
 
 const formSections = [
@@ -204,7 +204,7 @@ class Register extends PureComponent {
                     label="First Name"
                     id={REGISTER_FORM_FIRST_NAME_KEY}
                     name={REGISTER_FORM_FIRST_NAME_KEY}
-                    type="text"
+                    type={FIELD_TYPE_TEXT}
                     component={renderField}
                     placeholder="Wiley, E"
                     autoComplete="given-name"
@@ -216,7 +216,7 @@ class Register extends PureComponent {
                     label="Last Name"
                     id={REGISTER_FORM_LAST_NAME_KEY}
                     name={REGISTER_FORM_LAST_NAME_KEY}
-                    type="text"
+                    type={FIELD_TYPE_TEXT}
                     component={renderField}
                     placeholder="Coyote"
                     autoComplete="family-name"
@@ -228,7 +228,7 @@ class Register extends PureComponent {
                     label="Company"
                     id={REGISTER_FORM_COMPANY_KEY}
                     name={REGISTER_FORM_COMPANY_KEY}
-                    type="text"
+                    type={FIELD_TYPE_TEXT}
                     component={renderField}
                     placeholder="ACME"
                     autoComplete="organization"
@@ -255,7 +255,7 @@ class Register extends PureComponent {
                     label="Email"
                     id={REGISTER_FORM_EMAIL_KEY}
                     name={REGISTER_FORM_EMAIL_KEY}
-                    type="text"
+                    type={FIELD_TYPE_TEXT}
                     component={renderField}
                     placeholder="wiley@acme.com"
                     autoComplete="email"
@@ -267,7 +267,7 @@ class Register extends PureComponent {
                     label="Phone"
                     id={REGISTER_FORM_PHONE_KEY}
                     name={REGISTER_FORM_PHONE_KEY}
-                    type="text"
+                    type={FIELD_TYPE_TEXT}
                     component={renderField}
                     placeholder="403.555.1212"
                     autoComplete="tel"
