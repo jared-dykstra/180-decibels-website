@@ -10,6 +10,7 @@ import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import StepContent from '@material-ui/core/StepContent'
+import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 
 import { actions } from 'reduxStore/auth'
@@ -73,9 +74,6 @@ const muiStyles = {
   root: {
     'padding-left': 0,
     'padding-right': 0
-  },
-  clickable: {
-    cursor: 'pointer !important'
   }
 }
 
@@ -188,15 +186,17 @@ class Register extends PureComponent {
         <Stepper
           activeStep={activeStep}
           orientation="vertical"
-          classes={classes}
+          classes={classes.dialog}
         >
           <Step key={0} completed={aboutSectionComplete}>
-            <StepLabel
-              error={aboutSectionHasError}
-              onClick={() => this.setStep(0)}
-              className={classes.clickable}
-            >
-              {formSections[0].label}
+            <StepLabel error={aboutSectionHasError}>
+              <Button
+                variant="text"
+                disableRipple
+                onClick={() => this.setStep(0)}
+              >
+                {formSections[0].label}
+              </Button>
             </StepLabel>
             <StepContent>
               <Grid container spacing={24}>
@@ -240,12 +240,14 @@ class Register extends PureComponent {
             </StepContent>
           </Step>
           <Step key={1} completed={contactSectionComplete}>
-            <StepLabel
-              error={contactSectionHasError}
-              onClick={() => this.setStep(1)}
-              className={classes.clickable}
-            >
-              {formSections[1].label}
+            <StepLabel error={contactSectionHasError}>
+              <Button
+                variant="text"
+                disableRipple
+                onClick={() => this.setStep(1)}
+              >
+                {formSections[1].label}
+              </Button>
             </StepLabel>
             <StepContent>
               <Grid container spacing={24}>
@@ -277,12 +279,14 @@ class Register extends PureComponent {
             </StepContent>
           </Step>
           <Step key={2} completed={passwordSectionComplete}>
-            <StepLabel
-              error={passwordSectionHasError}
-              onClick={() => this.setStep(2)}
-              className={classes.clickable}
-            >
-              {formSections[2].label}
+            <StepLabel error={passwordSectionHasError}>
+              <Button
+                variant="text"
+                disableRipple
+                onClick={() => this.setStep(2)}
+              >
+                {formSections[2].label}
+              </Button>
             </StepLabel>
             <StepContent>
               <Grid container spacing={24}>

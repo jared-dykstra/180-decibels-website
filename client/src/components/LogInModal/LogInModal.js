@@ -29,7 +29,8 @@ import styles from './LogInModal.module.scss'
 const muiStyles = {
   container: {
     // Position the dialog near the top--the default is to center vertically
-    height: 'initial',
+    'align-items': 'baseline',
+    // TODO: See about a smaller margin-top on xs devices
     'margin-top': '93px'
   },
   paper: {
