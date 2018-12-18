@@ -38,13 +38,13 @@ class GetStarted extends PureComponent {
       return
     }
 
-    this.setState(state => ({
+    this.setState(() => ({
       activeStep: requestedStep
     }))
   }
 
   setDate = value => {
-    this.setState(state => ({
+    this.setState(() => ({
       selectedDate: value
     }))
   }
@@ -73,7 +73,7 @@ class GetStarted extends PureComponent {
                 disableRipple
                 onClick={() => this.setStep(0)}
               >
-                Choose a day that works for you
+                Choose a day and time
               </Button>
             </StepLabel>
             <StepContent>
