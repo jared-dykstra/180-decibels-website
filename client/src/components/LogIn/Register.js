@@ -186,7 +186,7 @@ class Register extends PureComponent {
         <Stepper
           activeStep={activeStep}
           orientation="vertical"
-          classes={classes.dialog}
+          classes={classes}
         >
           <Step key={0} completed={aboutSectionComplete}>
             <StepLabel error={aboutSectionHasError}>
