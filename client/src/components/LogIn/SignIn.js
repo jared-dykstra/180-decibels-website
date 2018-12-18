@@ -1,4 +1,3 @@
-import Immutable from 'seamless-immutable'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -32,19 +31,17 @@ class SignIn extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.state = Immutable.from({
+    this.state = {
       resetTs: new Date().getTime()
-    })
+    }
   }
 
   handleClickReset = args => {
     const { reset } = this.props
     reset(args)
-    this.setState(() =>
-      Immutable.from({
-        resetTs: new Date().getTime()
-      })
-    )
+    this.setState(() => ({
+      resetTs: new Date().getTime()
+    }))
   }
 
   render() {

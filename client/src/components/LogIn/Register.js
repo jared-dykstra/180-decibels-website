@@ -1,4 +1,3 @@
-import Immutable from 'seamless-immutable'
 import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
@@ -99,9 +98,9 @@ class Register extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.state = Immutable.from({
+    this.state = {
       activeStep: 0
-    })
+    }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -153,15 +152,11 @@ class Register extends PureComponent {
 
   setStep = requestedStep => {
     const { activeStep } = this.state
-    if (activeStep === requestedStep) {
-      return
-    }
-
-    this.setState(() =>
-      Immutable.from({
+    if (activeStep !== requestedStep) {
+      this.setState(() => ({
         activeStep: requestedStep
-      })
-    )
+      }))
+    }
   }
 
   render() {

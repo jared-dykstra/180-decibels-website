@@ -1,4 +1,3 @@
-import Immutable from 'seamless-immutable'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { Field } from 'redux-form/immutable'
@@ -24,9 +23,9 @@ export default class PasswordField extends PureComponent {
     fullWidth: true
   }
 
-  initialState = Immutable.from({
+  initialState = {
     showPassword: false
-  })
+  }
 
   constructor(props) {
     super(props)
@@ -34,9 +33,7 @@ export default class PasswordField extends PureComponent {
   }
 
   handleClickShowPassword = () => {
-    this.setState(state =>
-      Immutable.from({ showPassword: !state.showPassword })
-    )
+    this.setState(state => ({ showPassword: !state.showPassword }))
   }
 
   render = () => {

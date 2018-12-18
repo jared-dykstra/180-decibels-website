@@ -1,4 +1,3 @@
-import Immutable from 'seamless-immutable'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
@@ -45,17 +44,19 @@ class LogIn extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.state = Immutable.from({
+    this.state = {
       activeTab: TAB_LOGIN
-    })
+    }
   }
 
   handleChangeTab = (event, value) => {
-    this.setState(state =>
-      Immutable.from({
-        activeTab: value
-      })
-    )
+    const { activeTab } = this.state
+    if (value === activeTab) {
+      return
+    }
+    this.setState(() => ({
+      activeTab: value
+    }))
   }
 
   render() {

@@ -1,4 +1,3 @@
-import Immutable from 'seamless-immutable'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -59,9 +58,9 @@ class LogInModal extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.state = Immutable.from({
-      menuOpen: false
-    })
+    this.state = {
+      dropdownOpen: false
+    }
   }
 
   toggleModal = () => {
@@ -74,11 +73,9 @@ class LogInModal extends PureComponent {
   }
 
   toggleMenu = () => {
-    this.setState(prevState =>
-      Immutable.from({
-        dropdownOpen: !prevState.dropdownOpen
-      })
-    )
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }))
   }
 
   renderSignInButton = () => {

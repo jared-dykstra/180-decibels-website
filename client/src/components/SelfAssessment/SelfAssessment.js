@@ -1,4 +1,3 @@
-import Immutable from 'seamless-immutable'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -30,40 +29,42 @@ class SelfAssessment extends PureComponent {
 
   constructor(props) {
     super(props)
-    this.state = Immutable.from({
+    this.state = {
+      animating: false,
       currentIndex: 0
-    })
+    }
   }
 
   onExiting = () => {
-    this.animating = true
+    this.setState(() => ({
+      animating: true
+    }))
   }
 
   onExited = () => {
-    this.animating = false
+    this.setState(() => ({
+      animating: false
+    }))
   }
 
   next = () => {
-    if (this.animating) {
+    const { animating } = this.state
+    if (animating) {
       return
     }
-
-    this.setState(currentState =>
-      Immutable.from({
-        currentIndex: currentState.currentIndex + 1
-      })
-    )
+    this.setState(currentState => ({
+      currentIndex: currentState.currentIndex + 1
+    }))
   }
 
   previous = () => {
-    if (this.animating) {
+    const { animating } = this.state
+    if (animating) {
       return
     }
-    this.setState(currentState =>
-      Immutable.from({
-        currentIndex: currentState.currentIndex - 1
-      })
-    )
+    this.setState(currentState => ({
+      currentIndex: currentState.currentIndex - 1
+    }))
   }
 
   render() {
