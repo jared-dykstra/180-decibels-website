@@ -2,6 +2,7 @@ import React from 'react'
 
 import CustomTextField from './CustomTextField'
 import DateTimeField from './DateTimeField'
+import PasswordField from './PasswordField'
 
 import { FIELD_TYPE_PASSWORD, FIELD_TYPE_TEXT, FIELD_TYPE_DATE_TIME } from '.'
 
@@ -34,6 +35,7 @@ export default props => {
   const { type } = props
   switch (type) {
     case FIELD_TYPE_PASSWORD:
+      return <PasswordField {...props} />
     case FIELD_TYPE_TEXT:
       return <CustomTextField {...props} />
     // case 'radio':

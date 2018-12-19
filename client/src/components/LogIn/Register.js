@@ -2,7 +2,7 @@ import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { reduxForm, propTypes } from 'redux-form/immutable'
+import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 
 import Grid from '@material-ui/core/Grid'
 import Stepper from '@material-ui/core/Stepper'
@@ -35,8 +35,7 @@ import {
 } from '180-decibels-shared/registration'
 
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
-
-import PasswordField from './PasswordField'
+import { renderField, FIELD_TYPE_PASSWORD } from 'formUtils'
 
 const formSections = [
   {
@@ -217,22 +216,26 @@ class Register extends PureComponent {
             <StepContent>
               <Grid container spacing={24}>
                 <Grid item md={6}>
-                  <PasswordField
-                    // Whenever activeStep is changed, react elements using that value of a key are re-rendered, and their internal state is reset
-                    // This resets the "show password" functionality when the form is reset
+                  <Field
                     key={activeStep}
                     label="Password"
-                    formKey={REGISTER_FORM_PASSWORD1_KEY}
+                    id={REGISTER_FORM_PASSWORD1_KEY}
+                    name={REGISTER_FORM_PASSWORD1_KEY}
+                    type={FIELD_TYPE_PASSWORD}
+                    component={renderField}
                     placeholder="new password"
                     autoComplete="new-password"
                     fullWidth
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <PasswordField
+                  <Field
                     key={activeStep}
                     label="Confirm Password"
-                    formKey={REGISTER_FORM_PASSWORD2_KEY}
+                    id={REGISTER_FORM_PASSWORD2_KEY}
+                    name={REGISTER_FORM_PASSWORD2_KEY}
+                    type={FIELD_TYPE_PASSWORD}
+                    component={renderField}
                     placeholder="confirm"
                     autoComplete="new-password"
                     fullWidth

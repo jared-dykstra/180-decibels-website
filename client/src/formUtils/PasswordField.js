@@ -1,28 +1,17 @@
-import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
-import { Field } from 'redux-form/immutable'
+import React from 'react'
 
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import { renderField, FIELD_TYPE_TEXT, FIELD_TYPE_PASSWORD } from 'formUtils'
+import { FIELD_TYPE_TEXT, FIELD_TYPE_PASSWORD } from 'formUtils'
 
-export default class PasswordField extends PureComponent {
-  static propTypes = {
-    formKey: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    autoComplete: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    fullWidth: PropTypes.bool
-  }
+import FormComponent from './FormComponent'
+import CustomTextField from './CustomTextField'
 
-  static defaultProps = {
-    placeholder: undefined,
-    fullWidth: true
-  }
-
+/* eslint-disable react/no-this-in-sfc */
+export default class PasswordField extends FormComponent {
   initialState = {
     showPassword: false
   }
@@ -37,15 +26,12 @@ export default class PasswordField extends PureComponent {
   }
 
   render = () => {
-    const { label, formKey, placeholder, autoComplete, fullWidth } = this.props
+    const { type, ...custom } = this.props
     const { showPassword } = this.state
     return (
-      <Field
-        id={formKey}
-        name={formKey}
+      <CustomTextField
         type={showPassword ? FIELD_TYPE_TEXT : FIELD_TYPE_PASSWORD}
-        component={renderField}
-        {...{ label, placeholder, autoComplete, fullWidth }}
+        {...custom}
         endAdornment={
           <InputAdornment position="end">
             <IconButton

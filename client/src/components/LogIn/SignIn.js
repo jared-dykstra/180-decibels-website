@@ -14,11 +14,8 @@ import {
 import { actions } from 'reduxStore/auth'
 import { SIGNIN_FORM_KEY } from 'reduxStore/auth/authConstants'
 import { closeDialog as closeActionCreator } from 'reduxStore/auth/authActions'
-
-import { DialogFormButtons } from '..'
-
-import { renderField, FIELD_TYPE_TEXT } from 'formUtils'
-import PasswordField from './PasswordField'
+import { DialogFormButtons } from 'components'
+import { renderField, FIELD_TYPE_TEXT, FIELD_TYPE_PASSWORD } from 'formUtils'
 
 class SignIn extends PureComponent {
   static propTypes = {
@@ -74,10 +71,13 @@ class SignIn extends PureComponent {
           />
         </FormGroup>
         <FormGroup row>
-          <PasswordField
+          <Field
             key={resetTs}
             label="Password"
-            formKey={SIGNIN_FORM_PASSWORD_KEY}
+            id={SIGNIN_FORM_PASSWORD_KEY}
+            name={SIGNIN_FORM_PASSWORD_KEY}
+            type={FIELD_TYPE_PASSWORD}
+            component={renderField}
             placeholder="password"
             autoComplete="current-password"
             fullWidth
