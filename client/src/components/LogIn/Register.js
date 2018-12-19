@@ -36,12 +36,13 @@ import {
 
 import { DialogFormButtons } from '..'
 
-import { renderField, FIELD_TYPE_TEXT } from 'formUtils'
 import PasswordField from './PasswordField'
+import AboutStep from './AboutStep'
+import ContactStep from './ContactStep'
 
 const formSections = [
   {
-    label: 'A bit about Yourself...',
+    label: '',
     fields: [
       REGISTER_FORM_FIRST_NAME_KEY,
       REGISTER_FORM_LAST_NAME_KEY,
@@ -49,7 +50,7 @@ const formSections = [
     ]
   },
   {
-    label: 'How can you be reached?',
+    label: '',
     fields: [REGISTER_FORM_EMAIL_KEY, REGISTER_FORM_PHONE_KEY]
   },
   {
@@ -187,96 +188,27 @@ class Register extends PureComponent {
           orientation="vertical"
           classes={classes}
         >
-          <Step key={0} completed={aboutSectionComplete}>
-            <StepLabel error={aboutSectionHasError}>
-              <Button
-                variant="text"
-                disableRipple
-                onClick={() => this.setStep(0)}
-              >
-                {formSections[0].label}
-              </Button>
-            </StepLabel>
-            <StepContent>
-              <Grid container spacing={24}>
-                <Grid item md={6}>
-                  <Field
-                    label="First Name"
-                    id={REGISTER_FORM_FIRST_NAME_KEY}
-                    name={REGISTER_FORM_FIRST_NAME_KEY}
-                    type={FIELD_TYPE_TEXT}
-                    component={renderField}
-                    placeholder="Wiley, E"
-                    autoComplete="given-name"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item md={6}>
-                  <Field
-                    label="Last Name"
-                    id={REGISTER_FORM_LAST_NAME_KEY}
-                    name={REGISTER_FORM_LAST_NAME_KEY}
-                    type={FIELD_TYPE_TEXT}
-                    component={renderField}
-                    placeholder="Coyote"
-                    autoComplete="family-name"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    label="Company"
-                    id={REGISTER_FORM_COMPANY_KEY}
-                    name={REGISTER_FORM_COMPANY_KEY}
-                    type={FIELD_TYPE_TEXT}
-                    component={renderField}
-                    placeholder="ACME"
-                    autoComplete="organization"
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-          <Step key={1} completed={contactSectionComplete}>
-            <StepLabel error={contactSectionHasError}>
-              <Button
-                variant="text"
-                disableRipple
-                onClick={() => this.setStep(1)}
-              >
-                {formSections[1].label}
-              </Button>
-            </StepLabel>
-            <StepContent>
-              <Grid container spacing={24}>
-                <Grid item md={6}>
-                  <Field
-                    label="Email"
-                    id={REGISTER_FORM_EMAIL_KEY}
-                    name={REGISTER_FORM_EMAIL_KEY}
-                    type={FIELD_TYPE_TEXT}
-                    component={renderField}
-                    placeholder="wiley@acme.com"
-                    autoComplete="email"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item md={6}>
-                  <Field
-                    label="Phone"
-                    id={REGISTER_FORM_PHONE_KEY}
-                    name={REGISTER_FORM_PHONE_KEY}
-                    type={FIELD_TYPE_TEXT}
-                    component={renderField}
-                    placeholder="403.555.1212"
-                    autoComplete="tel"
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
+          <AboutStep
+            {...{
+              stepKey: 0,
+              setStep: this.setStep,
+              isComplete: aboutSectionComplete,
+              hasError: aboutSectionHasError,
+              firstNameKey: REGISTER_FORM_FIRST_NAME_KEY,
+              lastNameKey: REGISTER_FORM_LAST_NAME_KEY,
+              companyKey: REGISTER_FORM_COMPANY_KEY
+            }}
+          />
+          <ContactStep
+            {...{
+              stepKey: 1,
+              setStep: this.setStep,
+              isComplete: contactSectionComplete,
+              hasError: contactSectionHasError,
+              emailKey: REGISTER_FORM_EMAIL_KEY,
+              phoneKey: REGISTER_FORM_PHONE_KEY
+            }}
+          />
           <Step key={2} completed={passwordSectionComplete}>
             <StepLabel error={passwordSectionHasError}>
               <Button
