@@ -19,9 +19,11 @@ export default class CustomTextField extends FormComponent {
     } = this.props
     return (
       <FormControl
-        error={touched && !!error}
-        aria-describedby={`${id}-error-text`}
-        {...{ fullWidth }}
+        {...{
+          error: touched && !!error,
+          'aria-describedby': `${id}-error-text`,
+          fullWidth
+        }}
       >
         <InputLabel htmlFor={id}>{label}</InputLabel>
         <Input {...{ id, fullWidth }} {...input} {...custom} />
