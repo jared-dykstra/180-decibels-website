@@ -53,7 +53,7 @@ export class Home extends PureComponent {
         <Row id="i-am">
           <Col sm="6">
             <Jumbotron
-              className={`shadow-lg ${styles.persona} ${styles.owner}`}
+              className={`shadow ${styles.persona} ${styles.owner}`}
               onClick={doClickHelpMe}
             >
               <h2>I am an Owner Operator</h2>
@@ -79,7 +79,7 @@ export class Home extends PureComponent {
           </Col>
           <Col sm="6">
             <Jumbotron
-              className={`shadow-lg ${styles.persona} ${styles.manager}`}
+              className={`shadow ${styles.persona} ${styles.manager}`}
               onClick={doClickHelpMyTeam}
             >
               <h2>I am a Manager</h2>
