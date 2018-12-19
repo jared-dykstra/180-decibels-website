@@ -1,55 +1,56 @@
 import React from 'react'
-import { format, isValid } from 'date-fns'
+import { format, isValid, isWeekend } from 'date-fns'
 
 import { InlineDateTimePicker } from 'material-ui-pickers'
-import { IconButton, InputAdornment } from '@material-ui/core'
-import CalendarIcon from '@material-ui/icons/CalendarTodayTwoTone'
 
 import FormComponent from './FormComponent'
 
 export default class DateTimeField extends FormComponent {
   render() {
     const {
-      input,
+      input: { onChange, value, ...inputProps },
       meta: { touched, error /* warning */ },
       label,
       id,
-      value,
+      keyboard = true,
+      autoOk = true,
+      showTabs = false,
+      shouldDisableDate = date => isWeekend(date), // <== Disable weekends.  This property can be passed in if more control is needed
+      dateFormat = 'E, LLL do, B', // <== See: https://date-fns.org/v2.0.0-alpha.26/docs/format
       ...custom
     } = this.props
 
     const hasError = touched && Boolean(error)
-    const formatDate = date =>
-      date && isValid(date) ? format(date, 'E, LLL do, B') : undefined
 
+    //
+    // This is a 'loose' date picker that allows a user to type in anything they want.  It doesn't have to be a parsable date
+    //
     return (
       <InlineDateTimePicker
         {...{
+          onChange: date => {
+            if (dateFormat) {
+              // When the user selects via the calendar, turn it into a user-friendly string
+              if (isValid(date)) {
+                return onChange(format(date, dateFormat))
+              }
+            }
+            return date
+          },
           id,
           label,
           error: hasError,
-          labelFunc: formatDate,
           helperText: hasError ? error : undefined,
-          shouldDisableDate: date => {
-            // Exclude Weekends
-            const dayOfWeek = format(date, 'i')
-            return dayOfWeek > 5
-          },
           InputProps: {
-            value: formatDate(input.value) || '',
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <CalendarIcon />
-                </IconButton>
-              </InputAdornment>
-            )
+            value,
+            onChange,
+            ...inputProps
           },
-          autoOk: true,
-          showTabs: false,
-          allowKeyboardControl: false
+          autoOk,
+          showTabs,
+          keyboard,
+          shouldDisableDate
         }}
-        {...input}
         {...custom}
       />
     )
