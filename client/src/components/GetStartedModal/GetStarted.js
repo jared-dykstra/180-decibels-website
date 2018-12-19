@@ -13,11 +13,17 @@ import { withStyles } from '@material-ui/core/styles'
 
 import {
   validateGetStarted,
-  GET_STARTED_FORM_DATE_TIME_KEY
+  GET_STARTED_FORM_DATE_TIME_KEY,
+  GET_STARTED_FORM_COMPANY_KEY,
+  GET_STARTED_FORM_FIRST_NAME_KEY,
+  GET_STARTED_FORM_LAST_NAME_KEY,
+  GET_STARTED_FORM_EMAIL_KEY,
+  GET_STARTED_FORM_PHONE_KEY
 } from '180-decibels-shared/getStarted'
 
 import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
 import { renderField, FIELD_TYPE_DATE_TIME } from 'formUtils'
+import { AboutStep, ContactStep } from 'components'
 
 const muiStyles = {
   root: {
@@ -35,8 +41,7 @@ class GetStarted extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      activeStep: 0,
-      selectedDate: null
+      activeStep: 0
     }
   }
 
@@ -51,15 +56,9 @@ class GetStarted extends PureComponent {
     }))
   }
 
-  setDate = value => {
-    this.setState(() => ({
-      selectedDate: value
-    }))
-  }
-
   render = () => {
     const { classes } = this.props
-    const { activeStep, selectedDate } = this.state
+    const { activeStep } = this.state
     const calendarSectionComplete = false
     const calendarSectionHasError = false
     const aboutSectionComplete = false
@@ -103,30 +102,27 @@ class GetStarted extends PureComponent {
               />
             </StepContent>
           </Step>
-          <Step key={1} completed={aboutSectionComplete}>
-            <StepLabel error={aboutSectionHasError}>
-              <Button
-                variant="text"
-                disableRipple
-                onClick={() => this.setStep(1)}
-              >
-                A Bit about yourself...
-              </Button>
-            </StepLabel>
-            <StepContent>TODO</StepContent>
-          </Step>
-          <Step key={2} completed={contactSectionComplete}>
-            <StepLabel error={contactSectionHasError}>
-              <Button
-                variant="text"
-                disableRipple
-                onClick={() => this.setStep(2)}
-              >
-                How can you be reached?
-              </Button>
-            </StepLabel>
-            <StepContent>TODO</StepContent>
-          </Step>
+          <AboutStep
+            {...{
+              stepKey: 1,
+              setStep: this.setStep,
+              isComplete: aboutSectionComplete,
+              hasError: aboutSectionHasError,
+              firstNameKey: GET_STARTED_FORM_FIRST_NAME_KEY,
+              lastNameKey: GET_STARTED_FORM_LAST_NAME_KEY,
+              companyKey: GET_STARTED_FORM_COMPANY_KEY
+            }}
+          />
+          <ContactStep
+            {...{
+              stepKey: 2,
+              setStep: this.setStep,
+              isComplete: contactSectionComplete,
+              hasError: contactSectionHasError,
+              emailKey: GET_STARTED_FORM_EMAIL_KEY,
+              phoneKey: GET_STARTED_FORM_PHONE_KEY
+            }}
+          />
         </Stepper>
       </form>
     )

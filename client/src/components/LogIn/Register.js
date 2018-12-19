@@ -2,7 +2,7 @@ import { isEmpty as _isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Field, reduxForm, propTypes } from 'redux-form/immutable'
+import { reduxForm, propTypes } from 'redux-form/immutable'
 
 import Grid from '@material-ui/core/Grid'
 import Stepper from '@material-ui/core/Stepper'
