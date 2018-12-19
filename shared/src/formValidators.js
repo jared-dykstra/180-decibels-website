@@ -24,3 +24,6 @@ export const validatePhoneNumber = value =>
 
 export const validateEqual = (value1, value2) =>
   value1 && value2 && value1 !== value2 ? 'Must match' : undefined
+
+export const validateOneOf = (err, value1, value2) =>
+  !(value1 || value2) ? err : undefined

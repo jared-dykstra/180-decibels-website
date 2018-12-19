@@ -165,7 +165,7 @@ class GetStarted extends PureComponent {
                 disableRipple
                 onClick={() => this.setStep(0)}
               >
-                When should we contact you?
+                What time is Best?
               </Button>
             </StepLabel>
             <StepContent>
