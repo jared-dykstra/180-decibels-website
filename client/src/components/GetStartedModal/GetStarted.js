@@ -21,10 +21,33 @@ import {
   GET_STARTED_FORM_PHONE_KEY
 } from '180-decibels-shared/getStarted'
 
-import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
+import {
+  makeFormHasErrorSelector,
+  makeFormSectionCompleteSelector
+} from 'reduxStore/form/formSelectors'
+import {
+  closeDialog as closeActionCreator,
+  contact
+} from 'reduxStore/getStarted/getStartedActions'
 import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
 import { renderField, FIELD_TYPE_DATE_TIME } from 'formUtils'
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
+
+const formSections = [
+  {
+    fields: [GET_STARTED_FORM_DATE_TIME_KEY]
+  },
+  {
+    fields: [
+      GET_STARTED_FORM_FIRST_NAME_KEY,
+      GET_STARTED_FORM_LAST_NAME_KEY,
+      GET_STARTED_FORM_COMPANY_KEY
+    ]
+  },
+  {
+    fields: [GET_STARTED_FORM_EMAIL_KEY, GET_STARTED_FORM_PHONE_KEY]
+  }
+]
 
 const muiStyles = {
   root: {
@@ -36,6 +59,12 @@ const muiStyles = {
 class GetStarted extends PureComponent {
   static propTypes = {
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    calendarSectionHasError: PropTypes.bool.isRequired,
+    aboutSectionHasError: PropTypes.bool.isRequired,
+    contactSectionHasError: PropTypes.bool.isRequired,
+    calendarSectionComplete: PropTypes.bool.isRequired,
+    aboutSectionComplete: PropTypes.bool.isRequired,
+    contactSectionComplete: PropTypes.bool.isRequired,
     ...propTypes
   }
 
@@ -44,6 +73,53 @@ class GetStarted extends PureComponent {
     this.state = {
       activeStep: 0
     }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { calendarSectionHasError, aboutSectionHasError } = this.props
+    const { activeStep } = this.state
+    const stepChanged = prevState.activeStep !== activeStep
+
+    if (stepChanged) {
+      if (calendarSectionHasError) {
+        this.setStep(0)
+      } else if (aboutSectionHasError) {
+        this.setStep(1)
+      }
+    }
+  }
+
+  handleFormSubmit = (e, ...rest) => {
+    const { handleSubmit, doGetStarted, touch } = this.props
+    const { activeStep } = this.state
+
+    // Prevent default submit
+    e.preventDefault()
+    e.stopPropagation()
+
+    switch (activeStep) {
+      case 0:
+        // Invoke redux-form's validation on fields in the first section
+        touch(...formSections[0].fields)
+        this.setStep(1)
+        break
+      case 1:
+        // Invoke redux-form's validation on fields in the first two sections
+        touch(...formSections[0].fields, ...formSections[1].fields)
+        this.setStep(2)
+        break
+      case 2:
+        // Invoke redux-form's validation on fields in all the sections
+        touch(
+          ...formSections[0].fields,
+          ...formSections[1].fields,
+          ...formSections[2].fields
+        )
+        return handleSubmit(doGetStarted)(e, ...rest)
+      default:
+    }
+
+    return false
   }
 
   setStep = requestedStep => {
@@ -58,18 +134,25 @@ class GetStarted extends PureComponent {
   }
 
   render = () => {
-    const { classes, reset } = this.props
+    const {
+      classes,
+      reset,
+      pristine,
+      anyTouched,
+      submitting,
+      calendarSectionComplete,
+      calendarSectionHasError,
+      aboutSectionComplete,
+      aboutSectionHasError,
+      contactSectionComplete,
+      contactSectionHasError
+    } = this.props
     const { activeStep } = this.state
-    const calendarSectionComplete = false
-    const calendarSectionHasError = false
-    const aboutSectionComplete = false
-    const aboutSectionHasError = false
-    const contactSectionComplete = false
-    const contactSectionHasError = false
-
+    const isSubmitDisabled = submitting
+    const isResetDisabled = (pristine && !anyTouched) || submitting
     const addTwoWeeks = addWeeks(2)
     return (
-      <form>
+      <form onSubmit={this.handleFormSubmit}>
         <Stepper
           activeStep={activeStep}
           orientation="vertical"
@@ -127,13 +210,17 @@ class GetStarted extends PureComponent {
         </Stepper>
         <DialogFormButtons
           {...{
-            isSubmitDisabled: false,
-            isResetDisabled: false,
-            reset,
-            submitLabel: 'OK',
-            cancelLabel: 'cancel',
-            resetLabel: 'reset',
-            closeActionCreator: closeDialog
+            isSubmitDisabled,
+            isResetDisabled,
+            reset: () => {
+              this.setStep(0)
+              reset()
+            },
+            submitLabel:
+              activeStep === formSections.length - 1 ? 'Get Started' : 'Next',
+            cancelLabel: 'Cancel',
+            resetLabel: 'Reset',
+            closeActionCreator
           }}
         />
       </form>
@@ -142,9 +229,44 @@ class GetStarted extends PureComponent {
 }
 
 const ConnectedGetStarted = connect(
-  (state, props) => ({}),
+  (state, props) => {
+    const calendarSectionHasErrorSelector = makeFormHasErrorSelector({
+      formId: GET_STARTED_FORM_KEY,
+      fields: formSections[0].fields
+    })
+    const aboutSectionHasErrorSelector = makeFormHasErrorSelector({
+      formId: GET_STARTED_FORM_KEY,
+      fields: formSections[1].fields
+    })
+    const contactSectionHasErrorSelector = makeFormHasErrorSelector({
+      formId: GET_STARTED_FORM_KEY,
+      fields: formSections[2].fields
+    })
+
+    const calendarSectionCompleteSelector = makeFormSectionCompleteSelector({
+      formId: GET_STARTED_FORM_KEY,
+      fields: formSections[0].fields
+    })
+    const aboutSectionCompleteSelector = makeFormSectionCompleteSelector({
+      formId: GET_STARTED_FORM_KEY,
+      fields: formSections[1].fields
+    })
+    const contactSectionCompleteSelector = makeFormSectionCompleteSelector({
+      formId: GET_STARTED_FORM_KEY,
+      fields: formSections[2].fields
+    })
+
+    return {
+      calendarSectionHasError: calendarSectionHasErrorSelector(state, props),
+      aboutSectionHasError: aboutSectionHasErrorSelector(state, props),
+      contactSectionHasError: contactSectionHasErrorSelector(state, props),
+      calendarSectionComplete: calendarSectionCompleteSelector(state, props),
+      aboutSectionComplete: aboutSectionCompleteSelector(state, props),
+      contactSectionComplete: contactSectionCompleteSelector(state, props)
+    }
+  },
   (dispatch, props) => ({
-    // doToggleDialog: () => dispatch(toggleDialog)
+    doGetStarted: values => dispatch(contact(values))
   })
 )(withStyles(muiStyles)(GetStarted))
 

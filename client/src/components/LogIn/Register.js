@@ -40,7 +40,6 @@ import PasswordField from './PasswordField'
 
 const formSections = [
   {
-    label: '',
     fields: [
       REGISTER_FORM_FIRST_NAME_KEY,
       REGISTER_FORM_LAST_NAME_KEY,
@@ -48,11 +47,9 @@ const formSections = [
     ]
   },
   {
-    label: '',
     fields: [REGISTER_FORM_EMAIL_KEY, REGISTER_FORM_PHONE_KEY]
   },
   {
-    label: 'Choose a Password',
     fields: [REGISTER_FORM_PASSWORD1_KEY, REGISTER_FORM_PASSWORD2_KEY]
   }
 ]
@@ -214,7 +211,7 @@ class Register extends PureComponent {
                 disableRipple
                 onClick={() => this.setStep(2)}
               >
-                {formSections[2].label}
+                Choose a Password
               </Button>
             </StepLabel>
             <StepContent>
