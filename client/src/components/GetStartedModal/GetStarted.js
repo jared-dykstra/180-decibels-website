@@ -21,9 +21,10 @@ import {
   GET_STARTED_FORM_PHONE_KEY
 } from '180-decibels-shared/getStarted'
 
+import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
 import { renderField, FIELD_TYPE_DATE_TIME } from 'formUtils'
-import { AboutStep, ContactStep } from 'components'
+import { AboutStep, ContactStep, DialogFormButtons } from 'components'
 
 const muiStyles = {
   root: {
@@ -57,7 +58,7 @@ class GetStarted extends PureComponent {
   }
 
   render = () => {
-    const { classes } = this.props
+    const { classes, reset } = this.props
     const { activeStep } = this.state
     const calendarSectionComplete = false
     const calendarSectionHasError = false
@@ -124,6 +125,17 @@ class GetStarted extends PureComponent {
             }}
           />
         </Stepper>
+        <DialogFormButtons
+          {...{
+            isSubmitDisabled: false,
+            isResetDisabled: false,
+            reset,
+            submitLabel: 'OK',
+            cancelLabel: 'cancel',
+            resetLabel: 'reset',
+            closeActionCreator: closeDialog
+          }}
+        />
       </form>
     )
   }

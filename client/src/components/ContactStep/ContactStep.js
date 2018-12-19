@@ -42,8 +42,8 @@ const ContactStep = ({
         <Grid item md={6}>
           <Field
             label="Phone"
-            id={emailKey}
-            name={emailKey}
+            id={phoneKey}
+            name={phoneKey}
             type={FIELD_TYPE_TEXT}
             component={renderField}
             placeholder="403.555.1212"

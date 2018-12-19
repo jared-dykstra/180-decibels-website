@@ -14,8 +14,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
 import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 
-import { DialogFormButtons } from '..'
-
 import GetStarted from './GetStarted'
 
 const styles = {
@@ -31,10 +29,10 @@ const styles = {
   }
 }
 
-const GetStartedModal = ({ isModalOpen, dodoCloseDialog, classes }) => (
+const GetStartedModal = ({ isModalOpen, doCloseDialog, classes }) => (
   <Dialog
     open={isModalOpen}
-    onClose={dodoCloseDialog}
+    onClose={doCloseDialog}
     aria-labelledby="getStarted-dialog-title"
     fullWidth
     classes={classes}
@@ -47,7 +45,7 @@ const GetStartedModal = ({ isModalOpen, dodoCloseDialog, classes }) => (
         <IconButton
           aria-label="Close"
           style={{ marginRight: -20 }}
-          onClick={dodoCloseDialog}
+          onClick={doCloseDialog}
         >
           <CloseIcon />
         </IconButton>
@@ -60,23 +58,13 @@ const GetStartedModal = ({ isModalOpen, dodoCloseDialog, classes }) => (
       </DialogContentText>
       <GetStarted />
     </DialogContent>
-    <DialogFormButtons
-      {...{
-        isSubmitDisabled: false,
-        isResetDisabled: false,
-        reset: () => {},
-        submitLabel: 'OK',
-        cancelLabel: 'cancel',
-        resetLabel: 'reset',
-        closeActionCreator: closeDialog
-      }}
-    />
   </Dialog>
 )
 
 GetStartedModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
-  dodoCloseDialog: PropTypes.func.isRequired
+  doCloseDialog: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 export default connect(
@@ -84,6 +72,6 @@ export default connect(
     isModalOpen: getStartedModalIsOpenSelector(state)
   }),
   dispatch => ({
-    dodoCloseDialog: () => dispatch(closeDialog())
+    doCloseDialog: () => dispatch(closeDialog())
   })
 )(withStyles(styles)(GetStartedModal))
