@@ -1,3 +1,5 @@
+export { default as AboutStep } from './AboutStep/AboutStep'
+export { default as ContactStep } from './ContactStep/ContactStep'
 export {
   default as DialogFormButtons
 } from './DialogFormButtons/DialogFormButtons'

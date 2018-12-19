@@ -34,11 +34,9 @@ import {
   REGISTER_FORM_PASSWORD2_KEY
 } from '180-decibels-shared/registration'
 
-import { DialogFormButtons } from '..'
+import { AboutStep, ContactStep, DialogFormButtons } from 'components'
 
 import PasswordField from './PasswordField'
-import AboutStep from './AboutStep'
-import ContactStep from './ContactStep'
 
 const formSections = [
   {
