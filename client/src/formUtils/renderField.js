@@ -1,51 +1,9 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 
-import FormControl from '@material-ui/core/FormControl'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
+import CustomTextField from './CustomTextField'
+import DateTimeField from './DateTimeField'
 
-import { FIELD_TYPE_PASSWORD, FIELD_TYPE_TEXT } from '.'
-
-const scrollIntoView = id => {
-  const domElement = document.getElementById(id)
-  if (domElement) {
-    domElement.scrollIntoView()
-  }
-}
-
-class CustomTextField extends PureComponent {
-  componentDidUpdate(oldProps) {
-    const { active, id } = this.props
-    if (!oldProps.active && active) {
-      scrollIntoView(id)
-    }
-  }
-
-  render() {
-    const {
-      input,
-      meta: { touched, error /* warning */ },
-      label,
-      id,
-      fullWidth,
-      ...custom
-    } = this.props
-    return (
-      <FormControl
-        error={touched && !!error}
-        aria-describedby={`${id}-error-text`}
-        {...{ fullWidth }}
-      >
-        <InputLabel htmlFor={id}>{label}</InputLabel>
-        <Input {...{ id, fullWidth }} {...input} {...custom} />
-        <FormHelperText id={`${id}-error-text`}>
-          {touched && error}
-        </FormHelperText>
-      </FormControl>
-    )
-  }
-}
+import { FIELD_TYPE_PASSWORD, FIELD_TYPE_TEXT, FIELD_TYPE_DATE_TIME } from '.'
 
 // const renderRadioField = ({ value, input, ...custom }) => (
 //   <Input type="radio" checked={value === input.value} {...input} {...custom} />
@@ -84,6 +42,8 @@ export default props => {
     //   return renderCheckbox(rest)
     // case 'select':
     //   return renderSelectField(props)
+    case FIELD_TYPE_DATE_TIME:
+      return <DateTimeField {...props} />
     default:
       throw new Error(
         `Unrecognized type: "${type}".  Augment renderField to render the new type`

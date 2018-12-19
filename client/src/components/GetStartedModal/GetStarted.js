@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 import { addWeeks } from 'date-fns/fp'
-import { InlineDateTimePicker } from 'material-ui-pickers'
 
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
@@ -10,6 +10,14 @@ import StepLabel from '@material-ui/core/StepLabel'
 import StepContent from '@material-ui/core/StepContent'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
+
+import {
+  validateGetStarted,
+  GET_STARTED_FORM_DATE_TIME_KEY
+} from '180-decibels-shared/getStarted'
+
+import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
+import { renderField, FIELD_TYPE_DATE_TIME } from 'formUtils'
 
 const muiStyles = {
   root: {
@@ -20,8 +28,8 @@ const muiStyles = {
 
 class GetStarted extends PureComponent {
   static propTypes = {
-    classes: PropTypes.objectOf(PropTypes.string).isRequired
-    // ...propTypes
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    ...propTypes
   }
 
   constructor(props) {
@@ -58,6 +66,7 @@ class GetStarted extends PureComponent {
     const aboutSectionHasError = false
     const contactSectionComplete = false
     const contactSectionHasError = false
+
     const addTwoWeeks = addWeeks(2)
     return (
       <form>
@@ -73,20 +82,24 @@ class GetStarted extends PureComponent {
                 disableRipple
                 onClick={() => this.setStep(0)}
               >
-                Choose a day and time
+                When should we contact you?
               </Button>
             </StepLabel>
             <StepContent>
-              Book a day that works for you within the next two weeks
-              <InlineDateTimePicker
-                keyboard
+              Book a day that works for you within the next two weeks. If you
+              prefer to get started right away, call{' '}
+              <a href="tel:+18883214531" className="text-nowrap">
+                1-888-321-4531
+              </a>
+              <Field
                 label="Date and Time"
-                maxDateMessage="Must be Within the next two weeks"
-                minDateMessage="Must be Within the next two weeks"
-                value={selectedDate}
-                onChange={this.setDate}
+                id={GET_STARTED_FORM_DATE_TIME_KEY}
+                name={GET_STARTED_FORM_DATE_TIME_KEY}
+                type={FIELD_TYPE_DATE_TIME}
+                component={renderField}
                 disablePast
                 maxDate={addTwoWeeks(new Date())}
+                fullWidth
               />
             </StepContent>
           </Step>
@@ -120,9 +133,15 @@ class GetStarted extends PureComponent {
   }
 }
 
-export default connect(
+const ConnectedGetStarted = connect(
   (state, props) => ({}),
   (dispatch, props) => ({
     // doToggleDialog: () => dispatch(toggleDialog)
   })
 )(withStyles(muiStyles)(GetStarted))
+
+export default reduxForm({
+  form: GET_STARTED_FORM_KEY,
+  validate: validateGetStarted,
+  destroyOnUnmount: false
+})(ConnectedGetStarted)
