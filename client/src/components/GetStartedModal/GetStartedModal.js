@@ -16,7 +16,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
 import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 
-import GetStarted from './GetStarted'
+import { GetStarted } from 'components'
 
 const GetStartedModal = ({ isModalOpen, doCloseDialog, width }) => (
   <Dialog

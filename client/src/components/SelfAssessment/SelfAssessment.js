@@ -10,7 +10,7 @@ import {
 
 import { Paper } from '@material-ui/core'
 
-import { LogIn } from 'components'
+import { GetStarted } from 'components'
 import { questionsPropType, responsesPropType } from 'propTypes'
 import {
   questionListSelector,
@@ -72,6 +72,7 @@ class SelfAssessment extends PureComponent {
   render() {
     const { assessmentName, questions, responses } = this.props
     const { currentIndex } = this.state
+    const indicatorPadding = '15%'
 
     const introSlides = [
       <CarouselItem
@@ -89,17 +90,14 @@ class SelfAssessment extends PureComponent {
         onExited={this.onExited}
         key="register"
       >
-        <h2>
-          Tell us a bit about yourself. We will send a report with tools you can
-          start using today!
-        </h2>
-        <div className={styles.register}>
-          <LogIn
-            signInText="Sign In"
-            resetText="Reset"
-            cancelText="Cancel"
-            registerText="Register"
-          />
+        <div
+          style={{
+            paddingLeft: indicatorPadding,
+            paddingRight: indicatorPadding
+          }}
+        >
+          <h2>Get your Report</h2>
+          <GetStarted />
         </div>
       </CarouselItem>,
       <CarouselItem
@@ -122,8 +120,8 @@ class SelfAssessment extends PureComponent {
           {/* Padding prevents content from being rendered behind carousel controls */}
           <div
             style={{
-              paddingLeft: '15%',
-              paddingRight: '15%'
+              paddingLeft: indicatorPadding,
+              paddingRight: indicatorPadding
             }}
           >
             <Question
@@ -166,7 +164,7 @@ class SelfAssessment extends PureComponent {
             // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
             items={slides.map(s => ({ src: s.key }))}
             activeIndex={currentIndex}
-            onClickHandler={e => e.stopPropagation()}
+            onClickHandler={() => {}}
           />
           {slides}
           {!isFirstSlide && (

@@ -2,14 +2,15 @@
 
 .carousel :global {
   .carousel-inner {
+    background-color: $decibels-soft-white;
     // See: https://github.com/reactstrap/reactstrap/issues/677
     // Eventually this will be fixed in reactstrap and this can be removed
-    height: 550px;
+    height: 600px;
   }
 
   .carousel-item {
-    background-color: $decibels-soft-white;
-    height: 600px;
+    height: 550px;
+    overflow-y: auto;
     padding: 30px;
     padding-bottom: 40px;
 
@@ -33,12 +34,13 @@
   .carousel-control-next-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2336cfda' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
   }
-}
 
-.register {
-  background-color: $white;
-  border-radius: .5em;
-  margin-left: 10%;
-  margin-right: 10%;
-  padding: 1em;
+  .carousel-indicators li {
+    background-color: $decibels-dark-grey;
+    cursor: default;
+  }
+
+  .carousel-indicators .active {
+    background-color: $decibels-red;
+  }
 }

@@ -51,8 +51,9 @@ const formSections = [
 
 const muiStyles = {
   root: {
-    'padding-left': 0,
-    'padding-right': 0
+    paddingLeft: 0,
+    paddingRight: 0,
+    backgroundColor: 'transparent'
   }
 }
 
