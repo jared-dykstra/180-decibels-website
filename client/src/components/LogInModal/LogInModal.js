@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { Dialog, withWidth } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
 import {
   isAuthenticatingSelector,
@@ -23,6 +24,15 @@ import { LogIn } from 'components'
 
 import styles from './LogInModal.module.scss'
 
+const muiStyles = {
+  container: {
+    // NOTE: Only being applied to md and larger devices
+    // Position the dialog near the top--the default is to center vertically
+    'align-items': 'baseline',
+    'margin-top': '2rem'
+  }
+}
+
 class LogInModal extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
@@ -33,6 +43,7 @@ class LogInModal extends PureComponent {
     doSignOut: PropTypes.func.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
     name: PropTypes.string,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
     width: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']) // <== See https://material-ui.com/layout/breakpoints/#withwidth-options-higher-order-component
   }
 
@@ -65,8 +76,9 @@ class LogInModal extends PureComponent {
   }
 
   renderSignInButton = () => {
-    const { isModalOpen, width } = this.props
+    const { isModalOpen, width, classes } = this.props
     const signInText = 'Sign In'
+    const isFullScreen = width === 'xs' || width === 'sm'
     return [
       <Button key="button" color="primary" outline onClick={this.toggleModal}>
         <FontAwesomeIcon icon={faUser} />
@@ -78,7 +90,8 @@ class LogInModal extends PureComponent {
         key="modal"
         open={isModalOpen}
         onClose={this.toggleModal}
-        fullScreen={width === 'xs' || width === 'sm'}
+        fullScreen={isFullScreen}
+        classes={!isFullScreen ? classes : undefined}
       >
         <LogIn
           signInText={signInText}
@@ -138,4 +151,4 @@ export default connect(
     doOpenDialog: () => dispatch(openDialog()),
     doSignOut: () => dispatch(signOut())
   })
-)(withWidth()(LogInModal))
+)(withWidth()(withStyles(muiStyles)(LogInModal)))
