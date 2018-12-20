@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import he from 'he'
 import Rating from 'react-rating'
-import { Grid } from '@material-ui/core'
-import { withTheme } from '@material-ui/core/styles'
+import { Button, Grid } from '@material-ui/core'
 
 import { actions } from 'reduxStore/selfAssessment'
 import {
+  makeHasBeenRespondedToSelector,
   makeVolumeSelector,
   makeMaxVolumeSelector,
   makeMinVolumeSelector,
@@ -25,12 +25,11 @@ class Question extends PureComponent {
     minVolume: PropTypes.number.isRequired,
     maxVolume: PropTypes.number.isRequired,
     volumeStep: PropTypes.number.isRequired,
+    hasResponse: PropTypes.bool.isRequired,
     volume: PropTypes.number.isRequired,
     next: PropTypes.func.isRequired,
     hintLow: PropTypes.string,
-    hintHigh: PropTypes.string,
-    // eslint-disable-next-line react/forbid-prop-types
-    theme: PropTypes.object.isRequired
+    hintHigh: PropTypes.string
   }
 
   static defaultProps = {
@@ -46,22 +45,22 @@ class Question extends PureComponent {
   render() {
     const {
       questionText,
+      hasResponse,
       volume,
       minVolume,
       maxVolume,
       volumeStep,
       next,
       hintLow,
-      hintHigh,
-      theme
+      hintHigh
     } = this.props
 
-    const primaryColor = theme.palette.primary.main
     const fullSymbols = [
       ...Array((maxVolume - minVolume) / volumeStep + 1).keys()
     ].map(i => {
       const currentValue = (i + minVolume) * volumeStep
       const percent = currentValue / maxVolume
+      // range: 1/3...3/3
       const opacity = (percent / 3) * 2 + 0.33
       return (
         <div>
@@ -96,9 +95,10 @@ class Question extends PureComponent {
                 start={minVolume}
                 stop={maxVolume + volumeStep}
                 step={volumeStep}
-                initialRating={volume}
-                onChange={() => {
-                  this.doSetVolume()
+                initialRating={hasResponse ? volume + volumeStep : undefined}
+                onChange={value => {
+                  console.log(`Volume=${value - volumeStep}`)
+                  this.doSetVolume(value - volumeStep)
                   next()
                 }}
                 quiet={false}
@@ -106,18 +106,27 @@ class Question extends PureComponent {
                 fullSymbol={fullSymbols}
               />
             </Grid>
-            <Grid item xs={6} style={{ color: primaryColor }}>
-              {hintLow}
+            <Grid item xs={6}>
+              <Button
+                color="secondary"
+                onClick={() => this.doSetVolume(minVolume)}
+              >
+                {hintLow}
+              </Button>
             </Grid>
             <Grid
               item
               xs={6}
               style={{
-                textAlign: 'right',
-                color: primaryColor
+                textAlign: 'right'
               }}
             >
-              {hintHigh}
+              <Button
+                color="secondary"
+                onClick={() => this.doSetVolume(maxVolume)}
+              >
+                {hintHigh}
+              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -128,11 +137,13 @@ class Question extends PureComponent {
 
 export default connect(
   (state, props) => {
+    const hasBeenRespondedToSelector = makeHasBeenRespondedToSelector()
     const volumeSelector = makeVolumeSelector()
     const volumeStepSelector = makeVolumeStepSelector()
     const minVolumeSelector = makeMinVolumeSelector()
     const maxVolumeSelector = makeMaxVolumeSelector()
     return {
+      hasResponse: hasBeenRespondedToSelector(state, props),
       volume: volumeSelector(state, props),
       maxVolume: maxVolumeSelector(state, props),
       minVolume: minVolumeSelector(state, props),
@@ -143,4 +154,4 @@ export default connect(
     setVolume: ({ assessmentName, questionId, volume }) =>
       dispatch(actions.setVolume({ assessmentName, questionId, volume }))
   })
-)(withTheme()(Question))
+)(Question)
