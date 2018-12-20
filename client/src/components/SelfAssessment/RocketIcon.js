@@ -7,22 +7,22 @@ import { Logo } from 'components'
 
 const styles = {
   fontSizeLarge: {
-    fontSize: '4em'
+    fontSize: '6em'
   }
 }
 
-const RocketIcon = ({ cssColor, ...props }) => (
-  <SvgIcon {...props} style={cssColor ? { color: cssColor } : undefined}>
+const RocketIcon = ({ opacity, ...props }) => (
+  <SvgIcon {...props} style={{ opacity }}>
     <Logo />
   </SvgIcon>
 )
 
 RocketIcon.propTypes = {
-  cssColor: PropTypes.string
+  opacity: PropTypes.number
 }
 
 RocketIcon.defaultProps = {
-  cssColor: undefined
+  opacity: 1
 }
 
 export default withStyles(styles)(RocketIcon)

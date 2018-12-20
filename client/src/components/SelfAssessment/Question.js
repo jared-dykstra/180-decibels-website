@@ -58,18 +58,15 @@ class Question extends PureComponent {
 
     const primaryColor = theme.palette.primary.main
     const fullSymbols = [
-      ...Array((maxVolume - minVolume) / volumeStep).keys()
+      ...Array((maxVolume - minVolume) / volumeStep + 1).keys()
     ].map(i => {
       const currentValue = (i + minVolume) * volumeStep
-      const opacity = currentValue / maxVolume
+      const percent = currentValue / maxVolume
+      const opacity = (percent / 3) * 2 + 0.33
       return (
         <div>
-          <RocketIcon
-            fontSize="large"
-            color="primary"
-            cssColor={`rgba(0, 255, 0, ${(opacity / 3) * 2 + 0.33})`}
-          />
-          <h1>{currentValue}</h1>
+          <RocketIcon fontSize="large" color="secondary" opacity={opacity} />
+          <h4>{currentValue}</h4>
         </div>
       )
     })
@@ -97,7 +94,7 @@ class Question extends PureComponent {
             >
               <Rating
                 start={minVolume}
-                stop={maxVolume}
+                stop={maxVolume + volumeStep}
                 step={volumeStep}
                 initialRating={volume}
                 onChange={() => {
