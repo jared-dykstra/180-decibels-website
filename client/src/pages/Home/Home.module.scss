@@ -1,10 +1,6 @@
 @import '~styles/custom';
 
 .home {
-  :global .video-react {
-    border: 1px solid $decibels-red;
-  }
-
   :global .jumbotron {
     background-color: darken($decibels-soft-white, 7);
 

@@ -1,13 +1,11 @@
 @import '~styles/custom';
 
 .quote {
+  background: $decibels-soft-white;
   color: $decibels-red !important;
 
   blockquote {
-    background: $decibels-soft-white;
     font-size: 1em;
-    margin: 1.5em 10px;
-    margin-top: 0;
     padding: 0.5em 10px;
   }
 }

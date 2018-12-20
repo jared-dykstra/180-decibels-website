@@ -8,6 +8,8 @@ import {
   CarouselIndicators
 } from 'reactstrap'
 
+import { Paper } from '@material-ui/core'
+
 import { LogIn } from 'components'
 import { questionsPropType, responsesPropType } from 'propTypes'
 import {
@@ -152,35 +154,37 @@ class SelfAssessment extends PureComponent {
     const canAdvanceSlide = isFirstSlide || currentQuestionHasBeenRespondedTo
 
     return (
-      <Carousel
-        interval={false}
-        activeIndex={currentIndex}
-        next={this.next}
-        previous={this.previous}
-        className={styles.carousel}
-      >
-        <CarouselIndicators
-          // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
-          items={slides.map(s => ({ src: s.key }))}
+      <Paper>
+        <Carousel
+          interval={false}
           activeIndex={currentIndex}
-          onClickHandler={e => e.stopPropagation()}
-        />
-        {slides}
-        {!isFirstSlide && (
-          <CarouselControl
-            direction="prev"
-            directionText="Previous"
-            onClickHandler={this.previous}
+          next={this.next}
+          previous={this.previous}
+          className={styles.carousel}
+        >
+          <CarouselIndicators
+            // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
+            items={slides.map(s => ({ src: s.key }))}
+            activeIndex={currentIndex}
+            onClickHandler={e => e.stopPropagation()}
           />
-        )}
-        {canAdvanceSlide && (
-          <CarouselControl
-            direction="next"
-            directionText="Next"
-            onClickHandler={this.next}
-          />
-        )}
-      </Carousel>
+          {slides}
+          {!isFirstSlide && (
+            <CarouselControl
+              direction="prev"
+              directionText="Previous"
+              onClickHandler={this.previous}
+            />
+          )}
+          {canAdvanceSlide && (
+            <CarouselControl
+              direction="next"
+              directionText="Next"
+              onClickHandler={this.next}
+            />
+          )}
+        </Carousel>
+      </Paper>
     )
   }
 }
