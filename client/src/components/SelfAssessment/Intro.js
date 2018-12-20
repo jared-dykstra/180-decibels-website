@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'reactstrap'
-import styles from './Intro.module.scss'
+import { Button } from '@material-ui/core'
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 const Intro = ({ next }) => (
@@ -10,11 +9,13 @@ const Intro = ({ next }) => (
       How loudly will each of the following questions resonate for your
       business?
     </h2>
-    <div className={`text-center ${styles['control-row']}`}>
+    <div className="text-center">
       <Button
-        size="lg"
+        variant="contained"
         color="primary"
+        size="large"
         onClick={e => next || e.stopPropagation()}
+        style={{ marginTop: '8em' }}
       >
         Okay, Let&apos;s begin
       </Button>

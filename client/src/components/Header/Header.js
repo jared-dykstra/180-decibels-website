@@ -41,7 +41,7 @@ class Header extends PureComponent {
             <LogInModal />
             {!isHomePage && (
               <span>
-                &nbsp;&nbsp;<GetStartedButton>Get Started</GetStartedButton>
+                &nbsp;&nbsp;<GetStartedButton>Contact Me</GetStartedButton>
               </span>
             )}
           </span>
