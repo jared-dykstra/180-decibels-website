@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import Toolbar from '@material-ui/core/Toolbar'
-import AppBar from '@material-ui/core/AppBar'
-import IconButton from '@material-ui/core/IconButton'
-import { withStyles } from '@material-ui/core/styles'
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  Toolbar,
+  AppBar,
+  IconButton,
+  withWidth
+} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
 import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
@@ -16,26 +18,12 @@ import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 
 import GetStarted from './GetStarted'
 
-const styles = {
-  container: {
-    // Position the dialog near the top--the default is to center vertically
-    'align-items': 'baseline',
-    // TODO: See about a smaller margin-top on xs devices
-    'margin-top': '93px'
-  },
-  paper: {
-    // Preserve width on small screens.  maxWidth kicks in on 'md' screens
-    margin: 0
-  }
-}
-
-const GetStartedModal = ({ isModalOpen, doCloseDialog, classes }) => (
+const GetStartedModal = ({ isModalOpen, doCloseDialog, width }) => (
   <Dialog
     open={isModalOpen}
     onClose={doCloseDialog}
     aria-labelledby="getStarted-dialog-title"
-    fullWidth
-    classes={classes}
+    fullScreen={width === 'xs' || width === 'sm'}
   >
     <AppBar key="tabs" position="relative" color="default">
       <Toolbar variant="dense">
@@ -64,7 +52,12 @@ const GetStartedModal = ({ isModalOpen, doCloseDialog, classes }) => (
 GetStartedModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   doCloseDialog: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.string).isRequired
+  width: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']) // <== See https://material-ui.com/layout/breakpoints/#withwidth-options-higher-order-component
+}
+
+GetStartedModal.defaultProps = {
+  // If SSR is used, width is not available
+  width: 'lg'
 }
 
 export default connect(
@@ -74,4 +67,4 @@ export default connect(
   dispatch => ({
     doCloseDialog: () => dispatch(closeDialog())
   })
-)(withStyles(styles)(GetStartedModal))
+)(withWidth()(GetStartedModal))
