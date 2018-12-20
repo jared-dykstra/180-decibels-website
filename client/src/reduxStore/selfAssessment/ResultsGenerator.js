@@ -4,7 +4,7 @@ import { isNil as _isNil } from 'lodash'
 
 /**
  * Sum the total available, and total earned points for a specific dimension.
- * If a question is "muted", it doesn't earn points--but the total possible earned
+ * If a question is not yet answered, it doesn't earn points--but the total possible earned
  * points for that dimension is reduced, as it's not counted.
  * @param {*} p
  * @param {Object} p.responses User's responses to each question
@@ -15,10 +15,9 @@ import { isNil as _isNil } from 'lodash'
 const sumDimension = ({ responses, questions, dimensionName, maxVolume }) =>
   Object.entries(responses).reduce(
     (acc, [questionId, response]) => {
-      const { volume, mute } = response
+      const { volume } = response
 
-      // If muted, skip this response
-      if (mute || _isNil(volume)) {
+      if (_isNil(volume)) {
         return acc
       }
 

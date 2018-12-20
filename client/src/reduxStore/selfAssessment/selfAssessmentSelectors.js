@@ -65,12 +65,6 @@ export const makeVolumeSelector = () =>
       response.volume ? response.volume : volumeConfig.min
   )
 
-export const makeMuteSelector = () =>
-  createSelector(
-    currentResponseSelector,
-    response => response.mute
-  )
-
 export const makeCanGoToNextQuestionSelector = () =>
   createSelector(
     currentResponseSelector,
