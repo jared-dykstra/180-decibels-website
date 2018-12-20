@@ -10,9 +10,7 @@ import {
 } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
-
-import Dialog from '@material-ui/core/Dialog'
-import { withStyles } from '@material-ui/core/styles'
+import { Dialog, withWidth } from '@material-ui/core'
 
 import {
   isAuthenticatingSelector,
@@ -25,19 +23,6 @@ import { LogIn } from 'components'
 
 import styles from './LogInModal.module.scss'
 
-const muiStyles = {
-  container: {
-    // Position the dialog near the top--the default is to center vertically
-    'align-items': 'baseline',
-    // TODO: See about a smaller margin-top on xs devices
-    'margin-top': '93px'
-  },
-  paper: {
-    // Preserve width on small screens.  maxWidth kicks in on 'md' screens
-    margin: 0
-  }
-}
-
 class LogInModal extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
@@ -48,12 +33,13 @@ class LogInModal extends PureComponent {
     doSignOut: PropTypes.func.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
     name: PropTypes.string,
-    classes: PropTypes.objectOf(PropTypes.string).isRequired
+    width: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']) // <== See https://material-ui.com/layout/breakpoints/#withwidth-options-higher-order-component
   }
 
   static defaultProps = {
     name: null,
-    className: undefined
+    className: undefined,
+    width: 'lg'
   }
 
   constructor(props) {
@@ -79,7 +65,7 @@ class LogInModal extends PureComponent {
   }
 
   renderSignInButton = () => {
-    const { isModalOpen, classes } = this.props
+    const { isModalOpen, width } = this.props
     const signInText = 'Sign In'
     return [
       <Button key="button" color="primary" outline onClick={this.toggleModal}>
@@ -92,8 +78,7 @@ class LogInModal extends PureComponent {
         key="modal"
         open={isModalOpen}
         onClose={this.toggleModal}
-        fullWidth
-        classes={classes}
+        fullScreen={width === 'xs' || width === 'sm'}
       >
         <LogIn
           signInText={signInText}
@@ -153,4 +138,4 @@ export default connect(
     doOpenDialog: () => dispatch(openDialog()),
     doSignOut: () => dispatch(signOut())
   })
-)(withStyles(muiStyles)(LogInModal))
+)(withWidth()(LogInModal))
