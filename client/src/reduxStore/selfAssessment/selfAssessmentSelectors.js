@@ -65,6 +65,12 @@ export const makeVolumeSelector = () =>
       response.volume ? response.volume : volumeConfig.min
   )
 
+export const makeHasBeenRespondedToSelector = () =>
+  createSelector(
+    currentResponseSelector,
+    response => response.hasBeenRespondedTo
+  )
+
 export const makeCanGoToNextQuestionSelector = () =>
   createSelector(
     currentResponseSelector,

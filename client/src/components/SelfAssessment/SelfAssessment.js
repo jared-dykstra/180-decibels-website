@@ -117,12 +117,20 @@ class SelfAssessment extends PureComponent {
           onExited={this.onExited}
           key={question.id}
         >
-          <Question
-            assessmentName={assessmentName}
-            questionId={question.id}
-            questionText={question.text}
-            next={this.next}
-          />
+          {/* Padding prevents content from being rendered behind carousel controls */}
+          <div
+            style={{
+              paddingLeft: '15%',
+              paddingRight: '15%'
+            }}
+          >
+            <Question
+              assessmentName={assessmentName}
+              questionId={question.id}
+              questionText={question.text}
+              next={this.next}
+            />
+          </div>
         </CarouselItem>
       )),
       ...resultSlides

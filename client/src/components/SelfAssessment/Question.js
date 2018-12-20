@@ -1,22 +1,20 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Col, Row } from 'reactstrap'
 import { connect } from 'react-redux'
 import he from 'he'
-import Slider from 'rc-slider'
+import Rating from 'react-rating'
+import { Button, Grid } from '@material-ui/core'
 
 import { actions } from 'reduxStore/selfAssessment'
 import {
+  makeHasBeenRespondedToSelector,
   makeVolumeSelector,
   makeMaxVolumeSelector,
   makeMinVolumeSelector,
-  makeVolumeStepSelector,
-  makeCanGoToNextQuestionSelector
+  makeVolumeStepSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
-import 'rc-slider/assets/index.css'
-
-import styles from './Questions.module.scss'
+import RocketIcon from './RocketIcon'
 
 class Question extends PureComponent {
   static propTypes = {
@@ -27,9 +25,16 @@ class Question extends PureComponent {
     minVolume: PropTypes.number.isRequired,
     maxVolume: PropTypes.number.isRequired,
     volumeStep: PropTypes.number.isRequired,
+    hasResponse: PropTypes.bool.isRequired,
     volume: PropTypes.number.isRequired,
-    canGoToNextQuestion: PropTypes.bool.isRequired,
-    next: PropTypes.func.isRequired
+    next: PropTypes.func.isRequired,
+    hintLow: PropTypes.string,
+    hintHigh: PropTypes.string
+  }
+
+  static defaultProps = {
+    hintLow: 'Disagree',
+    hintHigh: 'Agree'
   }
 
   doSetVolume = value => {
@@ -40,63 +45,109 @@ class Question extends PureComponent {
   render() {
     const {
       questionText,
+      hasResponse,
       volume,
       minVolume,
       maxVolume,
       volumeStep,
-      canGoToNextQuestion,
-      next
+      next,
+      hintLow,
+      hintHigh
     } = this.props
-    return (
-      <div>
-        {/* The he library is used to decode HTML character entities like &apos; */}
-        <h2>{he.decode(questionText)}</h2>
-        <div className={`justify-content-center ${styles.volume}`}>
-          <span className={styles[`vol${volume}`]}>{volume}</span>
+
+    const fullSymbols = [
+      ...Array((maxVolume - minVolume) / volumeStep + 1).keys()
+    ].map(i => {
+      const currentValue = (i + minVolume) * volumeStep
+      const percent = currentValue / maxVolume
+      // range: 1/3...3/3
+      const opacity = (percent / 3) * 2 + 0.33
+      return (
+        <div>
+          <RocketIcon fontSize="large" color="secondary" opacity={opacity} />
+          <h4>{currentValue}</h4>
         </div>
-        <Row className={styles['control-row']}>
-          <Col>
-            <Slider
-              value={volume}
-              min={minVolume}
-              max={maxVolume}
-              step={volumeStep}
-              dots={false}
-              onChange={this.doSetVolume}
-              className={styles.slider}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} className="text-center">
-            <Button
-              size="lg"
-              color="primary"
-              disabled={!canGoToNextQuestion}
-              onClick={next}
+      )
+    })
+    return (
+      <Grid
+        container
+        spacing={24}
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <Grid item>
+          {/* The he library is used to decode HTML character entities like &apos; */}
+          <h2>{he.decode(questionText)}</h2>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={24}>
+            <Grid
+              item
+              xs={12}
+              style={{
+                textAlign: 'center',
+                marginTop: '1em'
+              }}
             >
-              Next
-            </Button>
-          </Col>
-        </Row>
-      </div>
+              <Rating
+                start={minVolume}
+                stop={maxVolume + volumeStep}
+                step={volumeStep}
+                initialRating={hasResponse ? volume + volumeStep : undefined}
+                onChange={value => {
+                  console.log(`Volume=${value - volumeStep}`)
+                  this.doSetVolume(value - volumeStep)
+                  next()
+                }}
+                quiet={false}
+                emptySymbol={<RocketIcon fontSize="large" color="disabled" />}
+                fullSymbol={fullSymbols}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                color="secondary"
+                onClick={() => this.doSetVolume(minVolume)}
+              >
+                {hintLow}
+              </Button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{
+                textAlign: 'right'
+              }}
+            >
+              <Button
+                color="secondary"
+                onClick={() => this.doSetVolume(maxVolume)}
+              >
+                {hintHigh}
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     )
   }
 }
 
 export default connect(
   (state, props) => {
+    const hasBeenRespondedToSelector = makeHasBeenRespondedToSelector()
     const volumeSelector = makeVolumeSelector()
     const volumeStepSelector = makeVolumeStepSelector()
     const minVolumeSelector = makeMinVolumeSelector()
     const maxVolumeSelector = makeMaxVolumeSelector()
-    const canGoToNextQuestionSelector = makeCanGoToNextQuestionSelector()
     return {
+      hasResponse: hasBeenRespondedToSelector(state, props),
       volume: volumeSelector(state, props),
       maxVolume: maxVolumeSelector(state, props),
       minVolume: minVolumeSelector(state, props),
-      volumeStep: volumeStepSelector(state, props),
-      canGoToNextQuestion: canGoToNextQuestionSelector(state, props)
+      volumeStep: volumeStepSelector(state, props)
     }
   },
   dispatch => ({
