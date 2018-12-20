@@ -1,5 +1,7 @@
 @import '~styles/custom';
 
+$control-width: 2em;
+
 .carousel :global {
   .carousel-inner {
     background-color: $decibels-soft-white;
@@ -42,5 +44,14 @@
 
   .carousel-indicators .active {
     background-color: $decibels-red;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: $control-width;
+  }
+
+  :export {
+    var-control-width: $control-width;
   }
 }

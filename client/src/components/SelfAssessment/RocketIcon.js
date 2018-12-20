@@ -18,11 +18,13 @@ const RocketIcon = ({ opacity, ...props }) => (
 )
 
 RocketIcon.propTypes = {
-  opacity: PropTypes.number
+  opacity: PropTypes.number,
+  fontSize: PropTypes.oneOf(['inherit', 'small', 'large'])
 }
 
 RocketIcon.defaultProps = {
-  opacity: 1
+  opacity: 1,
+  fontSize: 'inherit'
 }
 
 export default withStyles(styles)(RocketIcon)

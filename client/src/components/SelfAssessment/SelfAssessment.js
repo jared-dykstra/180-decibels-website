@@ -72,7 +72,7 @@ class SelfAssessment extends PureComponent {
   render() {
     const { assessmentName, questions, responses } = this.props
     const { currentIndex } = this.state
-    const indicatorPadding = '15%'
+    const indicatorPadding = styles['var-control-width']
 
     const introSlides = [
       <CarouselItem

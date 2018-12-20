@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import he from 'he'
 import Rating from 'react-rating'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, withWidth } from '@material-ui/core'
 
 import { actions } from 'reduxStore/selfAssessment'
 import {
@@ -15,9 +15,11 @@ import {
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
 import RocketIcon from './RocketIcon'
+import Heading from './Heading'
 
 class Question extends PureComponent {
   static propTypes = {
+    width: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']), // <== See https://material-ui.com/layout/breakpoints/#withwidth-options-higher-order-component
     assessmentName: PropTypes.string.isRequired,
     questionId: PropTypes.string.isRequired,
     questionText: PropTypes.string.isRequired,
@@ -34,7 +36,8 @@ class Question extends PureComponent {
 
   static defaultProps = {
     hintLow: 'Disagree',
-    hintHigh: 'Agree'
+    hintHigh: 'Agree',
+    width: 'lg'
   }
 
   doSetVolume = value => {
@@ -52,9 +55,22 @@ class Question extends PureComponent {
       volumeStep,
       next,
       hintLow,
-      hintHigh
+      hintHigh,
+      width
     } = this.props
-
+    const getRatingSize = () => {
+      switch (width) {
+        case 'xs':
+          return '2em'
+        case 'sm':
+          return '3.5em'
+        case 'md':
+          return '5em'
+        default:
+          return '6em'
+      }
+    }
+    const ratingSize = getRatingSize()
     const fullSymbols = [
       ...Array((maxVolume - minVolume) / volumeStep + 1).keys()
     ].map(i => {
@@ -64,11 +80,12 @@ class Question extends PureComponent {
       const opacity = (percent / 3) * 2 + 0.33
       return (
         <div>
-          <RocketIcon fontSize="large" color="secondary" opacity={opacity} />
+          <RocketIcon color="secondary" opacity={opacity} />
           <h4>{currentValue}</h4>
         </div>
       )
     })
+
     return (
       <Grid
         container
@@ -79,7 +96,7 @@ class Question extends PureComponent {
       >
         <Grid item>
           {/* The he library is used to decode HTML character entities like &apos; */}
-          <h2>{he.decode(questionText)}</h2>
+          <Heading>{he.decode(questionText)}</Heading>
         </Grid>
         <Grid item>
           <Grid container spacing={24}>
@@ -88,7 +105,8 @@ class Question extends PureComponent {
               xs={12}
               style={{
                 textAlign: 'center',
-                marginTop: '1em'
+                marginTop: '.25em',
+                fontSize: ratingSize
               }}
             >
               <Rating
@@ -102,7 +120,7 @@ class Question extends PureComponent {
                   next()
                 }}
                 quiet={false}
-                emptySymbol={<RocketIcon fontSize="large" color="disabled" />}
+                emptySymbol={<RocketIcon color="disabled" />}
                 fullSymbol={fullSymbols}
               />
             </Grid>
@@ -154,4 +172,4 @@ export default connect(
     setVolume: ({ assessmentName, questionId, volume }) =>
       dispatch(actions.setVolume({ assessmentName, questionId, volume }))
   })
-)(Question)
+)(withWidth()(Question))
