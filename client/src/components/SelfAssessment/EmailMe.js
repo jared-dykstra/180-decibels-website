@@ -7,13 +7,13 @@ import Stepper from '@material-ui/core/Stepper'
 import { withStyles } from '@material-ui/core/styles'
 
 import {
-  validateGetStarted,
-  GET_STARTED_FORM_COMPANY_KEY,
-  GET_STARTED_FORM_FIRST_NAME_KEY,
-  GET_STARTED_FORM_LAST_NAME_KEY,
-  GET_STARTED_FORM_EMAIL_KEY,
-  GET_STARTED_FORM_PHONE_KEY
-} from '180-decibels-shared/getStarted'
+  validateAssessmentResults,
+  ASSESSMENT_RESULT_FORM_COMPANY_KEY,
+  ASSESSMENT_RESULT_FORM_FIRST_NAME_KEY,
+  ASSESSMENT_RESULT_FORM_LAST_NAME_KEY,
+  ASSESSMENT_RESULT_FORM_EMAIL_KEY,
+  ASSESSMENT_RESULT_FORM_PHONE_KEY
+} from '180-decibels-shared/assessmentResults'
 
 import {
   makeFormHasErrorSelector,
@@ -23,18 +23,18 @@ import {
   closeDialog as closeActionCreator,
   contact
 } from 'reduxStore/getStarted/getStartedActions'
-import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
+import { ASSESSMENT_RESULT_FORM_KEY } from 'reduxStore/selfAssessment/selfAssessmentConstants'
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
 
 const formSections = [
   {
-    fields: [GET_STARTED_FORM_EMAIL_KEY, GET_STARTED_FORM_PHONE_KEY]
+    fields: [ASSESSMENT_RESULT_FORM_EMAIL_KEY, ASSESSMENT_RESULT_FORM_PHONE_KEY]
   },
   {
     fields: [
-      GET_STARTED_FORM_FIRST_NAME_KEY,
-      GET_STARTED_FORM_LAST_NAME_KEY,
-      GET_STARTED_FORM_COMPANY_KEY
+      ASSESSMENT_RESULT_FORM_FIRST_NAME_KEY,
+      ASSESSMENT_RESULT_FORM_LAST_NAME_KEY,
+      ASSESSMENT_RESULT_FORM_COMPANY_KEY
     ]
   }
 ]
@@ -140,8 +140,8 @@ class EmailMe extends PureComponent {
               setStep: this.setStep,
               isComplete: contactSectionComplete,
               hasError: contactSectionHasError,
-              emailKey: GET_STARTED_FORM_EMAIL_KEY,
-              phoneKey: GET_STARTED_FORM_PHONE_KEY,
+              emailKey: ASSESSMENT_RESULT_FORM_EMAIL_KEY,
+              phoneKey: ASSESSMENT_RESULT_FORM_PHONE_KEY,
               promptForPhone: false
             }}
           >
@@ -153,9 +153,9 @@ class EmailMe extends PureComponent {
               setStep: this.setStep,
               isComplete: aboutSectionComplete,
               hasError: aboutSectionHasError,
-              firstNameKey: GET_STARTED_FORM_FIRST_NAME_KEY,
-              lastNameKey: GET_STARTED_FORM_LAST_NAME_KEY,
-              companyKey: GET_STARTED_FORM_COMPANY_KEY
+              firstNameKey: ASSESSMENT_RESULT_FORM_FIRST_NAME_KEY,
+              lastNameKey: ASSESSMENT_RESULT_FORM_LAST_NAME_KEY,
+              companyKey: ASSESSMENT_RESULT_FORM_COMPANY_KEY
             }}
           >
             Optional: Include your name and/or Company name in the report
@@ -184,19 +184,19 @@ class EmailMe extends PureComponent {
 const ConnectedEmailMe = connect(
   (state, props) => {
     const aboutSectionHasErrorSelector = makeFormHasErrorSelector({
-      formId: GET_STARTED_FORM_KEY,
+      formId: ASSESSMENT_RESULT_FORM_KEY,
       fields: formSections[1].fields
     })
     const contactSectionHasErrorSelector = makeFormHasErrorSelector({
-      formId: GET_STARTED_FORM_KEY,
+      formId: ASSESSMENT_RESULT_FORM_KEY,
       fields: formSections[0].fields
     })
     const aboutSectionCompleteSelector = makeFormSectionCompleteSelector({
-      formId: GET_STARTED_FORM_KEY,
+      formId: ASSESSMENT_RESULT_FORM_KEY,
       fields: formSections[1].fields
     })
     const contactSectionCompleteSelector = makeFormSectionCompleteSelector({
-      formId: GET_STARTED_FORM_KEY,
+      formId: ASSESSMENT_RESULT_FORM_KEY,
       fields: formSections[0].fields
     })
 
@@ -213,7 +213,7 @@ const ConnectedEmailMe = connect(
 )(withStyles(muiStyles)(EmailMe))
 
 export default reduxForm({
-  form: GET_STARTED_FORM_KEY,
-  validate: validateGetStarted,
+  form: ASSESSMENT_RESULT_FORM_KEY,
+  validate: validateAssessmentResults,
   destroyOnUnmount: false
 })(ConnectedEmailMe)
