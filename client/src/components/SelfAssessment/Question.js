@@ -75,19 +75,28 @@ class Question extends PureComponent {
       }
     }
     const ratingSize = getRatingSize()
-    const fullSymbols = [
-      ...Array((maxVolume - minVolume) / volumeStep + 1).keys()
-    ].map(i => {
+    const values = [...Array((maxVolume - minVolume) / volumeStep + 1).keys()]
+    const symbols = values.map(i => {
       const currentValue = (i + minVolume) * volumeStep
       const percent = currentValue / maxVolume
-      // range: 1/3...3/3
-      const opacity = (percent / 3) * 2 + 0.33
-      return (
-        <div>
-          <RocketIcon color="secondary" opacity={opacity} />
-          <h4>{currentValue}</h4>
-        </div>
-      )
+      const opacity = (percent / 3) * 2 + 0.3333 // <== // range: 1/3...1
+      const size = percent / 2 + 0.5 // <== // range: 1/2...1
+      const style = { fontSize: `${size * 100}%` }
+      return {
+        empty: (
+          <span style={style}>
+            <RocketIcon color="disabled" />
+          </span>
+        ),
+        full: (
+          <div>
+            <span style={style}>
+              <RocketIcon color="secondary" opacity={opacity} />
+            </span>
+            <h4>{currentValue}</h4>
+          </div>
+        )
+      }
     })
 
     return (
@@ -140,8 +149,8 @@ class Question extends PureComponent {
                     }
                   }}
                   quiet={false}
-                  emptySymbol={<RocketIcon color="disabled" />}
-                  fullSymbol={fullSymbols}
+                  emptySymbol={symbols.map(s => s.empty)}
+                  fullSymbol={symbols.map(s => s.full)}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -175,7 +184,12 @@ class Question extends PureComponent {
               }}
             >
               {hasResponse && (
-                <Button variant="contained" color="primary" onClick={next}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={next}
+                >
                   Next
                 </Button>
               )}
