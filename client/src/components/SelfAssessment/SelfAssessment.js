@@ -10,7 +10,6 @@ import {
 
 import { Paper } from '@material-ui/core'
 
-import { GetStarted } from 'components'
 import { questionsPropType, responsesPropType } from 'propTypes'
 import {
   questionListSelector,
@@ -21,6 +20,7 @@ import styles from './SelfAssessment.module.scss'
 import Intro from './Intro'
 import Question from './Question'
 import Results from './Results'
+import EmailMe from './EmailMe'
 
 class SelfAssessment extends PureComponent {
   static propTypes = {
@@ -97,7 +97,7 @@ class SelfAssessment extends PureComponent {
           }}
         >
           <h2>Get your Report</h2>
-          <GetStarted />
+          <EmailMe />
         </div>
       </CarouselItem>,
       <CarouselItem

@@ -18,15 +18,18 @@ const AboutStep = ({
   firstNameKey,
   lastNameKey,
   companyKey,
+  title,
+  children,
   ...rest
 }) => (
   <Step {...{ key: stepKey, completed: isComplete, ...rest }}>
     <StepLabel error={hasError}>
       <Button variant="text" disableRipple onClick={() => setStep(stepKey)}>
-        A bit about Yourself...
+        {title}
       </Button>
     </StepLabel>
     <StepContent>
+      {children}
       <Grid container spacing={24}>
         <Grid item md={6}>
           <Field
@@ -76,7 +79,17 @@ AboutStep.propTypes = {
   hasError: PropTypes.bool.isRequired,
   firstNameKey: PropTypes.string.isRequired,
   lastNameKey: PropTypes.string.isRequired,
-  companyKey: PropTypes.string.isRequired
+  companyKey: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+}
+
+AboutStep.defaultProps = {
+  title: 'A bit about Yourself...',
+  children: undefined
 }
 
 export default AboutStep

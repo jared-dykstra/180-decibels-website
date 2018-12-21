@@ -17,17 +17,21 @@ const ContactStep = ({
   hasError,
   emailKey,
   phoneKey,
+  title,
+  children,
+  promptForPhone,
   ...rest
 }) => (
   <Step {...{ key: stepKey, completed: isComplete, ...rest }}>
     <StepLabel error={hasError}>
       <Button variant="text" disableRipple onClick={() => setStep(stepKey)}>
-        How can you be reached?
+        {title}
       </Button>
     </StepLabel>
     <StepContent>
+      {children}
       <Grid container spacing={24}>
-        <Grid item md={6}>
+        <Grid item md={promptForPhone ? 6 : 12}>
           <Field
             label="Email"
             id={emailKey}
@@ -39,18 +43,20 @@ const ContactStep = ({
             fullWidth
           />
         </Grid>
-        <Grid item md={6}>
-          <Field
-            label="Phone"
-            id={phoneKey}
-            name={phoneKey}
-            type={FIELD_TYPE_TEXT}
-            component={renderField}
-            placeholder="403.555.1212"
-            autoComplete="tel"
-            fullWidth
-          />
-        </Grid>
+        {promptForPhone && (
+          <Grid item md={6}>
+            <Field
+              label="Phone"
+              id={phoneKey}
+              name={phoneKey}
+              type={FIELD_TYPE_TEXT}
+              component={renderField}
+              placeholder="403.555.1212"
+              autoComplete="tel"
+              fullWidth
+            />
+          </Grid>
+        )}
       </Grid>
     </StepContent>
   </Step>
@@ -62,7 +68,19 @@ ContactStep.propTypes = {
   isComplete: PropTypes.bool.isRequired,
   hasError: PropTypes.bool.isRequired,
   emailKey: PropTypes.string.isRequired,
-  phoneKey: PropTypes.string.isRequired
+  phoneKey: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  promptForPhone: PropTypes.bool
+}
+
+ContactStep.defaultProps = {
+  title: 'How can you be reached?',
+  children: undefined,
+  promptForPhone: true
 }
 
 export default ContactStep
