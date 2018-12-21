@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import he from 'he'
 import Rating from 'react-rating'
-import Swipable from 'react-swipeable'
+import Swipeable from 'react-swipeable'
 import { Button, Grid, withWidth } from '@material-ui/core'
 
 import { actions } from 'reduxStore/selfAssessment'
@@ -113,7 +113,7 @@ class Question extends PureComponent {
         </Grid>
 
         {/* Consume Swipe events over the clickable rating */}
-        <Swipable
+        <Swipeable
           onSwipedLeft={e => {
             e.stopPropagation()
           }}
@@ -195,7 +195,7 @@ class Question extends PureComponent {
               )}
             </Grid>
           </Grid>
-        </Swipable>
+        </Swipeable>
       </Grid>
     )
   }
