@@ -33,6 +33,7 @@ import 'bootstrap'
 import 'styles/fonts.scss'
 import 'styles/theme.scss'
 import 'video-react/dist/video-react.css'
+import 'react-id-swiper/src/styles/scss/swiper.scss'
 
 class App extends PureComponent {
   static propTypes = {

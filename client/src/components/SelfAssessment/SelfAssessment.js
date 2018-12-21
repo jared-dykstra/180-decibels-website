@@ -1,14 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators
-} from 'reactstrap'
+import Swiper from 'react-id-swiper/lib/custom'
 
-import { Paper } from '@material-ui/core'
+import { Button, Paper } from '@material-ui/core'
 
 import { questionsPropType, responsesPropType } from 'propTypes'
 import {
@@ -16,7 +11,6 @@ import {
   responsesSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
-import styles from './SelfAssessment.module.scss'
 import Intro from './Intro'
 import Question from './Question'
 import Results from './Results'
@@ -29,115 +23,63 @@ class SelfAssessment extends PureComponent {
     responses: responsesPropType.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      animating: false,
-      currentIndex: 0
-    }
-  }
-
-  onExiting = () => {
-    this.setState(() => ({
-      animating: true
-    }))
-  }
-
-  onExited = () => {
-    this.setState(() => ({
-      animating: false
-    }))
-  }
-
-  next = () => {
-    const { animating } = this.state
-    if (animating) {
-      return
-    }
-    this.setState(currentState => ({
-      currentIndex: currentState.currentIndex + 1
-    }))
-  }
-
-  previous = () => {
-    const { animating } = this.state
-    if (animating) {
-      return
-    }
-    this.setState(currentState => ({
-      currentIndex: currentState.currentIndex - 1
-    }))
-  }
-
-  render() {
-    const { assessmentName, questions, responses } = this.props
-    const { currentIndex } = this.state
-    const indicatorPadding = styles['var-control-width']
+  static getDerivedStateFromProps(props, state) {
+    const { assessmentName, questions } = props
+    const { swiper } = state
+    const next = () => (swiper ? swiper.slideNext() : () => {})
 
     const introSlides = [
-      <CarouselItem
-        onExiting={this.onExiting}
-        onExited={this.onExited}
-        key="intro"
-      >
-        <Intro next={this.next} />
-      </CarouselItem>
+      <div key="intro">
+        <Intro next={next} />
+      </div>
     ]
 
     const resultSlides = [
-      <CarouselItem
-        onExiting={this.onExiting}
-        onExited={this.onExited}
-        key="register"
-      >
-        <div
-          style={{
-            paddingLeft: indicatorPadding,
-            paddingRight: indicatorPadding
-          }}
-        >
-          <h2>Get your Report</h2>
-          <EmailMe />
-        </div>
-      </CarouselItem>,
-      <CarouselItem
-        onExiting={this.onExiting}
-        onExited={this.onExited}
-        key="results"
-      >
+      <div key="register">
+        <h2>Get your Report</h2>
+        <EmailMe />
+      </div>,
+      <div key="results">
         <Results assessmentName={assessmentName} />
-      </CarouselItem>
+      </div>
     ]
 
-    const slides = [
-      ...introSlides,
-      ...questions.map(question => (
-        <CarouselItem
-          onExiting={this.onExiting}
-          onExited={this.onExited}
-          key={question.id}
-        >
-          {/* Padding prevents content from being rendered behind carousel controls */}
-          <div
-            style={{
-              paddingLeft: indicatorPadding,
-              paddingRight: indicatorPadding
-            }}
-          >
-            <Question
-              assessmentName={assessmentName}
-              questionId={question.id}
-              questionText={question.text}
-              next={this.next}
-            />
-          </div>
-        </CarouselItem>
-      )),
-      ...resultSlides
-    ]
+    const questionSlides = questions.map(question => (
+      <div key={question.id}>
+        <Question
+          assessmentName={assessmentName}
+          questionId={question.id}
+          questionText={question.text}
+          next={next}
+        />
+      </div>
+    ))
 
-    // TODO: Get some unit test coverage on this block of logic by refactoring it out of render()
-    const isFirstSlide = currentIndex <= 0
+    return {
+      introSlides,
+      resultSlides,
+      questionSlides
+    }
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      swiper: null
+    }
+  }
+
+  updateSwiper = () => {
+    const { questions, responses } = this.props
+    const { swiper, introSlides } = this.state
+
+    if (!swiper) {
+      return
+    }
+
+    // TODO: Get some unit test coverage on this block of logic by refactoring it out of here
+    const currentIndex = swiper.activeIndex
+    const isFirstSlide = swiper.isBeginning
     const currentQuestion =
       currentIndex >= introSlides.length &&
       currentIndex < questions.length + introSlides.length
@@ -151,37 +93,48 @@ class SelfAssessment extends PureComponent {
       : undefined
     const canAdvanceSlide = isFirstSlide || currentQuestionHasBeenRespondedTo
 
+    // Update the state of the slider
+    swiper.allowSlideNext = canAdvanceSlide
+    swiper.allowSlidePrev = !isFirstSlide
+  }
+
+  componentDidUpdate = () => {
+    this.updateSwiper()
+  }
+
+  render() {
+    const { swiper, introSlides, questionSlides, resultSlides } = this.state
+    const slides = [...introSlides, ...questionSlides, ...resultSlides]
+
     return (
       <Paper>
-        <Carousel
-          interval={false}
-          activeIndex={currentIndex}
-          next={this.next}
-          previous={this.previous}
-          className={styles.carousel}
+        <Swiper
+          ref={node => {
+            // Set the ref, if not previously set
+            if (node && !swiper)
+              this.setState(() => ({
+                swiper: node.swiper
+              }))
+          }}
+          {...{
+            on: {
+              slideChange: this.updateSwiper
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              type: 'bullets',
+              clickable: true
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev'
+            }
+          }}
         >
-          <CarouselIndicators
-            // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
-            items={slides.map(s => ({ src: s.key }))}
-            activeIndex={currentIndex}
-            onClickHandler={() => {}}
-          />
           {slides}
-          {!isFirstSlide && (
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={this.previous}
-            />
-          )}
-          {canAdvanceSlide && (
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={this.next}
-            />
-          )}
-        </Carousel>
+          {/* <Button onClick={this.next}>Next</Button>
+          <Button onClick={this.previous}>Previous</Button> */}
+        </Swiper>
       </Paper>
     )
   }
