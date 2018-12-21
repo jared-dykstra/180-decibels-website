@@ -7,8 +7,9 @@ import {
   CarouselControl,
   CarouselIndicators
 } from 'reactstrap'
+import Swipeable from 'react-swipeable'
 
-import { Paper } from '@material-ui/core'
+import { DialogContentText, Paper } from '@material-ui/core'
 
 import { questionsPropType, responsesPropType } from 'propTypes'
 import {
@@ -96,7 +97,12 @@ class SelfAssessment extends PureComponent {
             paddingRight: indicatorPadding
           }}
         >
-          <h2>Get your Report</h2>
+          <h2>Your Results are Ready</h2>
+          <DialogContentText>
+            Thanks for taking the time to answer these questions. A report is
+            ready for you, which contains concrete, actionable steps that you
+            can immediately use.
+          </DialogContentText>
           <EmailMe />
         </div>
       </CarouselItem>,
@@ -152,36 +158,43 @@ class SelfAssessment extends PureComponent {
     const canAdvanceSlide = isFirstSlide || currentQuestionHasBeenRespondedTo
 
     return (
-      <Paper>
-        <Carousel
-          interval={false}
-          activeIndex={currentIndex}
-          next={this.next}
-          previous={this.previous}
-          className={styles.carousel}
+      <Paper elevation={6}>
+        <Swipeable
+          onSwipingLeft={() => (canAdvanceSlide ? this.next() : undefined)}
+          onSwipingRight={() => (!isFirstSlide ? this.previous() : undefined)}
+          stopPropagation
+          trackMouse
         >
-          <CarouselIndicators
-            // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
-            items={slides.map(s => ({ src: s.key }))}
+          <Carousel
+            interval={false}
             activeIndex={currentIndex}
-            onClickHandler={() => {}}
-          />
-          {slides}
-          {!isFirstSlide && (
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={this.previous}
+            next={this.next}
+            previous={this.previous}
+            className={styles.carousel}
+          >
+            <CarouselIndicators
+              // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
+              items={slides.map(s => ({ src: s.key }))}
+              activeIndex={currentIndex}
+              onClickHandler={() => {}}
             />
-          )}
-          {canAdvanceSlide && (
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={this.next}
-            />
-          )}
-        </Carousel>
+            {slides}
+            {!isFirstSlide && (
+              <CarouselControl
+                direction="prev"
+                directionText="Previous"
+                onClickHandler={this.previous}
+              />
+            )}
+            {canAdvanceSlide && (
+              <CarouselControl
+                direction="next"
+                directionText="Next"
+                onClickHandler={this.next}
+              />
+            )}
+          </Carousel>
+        </Swipeable>
       </Paper>
     )
   }

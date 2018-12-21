@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import he from 'he'
 import Rating from 'react-rating'
+import Swipable from 'react-swipeable'
 import { Button, Grid, withWidth } from '@material-ui/core'
 
 import { actions } from 'reduxStore/selfAssessment'
@@ -31,13 +32,15 @@ class Question extends PureComponent {
     volume: PropTypes.number.isRequired,
     next: PropTypes.func.isRequired,
     hintLow: PropTypes.string,
-    hintHigh: PropTypes.string
+    hintHigh: PropTypes.string,
+    autoAdvanceTimeMs: PropTypes.number
   }
 
   static defaultProps = {
     hintLow: 'Disagree',
     hintHigh: 'Agree',
-    width: 'lg'
+    width: 'lg', // <== If using SSR, the width won't be defined, so default to PC
+    autoAdvanceTimeMs: 250
   }
 
   doSetVolume = value => {
@@ -56,6 +59,7 @@ class Question extends PureComponent {
       next,
       hintLow,
       hintHigh,
+      autoAdvanceTimeMs,
       width
     } = this.props
     const getRatingSize = () => {
@@ -98,56 +102,86 @@ class Question extends PureComponent {
           {/* The he library is used to decode HTML character entities like &apos; */}
           <Heading>{he.decode(questionText)}</Heading>
         </Grid>
-        <Grid item>
-          <Grid container spacing={24}>
+
+        {/* Consume Swipe events over the clickable rating */}
+        <Swipable
+          onSwipedLeft={e => {
+            e.stopPropagation()
+          }}
+          onSwipedRight={e => {
+            e.stopPropagation()
+          }}
+          stopPropagation
+          preventDefaultTouchmoveEvent
+          trackMouse
+        >
+          <Grid item>
+            <Grid container spacing={24}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  textAlign: 'center',
+                  marginTop: '.25em',
+                  fontSize: ratingSize
+                }}
+              >
+                <Rating
+                  start={minVolume}
+                  stop={maxVolume + volumeStep}
+                  step={volumeStep}
+                  initialRating={hasResponse ? volume + volumeStep : undefined}
+                  onChange={value => {
+                    console.log(`Volume=${value - volumeStep}`)
+                    this.doSetVolume(value - volumeStep)
+                    if (!hasResponse && autoAdvanceTimeMs > 0) {
+                      // Auto-advance if this is the first answer
+                      window.setTimeout(next, autoAdvanceTimeMs)
+                    }
+                  }}
+                  quiet={false}
+                  emptySymbol={<RocketIcon color="disabled" />}
+                  fullSymbol={fullSymbols}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  color="secondary"
+                  onClick={() => this.doSetVolume(minVolume)}
+                >
+                  {hintLow}
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                style={{
+                  textAlign: 'right'
+                }}
+              >
+                <Button
+                  color="secondary"
+                  onClick={() => this.doSetVolume(maxVolume)}
+                >
+                  {hintHigh}
+                </Button>
+              </Grid>
+            </Grid>
             <Grid
               item
               xs={12}
               style={{
-                textAlign: 'center',
-                marginTop: '.25em',
-                fontSize: ratingSize
+                textAlign: 'center'
               }}
             >
-              <Rating
-                start={minVolume}
-                stop={maxVolume + volumeStep}
-                step={volumeStep}
-                initialRating={hasResponse ? volume + volumeStep : undefined}
-                onChange={value => {
-                  console.log(`Volume=${value - volumeStep}`)
-                  this.doSetVolume(value - volumeStep)
-                  next()
-                }}
-                quiet={false}
-                emptySymbol={<RocketIcon color="disabled" />}
-                fullSymbol={fullSymbols}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                color="secondary"
-                onClick={() => this.doSetVolume(minVolume)}
-              >
-                {hintLow}
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              style={{
-                textAlign: 'right'
-              }}
-            >
-              <Button
-                color="secondary"
-                onClick={() => this.doSetVolume(maxVolume)}
-              >
-                {hintHigh}
-              </Button>
+              {hasResponse && (
+                <Button variant="contained" color="primary" onClick={next}>
+                  Next
+                </Button>
+              )}
             </Grid>
           </Grid>
-        </Grid>
+        </Swipable>
       </Grid>
     )
   }

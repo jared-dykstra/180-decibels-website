@@ -24,7 +24,6 @@ import {
   contact
 } from 'reduxStore/getStarted/getStartedActions'
 import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
-import { renderField, FIELD_TYPE_DATE_TIME } from 'formUtils'
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
 
 const formSections = [
@@ -136,7 +135,7 @@ class EmailMe extends PureComponent {
         >
           <ContactStep
             {...{
-              title: 'Enter your email address',
+              title: 'Where should we send it?',
               stepKey: 0,
               setStep: this.setStep,
               isComplete: contactSectionComplete,
