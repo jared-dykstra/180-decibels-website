@@ -13,7 +13,6 @@ import {
 
 import { actions } from 'reduxStore/auth'
 import { SIGNIN_FORM_KEY } from 'reduxStore/auth/authConstants'
-import { closeDialog as closeActionCreator } from 'reduxStore/auth/authActions'
 import { DialogFormButtons } from 'components'
 import { renderField, FIELD_TYPE_TEXT, FIELD_TYPE_PASSWORD } from 'formUtils'
 
@@ -23,6 +22,7 @@ class SignIn extends PureComponent {
     submitLabel: PropTypes.string.isRequired,
     cancelLabel: PropTypes.string.isRequired,
     resetLabel: PropTypes.string.isRequired,
+    doCloseDialog: PropTypes.func.isRequired,
     ...propTypes
   }
 
@@ -49,7 +49,8 @@ class SignIn extends PureComponent {
       doSignIn,
       submitLabel,
       cancelLabel,
-      resetLabel
+      resetLabel,
+      doCloseDialog
     } = this.props
     // Whenever resetTs is changed, react elements using that value of a key are re-rendered, and their internal state is reset
     // This resets the "show password" functionality when the form is reset
@@ -91,7 +92,7 @@ class SignIn extends PureComponent {
             submitLabel,
             cancelLabel,
             resetLabel,
-            closeActionCreator
+            doCloseDialog
           }}
         />
       </form>
@@ -102,7 +103,8 @@ class SignIn extends PureComponent {
 const ConnectedSignIn = connect(
   null,
   dispatch => ({
-    doSignIn: values => dispatch(actions.signIn(values))
+    doSignIn: values => dispatch(actions.signIn(values)),
+    doCloseDialog: () => dispatch(actions.closeDialog())
   })
 )(SignIn)
 

@@ -37,14 +37,14 @@ class Header extends PureComponent {
           md={{ size: 5, offset: 0 }}
           className={styles.buttons}
         >
-          <span className="float-right">
+          <div className="float-right" style={{ display: 'flex' }}>
             <LogInModal />
             {!isHomePage && (
-              <span>
+              <div>
                 &nbsp;&nbsp;<GetStartedButton>Contact Me</GetStartedButton>
-              </span>
+              </div>
             )}
-          </span>
+          </div>
         </Col>
       </Navbar>
     )

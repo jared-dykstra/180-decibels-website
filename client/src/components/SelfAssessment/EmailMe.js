@@ -19,10 +19,7 @@ import {
   makeFormHasErrorSelector,
   makeFormSectionCompleteSelector
 } from 'reduxStore/form/formSelectors'
-import {
-  closeDialog as closeActionCreator,
-  contact
-} from 'reduxStore/getStarted/getStartedActions'
+import { contact } from 'reduxStore/getStarted/getStartedActions'
 import { ASSESSMENT_RESULT_FORM_KEY } from 'reduxStore/selfAssessment/selfAssessmentConstants'
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
 
@@ -171,9 +168,7 @@ class EmailMe extends PureComponent {
             },
             submitLabel:
               activeStep === formSections.length - 1 ? 'Get Report' : 'Next',
-            cancelLabel: 'Cancel',
-            resetLabel: 'Reset',
-            closeActionCreator
+            resetLabel: 'Reset'
           }}
         />
       </form>

@@ -25,10 +25,7 @@ import {
   makeFormHasErrorSelector,
   makeFormSectionCompleteSelector
 } from 'reduxStore/form/formSelectors'
-import {
-  closeDialog as closeActionCreator,
-  contact
-} from 'reduxStore/getStarted/getStartedActions'
+import { closeDialog, contact } from 'reduxStore/getStarted/getStartedActions'
 import { GET_STARTED_FORM_KEY } from 'reduxStore/getStarted/getStartedConstants'
 import { renderField, FIELD_TYPE_DATE_TIME } from 'formUtils'
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
@@ -66,6 +63,7 @@ class GetStarted extends PureComponent {
     calendarSectionComplete: PropTypes.bool.isRequired,
     aboutSectionComplete: PropTypes.bool.isRequired,
     contactSectionComplete: PropTypes.bool.isRequired,
+    doCloseDialog: PropTypes.func.isRequired,
     ...propTypes
   }
 
@@ -146,7 +144,8 @@ class GetStarted extends PureComponent {
       aboutSectionComplete,
       aboutSectionHasError,
       contactSectionComplete,
-      contactSectionHasError
+      contactSectionHasError,
+      doCloseDialog
     } = this.props
     const { activeStep } = this.state
     const isSubmitDisabled = submitting
@@ -221,7 +220,7 @@ class GetStarted extends PureComponent {
               activeStep === formSections.length - 1 ? 'Get Started' : 'Next',
             cancelLabel: 'Cancel',
             resetLabel: 'Reset',
-            closeActionCreator
+            doCloseDialog
           }}
         />
       </form>
@@ -267,7 +266,8 @@ const ConnectedGetStarted = connect(
     }
   },
   (dispatch, props) => ({
-    doGetStarted: values => dispatch(contact(values))
+    doGetStarted: values => dispatch(contact(values)),
+    doCloseDialog: () => dispatch(closeDialog())
   })
 )(withStyles(muiStyles)(GetStarted))
 

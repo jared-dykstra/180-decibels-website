@@ -12,10 +12,7 @@ import StepContent from '@material-ui/core/StepContent'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 
-import {
-  register,
-  closeDialog as closeActionCreator
-} from 'reduxStore/auth/authActions'
+import { register, closeDialog } from 'reduxStore/auth/authActions'
 import { REGISTER_FORM_KEY } from 'reduxStore/auth/authConstants'
 import {
   makeFormHasErrorSelector,
@@ -88,6 +85,7 @@ class Register extends PureComponent {
     contactSectionComplete: PropTypes.bool.isRequired,
     passwordSectionComplete: PropTypes.bool.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    doCloseDialog: PropTypes.func.isRequired,
     ...propTypes
   }
 
@@ -169,7 +167,8 @@ class Register extends PureComponent {
       passwordSectionHasError,
       aboutSectionComplete,
       contactSectionComplete,
-      passwordSectionComplete
+      passwordSectionComplete,
+      doCloseDialog
     } = this.props
     const { activeStep } = this.state
     const isSubmitDisabled = submitting
@@ -257,7 +256,7 @@ class Register extends PureComponent {
               activeStep === formSections.length - 1 ? submitLabel : 'Next',
             cancelLabel,
             resetLabel,
-            closeActionCreator
+            doCloseDialog
           }}
         />
       </form>
@@ -303,7 +302,8 @@ const ConnectedRegister = connect(
     }
   },
   dispatch => ({
-    doRegister: values => dispatch(register(values))
+    doRegister: values => dispatch(register(values)),
+    doCloseDialog: () => dispatch(closeDialog())
   })
 )(withStyles(muiStyles)(Register))
 
