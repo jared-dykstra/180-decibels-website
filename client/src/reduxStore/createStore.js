@@ -20,14 +20,40 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default history => {
-  const store = createStore(
+  const createReducer = myReducers =>
     combineReducers({
       router: connectRouter(history),
       form: formReducer,
-      ...reducers
-    }),
+      ...myReducers
+    })
+  const store = createStore(
+    createReducer(reducers),
     composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
   )
-  sagaMiddleware.run(rootSaga)
+  let sagaTask = sagaMiddleware.run(rootSaga)
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (module.hot) {
+      module.hot.accept('.', () => {
+        // eslint-disable-next-line no-console
+        console.warn('[HMR] - Replacing reducer and restarting Root Saga')
+
+        // eslint-disable-next-line global-require
+        const next = require('.').default
+
+        // Replace the reducer
+        const nextReducers = next.reducers
+        const nextReducer = createReducer(nextReducers)
+        store.replaceReducer(nextReducer)
+
+        // Start a new root Saga
+        sagaTask.cancel()
+        sagaTask.done.then(() => {
+          sagaTask = sagaMiddleware.run(next.saga)
+        })
+      })
+    }
+  }
+
   return store
 }

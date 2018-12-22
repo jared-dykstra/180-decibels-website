@@ -1,92 +1,67 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Route, Switch } from 'react-router'
-import { withRouter } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import { Provider } from 'react-redux'
 
-import { authenticate } from 'reduxStore/auth/authActions'
-import {
-  Confidentiality,
-  HelpMe,
-  HelpMyTeam,
-  Home,
-  HowWeWork,
-  NotFound,
-  OurTeam,
-  Privacy,
-  Services
-} from 'pages'
-import { GetStartedModal, ScrollToTop } from 'components'
-import {
-  ROUTE_HOME,
-  ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM,
-  ROUTE_OUR_TEAM,
-  ROUTE_PRIVACY,
-  ROUTE_CONFIDENTIALITY,
-  ROUTE_HOW_WE_WORK,
-  ROUTE_SERVICES
-} from 'reduxStore/routes/routesConstants'
+import { ConnectedRouter } from 'connected-react-router'
 
-import 'bootstrap'
-import 'styles/fonts.scss'
-import 'styles/theme.scss'
-import 'video-react/dist/video-react.css'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { createMuiTheme } from '@material-ui/core/styles'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
-class App extends PureComponent {
-  static propTypes = {
-    doAuthenticate: PropTypes.func.isRequired
+import styles from 'styles/custom.scss'
+
+import App from './ConnectedApp'
+
+// NOTE: Keep in sync with bootstrap, until bootstrap is removed.
+const THEME = createMuiTheme({
+  palette: {
+    primary: {
+      main: styles['var-primary'],
+      contrastText: styles['var-white']
+    },
+    secondary: {
+      main: styles['var-secondary']
+    }
+  },
+  typography: {
+    useNextVariants: true,
+    fontFamily: styles['var-font-family-sans-serif'],
+    fontWeightLight: styles['var-font-weight-light'],
+    fontWeightRegular: styles['var-font-weight-normal'],
+    fontWeightMedium: styles['var-font-weight-bold']
   }
+})
 
+class Router extends PureComponent {
   componentDidMount = () => {
-    const { doAuthenticate } = this.props
-    doAuthenticate(null)
+    const { logPageView } = this.props
+    const { pathname, search } = window.location
+    logPageView({ pathname, search })
   }
 
   render() {
-    const routes = {
-      [ROUTE_HOME]: Home,
-      [ROUTE_HELP_ME]: HelpMe,
-      [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
-      [ROUTE_HOW_WE_WORK]: HowWeWork,
-      [ROUTE_OUR_TEAM]: OurTeam,
-      [ROUTE_CONFIDENTIALITY]: Confidentiality,
-      [ROUTE_PRIVACY]: Privacy,
-      [ROUTE_SERVICES]: Services
-    }
-
+    const { store, history } = this.props
     return (
-      <ScrollToTop {...this.props}>
-        <Helmet>
-          {/* site-wide defaults, which can be overridden by each page */}
-          <title>180 Decibels</title>
-        </Helmet>
-
-        <Switch>
-          {Object.entries(routes).map(([path, Component]) => (
-            <Route
-              exact
-              path={path}
-              key={path}
-              render={() => <Component {...this.props} />}
-            />
-          ))}
-          <Route render={() => <NotFound />} />
-        </Switch>
-
-        <GetStartedModal />
-      </ScrollToTop>
+      <MuiThemeProvider theme={THEME}>
+        <Provider store={store}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <ConnectedRouter history={history}>
+              <App />
+            </ConnectedRouter>
+          </MuiPickersUtilsProvider>
+        </Provider>
+      </MuiThemeProvider>
     )
   }
 }
 
-// NOTE: Documentation of `withRouter`: https://reacttraining.com/react-router/web/guides/redux-integration
-export default withRouter(
-  connect(
-    (state /* , ownProps */) => ({}),
-    dispatch => ({
-      doAuthenticate: () => dispatch(authenticate())
-    })
-  )(App)
-)
+Router.propTypes = {
+  logPageView: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  store: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object.isRequired
+}
+
+export default Router

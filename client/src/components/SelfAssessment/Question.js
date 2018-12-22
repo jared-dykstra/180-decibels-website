@@ -141,7 +141,6 @@ class Question extends PureComponent {
                   step={volumeStep}
                   initialRating={hasResponse ? volume + volumeStep : undefined}
                   onChange={value => {
-                    console.log(`Volume=${value - volumeStep}`)
                     this.doSetVolume(value - volumeStep)
                     if (!hasResponse && autoAdvanceTimeMs > 0) {
                       // Auto-advance if this is the first answer

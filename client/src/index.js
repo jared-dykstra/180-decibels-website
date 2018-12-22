@@ -1,19 +1,11 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
-import { ConnectedRouter } from 'connected-react-router'
 import ReactGA from 'react-ga'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import { createMuiTheme } from '@material-ui/core/styles'
-import { MuiPickersUtilsProvider } from 'material-ui-pickers'
-import DateFnsUtils from '@date-io/date-fns'
 
 import createStore from 'reduxStore/createStore'
-
-import styles from 'styles/custom.scss'
-
 import { get as configGet } from './config'
+
 import * as serviceWorker from './serviceWorker'
 import App from './App'
 
@@ -35,48 +27,22 @@ history.listen(location => {
   logPageView(location)
 })
 
-// NOTE: Keep in sync with bootstrap, until bootstrap is removed.
-const THEME = createMuiTheme({
-  palette: {
-    primary: {
-      main: styles['var-primary'],
-      contrastText: styles['var-white']
-    },
-    secondary: {
-      main: styles['var-secondary']
-    }
-  },
-  typography: {
-    useNextVariants: true,
-    fontFamily: styles['var-font-family-sans-serif'],
-    fontWeightLight: styles['var-font-weight-light'],
-    fontWeightRegular: styles['var-font-weight-normal'],
-    fontWeightMedium: styles['var-font-weight-bold']
-  }
-})
+const rootElement = document.getElementById('root')
+const props = { store, history, logPageView }
 
-class Router extends PureComponent {
-  componentDidMount = () => {
-    const { pathname, search } = window.location
-    logPageView({ pathname, search })
-  }
+ReactDOM.render(<App {...props} />, rootElement)
 
-  render() {
-    return (
-      <MuiThemeProvider theme={THEME}>
-        <Provider store={store}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <ConnectedRouter history={history}>
-              <App />
-            </ConnectedRouter>
-          </MuiPickersUtilsProvider>
-        </Provider>
-      </MuiThemeProvider>
-    )
+if (process.env.NODE_ENV !== 'production') {
+  if (module.hot) {
+    module.hot.accept('./App', () => {
+      // eslint-disable-next-line no-console
+      console.warn('[HMR] - Updating App')
+      // eslint-disable-next-line global-require
+      const NextApp = require('./App').default
+      ReactDOM.render(<NextApp {...props} />, rootElement)
+    })
   }
 }
-
-ReactDOM.render(<Router />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
