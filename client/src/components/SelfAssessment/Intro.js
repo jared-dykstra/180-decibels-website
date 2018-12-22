@@ -12,21 +12,27 @@ const Intro = ({ next }) => (
       business?
     </Heading>
     <div className="text-center">
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        onClick={e => next || e.stopPropagation()}
-        style={{ marginTop: '3rem' }}
-      >
-        Okay, Let&apos;s begin
-      </Button>
+      {next && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={e => next || e.stopPropagation()}
+          style={{ marginTop: '3rem' }}
+        >
+          Okay, Let&apos;s begin
+        </Button>
+      )}
     </div>
   </div>
 )
 
 Intro.propTypes = {
-  next: PropTypes.func.isRequired
+  next: PropTypes.func
+}
+
+Intro.defaultProps = {
+  next: undefined
 }
 
 export default Intro
