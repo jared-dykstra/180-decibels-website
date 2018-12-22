@@ -11,7 +11,8 @@ import {
 } from './auth'
 import {
   mountPoint as getStartedMountPoint,
-  reducer as getStartedReducer
+  reducer as getStartedReducer,
+  saga as getStartedSaga
 } from './getStarted'
 
 export const reducers = {
@@ -21,6 +22,6 @@ export const reducers = {
 }
 
 export function* rootSaga() {
-  yield all([fork(authSaga)])
+  yield all([fork(authSaga), fork(getStartedSaga)])
   yield all()
 }

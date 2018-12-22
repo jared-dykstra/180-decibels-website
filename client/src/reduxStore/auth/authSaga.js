@@ -1,5 +1,5 @@
 // Adapt the fetcher to redux & redux-form using redux-saga.
-import { get as _get, isEmpty as _isEmpty } from 'lodash'
+import { isEmpty as _isEmpty } from 'lodash'
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { clearFields, startSubmit, stopSubmit } from 'redux-form'
 
@@ -13,6 +13,8 @@ import {
   SIGNIN_FORM_PASSWORD_KEY
 } from '180-decibels-shared/signIn'
 
+import { getValidationErrors } from 'apiUtils/responseProcessor'
+
 import {
   REGISTER_FORM_KEY,
   SIGNIN_FORM_KEY,
@@ -23,26 +25,6 @@ import {
 } from './authConstants'
 import { signInSuccess } from './authPrivateActions'
 import { authenticate, signIn, signOut, registerUser } from './fetcher'
-
-// Parses a GraphQL response
-const getValidationErrors = response => {
-  if (response.errors) {
-    const firstError = response.errors[0]
-    // Check for ValidationError
-    const code = _get(firstError, 'extensions.code')
-    if (code === 'BAD_USER_INPUT') {
-      const field = _get(firstError, 'extensions.exception.invalidArgs[0]')
-      if (field) {
-        const errors = { [field]: firstError.message }
-        return errors
-      }
-    } else {
-      // Error cannot be associated with a specific user-input field.  Just return the first error as a string
-      return firstError.message
-    }
-  }
-  return null
-}
 
 /* eslint-disable no-console */
 
