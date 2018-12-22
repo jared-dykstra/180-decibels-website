@@ -13,7 +13,7 @@ export {
   default as GetStartedModal
 } from './GetStartedModal/GetStartedModalLazy'
 export { default as LogIn } from './LogIn/LogIn'
-export { default as LogInModal } from './LogInModal/LogInModal'
+export { default as LogInModal } from './LogInModal/LogInModalLazy'
 export { default as Logo } from './Logo/Logo'
 export { default as SelfAssessment } from './SelfAssessment/SelfAssessmentLazy'
 export { default as ScrollToTop } from './ScrollToTop/ScrollToTop'

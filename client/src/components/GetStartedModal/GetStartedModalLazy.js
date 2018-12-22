@@ -1,8 +1,5 @@
 import React, { Suspense } from 'react'
 
-// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-// await sleep(30 * 1000)
-
 const GetStartedModal = React.lazy(async () => import('./GetStartedModal'))
 
 const GetStartedModalLazy = ({ children, ...props }) => (
