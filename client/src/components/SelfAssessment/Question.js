@@ -43,9 +43,51 @@ class Question extends PureComponent {
     autoAdvanceTimeMs: 250
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      volumeOverride: undefined
+    }
+  }
+
+  // "animate" it by re-rendering... Just for fun
+  animateVolume = (volume, setter) => {
+    const { minVolume, volumeStep } = this.props
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+    ;[...Array(Math.floor((volume - minVolume) / volumeStep)).keys()].reduce(
+      async (promiseChain, i) => {
+        await promiseChain
+        await sleep(20)
+        setter((i + 1) * volumeStep)
+      },
+      Promise.resolve()
+    )
+  }
+
+  doSetTemporaryVolume = value => {
+    if (!value) {
+      this.setState(() => ({ volumeOverride: value }))
+    } else {
+      this.animateVolume(value, v =>
+        this.setState(() => ({ volumeOverride: v }))
+      )
+    }
+  }
+
   doSetVolume = value => {
     const { assessmentName, questionId, setVolume } = this.props
-    setVolume({ assessmentName, volume: value, questionId })
+    // See: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+    const isTouchDevice =
+      'ontouchstart' in window ||
+      (window.DocumentTouch && document instanceof window.DocumentTouch)
+
+    if (!isTouchDevice) {
+      setVolume({ assessmentName, volume: value, questionId })
+    } else {
+      this.animateVolume(value, v =>
+        setVolume({ assessmentName, volume: v, questionId })
+      )
+    }
   }
 
   render() {
@@ -62,6 +104,7 @@ class Question extends PureComponent {
       autoAdvanceTimeMs,
       width
     } = this.props
+    const { volumeOverride } = this.state
     const getRatingSize = () => {
       switch (width) {
         case 'xs':
@@ -98,6 +141,13 @@ class Question extends PureComponent {
         )
       }
     })
+
+    const getRating = () => {
+      if (volumeOverride) {
+        return volumeOverride
+      }
+      return hasResponse ? volume : undefined
+    }
 
     return (
       <Grid
@@ -139,7 +189,7 @@ class Question extends PureComponent {
                   start={minVolume}
                   stop={maxVolume + volumeStep}
                   step={volumeStep}
-                  initialRating={hasResponse ? volume + volumeStep : undefined}
+                  initialRating={getRating() + volumeStep}
                   onChange={value => {
                     this.doSetVolume(value - volumeStep)
                     if (!hasResponse && autoAdvanceTimeMs > 0) {
@@ -156,6 +206,8 @@ class Question extends PureComponent {
                 <Button
                   color="secondary"
                   onClick={() => this.doSetVolume(minVolume)}
+                  onMouseEnter={() => this.doSetTemporaryVolume(minVolume)}
+                  onMouseLeave={() => this.doSetTemporaryVolume(undefined)}
                 >
                   {hintLow}
                 </Button>
@@ -170,6 +222,8 @@ class Question extends PureComponent {
                 <Button
                   color="secondary"
                   onClick={() => this.doSetVolume(maxVolume)}
+                  onMouseEnter={() => this.doSetTemporaryVolume(maxVolume)}
+                  onMouseLeave={() => this.doSetTemporaryVolume(undefined)}
                 >
                   {hintHigh}
                 </Button>
