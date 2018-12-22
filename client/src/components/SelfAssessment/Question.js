@@ -57,10 +57,10 @@ class Question extends PureComponent {
     ;[...Array(Math.floor((volume - minVolume) / volumeStep)).keys()].reduce(
       async (promiseChain, i) => {
         await promiseChain
-        await sleep(20)
+        await sleep(40)
         setter((i + 1) * volumeStep)
       },
-      Promise.resolve()
+      () => {}
     )
   }
 
@@ -76,18 +76,21 @@ class Question extends PureComponent {
 
   doSetVolume = value => {
     const { assessmentName, questionId, setVolume } = this.props
-    // See: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
-    const isTouchDevice =
-      'ontouchstart' in window ||
-      (window.DocumentTouch && document instanceof window.DocumentTouch)
 
-    if (!value || !isTouchDevice) {
-      setVolume({ assessmentName, volume: value, questionId })
-    } else {
-      this.animateVolume(value, v =>
-        setVolume({ assessmentName, volume: v, questionId })
-      )
-    }
+    // TODO: Either fix this or remove...
+    // TODO: isTouchDevice should really be hasEverReceivedHoverEvent
+    // // See: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+    // const isTouchDevice =
+    //   'ontouchstart' in window ||
+    //   (window.DocumentTouch && document instanceof window.DocumentTouch)
+
+    // if (!value || !isTouchDevice) {
+    setVolume({ assessmentName, volume: value, questionId })
+    // } else {
+    //   this.animateVolume(value, v =>
+    //     setVolume({ assessmentName, volume: v, questionId })
+    //   )
+    // }
   }
 
   render() {
@@ -143,7 +146,7 @@ class Question extends PureComponent {
     })
 
     const getRating = () => {
-      if (volumeOverride) {
+      if (volumeOverride !== undefined) {
         return volumeOverride
       }
       return hasResponse ? volume : undefined
