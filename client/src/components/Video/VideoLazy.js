@@ -1,13 +1,7 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-// await sleep(30 * 1000)
-
-const Video = React.lazy(async () => {
-  await sleep(30 * 1000)
-  return import('./Video')
-})
+const Video = React.lazy(async () => import('./Video'))
 
 const LogInModalLazy = ({ children, ...props }) => {
   const { poster, src } = props
