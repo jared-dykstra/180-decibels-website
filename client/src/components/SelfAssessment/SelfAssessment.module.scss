@@ -1,5 +1,6 @@
 @import '~styles/custom';
 
+$assessment-height: 600px;
 $control-width: 2em;
 
 .carousel :global {
@@ -7,11 +8,11 @@ $control-width: 2em;
     background-color: $decibels-soft-white;
     // See: https://github.com/reactstrap/reactstrap/issues/677
     // Eventually this will be fixed in reactstrap and this can be removed
-    height: 600px;
+    height: $assessment-height;
   }
 
   .carousel-item {
-    height: 550px;
+    height: calc(#{$assessment-height} - 50px);
     overflow-y: auto;
     padding: 30px;
     padding-bottom: 40px;
