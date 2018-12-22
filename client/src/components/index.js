@@ -9,7 +9,9 @@ export {
   default as GetStartedButton
 } from './GetStartedButton/GetStartedButton'
 export { default as GetStarted } from './GetStarted/GetStarted'
-export { default as GetStartedModal } from './GetStartedModal/GetStartedModal'
+export {
+  default as GetStartedModal
+} from './GetStartedModal/GetStartedModalLazy'
 export { default as LogIn } from './LogIn/LogIn'
 export { default as LogInModal } from './LogInModal/LogInModal'
 export { default as Logo } from './Logo/Logo'
