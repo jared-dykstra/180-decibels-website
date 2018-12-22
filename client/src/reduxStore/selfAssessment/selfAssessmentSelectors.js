@@ -38,6 +38,11 @@ const currentResponseSelector = createSelector(
   (responses, questionId) => responses[questionId]
 )
 
+export const currentSlideSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.ui.currentSlide
+)
+
 export const makeMaxVolumeSelector = () =>
   createSelector(
     volumeConfigSelector,

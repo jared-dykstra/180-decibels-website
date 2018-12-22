@@ -41,7 +41,10 @@ export default Immutable.from(
     acc[assessment] = {
       questionList: buildQuestionList(currentConfig.questions),
       responses: buildEmptyResponses(currentConfig),
-      configuration: currentConfig
+      configuration: currentConfig,
+      ui: {
+        currentSlide: 0
+      }
     }
     return acc
   }, {})

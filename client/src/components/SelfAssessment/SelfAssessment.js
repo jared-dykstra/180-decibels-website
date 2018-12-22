@@ -14,8 +14,13 @@ import { DialogContentText, Paper } from '@material-ui/core'
 import { questionsPropType, responsesPropType } from 'propTypes'
 import {
   questionListSelector,
-  responsesSelector
+  responsesSelector,
+  currentSlideSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
+import {
+  nextSlide,
+  prevSlide
+} from 'reduxStore/selfAssessment/selfAssessmentActions'
 
 import styles from './SelfAssessment.module.scss'
 import Intro from './Intro'
@@ -27,14 +32,16 @@ class SelfAssessment extends PureComponent {
   static propTypes = {
     assessmentName: PropTypes.string.isRequired,
     questions: questionsPropType.isRequired,
-    responses: responsesPropType.isRequired
+    responses: responsesPropType.isRequired,
+    currentIndex: PropTypes.number.isRequired,
+    doPrevSlide: PropTypes.func.isRequired,
+    doNextSlide: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      animating: false,
-      currentIndex: 0
+      animating: false
     }
   }
 
@@ -51,28 +58,25 @@ class SelfAssessment extends PureComponent {
   }
 
   next = () => {
+    const { doNextSlide } = this.props
     const { animating } = this.state
     if (animating) {
       return
     }
-    this.setState(currentState => ({
-      currentIndex: currentState.currentIndex + 1
-    }))
+    doNextSlide()
   }
 
   previous = () => {
+    const { doPrevSlide } = this.props
     const { animating } = this.state
     if (animating) {
       return
     }
-    this.setState(currentState => ({
-      currentIndex: currentState.currentIndex - 1
-    }))
+    doPrevSlide()
   }
 
   render() {
-    const { assessmentName, questions, responses } = this.props
-    const { currentIndex } = this.state
+    const { assessmentName, questions, responses, currentIndex } = this.props
     const indicatorPadding = styles['var-control-width']
 
     const introSlides = [
@@ -200,7 +204,14 @@ class SelfAssessment extends PureComponent {
   }
 }
 
-export default connect((state, props) => ({
-  questions: questionListSelector(state, props),
-  responses: responsesSelector(state, props)
-}))(SelfAssessment)
+export default connect(
+  (state, props) => ({
+    questions: questionListSelector(state, props),
+    responses: responsesSelector(state, props),
+    currentIndex: currentSlideSelector(state, props)
+  }),
+  (dispatch, props) => ({
+    doNextSlide: () => dispatch(nextSlide(props)),
+    doPrevSlide: () => dispatch(prevSlide(props))
+  })
+)(SelfAssessment)
