@@ -81,7 +81,7 @@ class Question extends PureComponent {
       'ontouchstart' in window ||
       (window.DocumentTouch && document instanceof window.DocumentTouch)
 
-    if (!isTouchDevice) {
+    if (!value || !isTouchDevice) {
       setVolume({ assessmentName, volume: value, questionId })
     } else {
       this.animateVolume(value, v =>
