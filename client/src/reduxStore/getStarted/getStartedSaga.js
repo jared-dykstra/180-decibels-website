@@ -14,7 +14,7 @@ import { contactSuccess } from './getStartedActions'
 
 function* contactHandler(action) {
   try {
-    // yield put(startSubmit(GET_STARTED_FORM_KEY))
+    yield put(startSubmit(GET_STARTED_FORM_KEY))
     const { payload } = action
     const { user } = payload
     const response = yield call(getStarted, user)

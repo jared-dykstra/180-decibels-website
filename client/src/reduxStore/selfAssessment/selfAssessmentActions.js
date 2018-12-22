@@ -2,7 +2,8 @@ import {
   SELF_ASSESSMENT_SET_VOLUME,
   SELF_ASSESSMENT_NEXT_SLIDE,
   SELF_ASSESSMENT_PREV_SLIDE,
-  SELF_ASSESSMENT_GET_RESULTS
+  SELF_ASSESSMENT_GET_RESULTS,
+  SELF_ASSESSMENT_GET_RESULTS_SUCCESS
 } from './selfAssessmentConstants'
 
 export const setVolume = ({ assessmentName, questionId, volume }) => ({
@@ -23,4 +24,9 @@ export const prevSlide = ({ assessmentName }) => ({
 export const getResults = ({ assessmentName, contactInfo }) => ({
   type: SELF_ASSESSMENT_GET_RESULTS,
   payload: { assessmentName, contactInfo }
+})
+
+export const getResultsSuccess = ({ assessmentName }) => ({
+  type: SELF_ASSESSMENT_GET_RESULTS_SUCCESS,
+  payload: { assessmentName }
 })
