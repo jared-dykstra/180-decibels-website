@@ -19,7 +19,7 @@ import {
   makeFormHasErrorSelector,
   makeFormSectionCompleteSelector
 } from 'reduxStore/form/formSelectors'
-import { contact } from 'reduxStore/getStarted/getStartedActions'
+import { getResults } from 'reduxStore/selfAssessment/selfAssessmentActions'
 import { ASSESSMENT_RESULT_FORM_KEY } from 'reduxStore/selfAssessment/selfAssessmentConstants'
 import { AboutStep, ContactStep, DialogFormButtons } from 'components'
 
@@ -47,6 +47,7 @@ const muiStyles = {
 class EmailMe extends PureComponent {
   static propTypes = {
     classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    assessmentName: PropTypes.string.isRequired,
     aboutSectionHasError: PropTypes.bool.isRequired,
     contactSectionHasError: PropTypes.bool.isRequired,
     aboutSectionComplete: PropTypes.bool.isRequired,
@@ -203,7 +204,13 @@ const ConnectedEmailMe = connect(
     }
   },
   (dispatch, props) => ({
-    doEmailMe: values => dispatch(contact(values))
+    doEmailMe: values =>
+      dispatch(
+        getResults({
+          assessmentName: props.assessmentName,
+          contactInfo: values
+        })
+      )
   })
 )(withStyles(muiStyles)(EmailMe))
 

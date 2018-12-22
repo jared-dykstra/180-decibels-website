@@ -107,7 +107,7 @@ class SelfAssessment extends PureComponent {
             ready for you, which contains concrete, actionable steps that you
             can immediately use.
           </DialogContentText>
-          <EmailMe />
+          <EmailMe {...{ assessmentName }} />
         </div>
       </CarouselItem>,
       <CarouselItem
@@ -115,7 +115,7 @@ class SelfAssessment extends PureComponent {
         onExited={this.onExited}
         key="results"
       >
-        <Results assessmentName={assessmentName} />
+        <Results {...{ assessmentName }} />
       </CarouselItem>
     ]
 
