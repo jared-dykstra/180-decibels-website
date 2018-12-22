@@ -4,11 +4,10 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Helmet } from 'react-helmet'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
-import { Player, ControlBar, BigPlayButton } from 'video-react'
 import Waypoint from 'react-waypoint'
 import { Paper } from '@material-ui/core'
 
-import { GetStartedButton, Quote, Template } from 'components'
+import { GetStartedButton, Quote, Template, Video } from 'components'
 import {
   ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM
@@ -122,15 +121,12 @@ export class Home extends PureComponent {
             >
               <section id="intro">
                 <Paper>
-                  <Player
-                    // preload="auto"
-                    aspectRatio="16:9"
-                    poster={`${CDN}/intro-video-poster.jpg`}
-                  >
-                    <source src={`${CDN}/180Voiceover2.mp4`} />
-                    <BigPlayButton position="center" />
-                    <ControlBar autoHide />
-                  </Player>
+                  <Video
+                    {...{
+                      poster: `${CDN}/intro-video-poster.jpg`,
+                      src: `${CDN}/180Voiceover2.mp4`
+                    }}
+                  />
                 </Paper>
               </section>
             </Waypoint>
@@ -140,15 +136,12 @@ export class Home extends PureComponent {
           <Col md="8">
             <section id="focus">
               <Paper>
-                <Player
-                  // preload="auto"
-                  aspectRatio="16:9"
-                  poster={`${CDN}/sun-video-poster.jpg`}
-                >
-                  <source src={`${CDN}/180DecibelsSunMetaphor.mp4`} />
-                  <BigPlayButton position="center" />
-                  <ControlBar autoHide />
-                </Player>
+                <Video
+                  {...{
+                    poster: `${CDN}/sun-video-poster.jpg`,
+                    src: `${CDN}/180DecibelsSunMetaphor.mp4`
+                  }}
+                />
               </Paper>
             </section>
           </Col>

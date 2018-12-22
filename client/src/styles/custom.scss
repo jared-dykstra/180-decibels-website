@@ -27,6 +27,13 @@ $secondary: $decibels-red;
 // Headings
 $headings-color: $decibels-red;
 
+// Video Player
+:global {
+  .video-react .video-react-poster {
+    background-color: initial !important;
+  }
+}
+
 /* stylelint disable property-no-unknown */
 :export {
   var-font-family-sans-serif: $font-family-sans-serif;
