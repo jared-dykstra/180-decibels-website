@@ -13,9 +13,16 @@ export default class ContactApi extends DataSource {
     this.context = config.context
   }
 
-  async requestCallback(args) {
+  async requestCallback(args, context) {
+    const { user, userId } = context
     const { contactInfo } = args
-    console.log(`requestCallback user=${JSON.stringify(contactInfo)}`)
+    console.log(
+      `requestCallback context=${JSON.stringify({
+        userId,
+        user, // <== only available if signed in, which is unlikely
+        contactInfo
+      })}`
+    )
     return null
   }
 }
