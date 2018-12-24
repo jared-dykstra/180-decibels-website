@@ -1,10 +1,22 @@
 import React from 'react'
-import { format, isValid, isWeekend } from 'date-fns'
+import { addDays, format, isValid, isWeekend } from 'date-fns'
 
 import { InlineDateTimePicker } from 'material-ui-pickers'
 
 import FormComponent from './FormComponent'
 
+// Disable weekends.  The logic can be extended if/as needed, eg. by using a free/busy iCal
+const isAvailable = date => !isWeekend(date)
+
+const nextAvailable = (date = new Date()) => {
+  let next
+  do {
+    next = addDays(date, 1)
+  } while (!isAvailable(date))
+  return next
+}
+
+// Intentionally *not* validating free-form text input--If that's needed, a new property or second field type should be created
 export default class DateTimeField extends FormComponent {
   render() {
     const {
@@ -15,7 +27,7 @@ export default class DateTimeField extends FormComponent {
       keyboard = true,
       autoOk = true,
       showTabs = false,
-      shouldDisableDate = date => isWeekend(date), // <== Disable weekends.  This property can be passed in if more control is needed
+      shouldDisableDate = date => !isAvailable(date),
       dateFormat = 'E, LLL do, B', // <== See: https://date-fns.org/v2.0.0-alpha.26/docs/format
       ...custom
     } = this.props
@@ -42,7 +54,7 @@ export default class DateTimeField extends FormComponent {
           error: hasError,
           helperText: hasError ? error : undefined,
           InputProps: {
-            value: value || new Date(),
+            value: value || format(nextAvailable(), dateFormat),
             onChange,
             ...inputProps
           },
