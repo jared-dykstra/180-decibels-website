@@ -9,6 +9,9 @@ import AssessmentAPI from './assessment/dataSource'
 import userSchema from './user/schema'
 import UserAPI from './user/dataSource'
 
+import contactSchema from './contact/schema'
+import ContactAPI from './contact/dataSource'
+
 /**
  * Installs apollo-server to handle requests under `path`
  * @param {*} app Express instance
@@ -18,11 +21,12 @@ export const createApi = (app, path) => {
   // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/index.js
   const dataSources = () => ({
     assessmentAPI: new AssessmentAPI({ store: 'intentionally undefined' }),
-    userAPI: new UserAPI()
+    userAPI: new UserAPI(),
+    contactAPI: new ContactAPI()
   })
 
   const schema = mergeSchemas({
-    schemas: [assessmentSchema, userSchema]
+    schemas: [assessmentSchema, userSchema, contactSchema]
   })
 
   // morgan.token('graphql-query', req => {
@@ -37,6 +41,13 @@ export const createApi = (app, path) => {
     schema,
     dataSources,
     tracing: true,
+    formatError: error => {
+      console.log(error)
+      // return new Error('Internal server error')
+      // Or, you can delete the exception information
+      // delete error.extensions.exception;
+      return error
+    },
     cacheControl: {
       defaultMaxAge: 5 // <-- Seconds
     },

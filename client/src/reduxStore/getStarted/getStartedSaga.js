@@ -3,7 +3,7 @@ import { isEmpty as _isEmpty } from 'lodash'
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { startSubmit, stopSubmit } from 'redux-form'
 
-import { getValidationErrors } from 'apiUtils/responseProcessor'
+import { getValidationErrors } from 'apiUtils'
 
 import {
   GET_STARTED_CONTACT,

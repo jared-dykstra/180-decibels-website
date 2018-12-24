@@ -13,7 +13,7 @@ import {
   SIGNIN_FORM_PASSWORD_KEY
 } from '180-decibels-shared/signIn'
 
-import { getValidationErrors } from 'apiUtils/responseProcessor'
+import { getValidationErrors } from 'apiUtils'
 
 import {
   REGISTER_FORM_KEY,
