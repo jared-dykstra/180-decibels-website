@@ -1,7 +1,6 @@
-import { get as _get } from 'lodash'
-import { ApolloLink, execute, makePromise } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
 import gql from 'graphql-tag.macro'
+
+import { clientExecuteAsync } from 'apiUtils'
 
 import {
   REGISTER_FORM_COMPANY_KEY,
@@ -16,19 +15,6 @@ import {
   SIGNIN_FORM_EMAIL_KEY,
   SIGNIN_FORM_PASSWORD_KEY
 } from '180-decibels-shared/signIn'
-
-import { get as configGet } from '../../config'
-
-const uri = configGet('apiEndpoint')
-
-// GraphQL Client - See: https://www.apollographql.com/docs/link/index.html#standalone
-// See this for an example of authenticating via a token in localstore:  https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#middleware
-const httpLink = new HttpLink({
-  uri,
-  credentials: 'same-origin'
-})
-const link = ApolloLink.from([httpLink])
-const clientExecuteAsync = (l, o) => makePromise(execute(l, o))
 
 // If thrown errors are wrapped with `new Error()`,  the payload isn't available via redux-saga
 // see: https://github.com/erikras/redux-form/issues/2442
@@ -55,9 +41,8 @@ export const signIn = async credentials => {
       [SIGNIN_FORM_PASSWORD_KEY]: credentials.get(SIGNIN_FORM_PASSWORD_KEY)
     }
   }
-  const retval = await clientExecuteAsync(link, operation)
-  const response = _get(retval, 'data.signIn')
-  return response || retval
+  const retval = await clientExecuteAsync(operation, 'signIn')
+  return retval
 }
 
 export const signOut = async () => {
@@ -68,7 +53,7 @@ export const signOut = async () => {
       }
     `
   }
-  await clientExecuteAsync(link, operation)
+  await clientExecuteAsync(operation)
 }
 
 export const authenticate = async () => {
@@ -88,9 +73,8 @@ export const authenticate = async () => {
       }
     `
   }
-  const retval = await clientExecuteAsync(link, operation)
-  const response = _get(retval, 'data.authenticate')
-  return response || retval
+  const retval = await clientExecuteAsync(operation, 'authenticate')
+  return retval
 }
 
 export const registerUser = async user => {
@@ -134,9 +118,8 @@ export const registerUser = async user => {
       password: user.get(REGISTER_FORM_PASSWORD1_KEY)
     }
   }
-  const retval = await clientExecuteAsync(link, operation)
-  const response = _get(retval, 'data.registerUser')
-  return response || retval
+  const retval = await clientExecuteAsync(operation, 'registerUser')
+  return retval
 }
 
 export const isEmailInUse = async email => {
@@ -150,7 +133,6 @@ export const isEmailInUse = async email => {
       email
     }
   }
-  const retval = await clientExecuteAsync(link, operation)
-  const inUse = _get(retval, 'data.isEmailInUse')
-  return inUse
+  const retval = await clientExecuteAsync(operation, 'isEmailInUse')
+  return retval
 }
