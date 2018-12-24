@@ -42,7 +42,7 @@ export default class DateTimeField extends FormComponent {
           error: hasError,
           helperText: hasError ? error : undefined,
           InputProps: {
-            value,
+            value: value || new Date(),
             onChange,
             ...inputProps
           },
