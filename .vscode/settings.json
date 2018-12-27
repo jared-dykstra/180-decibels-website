@@ -46,5 +46,6 @@
     "waypoint",
     "youtube"
   ],
-  "cSpell.language": "en"
+  "cSpell.language": "en",
+  "eslint.packageManager": "yarn"
 }
