@@ -53,7 +53,7 @@ export const handleGetStarted = async ({
     decibelsUid
   })
 
-  console.log(`AgileCRM Contact=${JSON.stringify(contact, null, 2)}`)
+  // console.log(`AgileCRM Contact=${JSON.stringify(contact, null, 2)}`)
 
   // Add a task - The contact (via specified email) must already exist
   const task = await createTaskForContact({
@@ -63,7 +63,7 @@ export const handleGetStarted = async ({
     description
   })
 
-  console.log(`AgileCRM Task=${JSON.stringify(task, null, 2)}`)
+  // console.log(`AgileCRM Task=${JSON.stringify(task, null, 2)}`)
 
   return { task, contact }
 }

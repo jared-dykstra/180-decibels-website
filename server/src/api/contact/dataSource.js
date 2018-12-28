@@ -16,17 +16,17 @@ export default class ContactApi extends DataSource {
   }
 
   async requestCallback(args, context) {
-    const { user, userId } = context
+    const { /* user, */ userId } = context
     const { contactInfo } = args
-    console.log(
-      `requestCallback context=${JSON.stringify({
-        userId,
-        user, // <== only available if signed in, which is unlikely
-        contactInfo
-      })}`
-    )
+    // console.log(
+    //   `requestCallback context=${JSON.stringify({
+    //     userId,
+    //     user, // <== only available if signed in, which is unlikely
+    //     contactInfo
+    //   })}`
+    // )
 
-    const { task, contact } = await handleGetStarted({
+    /* const { task, contact } = */ await handleGetStarted({
       email: contactInfo.email,
       firstName: contactInfo.firstName,
       lastName: contactInfo.lastName,
