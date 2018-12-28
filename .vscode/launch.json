@@ -29,6 +29,19 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug Server Tests",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": ["--runInBand", ".*test.*test.js"],
+      "console":"integratedTerminal",
+      "cwd": "${workspaceFolder}/server",
+      "internalConsoleOptions": "neverOpen",
+      "windows": {
+        "program": "${workspaceFolder}/node_modules/jest-cli/bin/jest"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Jest All",
       "program": "${workspaceFolder}/node_modules/.bin/jest",
       "args": ["--runInBand"],
