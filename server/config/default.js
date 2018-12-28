@@ -8,7 +8,9 @@ module.exports = {
   agileCrm: {
     restApiUser: 'jared.dykstra@180decibels.com',
     restApiKey: 'vhh6ubgghfc58g74sbggcdp32v',
-    // restEndpoint: 'https://decibels.agilecrm.com/dev/'
     restEndpoint: 'https://decibels.agilecrm.com/dev/'
+    // uidKerri: 6071708163375104,
+    // uidDayton: 5907182528888832,
+    // uidJared: 4634476193906688
   }
 }

@@ -3,8 +3,6 @@ import config from 'config'
 import { isNullOrUndefined } from 'util'
 import fetch from 'node-fetch'
 
-const agileCrmConfig = config.get('agileCrm')
-
 const checkStatus = res => {
   if (res.ok) {
     return res
@@ -14,7 +12,7 @@ const checkStatus = res => {
 }
 
 const buildHeaders = () => {
-  const { restApiUser, restApiKey } = agileCrmConfig
+  const { restApiUser, restApiKey } = config.get('agileCrm')
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -24,8 +22,31 @@ const buildHeaders = () => {
   }
 }
 
-export const TAG_GET_STARTED = 'Website GetStarted'
-export const TAG_REGISTER = 'Website Register'
+/**
+ * See: https://github.com/agilecrm/rest-api#1101-search-contact-by-email
+ */
+export const getContact = async ({ email }) => {
+  const { restEndpoint } = config.get('agileCrm')
+  const url = `${restEndpoint}api/contacts/search/email/${encodeURIComponent(
+    email
+  )}`
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: buildHeaders()
+  })
+
+  if (res.status === 204) {
+    // No contact found for that email address
+    return null
+  }
+
+  // Check for any other HTTP error
+  checkStatus(res)
+
+  // Process the response
+  const agileCrmContact = await res.json()
+  return agileCrmContact
+}
 
 export const createContact = async ({
   tags,
@@ -34,7 +55,8 @@ export const createContact = async ({
   title,
   company,
   email,
-  phone
+  phone,
+  decibelsUid
 }) => {
   const properties = [
     {
@@ -68,6 +90,11 @@ export const createContact = async ({
       name: 'phone',
       value: phone,
       subtype: 'work'
+    },
+    {
+      type: 'CUSTOM',
+      name: '180Decibels User ID',
+      value: decibelsUid
     }
   ]
 
@@ -76,7 +103,7 @@ export const createContact = async ({
     properties: filter(properties, p => !isNullOrUndefined(p.value))
   }
 
-  const { restEndpoint } = agileCrmConfig
+  const { restEndpoint } = config.get('agileCrm')
   const url = `${restEndpoint}api/contacts`
   const res = await fetch(url, {
     method: 'POST',
@@ -98,4 +125,37 @@ export const createContact = async ({
   // Process the response
   const agileCrmContact = await res.json()
   return agileCrmContact
+}
+
+/**
+ * See: https://github.com/agilecrm/rest-api#55-create-a-task-based-on-contact-email
+ */
+export const createTaskForContact = async ({
+  email,
+  subject,
+  dateDue = 1456986600,
+  description
+}) => {
+  const { restEndpoint } = config.get('agileCrm')
+  const url = `${restEndpoint}api/tasks/email/${encodeURIComponent(email)}`
+  const task = {
+    subject,
+    type: 'FOLLOW_UP',
+    due: dateDue,
+    priority_type: 'HIGH',
+    status: 'YET_TO_START',
+    taskDescription: description
+  }
+  const res = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(task),
+    headers: buildHeaders()
+  })
+
+  // Check for any other HTTP error
+  checkStatus(res)
+
+  // Process the response
+  const agileCrmTask = await res.json()
+  return agileCrmTask
 }

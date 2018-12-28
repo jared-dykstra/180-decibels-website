@@ -11,7 +11,10 @@
     "yarn": ">=1.10.0"
   },
   "private": true,
-  "workspaces": ["client", "server", "shared"],
+  "workspaces": {
+    "packages": ["client", "server", "shared"],
+    "nohoist": ["**/babel-jest", "**/babel-jest/**"]
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^9.0.0",
