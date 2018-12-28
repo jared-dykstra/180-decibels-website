@@ -6,9 +6,9 @@ module.exports = {
   profileCookieName: 'profile',
   jwtSecret: 'your-jwt-secret',
   agileCrm: {
+    restApiUser: 'jared.dykstra@180decibels.com',
     restApiKey: 'vhh6ubgghfc58g74sbggcdp32v',
     // restEndpoint: 'https://decibels.agilecrm.com/dev/'
-    restEndpoint:
-      'https://jared.dykstra@180decibels.com:vhh6ubgghfc58g74sbggcdp32v@decibels.agilecrm.com/dev/'
+    restEndpoint: 'https://decibels.agilecrm.com/dev/'
   }
 }

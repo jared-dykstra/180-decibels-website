@@ -48,7 +48,8 @@
     "dev": "nodemon --config nodemon.json ./src/main.js",
     "lint": "eslint --ignore-path ../.gitignore .",
     "lint:fix": "eslint --ignore-path ../.gitignore --fix .",
-    "test": "jest",
-    "ci": "yarn run lint && yarn run test"
+    "test": "jest .*test.*test.js --watchAll",
+    "test:ci": "jest .*test.*test.js",
+    "ci": "yarn run lint && yarn run test:ci"
   }
 }

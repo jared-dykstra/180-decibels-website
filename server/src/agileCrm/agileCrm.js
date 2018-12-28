@@ -1,18 +1,34 @@
-import { filter, isNull } from 'lodash'
+import { filter } from 'lodash'
 import config from 'config'
 import { isNullOrUndefined } from 'util'
 import fetch from 'node-fetch'
 
-const { restApiKey, restEndpoint } = config.get('agileCrm')
+const agileCrmConfig = config.get('agileCrm')
 
 const checkStatus = res => {
   if (res.ok) {
     return res
   }
-  throw new Error(res.statusText)
+  console.error(`HTTP Error: ${res.statusText}`)
+  throw new Error(`${res.status} - ${res.statusText}`)
 }
 
+const buildHeaders = () => {
+  const { restApiUser, restApiKey } = agileCrmConfig
+  return {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${Buffer.from(
+      `${restApiUser}:${restApiKey}`
+    ).toString('base64')}`
+  }
+}
+
+export const TAG_GET_STARTED = 'Website GetStarted'
+export const TAG_REGISTER = 'Website Register'
+
 export const createContact = async ({
+  tags,
   firstName,
   lastName,
   title,
@@ -56,23 +72,30 @@ export const createContact = async ({
   ]
 
   const contact = {
-    tag: ['Lead'],
+    tags,
     properties: filter(properties, p => !isNullOrUndefined(p.value))
   }
 
-  const headers = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
+  const { restEndpoint } = agileCrmConfig
+  const url = `${restEndpoint}api/contacts`
+  const res = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(contact),
+    headers: buildHeaders()
+  })
+
+  // Check for a duplicate contact
+  if (res.status === 400) {
+    // An improperly formed request can also cause this
+    throw new Error(
+      'A contact with that email address already exists in AgileCRM'
+    )
   }
 
-  console.log(`HERE: ${JSON.stringify({ contact, headers })}`)
-
-  const res = await fetch(restEndpoint, {
-    method: 'post',
-    body: JSON.stringify(contact),
-    headers
-  })
+  // Check for any other HTTP error
   checkStatus(res)
-  const json = await res.json()
-  console.log(`RESPONSE: ${json}`)
+
+  // Process the response
+  const agileCrmContact = await res.json()
+  return agileCrmContact
 }
