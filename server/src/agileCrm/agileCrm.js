@@ -133,7 +133,7 @@ export const createContact = async ({
 export const createTaskForContact = async ({
   email,
   subject,
-  dateDue = 1456986600,
+  dateDue,
   description
 }) => {
   const { restEndpoint } = config.get('agileCrm')
