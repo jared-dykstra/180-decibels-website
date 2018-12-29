@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+# development
+*.sqlite3
+
 # testing
 /coverage
 
