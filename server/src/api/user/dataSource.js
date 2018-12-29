@@ -10,9 +10,10 @@ import {
   addUser,
   findUser,
   addAlias,
-  eventSources,
   appendLogEvent
 } from '../../auth/dbAdapter'
+
+import { AUTH } from '../../auth/eventSources'
 
 const cookieOptions = () => ({
   maxAge: config.get('authDuration'),
@@ -59,7 +60,7 @@ const wrappedFindUser = async ({ email, userId, errorMessage }) => {
   } catch (err) {
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: `signIn Error - Unexpected Error fetching user: ${err}`
     })
 
@@ -91,8 +92,8 @@ export default class UserAPI extends DataSource {
       const isNotInUse = isNil(user)
       return !isNotInUse
     } catch (err) {
-      appendLogEvent({
-        source: eventSources.AUTH,
+      await appendLogEvent({
+        source: AUTH,
         event: `isEmailInUse Database Error: ${err}`
       })
       // Some sort of issue...Assume the email is available
@@ -112,7 +113,7 @@ export default class UserAPI extends DataSource {
       setUserId(userId, context)
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: 'authenticate - Generated new user ID'
       })
     }
@@ -130,7 +131,7 @@ export default class UserAPI extends DataSource {
 
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: 'Authenticated'
     })
 
@@ -158,7 +159,7 @@ export default class UserAPI extends DataSource {
     if (!user) {
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: 'signIn Error - incorrect email'
       })
       throw new UserInputError(errorMessage, {
@@ -171,7 +172,7 @@ export default class UserAPI extends DataSource {
     if (!isPasswordOK) {
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: 'signIn Error - incorrect password'
       })
       throw new UserInputError(errorMessage, {
@@ -185,7 +186,7 @@ export default class UserAPI extends DataSource {
     if (user.id !== userId) {
       await appendLogEvent({
         userId: user.id,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: { message: 'signIn - add userId alias', alias: userId }
       })
 
@@ -197,7 +198,7 @@ export default class UserAPI extends DataSource {
 
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: 'signIn Successful'
     })
 
@@ -216,7 +217,7 @@ export default class UserAPI extends DataSource {
     const { userId } = context
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: 'signOut'
     })
 
@@ -235,7 +236,7 @@ export default class UserAPI extends DataSource {
 
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: { message: 'registerUser', user }
     })
 
@@ -245,7 +246,7 @@ export default class UserAPI extends DataSource {
       // The user might have been assigned a different UserID.  If so, update their session accordingly
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: { message: 'registerUser - generated new user ID', newUserId }
       })
       setUserId(newUserId, context)

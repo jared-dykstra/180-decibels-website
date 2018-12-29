@@ -1,18 +1,16 @@
 import uuid from 'uuid/v1'
 import config from 'config'
-import { find as _find, isObject as _isObject } from 'lodash'
+import { find as _find, includes as _includes } from 'lodash'
 import { hash } from 'bcrypt'
 import { UserInputError } from 'apollo-server-express'
 import Knex from 'knex'
 
+import logLevels, { NOTICE, CRITICAL } from './logLevels'
+
 const knexConfig = config.get('knex')
 const knex = Knex(knexConfig)
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
 const normalizeEmail = email => (email ? email.toLowerCase().trim() : email)
-
-const eventLog = []
 
 // Unpack the database representation of a user
 const fromDbUser = user => {
@@ -29,21 +27,21 @@ const fromDbUser = user => {
   }
 }
 
-export const eventSources = {
-  AUTH: 'AUTH'
-}
-
-export const appendLogEvent = async ({ userId, source, event }) => {
-  const now = new Date()
-  const eventObj = _isObject(event) ? event : { message: JSON.stringify(event) }
+export const appendLogEvent = async ({
+  userId,
+  source,
+  event,
+  severity = NOTICE
+}) => {
   const log = {
-    userId,
-    timestamp: now.getTime(),
-    source,
-    event: eventObj
+    createdAt: new Date(),
+    severity: _includes(logLevels, severity) ? severity : CRITICAL,
+    uid: userId,
+    eventSource: source,
+    data: JSON.stringify(event)
   }
-  eventLog.push(log)
-  console.log(`Event: ${JSON.stringify(log)}`)
+  await knex('log').insert(log)
+  console.log(`SYSLOG - ${log.eventSource} (${log.severity}) - ${log.data}`)
 }
 
 export const findUser = async email => {
