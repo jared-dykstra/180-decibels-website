@@ -1,4 +1,4 @@
-import { get as _get } from 'lodash'
+import { get as _get, has as _has } from 'lodash'
 import { ApolloLink, execute, makePromise } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 
@@ -13,11 +13,14 @@ const httpLink = new HttpLink({
   credentials: 'same-origin'
 })
 const link = ApolloLink.from([httpLink])
+
 const clientExecuteAsync = async (operation, mutationName) => {
   const retval = await makePromise(execute(link, operation))
   if (mutationName) {
-    const response = _get(retval, `data.${mutationName}`)
-    return response || retval
+    const path = `data.${mutationName}`
+    if (_has(retval, path)) {
+      return _get(retval, path)
+    }
   }
   return retval
 }
