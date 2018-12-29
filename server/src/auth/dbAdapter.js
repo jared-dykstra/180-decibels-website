@@ -1,4 +1,3 @@
-// TODO: This gets replaced with a proper DB
 import uuid from 'uuid/v1'
 import config from 'config'
 import { find as _find, isObject as _isObject } from 'lodash'
@@ -13,21 +12,22 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const normalizeEmail = email => (email ? email.toLowerCase().trim() : email)
 
-const users = [
-  {
-    id: '5ea90acf-9f79-405d-9648-69c2b2014557',
-    aliases: [],
-    email: 'jared.dykstra@gmail.com',
-    firstName: 'Jared',
-    lastName: 'Dykstra',
-    phone: '403.837.4544',
-    company: 'Shef Services, Inc',
-    hashedPassword:
-      '$2b$04$LiKBXR05pIeNIrXooTxpoeetfV0.WWTIX3dRvDQnO.1P66QHtvzGS'
-  }
-]
-
 const eventLog = []
+
+// Unpack the database representation of a user
+const fromDbUser = user => {
+  const properties = JSON.parse(user.properties)
+
+  return {
+    user: {
+      id: user.uid,
+      aliases: user.aliases,
+      email: user.email,
+      ...properties
+    },
+    hashedPassword: user.hashedPassword
+  }
+}
 
 export const eventSources = {
   AUTH: 'AUTH'
@@ -57,53 +57,16 @@ export const findUser = async email => {
     .first()
 
   // If no match; user is undefined
-  if (!user) {
-    throw new Error(`User not found for ${normalizedEmail}`)
-  }
-
-  const properties = JSON.parse(user.properties)
-
-  return {
-    user: {
-      id: user.uid,
-      aliases: user.aliases,
-      email: user.email,
-      ...properties
-    },
-    hashedPassword: user.hashedPassword
-  }
-
-  // {
-  //   id: '5ea90acf-9f79-405d-9648-69c2b2014557',
-  //   aliases: [],
-  //   email: 'jared.dykstra@gmail.com',
-  //   firstName: 'Jared',
-  //   lastName: 'Dykstra',
-  //   phone: '403.837.4544',
-  //   company: 'Shef Services, Inc',
-  //   hashedPassword:
-  //     '$2b$04$LiKBXR05pIeNIrXooTxpoeetfV0.WWTIX3dRvDQnO.1P66QHtvzGS'
-  // }
-
-  // const user = _find(users, u => u.email === normalizedEmail)
-  // const { hashedPassword, ...rest } = user || {}
-  // return {
-  //   user: user ? rest : null,
-  //   hashedPassword
-  // }
+  return !(user === undefined || user === null) ? fromDbUser(user) : undefined
 }
 
 export const addUser = async (userId, userIn) => {
   const { email: rawEmail } = userIn
   const normalizedEmail = normalizeEmail(rawEmail)
 
-  // eslint-disable-next-line no-console
-  console.log(`JARED - TODO: REGISTER USER.  user=${JSON.stringify(userIn)}`)
-  await sleep(100)
-
   // Ensure the email isn't already in use
   const existingUserByEmail = await findUser(normalizedEmail)
-  if (existingUserByEmail.user) {
+  if (existingUserByEmail) {
     throw new UserInputError(
       `The email address ${normalizedEmail} is already in use`,
       { invalidArgs: ['email'] }
@@ -113,43 +76,54 @@ export const addUser = async (userId, userIn) => {
   // If there is no userId or if the userId already exists, generate a new one to avoid conflicts
   // This could happen if a user is sharing a PC (eg. boardroom computer)
   let newUserId = userId
-  const user = _find(users, u => u.id === userId)
+  const user = await knex('users')
+    .where({ uid: userId })
+    .first()
   if (!userId || user) {
-    console.warn(
-      'addUser: userID unknown or already in use.  Generating a new userID'
-    )
     newUserId = uuid()
   }
 
   // Exclude the password and replaced with hashed/salted value
   // Exclude the email and replace with normalized email
-  const { password, email, ...newUser } = userIn
+  const { password, email, ...userProperties } = userIn
 
   // Generate hashed password
-  newUser.hashedPassword = await hash(password, config.get('bcryptHashRounds'))
-  newUser.id = newUserId
-  newUser.email = normalizedEmail
+  const newDbUser = {
+    createdAt: new Date(),
+    uid: newUserId,
+    hashedPassword: await hash(password, config.get('bcryptHashRounds')),
+    email: normalizedEmail,
+    aliases: JSON.stringify([]),
+    properties: JSON.stringify(userProperties)
+  }
 
-  users.push({ aliases: [], ...newUser })
+  await knex('users').insert(newDbUser)
 
-  // console.log(`dbAdapter::addUser users=${JSON.stringify(users, null, 2)}`)
-
-  return { newUser, newUserId }
+  return fromDbUser(newDbUser)
 }
 
 export const addAlias = async (userId, alias) => {
   if (!alias) {
     return
   }
-  const user = _find(users, u => u.id === userId)
+  const user = await knex('users')
+    .whereNull('deletedAt')
+    .where({ uid: userId })
+    .first()
   if (user) {
-    const existingAlias = _find(user.aliases, a => a === alias)
+    const aliases = JSON.parse(user.aliases)
+    const existingAlias = _find(aliases, a => a === alias)
     if (!existingAlias) {
-      user.aliases.push(alias)
+      aliases.push(alias)
+      // Update the aliases in the DB
+      await knex('users')
+        .whereNull('deletedAt')
+        .where({ uid: userId })
+        .update({
+          aliases: JSON.stringify(aliases)
+        })
     }
   } else {
     throw new Error('addAlias: userId not found')
   }
-
-  // console.log(`dbAdapter::addAlias users=${JSON.stringify(users, null, 2)}`)
 }

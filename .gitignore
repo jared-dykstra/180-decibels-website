@@ -5,6 +5,7 @@ node_modules/
 
 # development
 *.sqlite3
+*.sqlite3-journal
 
 # testing
 /coverage

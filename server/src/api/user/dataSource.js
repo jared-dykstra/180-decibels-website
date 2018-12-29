@@ -1,3 +1,4 @@
+import { isNil } from 'lodash'
 import config from 'config'
 import uuid from 'uuid/v1'
 import { compare } from 'bcrypt'
@@ -86,14 +87,15 @@ export default class UserAPI extends DataSource {
   async isEmailInUse({ email }) {
     try {
       // If a user is found, the email is in use
-      const { user } = await findUser(email)
-      return !!user
+      const user = await findUser(email)
+      const isNotInUse = isNil(user)
+      return !isNotInUse
     } catch (err) {
-      // Some sort of issue...Assume the email is available
       appendLogEvent({
         source: eventSources.AUTH,
         event: `isEmailInUse Database Error: ${err}`
       })
+      // Some sort of issue...Assume the email is available
       return false
     }
   }
@@ -236,7 +238,9 @@ export default class UserAPI extends DataSource {
       source: eventSources.AUTH,
       event: { message: 'registerUser', user }
     })
-    const { newUser, newUserId } = await addUser(userId, user)
+
+    const { user: newUser } = await addUser(userId, user)
+    const newUserId = newUser.id
     if (newUserId !== userId) {
       // The user might have been assigned a different UserID.  If so, update their session accordingly
       await appendLogEvent({
