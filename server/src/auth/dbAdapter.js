@@ -4,6 +4,10 @@ import config from 'config'
 import { find as _find, isObject as _isObject } from 'lodash'
 import { hash } from 'bcrypt'
 import { UserInputError } from 'apollo-server-express'
+import Knex from 'knex'
+
+const knexConfig = config.get('knex')
+const knex = Knex(knexConfig)
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -47,12 +51,46 @@ export const findUser = async email => {
     return null
   }
   const normalizedEmail = normalizeEmail(email)
-  const user = _find(users, u => u.email === normalizedEmail)
-  const { hashedPassword, ...rest } = user || {}
-  return {
-    user: user ? rest : null,
-    hashedPassword
+  const user = await knex('users')
+    .whereNull('deletedAt')
+    .where({ email: normalizedEmail })
+    .first()
+
+  // If no match; user is undefined
+  if (!user) {
+    throw new Error(`User not found for ${normalizedEmail}`)
   }
+
+  const properties = JSON.parse(user.properties)
+
+  return {
+    user: {
+      id: user.uid,
+      aliases: user.aliases,
+      email: user.email,
+      ...properties
+    },
+    hashedPassword: user.hashedPassword
+  }
+
+  // {
+  //   id: '5ea90acf-9f79-405d-9648-69c2b2014557',
+  //   aliases: [],
+  //   email: 'jared.dykstra@gmail.com',
+  //   firstName: 'Jared',
+  //   lastName: 'Dykstra',
+  //   phone: '403.837.4544',
+  //   company: 'Shef Services, Inc',
+  //   hashedPassword:
+  //     '$2b$04$LiKBXR05pIeNIrXooTxpoeetfV0.WWTIX3dRvDQnO.1P66QHtvzGS'
+  // }
+
+  // const user = _find(users, u => u.email === normalizedEmail)
+  // const { hashedPassword, ...rest } = user || {}
+  // return {
+  //   user: user ? rest : null,
+  //   hashedPassword
+  // }
 }
 
 export const addUser = async (userId, userIn) => {
