@@ -45,27 +45,6 @@ const invalidateUserProfile = ({ res }) => {
   }
 }
 
-/**
- * Wraps findUser() with exception handling logic
- */
-const wrappedFindUser = async ({ email, userId, errorMessage }) => {
-  try {
-    const retval = await findUser(email)
-    return retval
-  } catch (err) {
-    await appendLogEvent({
-      userId,
-      source: AUTH,
-      event: `signIn Error - Unexpected Error fetching user: ${err}`
-    })
-
-    // Ensure a generic error is presented in the UI
-    throw new UserInputError(errorMessage, {
-      invalidArgs: ['password', 'email']
-    })
-  }
-}
-
 /* eslint-disable class-methods-use-this */
 export default class UserAPI extends DataSource {
   // constructor(/* { store } */) {
@@ -144,11 +123,26 @@ export default class UserAPI extends DataSource {
     const { email, password } = args
     const { res, userId } = context
     const errorMessage = 'Invalid email or password'
-    const { user, hashedPassword } = await wrappedFindUser({
-      email,
-      userId,
-      errorMessage
-    })
+
+    const wrappedFindUser = async () => {
+      try {
+        const retval = await findUser(email)
+        return retval
+      } catch (err) {
+        await appendLogEvent({
+          userId,
+          source: AUTH,
+          event: `signIn Error - Unexpected Error fetching user: ${err}`
+        })
+
+        // Ensure a generic error is presented in the UI
+        throw new UserInputError(errorMessage, {
+          invalidArgs: ['password', 'email']
+        })
+      }
+    }
+
+    const { user, hashedPassword } = await wrappedFindUser()
 
     // Does the user exist?
     if (!user) {
