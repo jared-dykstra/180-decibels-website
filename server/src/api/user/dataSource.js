@@ -6,14 +6,9 @@ import jwt from 'jsonwebtoken'
 import { DataSource } from 'apollo-datasource'
 import { UserInputError } from 'apollo-server-express'
 
-import {
-  addUser,
-  findUser,
-  addAlias,
-  appendLogEvent
-} from '../../auth/dbAdapter'
+import { addUser, findUser, addAlias, appendLogEvent } from '../../db/dbAdapter'
 
-import { AUTH } from '../../auth/eventSources'
+import { AUTH } from '../../db/eventSources'
 
 const cookieOptions = () => ({
   maxAge: config.get('authDuration'),
