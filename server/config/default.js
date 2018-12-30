@@ -15,7 +15,7 @@ module.exports = {
   knex: {
     // Default to Postgres with a connection string via $DATABASE_URL
     client: 'postgresql',
-    connection: defer(() => process.env.DATABASE_URL),
+    connection: defer(() => `${process.env.DATABASE_URL}?ssl=true`),
     pool: {
       min: 2,
       max: 10
