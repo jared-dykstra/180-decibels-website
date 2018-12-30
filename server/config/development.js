@@ -1,15 +1,9 @@
 module.exports = {
   knex: {
+    // A sqlite db doesn't require any manual setup
     client: 'sqlite3',
     connection: {
       filename: './dev.sqlite3'
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-      directory: './src/db/migrations'
-    },
-    seeds: {
-      directory: './src/db/seeds'
     },
     useNullAsDefault: true
   }
