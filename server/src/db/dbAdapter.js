@@ -12,14 +12,13 @@ const knex = Knex(knexConfig)
 
 const normalizeEmail = email => (email ? email.toLowerCase().trim() : email)
 
+// The JSON data type returns an object if the underlying DB is postgres; string if it's sqllite
+// TODO: Find a reusable solution: https://github.com/tgriesser/knex/issues/2575
+const fromJsonb = arg => (typeof arg === 'object' ? arg : JSON.parse(arg))
+
 // Unpack the database representation of a user
 const fromDbUser = user => {
-  // console.log(`JARED1 typeof(user.properties)=${typeof user.properties}`)
-  const properties =
-    typeof user.properties === 'string'
-      ? JSON.parse(user.properties)
-      : user.properties
-  // console.log(`JARED1 typeof(properties)=${typeof properties}`)
+  const properties = fromJsonb(user.properties)
 
   return {
     user: {
@@ -114,8 +113,7 @@ export const addAlias = async (userId, alias) => {
     .where({ uid: userId })
     .first()
   if (user) {
-    const aliases =
-      typeof user.aliases === 'string' ? JSON.parse(user.aliases) : user.aliases
+    const aliases = fromJsonb(user.aliases)
     const existingAlias = _find(aliases, a => a === alias)
     if (!existingAlias) {
       aliases.push(alias)

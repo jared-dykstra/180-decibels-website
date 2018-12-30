@@ -5,9 +5,9 @@ module.exports.up = async (knex, Promise) => {
       .primary()
     t.dateTime('deletedAt').nullable()
     t.uuid('uid').notNull()
-    t.json('aliases')
+    t.jsonb('aliases')
     t.text('email').notNull()
-    t.json('properties').nullable()
+    t.jsonb('properties').nullable()
     t.text('hashedPassword').nullable()
     t.unique('uid', 'users_uid')
     t.unique('email', 'users_email')
@@ -32,7 +32,7 @@ module.exports.up = async (knex, Promise) => {
       { useNative: true, enumName: 'syslog_type' }
     )
     t.uuid('uid').nullable()
-    t.json('data').notNull()
+    t.jsonb('data').notNull()
     t.index('uid', 'log_uid')
   })
 }
