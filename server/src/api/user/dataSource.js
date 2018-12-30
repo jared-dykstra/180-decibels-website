@@ -1,3 +1,4 @@
+import { isNil } from 'lodash'
 import config from 'config'
 import uuid from 'uuid/v1'
 import { compare } from 'bcrypt'
@@ -5,13 +6,9 @@ import jwt from 'jsonwebtoken'
 import { DataSource } from 'apollo-datasource'
 import { UserInputError } from 'apollo-server-express'
 
-import {
-  addUser,
-  findUser,
-  addAlias,
-  eventSources,
-  appendLogEvent
-} from '../../auth/dbAdapter'
+import { addUser, findUser, addAlias, appendLogEvent } from '../../db/dbAdapter'
+
+import { AUTH } from '../../db/eventSources'
 
 const cookieOptions = () => ({
   maxAge: config.get('authDuration'),
@@ -63,9 +60,19 @@ export default class UserAPI extends DataSource {
    * Return true/false if a given email address is already in use
    */
   async isEmailInUse({ email }) {
-    // If a user is found, the email is in use
-    const { user } = await findUser(email)
-    return !!user
+    try {
+      // If a user is found, the email is in use
+      const user = await findUser(email)
+      const isNotInUse = isNil(user)
+      return !isNotInUse
+    } catch (err) {
+      await appendLogEvent({
+        source: AUTH,
+        event: `isEmailInUse Database Error: ${err}`
+      })
+      // Some sort of issue...Assume the email is available
+      return false
+    }
   }
 
   /**
@@ -80,7 +87,7 @@ export default class UserAPI extends DataSource {
       setUserId(userId, context)
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: 'authenticate - Generated new user ID'
       })
     }
@@ -98,7 +105,7 @@ export default class UserAPI extends DataSource {
 
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: 'Authenticated'
     })
 
@@ -115,15 +122,33 @@ export default class UserAPI extends DataSource {
   async signIn(args, context) {
     const { email, password } = args
     const { res, userId } = context
-    const { user, hashedPassword } = await findUser(email)
-
     const errorMessage = 'Invalid email or password'
+
+    const wrappedFindUser = async () => {
+      try {
+        const retval = await findUser(email)
+        return retval
+      } catch (err) {
+        await appendLogEvent({
+          userId,
+          source: AUTH,
+          event: `signIn Error - Unexpected Error fetching user: ${err}`
+        })
+
+        // Ensure a generic error is presented in the UI
+        throw new UserInputError(errorMessage, {
+          invalidArgs: ['password', 'email']
+        })
+      }
+    }
+
+    const { user, hashedPassword } = await wrappedFindUser()
 
     // Does the user exist?
     if (!user) {
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: 'signIn Error - incorrect email'
       })
       throw new UserInputError(errorMessage, {
@@ -136,7 +161,7 @@ export default class UserAPI extends DataSource {
     if (!isPasswordOK) {
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: 'signIn Error - incorrect password'
       })
       throw new UserInputError(errorMessage, {
@@ -150,7 +175,7 @@ export default class UserAPI extends DataSource {
     if (user.id !== userId) {
       await appendLogEvent({
         userId: user.id,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: { message: 'signIn - add userId alias', alias: userId }
       })
 
@@ -162,7 +187,7 @@ export default class UserAPI extends DataSource {
 
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: 'signIn Successful'
     })
 
@@ -181,7 +206,7 @@ export default class UserAPI extends DataSource {
     const { userId } = context
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: 'signOut'
     })
 
@@ -200,15 +225,17 @@ export default class UserAPI extends DataSource {
 
     await appendLogEvent({
       userId,
-      source: eventSources.AUTH,
+      source: AUTH,
       event: { message: 'registerUser', user }
     })
-    const { newUser, newUserId } = await addUser(userId, user)
+
+    const { user: newUser } = await addUser(userId, user)
+    const newUserId = newUser.id
     if (newUserId !== userId) {
       // The user might have been assigned a different UserID.  If so, update their session accordingly
       await appendLogEvent({
         userId,
-        source: eventSources.AUTH,
+        source: AUTH,
         event: { message: 'registerUser - generated new user ID', newUserId }
       })
       setUserId(newUserId, context)

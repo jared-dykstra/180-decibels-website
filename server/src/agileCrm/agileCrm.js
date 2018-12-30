@@ -1,5 +1,6 @@
 import { filter } from 'lodash'
 import config from 'config'
+// TODO: This method is deprecated
 import { isNullOrUndefined } from 'util'
 import fetch from 'node-fetch'
 

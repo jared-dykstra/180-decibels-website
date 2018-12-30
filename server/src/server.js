@@ -80,5 +80,7 @@ export const makeServer = ({ clientRoot }) => {
   app.listen(port)
 
   // eslint-disable-next-line no-console
-  console.log(`Server is listening on port ${port}`)
+  console.log(
+    `Server is listening on port ${port}.  NODE_ENV=${process.env.NODE_ENV}`
+  )
 }
