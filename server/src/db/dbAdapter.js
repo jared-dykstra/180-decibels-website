@@ -14,7 +14,12 @@ const normalizeEmail = email => (email ? email.toLowerCase().trim() : email)
 
 // Unpack the database representation of a user
 const fromDbUser = user => {
-  const properties = JSON.parse(user.properties)
+  // console.log(`JARED1 typeof(user.properties)=${typeof user.properties}`)
+  const properties =
+    typeof user.properties === 'string'
+      ? JSON.parse(user.properties)
+      : user.properties
+  // console.log(`JARED1 typeof(properties)=${typeof properties}`)
 
   return {
     user: {
@@ -109,7 +114,8 @@ export const addAlias = async (userId, alias) => {
     .where({ uid: userId })
     .first()
   if (user) {
-    const aliases = JSON.parse(user.aliases)
+    const aliases =
+      typeof user.aliases === 'string' ? JSON.parse(user.aliases) : user.aliases
     const existingAlias = _find(aliases, a => a === alias)
     if (!existingAlias) {
       aliases.push(alias)
