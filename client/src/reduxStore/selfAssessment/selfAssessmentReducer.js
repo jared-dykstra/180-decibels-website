@@ -32,8 +32,9 @@ const currentSlidePath = ({ assessmentName }) => [
 export default (state = initialState, action) => {
   switch (action.type) {
     case SELF_ASSESSMENT_INITIALIZE: {
-      const { assessmentName } = action.payload
-      return state.setIn([assessmentName], initialState[assessmentName])
+      // Do nothing... a side-effect was kicked off in the saga.
+      // Don't reset the state--preserve state when switching between assessments
+      return state
     }
     case SELF_ASSESSMENT_INITIALIZED: {
       const { quiz, assessmentName } = action.payload

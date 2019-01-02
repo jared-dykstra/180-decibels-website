@@ -25,8 +25,11 @@ function* initHandler(action) {
   try {
     const { payload } = action
     const { assessmentName } = payload
-    const quiz = yield call(getQuiz, assessmentName)
-    yield put(initialized({ assessmentName, quiz }))
+    const state = yield select(s => s[mountPoint][assessmentName])
+    if (!state.ui.initialized) {
+      const quiz = yield call(getQuiz, assessmentName)
+      yield put(initialized({ assessmentName, quiz }))
+    }
   } catch (err) {
     console.error(`Get Quiz Error. err=${JSON.stringify(err)}`)
   }
