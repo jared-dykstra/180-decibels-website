@@ -129,3 +129,33 @@ export const addAlias = async (userId, alias) => {
     throw new Error('addAlias: userId not found')
   }
 }
+
+export const getAssessment = async name => {
+  const questions = await knex('assessment_quiz')
+    .leftJoin(
+      'assessment_quiz_questions',
+      'assessment_quiz.id',
+      '=',
+      'assessment_quiz_questions.quiz_id'
+    )
+    .leftJoin(
+      'assessment_questions',
+      'assessment_quiz_questions.question_id',
+      '=',
+      'assessment_questions.id'
+    )
+    .where({
+      name
+    })
+    .select('question_id', 'text', 'promptLeft', 'promptRight', 'negative')
+
+  const configuration = await knex('assessment_configuration')
+    .orderBy('createdAt', 'desc')
+    .first('config')
+
+  return {
+    name,
+    configuration: fromJsonb(configuration.config),
+    questions
+  }
+}
