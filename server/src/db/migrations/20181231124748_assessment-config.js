@@ -506,13 +506,13 @@ exports.up = async (knex, Promise) => {
   const ID_HELP_ME = '439a564d-adc9-497b-9dba-a9d8de6caf75'
   await knex(T_QUIZ).insert({
     id: ID_HELP_ME,
-    name: 'Help Me',
+    name: 'helpMe',
     rubric: JSON.stringify(config.helpMe.rubric)
   })
   const ID_HELP_MY_TEAM = '853020dd-ebc6-458c-8bf2-eb5a1cc6101f'
   await knex(T_QUIZ).insert({
     id: ID_HELP_MY_TEAM,
-    name: 'Help My Team',
+    name: 'helpMyTeam',
     rubric: JSON.stringify(config.helpMyTeam.rubric)
   })
 

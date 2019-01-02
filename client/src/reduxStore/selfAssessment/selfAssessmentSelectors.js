@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
-import resultsGenerator from './ResultsGenerator'
 
 const selfAssessmentSelector = (state, props) => {
   const { assessmentName } = props
@@ -36,6 +35,11 @@ const currentResponseSelector = createSelector(
   responsesSelector,
   currentQuestionIdSelector,
   (responses, questionId) => responses[questionId]
+)
+
+export const initializedSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.ui.initialized
 )
 
 export const currentSlideSelector = createSelector(
@@ -80,15 +84,4 @@ export const makeCanGoToNextQuestionSelector = () =>
   createSelector(
     currentResponseSelector,
     response => response.hasBeenRespondedTo
-  )
-
-export const makeResultsSelector = () =>
-  createSelector(
-    selfAssessmentSelector,
-    configSelector,
-    (selfAssessment, config) =>
-      resultsGenerator({
-        responses: selfAssessment.responses,
-        config
-      })
   )

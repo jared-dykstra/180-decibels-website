@@ -1,17 +1,36 @@
 // Adapt the fetcher to redux & redux-form using redux-saga.
 import { isEmpty as _isEmpty } from 'lodash'
-import { all, call, put, select, takeLatest } from 'redux-saga/effects'
+import {
+  all,
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest
+} from 'redux-saga/effects'
 import { startSubmit, stopSubmit } from 'redux-form'
 
 import { getValidationErrors } from 'apiUtils'
 
 import {
   SELF_ASSESSMENT_GET_RESULTS,
-  ASSESSMENT_RESULT_FORM_KEY
+  ASSESSMENT_RESULT_FORM_KEY,
+  SELF_ASSESSMENT_INITIALIZE
 } from './selfAssessmentConstants'
-import { getResults } from './fetcher'
-import { getResultsSuccess } from './selfAssessmentActions'
+import { getQuiz, getResults } from './fetcher'
+import { initialized, getResultsSuccess } from './selfAssessmentActions'
 import { mountPoint } from '.'
+
+function* initHandler(action) {
+  try {
+    const { payload } = action
+    const { assessmentName } = payload
+    const quiz = yield call(getQuiz, assessmentName)
+    yield put(initialized({ assessmentName, quiz }))
+  } catch (err) {
+    console.error(`Get Quiz Error. err=${JSON.stringify(err)}`)
+  }
+}
 
 function* contactHandler(action) {
   try {
@@ -41,5 +60,8 @@ export default function*() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
 
-  yield all([takeLatest(SELF_ASSESSMENT_GET_RESULTS, contactHandler)])
+  yield all([
+    takeEvery(SELF_ASSESSMENT_INITIALIZE, initHandler),
+    takeLatest(SELF_ASSESSMENT_GET_RESULTS, contactHandler)
+  ])
 }
