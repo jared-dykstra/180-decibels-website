@@ -20,6 +20,7 @@ const typeDefs = gql`
 
   type Configuration {
     volume: Volume!
+    quiz_id: ID!
   }
 
   type Assessment {

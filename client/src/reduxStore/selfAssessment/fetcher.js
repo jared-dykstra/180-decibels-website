@@ -20,6 +20,7 @@ export const getQuiz = async name => {
               max
               step
             }
+            quiz_id
           }
           questions {
             question_id

@@ -1,6 +1,11 @@
 import uuid from 'uuid/v1'
 import config from 'config'
-import { find as _find, includes as _includes } from 'lodash'
+import {
+  find as _find,
+  includes as _includes,
+  head as _head,
+  omit as _omit
+} from 'lodash'
 import { hash } from 'bcrypt'
 import { UserInputError } from 'apollo-server-express'
 import Knex from 'knex'
@@ -147,15 +152,25 @@ export const getAssessment = async name => {
     .where({
       name
     })
-    .select('question_id', 'text', 'promptLeft', 'promptRight', 'negative')
+    .select(
+      'quiz_id',
+      'question_id',
+      'text',
+      'promptLeft',
+      'promptRight',
+      'negative'
+    )
 
-  const configuration = await knex('assessment_configuration')
+  const configurationData = await knex('assessment_configuration')
     .orderBy('createdAt', 'desc')
     .first('config')
 
+  const configuration = fromJsonb(configurationData.config)
+  configuration.quiz_id = (_head(questions) || {}).quiz_id
+
   return {
     name,
-    configuration: fromJsonb(configuration.config),
-    questions
+    configuration,
+    questions: questions.map(q => _omit(q, ['quiz_id']))
   }
 }
