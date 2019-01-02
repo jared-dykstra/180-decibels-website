@@ -6,15 +6,6 @@ import { handleGetStarted } from '../../agileCrm'
 /* eslint-disable class-methods-use-this */
 
 export default class ContactApi extends DataSource {
-  constructor({ store } = {}) {
-    super()
-    this.store = store
-  }
-
-  initialize(config) {
-    this.context = config.context
-  }
-
   async requestCallback(args, context) {
     const { /* user, */ userId } = context
     const { contactInfo } = args

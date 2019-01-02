@@ -47,15 +47,6 @@ const invalidateUserProfile = ({ res }) => {
 
 /* eslint-disable class-methods-use-this */
 export default class UserAPI extends DataSource {
-  // constructor(/* { store } */) {
-  //   super()
-  //   // this.store = store
-  // }
-
-  initialize(configuration) {
-    this.context = configuration.context
-  }
-
   /**
    * Return true/false if a given email address is already in use
    */
