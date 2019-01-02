@@ -33,8 +33,19 @@ const typeDefs = gql`
     getAssessment(name: String): Assessment!
   }
 
+  input Answer {
+    quiz_id: ID!
+    question_id: ID!
+    value: Int!
+  }
+
+  input Response {
+    quiz_id: ID!
+  }
+
   type Mutation {
-    createAssessmentResultSet(responses: [ID]!): [String]!
+    answerQuestion(answer: Answer!): ID!
+    answerQuiz(response: Response!): ID!
   }
 `
 

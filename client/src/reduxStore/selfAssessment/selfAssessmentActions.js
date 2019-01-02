@@ -5,7 +5,8 @@ import {
   SELF_ASSESSMENT_GET_RESULTS,
   SELF_ASSESSMENT_GET_RESULTS_SUCCESS,
   SELF_ASSESSMENT_INITIALIZE,
-  SELF_ASSESSMENT_INITIALIZED
+  SELF_ASSESSMENT_INITIALIZED,
+  SELF_ASSESSMENT_ADD_ANSWER_ID
 } from './selfAssessmentConstants'
 
 export const initialize = ({ assessmentName }) => ({
@@ -21,6 +22,11 @@ export const initialized = ({ assessmentName, quiz }) => ({
 export const setVolume = ({ assessmentName, questionId, volume }) => ({
   type: SELF_ASSESSMENT_SET_VOLUME,
   payload: { assessmentName, questionId, volume }
+})
+
+export const addAnswerId = ({ assessmentName, questionId, answerId }) => ({
+  type: SELF_ASSESSMENT_ADD_ANSWER_ID,
+  payload: { assessmentName, questionId, answerId }
 })
 
 export const nextSlide = ({ assessmentName }) => ({

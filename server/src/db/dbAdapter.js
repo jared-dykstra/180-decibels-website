@@ -174,3 +174,22 @@ export const getAssessment = async name => {
     questions: questions.map(q => _omit(q, ['quiz_id']))
   }
 }
+
+export const answerQuestion = async (userId, answer) => {
+  const row = {
+    createdAt: new Date(),
+    answer_id: uuid(),
+    user_id: userId,
+    ...answer
+  }
+  await knex('assessment_question_answers').insert(row)
+  return row.answer_id
+}
+
+export const answerQuiz = async (userId, quiz) =>
+  // TODO
+  // const row = {
+  //   user_id: userId,
+  //   ...quiz
+  // }
+  uuid()

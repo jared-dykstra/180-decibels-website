@@ -6,22 +6,9 @@ import {
   SELF_ASSESSMENT_NEXT_SLIDE,
   SELF_ASSESSMENT_PREV_SLIDE,
   SELF_ASSESSMENT_INITIALIZE,
-  SELF_ASSESSMENT_INITIALIZED
+  SELF_ASSESSMENT_INITIALIZED,
+  SELF_ASSESSMENT_ADD_ANSWER_ID
 } from './selfAssessmentConstants'
-
-const volumePath = ({ assessmentName, questionId }) => [
-  assessmentName,
-  'responses',
-  questionId,
-  'volume'
-]
-
-const respondedPath = ({ assessmentName, questionId }) => [
-  assessmentName,
-  'responses',
-  questionId,
-  'hasBeenRespondedTo'
-]
 
 const currentSlidePath = ({ assessmentName }) => [
   assessmentName,
@@ -61,10 +48,20 @@ export default (state = initialState, action) => {
     }
 
     case SELF_ASSESSMENT_SET_VOLUME: {
-      const { volume } = action.payload
+      const { assessmentName, questionId, volume } = action.payload
       return state
-        .setIn(volumePath(action.payload), volume)
-        .setIn(respondedPath(action.payload), true)
+        .setIn([assessmentName, 'responses', questionId, 'volume'], volume)
+        .setIn(
+          [assessmentName, 'responses', questionId, 'hasBeenRespondedTo'],
+          true
+        )
+    }
+    case SELF_ASSESSMENT_ADD_ANSWER_ID: {
+      const { assessmentName, questionId, answerId } = action.payload
+      return state.setIn(
+        [assessmentName, 'responses', questionId, 'answerId'],
+        answerId
+      )
     }
     case SELF_ASSESSMENT_NEXT_SLIDE: {
       const path = currentSlidePath(action.payload)

@@ -15,10 +15,15 @@ import { getValidationErrors } from 'apiUtils'
 import {
   SELF_ASSESSMENT_GET_RESULTS,
   ASSESSMENT_RESULT_FORM_KEY,
-  SELF_ASSESSMENT_INITIALIZE
+  SELF_ASSESSMENT_INITIALIZE,
+  SELF_ASSESSMENT_SET_VOLUME
 } from './selfAssessmentConstants'
-import { getQuiz, getResults } from './fetcher'
-import { initialized, getResultsSuccess } from './selfAssessmentActions'
+import { getQuiz, getResults, answerQuestion } from './fetcher'
+import {
+  initialized,
+  getResultsSuccess,
+  addAnswerId
+} from './selfAssessmentActions'
 import { mountPoint } from '.'
 
 function* initHandler(action) {
@@ -56,6 +61,22 @@ function* contactHandler(action) {
   }
 }
 
+function* setVolumeHandler(action) {
+  try {
+    const { payload } = action
+    const { assessmentName, questionId, volume } = payload
+    const state = yield select(s => s[mountPoint][assessmentName])
+    const answerId = yield call(answerQuestion, {
+      quizId: state.configuration.quiz_id,
+      questionId,
+      value: volume
+    })
+    yield put(addAnswerId({ assessmentName, questionId, answerId }))
+  } catch (err) {
+    console.error(`setVolumeHandlerError.  err=${JSON.stringify(err)}`)
+  }
+}
+
 /* eslint-enable no-console */
 
 export default function*() {
@@ -65,6 +86,7 @@ export default function*() {
 
   yield all([
     takeEvery(SELF_ASSESSMENT_INITIALIZE, initHandler),
+    takeEvery(SELF_ASSESSMENT_SET_VOLUME, setVolumeHandler),
     takeLatest(SELF_ASSESSMENT_GET_RESULTS, contactHandler)
   ])
 }

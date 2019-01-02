@@ -1,6 +1,6 @@
 // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/datasources/user.js
 import { DataSource } from 'apollo-datasource'
-import { getAssessment } from '../../db/dbAdapter'
+import { getAssessment, answerQuestion } from '../../db/dbAdapter'
 
 /* eslint-disable class-methods-use-this */
 
@@ -9,12 +9,21 @@ export default class AssessmentApi extends DataSource {
     this.context = config.context
   }
 
-  async getAssessment(name) {
+  async getAssessment(args) {
+    const { name } = args
     const assessment = await getAssessment(name)
     return assessment
   }
 
-  async createAssessmentResultSet() {
-    return ['message 1', 'message 2']
+  async answerQuestion(args, context) {
+    const { answer } = args
+    const { userId } = context
+    const answerId = await answerQuestion(userId, answer)
+    return answerId
+  }
+
+  async answerQuiz(args, context) {
+    const { response } = args
+    const { userId } = context
   }
 }
