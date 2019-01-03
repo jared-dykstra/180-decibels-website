@@ -5,10 +5,11 @@ const dsSelector = context => {
 
 export default {
   Query: {
-    getAssessment: async (parent, args, context) => {
-      const assessment = dsSelector(context).getAssessment(args)
-      return assessment
-    }
+    getAssessment: async (parent, args, context) =>
+      dsSelector(context).getAssessment(args),
+
+    getResult: async (parent, args, context) =>
+      dsSelector(context).getResult(args)
   },
   Mutation: {
     answerQuestion: (parent, args, context, info) =>

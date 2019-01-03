@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet'
 
 import { authenticate } from 'reduxStore/auth/authActions'
 import {
+  AssessmentResult,
   Confidentiality,
   HelpMe,
   HelpMyTeam,
@@ -72,6 +73,10 @@ class App extends PureComponent {
               render={() => <Component {...this.props} />}
             />
           ))}
+          <Route
+            path={`(${ROUTE_HELP_ME}|${ROUTE_HELP_MY_TEAM})/result/:id`}
+            render={props => <AssessmentResult {...props} />}
+          />
           <Route render={() => <NotFound />} />
         </Switch>
 

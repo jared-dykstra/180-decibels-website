@@ -269,3 +269,10 @@ export const answerQuiz = async (userId, response) => {
   await knex('assessment_quiz_responses').insert(row)
   return row.response_id
 }
+
+export const getAssessmentResult = async resultId => {
+  const result = await knex('assessment_quiz_responses')
+    .where({ response_id: resultId })
+    .first()
+  return result ? fromJsonb(result.response) : result
+}

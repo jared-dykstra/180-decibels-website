@@ -29,8 +29,13 @@ const typeDefs = gql`
     questions: [Question]!
   }
 
+  type Result {
+    json: String!
+  }
+
   type Query {
     getAssessment(name: String): Assessment!
+    getResult(id: ID!): Result
   }
 
   input Answer {

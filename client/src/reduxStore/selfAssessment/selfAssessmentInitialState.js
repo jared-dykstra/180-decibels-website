@@ -16,5 +16,6 @@ const initialQuizState = () => ({
 
 export default Immutable.from({
   helpMyTeam: initialQuizState(),
-  helpMe: initialQuizState()
+  helpMe: initialQuizState(),
+  results: {}
 })

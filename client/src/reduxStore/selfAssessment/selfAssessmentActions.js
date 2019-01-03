@@ -2,11 +2,13 @@ import {
   SELF_ASSESSMENT_SET_VOLUME,
   SELF_ASSESSMENT_NEXT_SLIDE,
   SELF_ASSESSMENT_PREV_SLIDE,
-  SELF_ASSESSMENT_GET_RESULTS,
-  SELF_ASSESSMENT_GET_RESULTS_SUCCESS,
+  SELF_ASSESSMENT_SUBMIT_RESULTS,
+  SELF_ASSESSMENT_SUBMIT_RESULTS_SUCCESS,
   SELF_ASSESSMENT_INITIALIZE,
   SELF_ASSESSMENT_INITIALIZED,
-  SELF_ASSESSMENT_ADD_ANSWER_ID
+  SELF_ASSESSMENT_ADD_ANSWER_ID,
+  SELF_ASSESSMENT_LOAD_RESULTS,
+  SELF_ASSESSMENT_LOAD_RESULTS_SUCCESS
 } from './selfAssessmentConstants'
 
 export const initialize = ({ assessmentName }) => ({
@@ -40,11 +42,23 @@ export const prevSlide = ({ assessmentName }) => ({
 })
 
 export const getResults = ({ assessmentName, contactInfo }) => ({
-  type: SELF_ASSESSMENT_GET_RESULTS,
+  type: SELF_ASSESSMENT_SUBMIT_RESULTS,
   payload: { assessmentName, contactInfo }
 })
 
 export const getResultsSuccess = ({ assessmentName, responseId, email }) => ({
-  type: SELF_ASSESSMENT_GET_RESULTS_SUCCESS,
+  type: SELF_ASSESSMENT_SUBMIT_RESULTS_SUCCESS,
   payload: { assessmentName, responseId, email }
+})
+
+//
+
+export const loadResults = ({ resultId }) => ({
+  type: SELF_ASSESSMENT_LOAD_RESULTS,
+  payload: { resultId }
+})
+
+export const loadResultsSuccess = ({ resultId, results }) => ({
+  type: SELF_ASSESSMENT_LOAD_RESULTS_SUCCESS,
+  payload: { resultId, results }
 })

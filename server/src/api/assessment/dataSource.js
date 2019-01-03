@@ -2,6 +2,7 @@
 import { DataSource } from 'apollo-datasource'
 import {
   getAssessment,
+  getAssessmentResult,
   answerQuestion,
   answerQuiz,
   updateUser
@@ -18,6 +19,12 @@ export default class AssessmentApi extends DataSource {
     const { name } = args
     const assessment = await getAssessment(name)
     return assessment
+  }
+
+  async getResult(args) {
+    const { id: resultId } = args
+    const result = await getAssessmentResult(resultId)
+    return { json: JSON.stringify(result) }
   }
 
   async answerQuestion(args, context) {
