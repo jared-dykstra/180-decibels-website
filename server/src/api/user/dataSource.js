@@ -1,12 +1,17 @@
 import { isNil } from 'lodash'
 import config from 'config'
-import uuid from 'uuid/v1'
 import { compare } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { DataSource } from 'apollo-datasource'
 import { UserInputError } from 'apollo-server-express'
 
-import { addUser, findUser, addAlias, appendLogEvent } from '../../db/dbAdapter'
+import {
+  registerDbUser,
+  findUserByEmail,
+  addAlias,
+  appendLogEvent,
+  createUserId
+} from '../../db/dbAdapter'
 
 import { AUTH } from '../../db/eventSources'
 
@@ -53,7 +58,7 @@ export default class UserAPI extends DataSource {
   async isEmailInUse({ email }) {
     try {
       // If a user is found, the email is in use
-      const user = await findUser(email)
+      const user = await findUserByEmail(email)
       const isNotInUse = isNil(user)
       return !isNotInUse
     } catch (err) {
@@ -74,7 +79,7 @@ export default class UserAPI extends DataSource {
     let userId = rawUserId
     if (!userId) {
       // First time visiting? Generate a new user ID
-      userId = uuid()
+      userId = await createUserId()
       setUserId(userId, context)
       await appendLogEvent({
         userId,
@@ -117,7 +122,7 @@ export default class UserAPI extends DataSource {
 
     const wrappedFindUser = async () => {
       try {
-        const retval = await findUser(email)
+        const retval = await findUserByEmail(email)
         return retval
       } catch (err) {
         await appendLogEvent({
@@ -220,17 +225,7 @@ export default class UserAPI extends DataSource {
       event: { message: 'registerUser', user }
     })
 
-    const { user: newUser } = await addUser(userId, user)
-    const newUserId = newUser.id
-    if (newUserId !== userId) {
-      // The user might have been assigned a different UserID.  If so, update their session accordingly
-      await appendLogEvent({
-        userId,
-        source: AUTH,
-        event: { message: 'registerUser - generated new user ID', newUserId }
-      })
-      setUserId(newUserId, context)
-    }
+    const { user: newUser } = await registerDbUser(userId, user)
     const userProfileToken = getAndSetUserProfile({ user: newUser, res })
     return {
       user: newUser,

@@ -1,6 +1,11 @@
 // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/datasources/user.js
 import { DataSource } from 'apollo-datasource'
-import { getAssessment, answerQuestion } from '../../db/dbAdapter'
+import {
+  getAssessment,
+  answerQuestion,
+  answerQuiz,
+  updateUser
+} from '../../db/dbAdapter'
 
 /* eslint-disable class-methods-use-this */
 
@@ -25,5 +30,8 @@ export default class AssessmentApi extends DataSource {
   async answerQuiz(args, context) {
     const { response } = args
     const { userId } = context
+    await updateUser(userId, response.contactInfo)
+    const responseId = await answerQuiz(userId, response)
+    return responseId
   }
 }

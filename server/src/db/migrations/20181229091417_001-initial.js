@@ -6,7 +6,7 @@ module.exports.up = async (knex, Promise) => {
     t.dateTime('deletedAt').nullable()
     t.uuid('uid').notNull()
     t.jsonb('aliases')
-    t.text('email').notNull()
+    t.text('email').nullable()
     t.jsonb('properties').nullable()
     t.text('hashedPassword').nullable()
     t.unique('uid', 'users_uid')

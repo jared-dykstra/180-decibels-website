@@ -20,7 +20,7 @@ const typeDefs = gql`
 
   type Configuration {
     volume: Volume!
-    quiz_id: ID!
+    quizId: ID!
   }
 
   type Assessment {
@@ -34,18 +34,34 @@ const typeDefs = gql`
   }
 
   input Answer {
-    quiz_id: ID!
-    question_id: ID!
+    quizId: ID!
+    questionId: ID!
     value: Int!
   }
 
-  input Response {
-    quiz_id: ID!
+  input ContactInfo {
+    email: String!
+    firstName: String
+    lastName: String
+    company: String
+  }
+
+  input FullAnswer {
+    questionId: ID!
+    value: Int!
+    hasBeenRespondedTo: Boolean!
+    answerId: ID!
+  }
+
+  input QuizResponse {
+    quizId: ID!
+    contactInfo: ContactInfo!
+    answers: [FullAnswer!]!
   }
 
   type Mutation {
     answerQuestion(answer: Answer!): ID!
-    answerQuiz(response: Response!): ID!
+    answerQuiz(response: QuizResponse!): ID!
   }
 `
 

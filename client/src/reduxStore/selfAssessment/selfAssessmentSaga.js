@@ -18,7 +18,7 @@ import {
   SELF_ASSESSMENT_INITIALIZE,
   SELF_ASSESSMENT_SET_VOLUME
 } from './selfAssessmentConstants'
-import { getQuiz, getResults, answerQuestion } from './fetcher'
+import { getQuiz, answerQuestion, answerQuiz } from './fetcher'
 import {
   initialized,
   getResultsSuccess,
@@ -44,10 +44,12 @@ function* contactHandler(action) {
   try {
     yield put(startSubmit(ASSESSMENT_RESULT_FORM_KEY))
     const { payload } = action
-    const { assessmentName } = payload
+    const { assessmentName, contactInfo } = payload
     const state = yield select(s => s[mountPoint][assessmentName])
-    const response = yield call(getResults, {
-      assessmentName,
+    const response = yield call(answerQuiz, {
+      quizId: state.configuration.quizId,
+      quizName: assessmentName,
+      contactInfo,
       responses: state.responses
     })
     const validationErrors = getValidationErrors(response)
@@ -67,7 +69,7 @@ function* setVolumeHandler(action) {
     const { assessmentName, questionId, volume } = payload
     const state = yield select(s => s[mountPoint][assessmentName])
     const answerId = yield call(answerQuestion, {
-      quizId: state.configuration.quiz_id,
+      quizId: state.configuration.quizId,
       questionId,
       value: volume
     })

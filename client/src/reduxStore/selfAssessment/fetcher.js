@@ -4,8 +4,40 @@ import { clientExecuteAsync } from 'apiUtils'
 
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export const getResults = async (...args) => {
-  console.error(`TODO: getResults() args=${JSON.stringify(args, null, 2)}`)
+export const answerQuiz = async ({
+  quizId,
+  // quizName,
+  contactInfo,
+  responses
+}) => {
+  // Convert answers from hash to array
+  const answers = Object.entries(responses).map(
+    ([k, { volume, hasBeenRespondedTo, answerId }]) => ({
+      questionId: k,
+      value: volume,
+      hasBeenRespondedTo,
+      answerId
+    })
+  )
+
+  const response = {
+    quizId,
+    contactInfo,
+    answers
+  }
+
+  const operation = {
+    query: gql`
+      mutation answerQuiz($response: QuizResponse!) {
+        answerQuiz(response: $response)
+      }
+    `,
+    variables: {
+      response
+    }
+  }
+  const retval = await clientExecuteAsync(operation, 'answerQuiz')
+  return retval
 }
 
 export const getQuiz = async name => {
@@ -20,7 +52,7 @@ export const getQuiz = async name => {
               max
               step
             }
-            quiz_id
+            quizId
           }
           questions {
             question_id
@@ -40,23 +72,15 @@ export const getQuiz = async name => {
   return retval
 }
 
-export const answerQuestion = async ({ quizId, questionId, value }) => {
+export const answerQuestion = async answer => {
   const operation = {
     query: gql`
-      mutation answerQuestion($quiz_id: ID!, $question_id: ID!, $value: Int!) {
-        answerQuestion(
-          answer: {
-            quiz_id: $quiz_id
-            question_id: $question_id
-            value: $value
-          }
-        )
+      mutation answerQuestion($answer: Answer!) {
+        answerQuestion(answer: $answer)
       }
     `,
     variables: {
-      quiz_id: quizId,
-      question_id: questionId,
-      value
+      answer
     }
   }
   const retval = await clientExecuteAsync(operation, 'answerQuestion')
