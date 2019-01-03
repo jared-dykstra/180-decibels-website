@@ -86,10 +86,6 @@ const findUserById = async id => {
  * userIn must contain an email address and may or may not have additional fields
  */
 export const updateUser = async (userId, userIn) => {
-  console.log(
-    `JARED - updateUser userId=${userId} userIn=${JSON.stringify(userIn)}`
-  )
-
   if (!userId) {
     throw new Error('updateUser: userId is null or undefined')
   }
@@ -123,12 +119,6 @@ export const updateUser = async (userId, userIn) => {
 }
 
 const updateExistingUser = async ({ newUser, existingUser }) => {
-  console.log(
-    `JARED - Update existing User newUser=${JSON.stringify(
-      newUser
-    )}, existingUser=${JSON.stringify(existingUser)}`
-  )
-
   const updatedUser = _merge(existingUser.user, newUser.user)
   if (newUser.user.id && existingUser.user.id !== newUser.user.id) {
     updatedUser.id = existingUser.id
@@ -137,12 +127,7 @@ const updateExistingUser = async ({ newUser, existingUser }) => {
     }
   }
 
-  console.log(
-    `JARED - Update existing User updatedUser=${JSON.stringify(updatedUser)}`
-  )
-
   const { id, aliases, email, ...rest } = updatedUser
-
   await knex('users')
     .where({ uid: existingUser.user.id })
     .update({
