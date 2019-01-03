@@ -7,7 +7,8 @@ import {
   SELF_ASSESSMENT_PREV_SLIDE,
   SELF_ASSESSMENT_INITIALIZE,
   SELF_ASSESSMENT_INITIALIZED,
-  SELF_ASSESSMENT_ADD_ANSWER_ID
+  SELF_ASSESSMENT_ADD_ANSWER_ID,
+  SELF_ASSESSMENT_GET_RESULTS_SUCCESS
 } from './selfAssessmentConstants'
 
 const currentSlidePath = ({ assessmentName }) => [
@@ -62,6 +63,10 @@ export default (state = initialState, action) => {
         [assessmentName, 'responses', questionId, 'answerId'],
         answerId
       )
+    }
+    case SELF_ASSESSMENT_GET_RESULTS_SUCCESS: {
+      const { responseId, assessmentName, email } = action.payload
+      return state.setIn([assessmentName, 'results'], { responseId, email })
     }
     case SELF_ASSESSMENT_NEXT_SLIDE: {
       const path = currentSlidePath(action.payload)

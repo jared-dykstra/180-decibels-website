@@ -47,6 +47,17 @@ export const currentSlideSelector = createSelector(
   selfAssessment => selfAssessment.ui.currentSlide
 )
 
+export const resultsUrlSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment =>
+    `${window.location.href}/result/${selfAssessment.results.responseId}`
+)
+
+export const emailSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.results.email
+)
+
 export const makeMaxVolumeSelector = () =>
   createSelector(
     volumeConfigSelector,

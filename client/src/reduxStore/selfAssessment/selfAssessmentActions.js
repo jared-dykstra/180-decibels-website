@@ -44,7 +44,7 @@ export const getResults = ({ assessmentName, contactInfo }) => ({
   payload: { assessmentName, contactInfo }
 })
 
-export const getResultsSuccess = ({ assessmentName }) => ({
+export const getResultsSuccess = ({ assessmentName, responseId, email }) => ({
   type: SELF_ASSESSMENT_GET_RESULTS_SUCCESS,
-  payload: { assessmentName }
+  payload: { assessmentName, responseId, email }
 })

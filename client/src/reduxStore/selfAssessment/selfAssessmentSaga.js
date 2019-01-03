@@ -10,6 +10,8 @@ import {
 } from 'redux-saga/effects'
 import { startSubmit, stopSubmit } from 'redux-form'
 
+import { ASSESSMENT_RESULT_FORM_EMAIL_KEY } from '180-decibels-shared/assessmentResults'
+
 import { getValidationErrors } from 'apiUtils'
 
 import {
@@ -22,7 +24,8 @@ import { getQuiz, answerQuestion, answerQuiz } from './fetcher'
 import {
   initialized,
   getResultsSuccess,
-  addAnswerId
+  addAnswerId,
+  nextSlide
 } from './selfAssessmentActions'
 import { mountPoint } from '.'
 
@@ -41,7 +44,7 @@ function* initHandler(action) {
   }
 }
 
-function* contactHandler(action) {
+function* quizResultsHandler(action) {
   try {
     yield put(startSubmit(ASSESSMENT_RESULT_FORM_KEY))
     const { payload } = action
@@ -56,11 +59,18 @@ function* contactHandler(action) {
     const validationErrors = getValidationErrors(response)
     yield put(stopSubmit(ASSESSMENT_RESULT_FORM_KEY, validationErrors || {}))
     if (_isEmpty(validationErrors)) {
-      yield put(getResultsSuccess())
+      yield put(
+        getResultsSuccess({
+          assessmentName,
+          responseId: response,
+          email: contactInfo.get(ASSESSMENT_RESULT_FORM_EMAIL_KEY)
+        })
+      )
+      yield put(nextSlide({ assessmentName }))
     }
   } catch (err) {
     yield put(stopSubmit(ASSESSMENT_RESULT_FORM_KEY, {}))
-    console.error(`contactHandler Error. err=${JSON.stringify(err)}`)
+    console.error(`quizResultsHandler Error. err=${JSON.stringify(err)}`)
     throw err
   }
 }
@@ -92,6 +102,6 @@ export default function*() {
   yield all([
     takeEvery(SELF_ASSESSMENT_INITIALIZE, initHandler),
     takeEvery(SELF_ASSESSMENT_SET_VOLUME, setVolumeHandler),
-    takeLatest(SELF_ASSESSMENT_GET_RESULTS, contactHandler)
+    takeLatest(SELF_ASSESSMENT_GET_RESULTS, quizResultsHandler)
   ])
 }

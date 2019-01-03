@@ -7,7 +7,11 @@ const initialQuizState = () => ({
   },
   questionList: [],
   responses: {},
-  configuration: {}
+  configuration: {},
+  results: {
+    responseId: null,
+    email: null
+  }
 })
 
 export default Immutable.from({
