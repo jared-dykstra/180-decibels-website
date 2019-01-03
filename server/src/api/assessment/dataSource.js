@@ -1,39 +1,37 @@
 // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/datasources/user.js
 import { DataSource } from 'apollo-datasource'
+import {
+  getAssessment,
+  answerQuestion,
+  answerQuiz,
+  updateUser
+} from '../../db/dbAdapter'
 
-import assessmentConfig from './assessmentConfiguration.json'
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+/* eslint-disable class-methods-use-this */
 
 export default class AssessmentApi extends DataSource {
-  constructor({ store }) {
-    super()
-    this.store = store
-    this.delay = 1000
-  }
-
   initialize(config) {
     this.context = config.context
   }
 
-  async getAssessment(name) {
-    await sleep(this.delay)
-    const config = assessmentConfig[name]
-    const questions = Object.entries(config.questions).map(([k, v]) => ({
-      id: k,
-      ...v
-    }))
-    const retval = {
-      name,
-      version: config.version,
-      configuration: config.configuration,
-      questions
-    }
-    return retval
+  async getAssessment(args) {
+    const { name } = args
+    const assessment = await getAssessment(name)
+    return assessment
   }
 
-  async createAssessmentResultSet() {
-    await sleep(this.delay)
-    return ['message 1', 'message 2']
+  async answerQuestion(args, context) {
+    const { answer } = args
+    const { userId } = context
+    const answerId = await answerQuestion(userId, answer)
+    return answerId
+  }
+
+  async answerQuiz(args, context) {
+    const { response } = args
+    const { userId } = context
+    await updateUser(userId, response.contactInfo)
+    const responseId = await answerQuiz(userId, response)
+    return responseId
   }
 }

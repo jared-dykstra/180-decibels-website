@@ -3,6 +3,11 @@
 $assessment-height: 600px;
 $control-width: 2em;
 
+.carousel {
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
+}
+
 .carousel :global {
   .carousel-inner {
     background-color: $decibels-soft-white;
@@ -16,12 +21,6 @@ $control-width: 2em;
     overflow-y: auto;
     padding: 30px;
     padding-bottom: 40px;
-
-    // @include media-breakpoint-up(sm) {
-    //   h2 {
-    //     height: 3em;
-    //   }
-    // }
 
     h2 {
       color: $decibels-red;

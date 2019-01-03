@@ -15,9 +15,11 @@ import { questionsPropType, responsesPropType } from 'propTypes'
 import {
   questionListSelector,
   responsesSelector,
-  currentSlideSelector
+  currentSlideSelector,
+  initializedSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 import {
+  initialize,
   nextSlide,
   prevSlide
 } from 'reduxStore/selfAssessment/selfAssessmentActions'
@@ -31,9 +33,11 @@ import EmailMe from './EmailMe'
 class SelfAssessment extends PureComponent {
   static propTypes = {
     assessmentName: PropTypes.string.isRequired,
+    isInitialized: PropTypes.bool.isRequired,
     questions: questionsPropType.isRequired,
     responses: responsesPropType.isRequired,
     currentIndex: PropTypes.number.isRequired,
+    doInitialize: PropTypes.func.isRequired,
     doPrevSlide: PropTypes.func.isRequired,
     doNextSlide: PropTypes.func.isRequired
   }
@@ -43,6 +47,8 @@ class SelfAssessment extends PureComponent {
     this.state = {
       animating: false
     }
+
+    props.doInitialize()
   }
 
   onExiting = () => {
@@ -76,7 +82,13 @@ class SelfAssessment extends PureComponent {
   }
 
   render() {
-    const { assessmentName, questions, responses, currentIndex } = this.props
+    const {
+      assessmentName,
+      isInitialized,
+      questions,
+      responses,
+      currentIndex
+    } = this.props
     const indicatorPadding = styles['var-control-width']
 
     const introSlides = [
@@ -85,7 +97,7 @@ class SelfAssessment extends PureComponent {
         onExited={this.onExited}
         key="intro"
       >
-        <Intro next={this.next} />
+        <Intro assessmentName={assessmentName} next={this.next} />
       </CarouselItem>
     ]
 
@@ -139,6 +151,8 @@ class SelfAssessment extends PureComponent {
               questionId={question.id}
               questionText={question.text}
               next={this.next}
+              hintHigh={question.promptRight}
+              hintLow={question.promptLeft}
             />
           </div>
         </CarouselItem>
@@ -159,7 +173,8 @@ class SelfAssessment extends PureComponent {
     const currentQuestionHasBeenRespondedTo = currentResponse
       ? currentResponse.hasBeenRespondedTo
       : undefined
-    const canAdvanceSlide = isFirstSlide || currentQuestionHasBeenRespondedTo
+    const canAdvanceSlide =
+      isInitialized && (isFirstSlide || currentQuestionHasBeenRespondedTo)
 
     return (
       <Swipeable
@@ -206,9 +221,11 @@ export default connect(
   (state, props) => ({
     questions: questionListSelector(state, props),
     responses: responsesSelector(state, props),
-    currentIndex: currentSlideSelector(state, props)
+    currentIndex: currentSlideSelector(state, props),
+    isInitialized: initializedSelector(state, props)
   }),
   (dispatch, props) => ({
+    doInitialize: () => dispatch(initialize(props)),
     doNextSlide: () => dispatch(nextSlide(props)),
     doPrevSlide: () => dispatch(prevSlide(props))
   })

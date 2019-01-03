@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
-import resultsGenerator from './ResultsGenerator'
 
 const selfAssessmentSelector = (state, props) => {
   const { assessmentName } = props
@@ -38,9 +37,25 @@ const currentResponseSelector = createSelector(
   (responses, questionId) => responses[questionId]
 )
 
+export const initializedSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.ui.initialized
+)
+
 export const currentSlideSelector = createSelector(
   selfAssessmentSelector,
   selfAssessment => selfAssessment.ui.currentSlide
+)
+
+export const resultsUrlSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment =>
+    `${window.location.href}/result/${selfAssessment.results.responseId}`
+)
+
+export const emailSelector = createSelector(
+  selfAssessmentSelector,
+  selfAssessment => selfAssessment.results.email
 )
 
 export const makeMaxVolumeSelector = () =>
@@ -80,15 +95,4 @@ export const makeCanGoToNextQuestionSelector = () =>
   createSelector(
     currentResponseSelector,
     response => response.hasBeenRespondedTo
-  )
-
-export const makeResultsSelector = () =>
-  createSelector(
-    selfAssessmentSelector,
-    configSelector,
-    (selfAssessment, config) =>
-      resultsGenerator({
-        responses: selfAssessment.responses,
-        config
-      })
   )

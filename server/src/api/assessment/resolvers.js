@@ -1,16 +1,20 @@
-const dsSelector = dataSources => dataSources.assessmentAPI
+const dsSelector = context => {
+  const { dataSources } = context
+  return dataSources.assessmentAPI
+}
 
 export default {
   Query: {
-    getAssessment: async (_, { name }, { dataSources }) => {
-      const assessment = dsSelector(dataSources).getAssessment(name)
+    getAssessment: async (parent, args, context) => {
+      const assessment = dsSelector(context).getAssessment(args)
       return assessment
     }
   },
   Mutation: {
-    createAssessmentResultSet: async (_, { results }, { dataSources }) => {
-      const result = dsSelector(dataSources).createAssessmentResultSet(results)
-      return result
-    }
+    answerQuestion: (parent, args, context, info) =>
+      dsSelector(context).answerQuestion(args, context),
+
+    answerQuiz: (parent, args, context, info) =>
+      dsSelector(context).answerQuiz(args, context)
   }
 }

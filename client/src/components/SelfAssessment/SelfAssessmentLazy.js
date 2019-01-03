@@ -6,7 +6,7 @@ import styles from './SelfAssessment.module.scss'
 
 const SelfAssessment = React.lazy(async () => import('./SelfAssessment'))
 
-const SelfAssessmentLazy = ({ children, ...props }) => (
+const SelfAssessmentLazy = ({ children, assessmentName, ...props }) => (
   <Paper elevation={6}>
     <Suspense
       fallback={
@@ -14,13 +14,13 @@ const SelfAssessmentLazy = ({ children, ...props }) => (
         <div className={`${styles.carousel} carousel slide`}>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <Intro />
+              <Intro assessmentName={assessmentName} />
             </div>
           </div>
         </div>
       }
     >
-      <SelfAssessment {...props} />
+      <SelfAssessment {...{ assessmentName, ...props }} />
     </Suspense>
   </Paper>
 )

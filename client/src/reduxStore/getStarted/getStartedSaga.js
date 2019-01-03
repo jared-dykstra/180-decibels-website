@@ -26,6 +26,7 @@ function* contactHandler(action) {
   } catch (err) {
     yield put(stopSubmit(GET_STARTED_FORM_KEY, {}))
     console.error(`Get Started Error. err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 

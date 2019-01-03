@@ -18,33 +18,19 @@ import {
 export const getStarted = async contactInfo => {
   const operation = {
     query: gql`
-      mutation ContactMe(
-        $dateTime: String
-        $firstName: String
-        $lastName: String
-        $company: String
-        $email: String
-        $phone: String
-      ) {
-        contactMe(
-          contactInfo: {
-            dateTime: $dateTime
-            firstName: $firstName
-            lastName: $lastName
-            company: $company
-            email: $email
-            phone: $phone
-          }
-        )
+      mutation ContactMe($contactInfo: ContactInfo!) {
+        contactMe(contactInfo: $contactInfo)
       }
     `,
     variables: {
-      dateTime: contactInfo.get(GET_STARTED_FORM_DATE_TIME_KEY),
-      firstName: contactInfo.get(GET_STARTED_FORM_FIRST_NAME_KEY),
-      lastName: contactInfo.get(GET_STARTED_FORM_LAST_NAME_KEY),
-      company: contactInfo.get(GET_STARTED_FORM_COMPANY_KEY),
-      email: contactInfo.get(GET_STARTED_FORM_EMAIL_KEY),
-      phone: contactInfo.get(GET_STARTED_FORM_PHONE_KEY)
+      contactInfo: {
+        dateTime: contactInfo.get(GET_STARTED_FORM_DATE_TIME_KEY),
+        firstName: contactInfo.get(GET_STARTED_FORM_FIRST_NAME_KEY),
+        lastName: contactInfo.get(GET_STARTED_FORM_LAST_NAME_KEY),
+        company: contactInfo.get(GET_STARTED_FORM_COMPANY_KEY),
+        email: contactInfo.get(GET_STARTED_FORM_EMAIL_KEY),
+        phone: contactInfo.get(GET_STARTED_FORM_PHONE_KEY)
+      }
     }
   }
   const retval = await clientExecuteAsync(operation, 'contactMe')

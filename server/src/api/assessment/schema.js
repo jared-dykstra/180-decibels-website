@@ -5,19 +5,26 @@ import resolvers from './resolvers'
 
 const typeDefs = gql`
   type Question {
-    id: ID!
+    question_id: ID!
     text: String!
+    promptLeft: String!
+    promptRight: String!
+    negative: Boolean!
+  }
+
+  type Volume {
+    min: Int!
+    max: Int!
+    step: Int!
   }
 
   type Configuration {
-    volumeMin: Int!
-    volumeMax: Int!
-    volumeStep: Int!
+    volume: Volume!
+    quizId: ID!
   }
 
   type Assessment {
     name: String!
-    version: String!
     configuration: Configuration!
     questions: [Question]!
   }
@@ -26,8 +33,35 @@ const typeDefs = gql`
     getAssessment(name: String): Assessment!
   }
 
+  input Answer {
+    quizId: ID!
+    questionId: ID!
+    value: Int!
+  }
+
+  input ContactInfo {
+    email: String!
+    firstName: String
+    lastName: String
+    company: String
+  }
+
+  input FullAnswer {
+    questionId: ID!
+    value: Int!
+    hasBeenRespondedTo: Boolean!
+    answerId: ID!
+  }
+
+  input QuizResponse {
+    quizId: ID!
+    contactInfo: ContactInfo!
+    answers: [FullAnswer!]!
+  }
+
   type Mutation {
-    createAssessmentResultSet(responses: [ID]!): [String]!
+    answerQuestion(answer: Answer!): ID!
+    answerQuiz(response: QuizResponse!): ID!
   }
 `
 

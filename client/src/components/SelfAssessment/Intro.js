@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+
+import { initializedSelector } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
 import Heading from './Heading'
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-const Intro = ({ next }) => (
+const Intro = ({ isInitialized, next }) => (
   <div onClick={next} role="presentation" className="h-100">
     <Heading align="center">
       How loudly will each of the following questions resonate for your
@@ -19,6 +22,7 @@ const Intro = ({ next }) => (
           size="large"
           onClick={e => next || e.stopPropagation()}
           style={{ marginTop: '3rem' }}
+          disabled={!isInitialized}
         >
           Okay, Let&apos;s begin
         </Button>
@@ -28,11 +32,17 @@ const Intro = ({ next }) => (
 )
 
 Intro.propTypes = {
-  next: PropTypes.func
+  next: PropTypes.func,
+  // assessmentName is used via initializedSelector
+  // eslint-disable-next-line react/no-unused-prop-types
+  assessmentName: PropTypes.string.isRequired,
+  isInitialized: PropTypes.bool.isRequired
 }
 
 Intro.defaultProps = {
   next: undefined
 }
 
-export default Intro
+export default connect((state, { assessmentName }) => ({
+  isInitialized: initializedSelector(state, { assessmentName })
+}))(Intro)

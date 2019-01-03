@@ -34,6 +34,7 @@ function* authenticateHandler() {
     yield put(signInSuccess(response))
   } catch (err) {
     console.warn(`Authentication Error.  err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 
@@ -63,6 +64,7 @@ function* signInHandler(action) {
       })
     )
     console.error(`User SignIn Error. err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 
@@ -89,6 +91,7 @@ function* registerHandler(action) {
   } catch (err) {
     yield put(stopSubmit(REGISTER_FORM_KEY, {}))
     console.error(`User Registration Error. err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 

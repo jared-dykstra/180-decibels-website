@@ -2,29 +2,17 @@
 import { DataSource } from 'apollo-datasource'
 
 import { handleGetStarted } from '../../agileCrm'
+import { updateUser } from '../../db/dbAdapter'
 
 /* eslint-disable class-methods-use-this */
 
 export default class ContactApi extends DataSource {
-  constructor({ store } = {}) {
-    super()
-    this.store = store
-  }
-
-  initialize(config) {
-    this.context = config.context
-  }
-
   async requestCallback(args, context) {
-    const { /* user, */ userId } = context
+    // const { /* user, */ userId } = context
+    const userId = '993731af-df98-4c4b-a980-69bd7a42967c'
     const { contactInfo } = args
-    // console.log(
-    //   `requestCallback context=${JSON.stringify({
-    //     userId,
-    //     user, // <== only available if signed in, which is unlikely
-    //     contactInfo
-    //   })}`
-    // )
+
+    await updateUser(userId, contactInfo)
 
     /* const { task, contact } = */ await handleGetStarted({
       email: contactInfo.email,
