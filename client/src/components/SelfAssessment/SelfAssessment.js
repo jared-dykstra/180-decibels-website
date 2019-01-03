@@ -151,6 +151,8 @@ class SelfAssessment extends PureComponent {
               questionId={question.id}
               questionText={question.text}
               next={this.next}
+              hintHigh={question.promptRight}
+              hintLow={question.promptLeft}
             />
           </div>
         </CarouselItem>

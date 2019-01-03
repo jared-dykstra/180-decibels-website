@@ -31,14 +31,12 @@ class Question extends PureComponent {
     hasResponse: PropTypes.bool.isRequired,
     volume: PropTypes.number.isRequired,
     next: PropTypes.func.isRequired,
-    hintLow: PropTypes.string,
-    hintHigh: PropTypes.string,
+    hintLow: PropTypes.string.isRequired,
+    hintHigh: PropTypes.string.isRequired,
     autoAdvanceTimeMs: PropTypes.number
   }
 
   static defaultProps = {
-    hintLow: 'Disagree',
-    hintHigh: 'Agree',
     width: 'lg', // <== If using SSR, the width won't be defined, so default to PC
     autoAdvanceTimeMs: 250
   }
