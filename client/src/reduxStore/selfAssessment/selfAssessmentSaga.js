@@ -37,6 +37,7 @@ function* initHandler(action) {
     }
   } catch (err) {
     console.error(`Get Quiz Error. err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 
@@ -59,7 +60,8 @@ function* contactHandler(action) {
     }
   } catch (err) {
     yield put(stopSubmit(ASSESSMENT_RESULT_FORM_KEY, {}))
-    console.error(`Get Started Error. err=${JSON.stringify(err)}`)
+    console.error(`contactHandler Error. err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 
@@ -76,6 +78,7 @@ function* setVolumeHandler(action) {
     yield put(addAnswerId({ assessmentName, questionId, answerId }))
   } catch (err) {
     console.error(`setVolumeHandlerError.  err=${JSON.stringify(err)}`)
+    throw err
   }
 }
 

@@ -90,17 +90,6 @@ export const updateUser = async (userId, userIn) => {
     throw new Error('updateUser: userId is null or undefined')
   }
 
-  const { email: rawEmail } = userIn
-  const normalizedEmail = normalizeEmail(rawEmail)
-
-  if (!normalizedEmail) {
-    // Nothing to do
-    console.warn(
-      'updateUser: no email provided.  GraphQL schema should prevent this'
-    )
-    return
-  }
-
   // Does the userID already exist?
   const existingUserById = await findUserById(userId)
   if (!existingUserById) {
@@ -114,7 +103,13 @@ export const updateUser = async (userId, userIn) => {
   }
 
   // TODO: It's possible that the email address already exists on a different user
-  // // Does the email already exist?
+  // Does the email already exist?
+  // const { email: rawEmail } = userIn
+  // const normalizedEmail = normalizeEmail(rawEmail)
+
+  // if (!normalizedEmail) {
+  //   // Nothing to do - The "Contact Me" form doesn't require an email
+  // }
   // const existingUserByEmail = await findUserByEmail(normalizedEmail)
 }
 

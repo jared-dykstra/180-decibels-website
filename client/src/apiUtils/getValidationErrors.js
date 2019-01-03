@@ -2,6 +2,10 @@ import { get as _get } from 'lodash'
 
 // Parses a GraphQL response
 const getValidationErrors = response => {
+  if (!response) {
+    return null
+  }
+
   if (response.errors) {
     const firstError = response.errors[0]
     // Check for ValidationError
