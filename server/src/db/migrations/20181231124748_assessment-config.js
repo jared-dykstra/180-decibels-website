@@ -282,23 +282,23 @@ const config = {
     rubric: {
       [ID_ACCOUNTABILITY]: {
         highComment:
-          'Your team understands the importance of accountability.  Use <this technique> to keep it up',
+          'Nicely done! It looks like you are doing a great job with team Accountability. Here are a few additional tips.',
         lowComment:
-          'If your team places greater priority on accountability, it will make a big difference.  Use <these these techniques> to get started right away',
+          'It looks like your team may be a lacking in Accountability which, is essential for a high-performing team. Here are a few tips to help you develop your team Accountability',
         threshold: '75%'
       },
       [ID_PEOPLE]: {
         highComment:
-          'The people on your team are working well together.  Use <this technique> to continue improving',
+          'Nicely done! It looks like you have a good People fit on your team. Here are a few additional tips to help maintain this competency.',
         lowComment:
-          'Try <this technique> to improve communication between team members',
+          'It looks like you may not have the ‘right’ People in the right roles. Here are a few tips to help you with common People challenges.',
         threshold: '75%'
       },
       [ID_STRATEGY]: {
         highComment:
-          'Your team has an understanding of the strategy and vision.  Use <this technique> to continue improving',
+          'Nicely done! It looks like you have solid business Strategy. Here are a few additional tips to help maintain this competency.',
         lowComment:
-          'Communicate strategy and long-term vision to your team.  Use <these techniques> to get started today',
+          'It looks like your Strategic Planning could benefit from a little work. Here are a few tips to help you with developing a solid, practical strategic plan.',
         threshold: '75%'
       }
     },
@@ -338,22 +338,23 @@ const config = {
     rubric: {
       [ID_ACCOUNTABILITY]: {
         highComment:
-          'Great job with the accountability.  Use <this technique> to keep it up',
+          'Nicely done! It looks like you are doing a great job with team Accountability. Here are a few additional tips.',
         lowComment:
-          'Improving accountability will make a big difference.  Use <these these techniques> to get started right away',
+          'It looks like your team may be a lacking in Accountability which, is essential for a high-performing team. Here are a few tips to help you develop your team Accountability',
         threshold: '75%'
       },
       [ID_PEOPLE]: {
         highComment:
-          'Great job with managing your people.  Use <this technique> to continue improving',
+          'Nicely done! It looks like you have a good People fit on your team. Here are a few additional tips to help maintain this competency.',
         lowComment:
-          'Try <this technique> to improve human resources management',
+          'It looks like you may not have the ‘right’ People in the right roles. Here are a few tips to help you with common People challenges.',
         threshold: '75%'
       },
       [ID_STRATEGY]: {
         highComment:
-          'Great job with managing strategy.  Use <this technique> to continue improving',
-        lowComment: 'Try <this technique> to improve strategy management',
+          'Nicely done! It looks like you have solid business Strategy. Here are a few additional tips to help maintain this competency.',
+        lowComment:
+          'It looks like your Strategic Planning could benefit from a little work. Here are a few tips to help you with developing a solid, practical strategic plan.',
         threshold: '75%'
       }
     },
