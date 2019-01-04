@@ -90,9 +90,23 @@ export const answerQuestion = async answer => {
 export const getQuizResults = async resultId => {
   const operation = {
     query: gql`
-      query getAssessment($resultId: ID!) {
-        getResult(id: $resultId) {
-          json
+      query getAssessmentResult($resultId: ID!) {
+        getAssessmentResult(id: $resultId) {
+          quizTimestamp
+          originalUserId
+          contactInfo {
+            email
+            firstName
+            lastName
+            company
+          }
+          grades {
+            competencyId
+            name
+            threshold
+            score
+            comment
+          }
         }
       }
     `,
@@ -100,6 +114,6 @@ export const getQuizResults = async resultId => {
       resultId
     }
   }
-  const retval = await clientExecuteAsync(operation, 'getResult')
+  const retval = await clientExecuteAsync(operation, 'getAssessmentResult')
   return retval
 }

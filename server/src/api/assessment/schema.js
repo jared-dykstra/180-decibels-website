@@ -29,13 +29,31 @@ const typeDefs = gql`
     questions: [Question]!
   }
 
+  type ReturnedContactInfo {
+    email: String!
+    firstName: String
+    lastName: String
+    company: String
+  }
+
+  type Grade {
+    competencyId: ID!
+    name: String!
+    threshold: Float!
+    score: Float!
+    comment: String!
+  }
+
   type Result {
-    json: String!
+    quizTimestamp: String!
+    originalUserId: ID!
+    contactInfo: ReturnedContactInfo!
+    grades: [Grade!]!
   }
 
   type Query {
     getAssessment(name: String): Assessment!
-    getResult(id: ID!): Result
+    getAssessmentResult(id: ID!): Result
   }
 
   input Answer {

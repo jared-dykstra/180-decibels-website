@@ -5,7 +5,7 @@ const ID_STRATEGY = 'ff8bccc2-82cc-429c-b1ae-dc45a656b605'
 const config = {
   questions: {
     'f7ca272e-6c96-4ee9-96a2-6e5d33012478': {
-      text: 'I regularly revise and communicate a long-term plan for my team.',
+      text: 'I regularly revise and communicate a long-term plan for my team',
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -23,7 +23,7 @@ const config = {
       negative: false
     },
     'd8bcb004-ef11-42ce-8d5f-8f51d8a32362': {
-      text: 'Everyone knows what their accountabilities are.',
+      text: 'Everyone knows what their accountabilities are',
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -33,7 +33,7 @@ const config = {
     },
     '49155d84-7e77-4457-9caa-68f38bba8517': {
       text:
-        'Everyone gets their accountabilities done without needing to be reminded.',
+        'Everyone gets their accountabilities done without needing to be reminded',
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -43,7 +43,7 @@ const config = {
     },
     'f2f69dd3-13b9-4ea2-9d7e-147c8f79974d': {
       text:
-        "We always take the time to make sure that everyone involved knows exactly what 'done' means.",
+        "We always take the time to make sure that everyone involved knows exactly what 'done' means",
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -53,7 +53,7 @@ const config = {
     },
     '2f94c579-808a-469a-a889-33d5c2cf92ee': {
       text:
-        'Everyone knows where we are going and HOW we are going to get there.',
+        'Everyone knows where we are going and HOW we are going to get there',
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -62,7 +62,7 @@ const config = {
       negative: false
     },
     '99eaebca-2cc8-4915-85d4-3f1c2b02afe5': {
-      text: 'EVERYONE has specific weekly numbers that they need to hit ',
+      text: 'EVERYONE has specific weekly numbers that they need to hit',
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -90,7 +90,7 @@ const config = {
       negative: false
     },
     'd2acdade-4bdc-4207-beba-cae592c06316': {
-      text: 'We have weekly meetings, but no one is held accountable.',
+      text: 'We have weekly meetings, but no one is held accountable',
       accountability: 10,
       people: 0,
       strategy: 0,
@@ -99,7 +99,7 @@ const config = {
       negative: true
     },
     'fb6480e9-f721-4109-82b5-d144b3ca75e8': {
-      text: 'There is often conflict and drama between team members.',
+      text: 'There is often conflict and drama between team members',
       accountability: 10,
       people: 10,
       strategy: 0,
@@ -109,7 +109,7 @@ const config = {
     },
     '2c958994-9800-4856-954f-b59e1f8c26ce': {
       text:
-        "When a person misses deadlines or doesn't get things done, no one confronts them.",
+        "When a person misses deadlines or doesn't get things done, no one confronts them",
       accountability: 10,
       people: 10,
       strategy: 0,
@@ -137,7 +137,7 @@ const config = {
     },
     'e17af4ba-2c80-4491-9062-2c5140b03753': {
       text:
-        'EACH team member has autonomy to make key decisions in performing their role.',
+        'EACH team member has autonomy to make key decisions in performing their role',
       accountability: 0,
       people: 10,
       strategy: 0,
@@ -147,7 +147,7 @@ const config = {
     },
     '38a2c293-ffd0-4b93-8f4b-8c539eefd071': {
       text:
-        "Everyone knows exactly what their boss expects them to do; how to be a 'Rockstar' in their job.",
+        "Everyone knows exactly what their boss expects them to do; how to be a 'Rockstar' in their job",
       accountability: 0,
       people: 10,
       strategy: 0,
@@ -157,7 +157,7 @@ const config = {
     },
     '47a60ccd-815a-442d-ba3c-69186afb1902': {
       text:
-        'Team members have defined areas where they have decision making authority.',
+        'Team members have defined areas where they have decision making authority',
       accountability: 0,
       people: 10,
       strategy: 0,
@@ -177,7 +177,7 @@ const config = {
     },
     '459d0dff-6886-4046-94d6-342b2fc5bd92': {
       text:
-        "Staff feels that leadership team members aren't in agreement on priorities.",
+        "Staff feels that leadership team members aren't in agreement on priorities",
       accountability: 0,
       people: 10,
       strategy: 0,
@@ -187,7 +187,7 @@ const config = {
     },
     'bdda783c-acb6-4fff-8b2f-4b477f0d4b9a': {
       text:
-        'People are aware of when they in-line with expected behavior or not.',
+        'People are aware of when they in-line with expected behavior or not',
       accountability: 0,
       people: 10,
       strategy: 0,
@@ -197,7 +197,7 @@ const config = {
     },
     '8bd55f54-5115-4638-8627-a7d7ae0b463e': {
       text:
-        'Our leadership team takes time every few months to spend dedicated time thinking and planning.',
+        'Our leadership team takes time every few months to spend dedicated time thinking and planning',
       accountability: 0,
       people: 0,
       strategy: 10,
@@ -216,7 +216,7 @@ const config = {
       negative: false
     },
     'd790d95d-d48c-4488-a1cb-3d1f462f077c': {
-      text: 'Leadership team members undermine one another in front of staff. ',
+      text: 'Leadership team members undermine one another in front of staff',
       accountability: 0,
       people: 10,
       strategy: 10,
@@ -226,7 +226,7 @@ const config = {
     },
     '075e1d54-f9c2-410d-a87e-77616da48d2a': {
       text:
-        'Everyone in the organization can articulate the long-term goals and top priorities.',
+        'Everyone in the organization can articulate the long-term goals and top priorities',
       accountability: 0,
       people: 0,
       strategy: 10,
@@ -235,7 +235,7 @@ const config = {
       negative: false
     },
     '7a819ca1-768b-4c53-9621-efbd44c18eff': {
-      text: 'People disagree about which things to get done first.',
+      text: 'People disagree about which things to get done first',
       accountability: 0,
       people: 0,
       strategy: 10,
@@ -244,7 +244,7 @@ const config = {
       negative: true
     },
     'fa801864-0cb6-46e5-9c31-45dd06bb2a4c': {
-      text: 'We have a shared Accountability Chart.',
+      text: 'We have a shared Accountability Chart',
       accountability: 0,
       people: 0,
       strategy: 10,
@@ -254,7 +254,7 @@ const config = {
     },
     '1bdb7127-cb9b-473e-875f-42a683d3974a': {
       text:
-        'As a business leader, I reinforce the plan and priorities with my team at least once a week, informally or formally.',
+        'As a business leader, I reinforce the plan and priorities with my team at least once a week, informally or formally',
       accountability: 0,
       people: 0,
       strategy: 10,
@@ -264,7 +264,7 @@ const config = {
     },
     'e5636566-ef8b-4934-8ae2-2e2a815539ec': {
       text:
-        'It is difficult to tell if staff are actually doing the right things from week to week to help us to achieve our organizational goals.',
+        'It is difficult to tell if staff are actually doing the right things from week to week to help us to achieve our organizational goals',
       accountability: 0,
       people: 0,
       strategy: 10,
@@ -285,21 +285,21 @@ const config = {
           'Your team understands the importance of accountability.  Use <this technique> to keep it up',
         lowComment:
           'If your team places greater priority on accountability, it will make a big difference.  Use <these these techniques> to get started right away',
-        threshold: '50%'
+        threshold: '75%'
       },
       [ID_PEOPLE]: {
         highComment:
           'The people on your team are working well together.  Use <this technique> to continue improving',
         lowComment:
           'Try <this technique> to improve communication between team members',
-        threshold: '50%'
+        threshold: '75%'
       },
       [ID_STRATEGY]: {
         highComment:
           'Your team has an understanding of the strategy and vision.  Use <this technique> to continue improving',
         lowComment:
           'Communicate strategy and long-term vision to your team.  Use <these techniques> to get started today',
-        threshold: '50%'
+        threshold: '75%'
       }
     },
     questions: [
@@ -341,20 +341,20 @@ const config = {
           'Great job with the accountability.  Use <this technique> to keep it up',
         lowComment:
           'Improving accountability will make a big difference.  Use <these these techniques> to get started right away',
-        threshold: '50%'
+        threshold: '75%'
       },
       [ID_PEOPLE]: {
         highComment:
           'Great job with managing your people.  Use <this technique> to continue improving',
         lowComment:
           'Try <this technique> to improve human resources management',
-        threshold: '50%'
+        threshold: '75%'
       },
       [ID_STRATEGY]: {
         highComment:
           'Great job with managing strategy.  Use <this technique> to continue improving',
         lowComment: 'Try <this technique> to improve strategy management',
-        threshold: '50%'
+        threshold: '75%'
       }
     },
     questions: [

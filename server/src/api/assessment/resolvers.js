@@ -8,8 +8,8 @@ export default {
     getAssessment: async (parent, args, context) =>
       dsSelector(context).getAssessment(args),
 
-    getResult: async (parent, args, context) =>
-      dsSelector(context).getResult(args)
+    getAssessmentResult: async (parent, args, context) =>
+      dsSelector(context).getAssessmentResult(args)
   },
   Mutation: {
     answerQuestion: (parent, args, context, info) =>
