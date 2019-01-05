@@ -41,7 +41,9 @@ const typeDefs = gql`
     name: String!
     threshold: Float!
     score: Float!
+    order: Int!
     comment: String!
+    link: String!
   }
 
   type Result {

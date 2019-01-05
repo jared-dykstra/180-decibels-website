@@ -282,23 +282,34 @@ const config = {
     rubric: {
       [ID_ACCOUNTABILITY]: {
         highComment:
-          'Nicely done! It looks like you are doing a great job with team Accountability. Here are a few additional tips.',
+          'Nicely done! It looks like you are doing a great job with team Accountability.',
+        highLink: 'Here are a few additional tips...',
         lowComment:
-          'It looks like your team may be a lacking in Accountability which, is essential for a high-performing team. Here are a few tips to help you develop your team Accountability',
+          'It looks like your team may be a lacking in Accountability which, is essential for a high-performing team.',
+        lowLink:
+          'Here are a few tips to help you develop your team Accountability...',
         threshold: '75%'
       },
       [ID_PEOPLE]: {
         highComment:
-          'Nicely done! It looks like you have a good People fit on your team. Here are a few additional tips to help maintain this competency.',
+          'Nicely done! It looks like you have a good People fit on your team.',
+        highLink:
+          'Here are a few additional tips to help maintain this competency...',
         lowComment:
-          'It looks like you may not have the ‘right’ People in the right roles. Here are a few tips to help you with common People challenges.',
+          'It looks like you may not have the ‘right’ People in the right roles.',
+        lowLink:
+          'Here are a few tips to help you with common People challenges...',
         threshold: '75%'
       },
       [ID_STRATEGY]: {
         highComment:
-          'Nicely done! It looks like you have solid business Strategy. Here are a few additional tips to help maintain this competency.',
+          'Nicely done! It looks like you have solid business Strategy.',
+        highLink:
+          'Here are a few additional tips to help maintain this competency...',
         lowComment:
-          'It looks like your Strategic Planning could benefit from a little work. Here are a few tips to help you with developing a solid, practical strategic plan.',
+          'It looks like your Strategic Planning could benefit from a little work.',
+        lowLink:
+          'Here are a few tips to help you with developing a solid, practical strategic plan....',
         threshold: '75%'
       }
     },
@@ -338,23 +349,34 @@ const config = {
     rubric: {
       [ID_ACCOUNTABILITY]: {
         highComment:
-          'Nicely done! It looks like you are doing a great job with team Accountability. Here are a few additional tips.',
+          'Nicely done! It looks like you are doing a great job with team Accountability.',
+        highLink: 'Here are a few additional tips...',
         lowComment:
-          'It looks like your team may be a lacking in Accountability which, is essential for a high-performing team. Here are a few tips to help you develop your team Accountability',
+          'It looks like your team may be a lacking in Accountability which, is essential for a high-performing team.',
+        lowLink:
+          'Here are a few tips to help you develop your team Accountability...',
         threshold: '75%'
       },
       [ID_PEOPLE]: {
         highComment:
-          'Nicely done! It looks like you have a good People fit on your team. Here are a few additional tips to help maintain this competency.',
+          'Nicely done! It looks like you have a good People fit on your team.',
+        highLink:
+          'Here are a few additional tips to help maintain this competency...',
         lowComment:
-          'It looks like you may not have the ‘right’ People in the right roles. Here are a few tips to help you with common People challenges.',
+          'It looks like you may not have the ‘right’ People in the right roles.',
+        lowLink:
+          'Here are a few tips to help you with common People challenges...',
         threshold: '75%'
       },
       [ID_STRATEGY]: {
         highComment:
-          'Nicely done! It looks like you have solid business Strategy. Here are a few additional tips to help maintain this competency.',
+          'Nicely done! It looks like you have solid business Strategy.',
+        highLink:
+          'Here are a few additional tips to help maintain this competency...',
         lowComment:
-          'It looks like your Strategic Planning could benefit from a little work. Here are a few tips to help you with developing a solid, practical strategic plan.',
+          'It looks like your Strategic Planning could benefit from a little work.',
+        lowLink:
+          'Here are a few tips to help you with developing a solid, practical strategic plan....',
         threshold: '75%'
       }
     },
@@ -405,6 +427,7 @@ exports.up = async (knex, Promise) => {
       .notNull()
       .primary()
     t.jsonb('config').notNull()
+    t.index('createdAt')
   })
   await knex(T_CONFIG).insert({
     createdAt: new Date(),
@@ -425,18 +448,23 @@ exports.up = async (knex, Promise) => {
     t.text('name')
       .notNull()
       .unique()
+    t.integer('order')
+    t.index('order')
   })
   await knex(T_COMPETENCIES).insert({
     id: ID_ACCOUNTABILITY,
-    name: 'accountability'
+    name: 'Accountability',
+    order: 3
   })
   await knex(T_COMPETENCIES).insert({
     id: ID_PEOPLE,
-    name: 'people'
+    name: 'People',
+    order: 2
   })
   await knex(T_COMPETENCIES).insert({
     id: ID_STRATEGY,
-    name: 'strategy'
+    name: 'Strategy & Planning',
+    order: 1
   })
 
   // Define assessment questions & scores
@@ -460,7 +488,7 @@ exports.up = async (knex, Promise) => {
       .references('id')
       .inTable(T_COMPETENCIES)
     t.integer('score').notNull()
-    t.unique(['question_id', 'competency_id'], 'ix_question_competency')
+    t.unique(['question_id', 'competency_id'])
   })
 
   await Promise.all(
@@ -527,7 +555,7 @@ exports.up = async (knex, Promise) => {
       .notNull()
       .references('id')
       .inTable(T_QUESTIONS)
-    t.unique(['quiz_id', 'question_id'], 'ix_quiz_question')
+    t.unique(['quiz_id', 'question_id'])
   })
 
   await Promise.all(

@@ -48,8 +48,6 @@ export default class AssessmentApi extends DataSource {
       grades
     }
 
-    console.log(`response: ${JSON.stringify(response, null, 2)}`)
-
     return response
   }
 

@@ -105,7 +105,9 @@ export const getQuizResults = async resultId => {
             name
             threshold
             score
+            order
             comment
+            link
           }
         }
       }

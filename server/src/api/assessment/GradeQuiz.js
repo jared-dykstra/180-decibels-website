@@ -14,7 +14,8 @@ export default ({ quizRubric, response, competencies }) => {
       threshold: rubricThreshold,
       score: percent,
       comment:
-        percent > rubricThreshold ? rubric.highComment : rubric.lowComment
+        percent > rubricThreshold ? rubric.highComment : rubric.lowComment,
+      link: percent > rubricThreshold ? rubric.highLink : rubric.lowLink
     }
   }
 
