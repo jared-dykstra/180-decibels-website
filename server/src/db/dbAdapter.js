@@ -269,3 +269,100 @@ export const answerQuiz = async (userId, response) => {
   await knex('assessment_quiz_responses').insert(row)
   return row.response_id
 }
+
+export const getAssessmentResult = async responseId => {
+  const quizResponse = await knex('assessment_quiz_responses')
+    .where({ response_id: responseId })
+    .first()
+
+  if (!quizResponse) {
+    throw new Error(`No response for requested ID=${responseId}`)
+  }
+
+  const {
+    createdAt,
+    response,
+    quiz_id: quizId,
+    user_id: originalUserId
+  } = quizResponse
+  const responseObj = fromJsonb(response)
+  const { contactInfo, answers } = responseObj
+
+  // Reduce answers to a map, keyed by questionId
+  const answersMap = answers.reduce((acc, { questionId, ...rest }) => {
+    acc[questionId] = rest
+    return acc
+  }, {})
+
+  // Augment answers with more information about each question
+  const questions = await knex('assessment_questions')
+    .leftJoin(
+      'assessment_questions_competencies',
+      'assessment_questions.id',
+      '=',
+      'assessment_questions_competencies.question_id'
+    )
+    .leftJoin(
+      'assessment_competencies',
+      'assessment_questions_competencies.competency_id',
+      '=',
+      'assessment_competencies.id'
+    )
+    .whereIn('question_id', Object.keys(answersMap))
+    .select('question_id', 'competency_id', 'score', 'negative', 'text')
+
+  // Reduce questions to a map, keyed by questionId, merged with answersMap
+  const questionsMap = questions.reduce(
+    (acc, { question_id: questionId, ...rest }) => {
+      const merged = { ...answersMap[questionId], ...rest }
+      const {
+        value,
+        hasBeenRespondedTo,
+        answerId,
+        competency_id: competencyId,
+        score,
+        negative,
+        text
+      } = merged
+      // For a negative question, low scores are good & vice-versa
+      const normalizedScore = !negative ? value : score - value
+      acc[questionId] = {
+        text,
+        answerId,
+        competencyId,
+        hasBeenRespondedTo,
+        originalScore: value,
+        normalizedScore,
+        total: score
+      }
+      return acc
+    },
+    {}
+  )
+
+  const quiz = await knex('assessment_quiz')
+    .where({ id: quizId })
+    .first()
+  const { name: quizName, rubric } = quiz
+  const quizRubric = fromJsonb(rubric)
+
+  const retval = {
+    responseId,
+    quizTimestamp: createdAt,
+    originalUserId,
+    quizId,
+    quizName,
+    quizRubric,
+    contactInfo,
+    questions: questionsMap
+  }
+
+  // console.log(`getAssessmentResult: ${JSON.stringify(retval, null, 2)}`)
+
+  return retval
+}
+
+export const getCompetencies = async () => {
+  const competencies = await knex('assessment_competencies')
+  return competencies
+}

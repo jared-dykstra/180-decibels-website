@@ -10,11 +10,13 @@ const initialQuizState = () => ({
   configuration: {},
   results: {
     responseId: null,
-    email: null
+    email: null,
+    error: false
   }
 })
 
 export default Immutable.from({
   helpMyTeam: initialQuizState(),
-  helpMe: initialQuizState()
+  helpMe: initialQuizState(),
+  results: {}
 })

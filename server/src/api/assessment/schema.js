@@ -29,8 +29,33 @@ const typeDefs = gql`
     questions: [Question]!
   }
 
+  type ReturnedContactInfo {
+    email: String!
+    firstName: String
+    lastName: String
+    company: String
+  }
+
+  type Grade {
+    competencyId: ID!
+    name: String!
+    threshold: Float!
+    score: Float!
+    order: Int!
+    comment: String!
+    link: String!
+  }
+
+  type Result {
+    quizTimestamp: String!
+    originalUserId: ID!
+    contactInfo: ReturnedContactInfo!
+    grades: [Grade!]!
+  }
+
   type Query {
     getAssessment(name: String): Assessment!
+    getAssessmentResult(id: ID!): Result
   }
 
   input Answer {

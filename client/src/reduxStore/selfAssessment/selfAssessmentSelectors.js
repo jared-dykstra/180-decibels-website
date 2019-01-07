@@ -1,5 +1,8 @@
+import { sortBy as _sortBy } from 'lodash'
 import { createSelector } from 'reselect'
 import { mountPoint } from '.'
+
+/* Begin Self Assesment Selectors */
 
 const selfAssessmentSelector = (state, props) => {
   const { assessmentName } = props
@@ -96,3 +99,60 @@ export const makeCanGoToNextQuestionSelector = () =>
     currentResponseSelector,
     response => response.hasBeenRespondedTo
   )
+
+/* Begin SelfAssessment Result selectors */
+
+// "match" is supplied by react-router
+export const idSelector = (state, props) => props.match.params.id
+
+const rawResultsSelector = (state, props) => {
+  const id = idSelector(state, props)
+  const raw = state[mountPoint].results[id]
+  return raw || {}
+}
+
+export const resultsErrorSelector = createSelector(
+  rawResultsSelector,
+  raw => raw.error
+)
+
+export const resultsSelector = createSelector(
+  rawResultsSelector,
+  raw => (raw.error ? {} : raw.results || {})
+)
+
+const contactInfoSelector = createSelector(
+  resultsSelector,
+  results => results.contactInfo || {}
+)
+
+export const displayNameSelector = createSelector(
+  contactInfoSelector,
+  contactInfo => {
+    let retval
+    if (contactInfo.firstName || contactInfo.lastName) {
+      retval = `${contactInfo.firstName} ${contactInfo.lastName} (${
+        contactInfo.email
+      })`
+    } else {
+      retval = contactInfo.email
+    }
+    if (contactInfo.company) {
+      retval = `${retval} - ${contactInfo.company}`
+    }
+    return retval || ''
+  }
+)
+
+export const gradesSelector = createSelector(
+  resultsSelector,
+  results => {
+    const grades = results.grades ? results.grades : []
+    return _sortBy(grades, o => o.order).map(
+      ({ threshold, score, ...rest }) => ({
+        ...rest,
+        thumbsUp: score > threshold
+      })
+    )
+  }
+)

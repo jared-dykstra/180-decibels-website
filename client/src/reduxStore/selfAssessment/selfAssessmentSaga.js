@@ -15,17 +15,19 @@ import { ASSESSMENT_RESULT_FORM_EMAIL_KEY } from '180-decibels-shared/assessment
 import { getValidationErrors } from 'apiUtils'
 
 import {
-  SELF_ASSESSMENT_GET_RESULTS,
+  SELF_ASSESSMENT_SUBMIT_RESULTS,
   ASSESSMENT_RESULT_FORM_KEY,
   SELF_ASSESSMENT_INITIALIZE,
-  SELF_ASSESSMENT_SET_VOLUME
+  SELF_ASSESSMENT_SET_VOLUME,
+  SELF_ASSESSMENT_LOAD_RESULTS
 } from './selfAssessmentConstants'
-import { getQuiz, answerQuestion, answerQuiz } from './fetcher'
+import { getQuiz, answerQuestion, answerQuiz, getQuizResults } from './fetcher'
 import {
   initialized,
   getResultsSuccess,
   addAnswerId,
-  nextSlide
+  nextSlide,
+  loadResultsComplete
 } from './selfAssessmentActions'
 import { mountPoint } from '.'
 
@@ -39,12 +41,13 @@ function* initHandler(action) {
       yield put(initialized({ assessmentName, quiz }))
     }
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`Get Quiz Error. err=${JSON.stringify(err)}`)
     throw err
   }
 }
 
-function* quizResultsHandler(action) {
+function* submitQuizHandler(action) {
   try {
     yield put(startSubmit(ASSESSMENT_RESULT_FORM_KEY))
     const { payload } = action
@@ -70,6 +73,7 @@ function* quizResultsHandler(action) {
     }
   } catch (err) {
     yield put(stopSubmit(ASSESSMENT_RESULT_FORM_KEY, {}))
+    // eslint-disable-next-line no-console
     console.error(`quizResultsHandler Error. err=${JSON.stringify(err)}`)
     throw err
   }
@@ -87,7 +91,21 @@ function* setVolumeHandler(action) {
     })
     yield put(addAnswerId({ assessmentName, questionId, answerId }))
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`setVolumeHandlerError.  err=${JSON.stringify(err)}`)
+    throw err
+  }
+}
+
+function* loadResultHandler(action) {
+  try {
+    const { payload } = action
+    const { resultId } = payload
+    const results = yield call(getQuizResults, resultId)
+    yield put(loadResultsComplete({ results, resultId }))
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`loadResultHandler.  err=${JSON.stringify(err)}`)
     throw err
   }
 }
@@ -102,6 +120,7 @@ export default function*() {
   yield all([
     takeEvery(SELF_ASSESSMENT_INITIALIZE, initHandler),
     takeEvery(SELF_ASSESSMENT_SET_VOLUME, setVolumeHandler),
-    takeLatest(SELF_ASSESSMENT_GET_RESULTS, quizResultsHandler)
+    takeLatest(SELF_ASSESSMENT_SUBMIT_RESULTS, submitQuizHandler),
+    takeEvery(SELF_ASSESSMENT_LOAD_RESULTS, loadResultHandler)
   ])
 }

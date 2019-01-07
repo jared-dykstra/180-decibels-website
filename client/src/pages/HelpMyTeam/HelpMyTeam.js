@@ -42,7 +42,7 @@ export default () => (
           enough to create an initial report, which will contain concrete,
           actionable steps that you can immediately use.
         </p>
-        <SelfAssessment assessmentName="helpMyTeam" />
+        <SelfAssessment assessmentName="helpMyTeam" id="quiz" />
       </Col>
     </Row>
   </Template>

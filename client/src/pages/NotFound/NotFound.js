@@ -1,13 +1,25 @@
 import React from 'react'
-import { Button } from 'reactstrap'
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 
-import { Template } from '../../components'
+import { Template } from 'components'
+import { ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 
 export default () => (
   <Template>
-    <p />
-    <h1>404</h1>
-    <h2>Sorry, the page you were looking for cannot be found</h2>
-    <Button>Go to Home Page</Button>
+    <br />
+    <h2>Not Found</h2>
+    <p>Sorry, the page you were looking for cannot be found</p>
+    <br />
+    <br />
+    <Button
+      color="primary"
+      variant="contained"
+      size="lg"
+      component={Link}
+      to={ROUTE_HOME}
+    >
+      Go to Home Page
+    </Button>
   </Template>
 )

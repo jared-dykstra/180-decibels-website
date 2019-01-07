@@ -2,12 +2,24 @@
 import { DataSource } from 'apollo-datasource'
 import {
   getAssessment,
+  getAssessmentResult,
   answerQuestion,
   answerQuiz,
-  updateUser
+  updateUser,
+  getCompetencies
 } from '../../db/dbAdapter'
 
+import gradeQuiz from './GradeQuiz'
+
 /* eslint-disable class-methods-use-this */
+
+const getGradedAssessmentResult = async resultId => {
+  const { quizRubric, ...response } = await getAssessmentResult(resultId)
+  const competencies = await getCompetencies()
+  const grade = gradeQuiz({ competencies, quizRubric, response })
+  const gradedResponse = { ...response, grade }
+  return gradedResponse
+}
 
 export default class AssessmentApi extends DataSource {
   initialize(config) {
@@ -18,6 +30,25 @@ export default class AssessmentApi extends DataSource {
     const { name } = args
     const assessment = await getAssessment(name)
     return assessment
+  }
+
+  async getAssessmentResult(args) {
+    const { id: resultId } = args
+    const gradedResponse = await getGradedAssessmentResult(resultId)
+
+    const { quizTimestamp, originalUserId, contactInfo, grade } = gradedResponse
+    const grades = Object.entries(grade).map(([competencyId, value]) => ({
+      competencyId,
+      ...value
+    }))
+    const response = {
+      quizTimestamp: `${quizTimestamp}`,
+      originalUserId,
+      contactInfo,
+      grades
+    }
+
+    return response
   }
 
   async answerQuestion(args, context) {
@@ -32,6 +63,10 @@ export default class AssessmentApi extends DataSource {
     const { userId } = context
     await updateUser(userId, response.contactInfo)
     const responseId = await answerQuiz(userId, response)
+
+    // TODO: Start background task (non-awaited promise) to build graded response and add to AgileCRM
+    // const gradedResponse = getGradedAssessmentResult(responseId)
+
     return responseId
   }
 }

@@ -38,7 +38,7 @@ export default () => (
           enough to create an initial report, which will contain concrete,
           actionable steps that you can immediately use.
         </p>
-        <SelfAssessment assessmentName="helpMe" />
+        <SelfAssessment assessmentName="helpMe" id="quiz" />
         <p>
           Maybe your company grew very quickly or maybe you have people in seats
           that were never trained to manage…that is all very normal. But an

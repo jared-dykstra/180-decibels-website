@@ -1,3 +1,6 @@
+export {
+  default as AssessmentResult
+} from './AssessmentResult/AssessmentResult'
 export { default as Confidentiality } from './Confidentiality/Confidentiality'
 export { default as Home } from './Home/Home'
 export { default as HelpMe } from './HelpMe/HelpMe'

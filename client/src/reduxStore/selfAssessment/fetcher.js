@@ -86,3 +86,36 @@ export const answerQuestion = async answer => {
   const retval = await clientExecuteAsync(operation, 'answerQuestion')
   return retval
 }
+
+export const getQuizResults = async resultId => {
+  const operation = {
+    query: gql`
+      query getAssessmentResult($resultId: ID!) {
+        getAssessmentResult(id: $resultId) {
+          quizTimestamp
+          originalUserId
+          contactInfo {
+            email
+            firstName
+            lastName
+            company
+          }
+          grades {
+            competencyId
+            name
+            threshold
+            score
+            order
+            comment
+            link
+          }
+        }
+      }
+    `,
+    variables: {
+      resultId
+    }
+  }
+  const retval = await clientExecuteAsync(operation, 'getAssessmentResult')
+  return retval
+}

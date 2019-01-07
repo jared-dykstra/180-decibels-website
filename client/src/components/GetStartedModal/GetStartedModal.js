@@ -9,16 +9,20 @@ import {
   Toolbar,
   AppBar,
   IconButton,
+  Typography,
   withWidth
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
-import { getStartedModalIsOpenSelector } from 'reduxStore/getStarted/getStartedSelectors'
+import {
+  getStartedModalIsOpenSelector,
+  getStartedModalLinkTextSelector
+} from 'reduxStore/getStarted/getStartedSelectors'
 import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 
 import { GetStarted } from 'components'
 
-const GetStartedModal = ({ isModalOpen, doCloseDialog, width }) => (
+const GetStartedModal = ({ isModalOpen, linkText, doCloseDialog, width }) => (
   <Dialog
     open={isModalOpen}
     onClose={doCloseDialog}
@@ -40,6 +44,11 @@ const GetStartedModal = ({ isModalOpen, doCloseDialog, width }) => (
       </Toolbar>
     </AppBar>
     <DialogContent style={{ marginTop: '1em' }}>
+      {linkText && (
+        <Typography align="center" color="secondary">
+          {linkText}
+        </Typography>
+      )}
       <DialogContentText>
         A short conversation will help us understand your needs. You get tools
         that can improve your business right away.
@@ -51,18 +60,21 @@ const GetStartedModal = ({ isModalOpen, doCloseDialog, width }) => (
 
 GetStartedModal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
+  linkText: PropTypes.string,
   doCloseDialog: PropTypes.func.isRequired,
   width: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']) // <== See https://material-ui.com/layout/breakpoints/#withwidth-options-higher-order-component
 }
 
 GetStartedModal.defaultProps = {
+  linkText: null,
   // If SSR is used, width is not available
   width: 'lg'
 }
 
 export default connect(
   state => ({
-    isModalOpen: getStartedModalIsOpenSelector(state)
+    isModalOpen: getStartedModalIsOpenSelector(state),
+    linkText: getStartedModalLinkTextSelector(state)
   }),
   dispatch => ({
     doCloseDialog: () => dispatch(closeDialog())

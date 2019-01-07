@@ -8,7 +8,9 @@ import {
   SELF_ASSESSMENT_INITIALIZE,
   SELF_ASSESSMENT_INITIALIZED,
   SELF_ASSESSMENT_ADD_ANSWER_ID,
-  SELF_ASSESSMENT_GET_RESULTS_SUCCESS
+  SELF_ASSESSMENT_SUBMIT_RESULTS_SUCCESS,
+  SELF_ASSESSMENT_LOAD_RESULTS,
+  SELF_ASSESSMENT_LOAD_RESULTS_COMPLETE
 } from './selfAssessmentConstants'
 
 const currentSlidePath = ({ assessmentName }) => [
@@ -64,7 +66,7 @@ export default (state = initialState, action) => {
         answerId
       )
     }
-    case SELF_ASSESSMENT_GET_RESULTS_SUCCESS: {
+    case SELF_ASSESSMENT_SUBMIT_RESULTS_SUCCESS: {
       const { responseId, assessmentName, email } = action.payload
       return state.setIn([assessmentName, 'results'], { responseId, email })
     }
@@ -77,6 +79,14 @@ export default (state = initialState, action) => {
       const path = currentSlidePath(action.payload)
       const currentSlide = state.getIn(path)
       return state.setIn(path, currentSlide - 1)
+    }
+    case SELF_ASSESSMENT_LOAD_RESULTS: {
+      const { resultId } = action.payload
+      return state.setIn(['results', resultId], { results: null, error: true })
+    }
+    case SELF_ASSESSMENT_LOAD_RESULTS_COMPLETE: {
+      const { resultId, results } = action.payload
+      return state.setIn(['results', resultId], { results, error: !results })
     }
     default:
       return state

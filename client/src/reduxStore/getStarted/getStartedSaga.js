@@ -25,6 +25,7 @@ function* contactHandler(action) {
     }
   } catch (err) {
     yield put(stopSubmit(GET_STARTED_FORM_KEY, {}))
+    // eslint-disable-next-line no-console
     console.error(`Get Started Error. err=${JSON.stringify(err)}`)
     throw err
   }
