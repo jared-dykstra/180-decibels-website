@@ -11,7 +11,7 @@ const initialQuizState = () => ({
   results: {
     responseId: null,
     email: null,
-    error: false
+    error: undefined
   }
 })
 

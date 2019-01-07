@@ -82,7 +82,10 @@ export default (state = initialState, action) => {
     }
     case SELF_ASSESSMENT_LOAD_RESULTS: {
       const { resultId } = action.payload
-      return state.setIn(['results', resultId], { results: null, error: true })
+      return state.setIn(['results', resultId], {
+        results: null,
+        error: undefined
+      })
     }
     case SELF_ASSESSMENT_LOAD_RESULTS_COMPLETE: {
       const { resultId, results } = action.payload

@@ -36,7 +36,7 @@ class AssessmentResult extends PureComponent {
   static propTypes = {
     doLoadResults: PropTypes.func.isRequired,
     displayName: PropTypes.string.isRequired,
-    hasError: PropTypes.bool.isRequired,
+    hasError: PropTypes.bool,
     // id: PropTypes.string.isRequired,
     grades: PropTypes.arrayOf(
       PropTypes.shape({
@@ -50,6 +50,10 @@ class AssessmentResult extends PureComponent {
     match: PropTypes.shape({
       id: PropTypes.string
     }).isRequired
+  }
+
+  static defaultProps = {
+    hasError: undefined
   }
 
   constructor(props) {
@@ -169,7 +173,8 @@ class AssessmentResult extends PureComponent {
           <title>180 Decibels - Confidentiality</title>
           <meta name="description" content="How are you doing?" />
         </Helmet>
-        {hasError && (
+        {hasError === undefined && <h5>Loading...</h5>}
+        {hasError === true && (
           <div>
             <br />
             <h2>Not Found</h2>
@@ -183,7 +188,7 @@ class AssessmentResult extends PureComponent {
             <Button
               color="primary"
               variant="contained"
-              size="lg"
+              size="large"
               component={Link}
               to={ROUTE_HOME}
             >
@@ -191,7 +196,7 @@ class AssessmentResult extends PureComponent {
             </Button>
           </div>
         )}
-        {!hasError && <Report />}
+        {hasError === false && <Report />}
       </Template>
     )
   }
