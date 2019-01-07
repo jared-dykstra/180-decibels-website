@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import {
   resultsUrlSelector,
@@ -16,14 +17,18 @@ const Results = ({ resultsUrl, resultsEmail }) => (
     </p>
     <p>Or use the following link:</p>
     <p>
-      <a href={resultsUrl}>{resultsUrl}</a>
+      <Link to={resultsUrl}>{resultsUrl}</Link>
     </p>
   </div>
 )
 
 Results.propTypes = {
   resultsUrl: PropTypes.string.isRequired,
-  resultsEmail: PropTypes.string.isRequired
+  resultsEmail: PropTypes.string
+}
+
+Results.defaultProps = {
+  resultsEmail: undefined
 }
 
 export default connect(

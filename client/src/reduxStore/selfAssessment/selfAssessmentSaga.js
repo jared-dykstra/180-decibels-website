@@ -41,6 +41,7 @@ function* initHandler(action) {
       yield put(initialized({ assessmentName, quiz }))
     }
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`Get Quiz Error. err=${JSON.stringify(err)}`)
     throw err
   }
@@ -72,6 +73,7 @@ function* submitQuizHandler(action) {
     }
   } catch (err) {
     yield put(stopSubmit(ASSESSMENT_RESULT_FORM_KEY, {}))
+    // eslint-disable-next-line no-console
     console.error(`quizResultsHandler Error. err=${JSON.stringify(err)}`)
     throw err
   }
@@ -89,6 +91,7 @@ function* setVolumeHandler(action) {
     })
     yield put(addAnswerId({ assessmentName, questionId, answerId }))
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`setVolumeHandlerError.  err=${JSON.stringify(err)}`)
     throw err
   }
@@ -101,6 +104,7 @@ function* loadResultHandler(action) {
     const results = yield call(getQuizResults, resultId)
     yield put(loadResultsSuccess({ results, resultId }))
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`loadResultHandler.  err=${JSON.stringify(err)}`)
     throw err
   }

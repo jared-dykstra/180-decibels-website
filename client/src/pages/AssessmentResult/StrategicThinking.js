@@ -40,8 +40,9 @@ const StrategicThinking = () => (
         how the ideal customer thinks and makes decisions.
       </li>
       <li>
-        <Action>Short-term priorities</Action>A short list of the most important
-        objectives that the company must achieve in the next 30-90 days.
+        <Action>Short-term priorities</Action> - A short list of the most
+        important objectives that the company must achieve in the next 30-90
+        days.
       </li>
     </ul>
     <h5>

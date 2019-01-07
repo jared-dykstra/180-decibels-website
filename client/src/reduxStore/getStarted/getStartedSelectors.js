@@ -7,3 +7,8 @@ export const getStartedModalIsOpenSelector = createSelector(
   getStartedSelector,
   getStarted => getStarted.isOpen
 )
+
+export const getStartedModalLinkTextSelector = createSelector(
+  getStartedSelector,
+  getStarted => getStarted.linkText
+)

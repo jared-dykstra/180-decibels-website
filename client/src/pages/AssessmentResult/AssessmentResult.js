@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
 import {
   Button,
   ExpansionPanel,
@@ -13,6 +15,10 @@ import ThumbUp from '@material-ui/icons/ThumbUp'
 
 import { Template } from 'components'
 
+import {
+  ROUTE_HELP_MY_TEAM,
+  ROUTE_HELP_ME
+} from 'reduxStore/routes/routesConstants'
 import { loadResults } from 'reduxStore/selfAssessment/selfAssessmentActions'
 import {
   displayNameSelector,
@@ -60,6 +66,10 @@ class AssessmentResult extends PureComponent {
 
     return (
       <Template>
+        <Helmet>
+          <title>180 Decibels - Confidentiality</title>
+          <meta name="description" content="How are you doing?" />
+        </Helmet>
         <h2>How are you Doing?</h2>
         <br />
         <Grid container>
@@ -136,6 +146,19 @@ class AssessmentResult extends PureComponent {
               </ExpansionPanelDetails>
             </ExpansionPanel>
           ))}
+          <Grid item xs={11} align="center">
+            <i>
+              Would you like to take or re-take the asessment for{' '}
+              <Link to={{ pathname: ROUTE_HELP_ME, hash: 'quiz' }}>
+                yourself
+              </Link>{' '}
+              or{' '}
+              <Link to={{ pathname: ROUTE_HELP_MY_TEAM, hash: 'quiz' }}>
+                your team
+              </Link>
+              ?
+            </i>
+          </Grid>
         </Grid>
       </Template>
     )

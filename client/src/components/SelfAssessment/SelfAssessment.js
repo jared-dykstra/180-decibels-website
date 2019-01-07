@@ -83,6 +83,7 @@ class SelfAssessment extends PureComponent {
 
   render() {
     const {
+      id,
       assessmentName,
       isInitialized,
       questions,
@@ -177,42 +178,44 @@ class SelfAssessment extends PureComponent {
       isInitialized && (isFirstSlide || currentQuestionHasBeenRespondedTo)
 
     return (
-      <Swipeable
-        onSwipingLeft={() => (canAdvanceSlide ? this.next() : undefined)}
-        onSwipingRight={() => (!isFirstSlide ? this.previous() : undefined)}
-        stopPropagation
-        trackMouse
-      >
-        <Carousel
-          interval={false}
-          activeIndex={currentIndex}
-          next={this.next}
-          previous={this.previous}
-          className={styles.carousel}
+      <div id={id}>
+        <Swipeable
+          onSwipingLeft={() => (canAdvanceSlide ? this.next() : undefined)}
+          onSwipingRight={() => (!isFirstSlide ? this.previous() : undefined)}
+          stopPropagation
+          trackMouse
         >
-          <CarouselIndicators
-            // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
-            items={slides.map(s => ({ src: s.key }))}
+          <Carousel
+            interval={false}
             activeIndex={currentIndex}
-            onClickHandler={() => {}}
-          />
-          {slides}
-          {!isFirstSlide && (
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={this.previous}
+            next={this.next}
+            previous={this.previous}
+            className={styles.carousel}
+          >
+            <CarouselIndicators
+              // key is set via 'src' field. https://stackoverflow.com/a/49418684/5373104
+              items={slides.map(s => ({ src: s.key }))}
+              activeIndex={currentIndex}
+              onClickHandler={() => {}}
             />
-          )}
-          {canAdvanceSlide && (
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={this.next}
-            />
-          )}
-        </Carousel>
-      </Swipeable>
+            {slides}
+            {!isFirstSlide && (
+              <CarouselControl
+                direction="prev"
+                directionText="Previous"
+                onClickHandler={this.previous}
+              />
+            )}
+            {canAdvanceSlide && (
+              <CarouselControl
+                direction="next"
+                directionText="Next"
+                onClickHandler={this.next}
+              />
+            )}
+          </Carousel>
+        </Swipeable>
+      </div>
     )
   }
 }

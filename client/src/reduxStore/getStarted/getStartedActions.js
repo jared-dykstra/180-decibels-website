@@ -5,9 +5,9 @@ import {
   GET_STARTED_CONTACT_SUCCESS
 } from './getStartedConstants'
 
-export const openDialog = () => ({
+export const openDialog = linkText => ({
   type: GET_STARTED_OPEN_MODAL,
-  payload: {}
+  payload: { linkText }
 })
 
 export const closeDialog = () => ({

@@ -120,12 +120,12 @@ const People = () => (
       </li>
       <li>
         <Action>Tell them how their success will be measured</Action> - This can
-        be done ideally, with numbers or with a clear definition of what 'done'
-        looks like for specific tasks or projects. Take the time to understand
-        how they are doing with a task or project and offer guidance when they
-        need it. As you can imagine managing performance is far, far easier if
-        tasks are easy to measure. This lets you easily measure is it, done or
-        not-done?
+        be done ideally, with numbers or with a clear definition of what
+        &apos;done&apos; looks like for specific tasks or projects. Take the
+        time to understand how they are doing with a task or project and offer
+        guidance when they need it. As you can imagine managing performance is
+        far, far easier if tasks are easy to measure. This lets you easily
+        measure is it, done or not-done?
       </li>
       <li>
         <Action>Build an Accountability Chart</Action> - Ensure that everyone
@@ -141,10 +141,10 @@ const People = () => (
         that everyone fully understands the expected behaviors and attitudes
         (expressed in the Core Values). Acknowledge them for having a positive
         attitude, showing initiative, going above and beyond for customers or,
-        whatever is inline with your published Core Values. And, when a person's
-        behavior is too far outside the lines then help them understand that
-        they are outside and that the need to modify their behavior and keep it
-        in alignment with the organizational values.
+        whatever is inline with your published Core Values. And, when a
+        person&apos;s behavior is too far outside the lines then help them
+        understand that they are outside and that the need to modify their
+        behavior and keep it in alignment with the organizational values.
       </li>
       <li>
         <Action>Ensure that the leadership team is fully aligned</Action> - It
