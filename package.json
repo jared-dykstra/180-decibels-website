@@ -13,7 +13,7 @@
   "private": true,
   "workspaces": {
     "packages": ["client", "server", "shared"],
-    "nohoist": ["**/babel-jest", "**/babel-jest/**"]
+    "nohoist": ["**/babel-jest", "**/babel-jest/**", "**/react-scripts", "**/react-scripts/**"]
   },
   "dependencies": {},
   "devDependencies": {
