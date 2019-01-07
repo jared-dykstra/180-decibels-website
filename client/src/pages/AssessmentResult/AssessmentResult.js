@@ -62,9 +62,14 @@ class AssessmentResult extends PureComponent {
       <Template>
         <h2>How are you Doing?</h2>
         <br />
-        <Grid container spacing={24}>
+        <Grid container>
           <Grid item xs={4} sm={3} align="right">
-            <span style={{ fontSize: '6rem' }}>
+            <span
+              style={{
+                fontSize: '6rem',
+                marginRight: '.5em'
+              }}
+            >
               <Podium fontSize="inherit" />
             </span>
           </Grid>
@@ -74,6 +79,11 @@ class AssessmentResult extends PureComponent {
               minimal politics &amp; confusion plus high degrees of morale &amp;
               productivity.
             </h5>
+          </Grid>
+          <Grid item xs={12}>
+            <p style={{ marginTop: '2em', textAlign: 'center' }}>
+              <i>Prepared for {displayName}</i>
+            </p>
           </Grid>
           {grades.map(grade => (
             <ExpansionPanel key={grade.competencyId} style={{ margin: '1em' }}>
@@ -124,9 +134,6 @@ class AssessmentResult extends PureComponent {
             </ExpansionPanel>
           ))}
         </Grid>
-        <p style={{ marginTop: '2em', textAlign: 'center' }}>
-          <i>Prepared for {displayName}</i>
-        </p>
       </Template>
     )
   }
