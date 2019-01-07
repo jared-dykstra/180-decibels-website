@@ -9,7 +9,7 @@ export const SELF_ASSESSMENT_SUBMIT_RESULTS_SUCCESS =
   'self-assessment/SUBMIT_RESULTS/SUCCESS'
 
 export const SELF_ASSESSMENT_LOAD_RESULTS = 'self-assessment/LOAD_RESULTS'
-export const SELF_ASSESSMENT_LOAD_RESULTS_SUCCESS =
+export const SELF_ASSESSMENT_LOAD_RESULTS_COMPLETE =
   'self-assessment/LOAD_RESULTS_SUCCESS'
 
 // Form to collect email address

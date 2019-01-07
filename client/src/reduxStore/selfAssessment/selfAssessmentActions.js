@@ -8,7 +8,7 @@ import {
   SELF_ASSESSMENT_INITIALIZED,
   SELF_ASSESSMENT_ADD_ANSWER_ID,
   SELF_ASSESSMENT_LOAD_RESULTS,
-  SELF_ASSESSMENT_LOAD_RESULTS_SUCCESS
+  SELF_ASSESSMENT_LOAD_RESULTS_COMPLETE
 } from './selfAssessmentConstants'
 
 export const initialize = ({ assessmentName }) => ({
@@ -58,7 +58,7 @@ export const loadResults = ({ resultId }) => ({
   payload: { resultId }
 })
 
-export const loadResultsSuccess = ({ resultId, results }) => ({
-  type: SELF_ASSESSMENT_LOAD_RESULTS_SUCCESS,
+export const loadResultsComplete = ({ resultId, results }) => ({
+  type: SELF_ASSESSMENT_LOAD_RESULTS_COMPLETE,
   payload: { resultId, results }
 })

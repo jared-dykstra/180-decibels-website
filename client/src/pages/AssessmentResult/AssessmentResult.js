@@ -17,13 +17,15 @@ import { Template } from 'components'
 
 import {
   ROUTE_HELP_MY_TEAM,
-  ROUTE_HELP_ME
+  ROUTE_HELP_ME,
+  ROUTE_HOME
 } from 'reduxStore/routes/routesConstants'
 import { loadResults } from 'reduxStore/selfAssessment/selfAssessmentActions'
 import {
   displayNameSelector,
   // idSelector,
-  gradesSelector
+  gradesSelector,
+  resultsErrorSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
 import CompetencyIcon from './CompetencyIcon'
@@ -34,6 +36,7 @@ class AssessmentResult extends PureComponent {
   static propTypes = {
     doLoadResults: PropTypes.func.isRequired,
     displayName: PropTypes.string.isRequired,
+    hasError: PropTypes.bool.isRequired,
     // id: PropTypes.string.isRequired,
     grades: PropTypes.arrayOf(
       PropTypes.shape({
@@ -56,7 +59,7 @@ class AssessmentResult extends PureComponent {
   }
 
   render() {
-    const { displayName, grades } = this.props
+    const { displayName, grades, hasError } = this.props
 
     // Should probably use withStyles() and make this a css class
     const flexCenter = {
@@ -64,12 +67,19 @@ class AssessmentResult extends PureComponent {
       display: 'flex'
     }
 
-    return (
-      <Template>
-        <Helmet>
-          <title>180 Decibels - Confidentiality</title>
-          <meta name="description" content="How are you doing?" />
-        </Helmet>
+    const TakeTestAction = () => (
+      <i>
+        Would you like to take or re-take the assessment for{' '}
+        <Link to={{ pathname: ROUTE_HELP_ME, hash: 'quiz' }}>yourself</Link> or{' '}
+        <Link to={{ pathname: ROUTE_HELP_MY_TEAM, hash: 'quiz' }}>
+          your team
+        </Link>
+        ?
+      </i>
+    )
+
+    const Report = () => (
+      <div>
         <h2>How are you Doing?</h2>
         <br />
         <Grid container>
@@ -147,19 +157,41 @@ class AssessmentResult extends PureComponent {
             </ExpansionPanel>
           ))}
           <Grid item xs={11} align="center">
-            <i>
-              Would you like to take or re-take the asessment for{' '}
-              <Link to={{ pathname: ROUTE_HELP_ME, hash: 'quiz' }}>
-                yourself
-              </Link>{' '}
-              or{' '}
-              <Link to={{ pathname: ROUTE_HELP_MY_TEAM, hash: 'quiz' }}>
-                your team
-              </Link>
-              ?
-            </i>
+            <TakeTestAction />
           </Grid>
         </Grid>
+      </div>
+    )
+
+    return (
+      <Template>
+        <Helmet>
+          <title>180 Decibels - Confidentiality</title>
+          <meta name="description" content="How are you doing?" />
+        </Helmet>
+        {hasError && (
+          <div>
+            <br />
+            <h2>Not Found</h2>
+            <p>
+              We&apos;re sorry, but the the requested assessment was not found
+              or is no longer available
+            </p>
+            <TakeTestAction />
+            <br />
+            <br />
+            <Button
+              color="primary"
+              variant="contained"
+              size="lg"
+              component={Link}
+              to={ROUTE_HOME}
+            >
+              Go to Home Page
+            </Button>
+          </div>
+        )}
+        {!hasError && <Report />}
       </Template>
     )
   }
@@ -168,6 +200,7 @@ class AssessmentResult extends PureComponent {
 export default connect(
   (state, props) => ({
     // id: idSelector(state, props),
+    hasError: resultsErrorSelector(state, props),
     displayName: displayNameSelector(state, props),
     grades: gradesSelector(state, props)
   }),

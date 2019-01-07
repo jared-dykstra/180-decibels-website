@@ -27,7 +27,7 @@ import {
   getResultsSuccess,
   addAnswerId,
   nextSlide,
-  loadResultsSuccess
+  loadResultsComplete
 } from './selfAssessmentActions'
 import { mountPoint } from '.'
 
@@ -102,7 +102,7 @@ function* loadResultHandler(action) {
     const { payload } = action
     const { resultId } = payload
     const results = yield call(getQuizResults, resultId)
-    yield put(loadResultsSuccess({ results, resultId }))
+    yield put(loadResultsComplete({ results, resultId }))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(`loadResultHandler.  err=${JSON.stringify(err)}`)

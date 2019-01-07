@@ -105,11 +105,21 @@ export const makeCanGoToNextQuestionSelector = () =>
 // "match" is supplied by react-router
 export const idSelector = (state, props) => props.match.params.id
 
-export const resultsSelector = (state, props) => {
+const rawResultsSelector = (state, props) => {
   const id = idSelector(state, props)
-  const results = state[mountPoint].results[id]
-  return results || {}
+  const raw = state[mountPoint].results[id]
+  return raw || {}
 }
+
+export const resultsErrorSelector = createSelector(
+  rawResultsSelector,
+  raw => raw.error
+)
+
+export const resultsSelector = createSelector(
+  rawResultsSelector,
+  raw => (raw.error ? {} : raw.results || {})
+)
 
 const contactInfoSelector = createSelector(
   resultsSelector,

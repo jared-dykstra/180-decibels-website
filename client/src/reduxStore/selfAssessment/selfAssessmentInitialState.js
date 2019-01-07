@@ -10,7 +10,8 @@ const initialQuizState = () => ({
   configuration: {},
   results: {
     responseId: null,
-    email: null
+    email: null,
+    error: false
   }
 })
 
