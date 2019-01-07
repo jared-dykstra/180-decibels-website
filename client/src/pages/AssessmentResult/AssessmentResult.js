@@ -93,7 +93,10 @@ class AssessmentResult extends PureComponent {
                     item
                     xs={2}
                     sm={1}
-                    style={{ fontSize: '2.5rem', ...flexCenter }}
+                    style={{
+                      fontSize: '2.5rem',
+                      ...flexCenter
+                    }}
                   >
                     <CompetencyIcon
                       competencyId={grade.competencyId}
