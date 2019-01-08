@@ -24,10 +24,12 @@ import { GetStarted } from 'components'
 
 class GetStartedModal extends PureComponent {
   componentDidUpdate = prevProps => {
-    const { isModalOpen, tracker } = this.props
+    const { isModalOpen, tracker, linkText } = this.props
     const { isModalOpen: prevIsModalOpen } = prevProps
     if (isModalOpen !== prevIsModalOpen && isModalOpen) {
-      tracker.modalView({ modalName: 'getStarted' })
+      tracker.modalView({
+        modalName: `getStarted${linkText ? `/${linkText}` : ''}`
+      })
     }
   }
 
