@@ -33,7 +33,10 @@ class Question extends PureComponent {
     next: PropTypes.func.isRequired,
     hintLow: PropTypes.string.isRequired,
     hintHigh: PropTypes.string.isRequired,
-    autoAdvanceTimeMs: PropTypes.number
+    autoAdvanceTimeMs: PropTypes.number,
+    tracker: PropTypes.shape({
+      event: PropTypes.func.isRequired
+    }).isRequired
   }
 
   static defaultProps = {
@@ -73,7 +76,7 @@ class Question extends PureComponent {
   }
 
   doSetVolume = value => {
-    const { assessmentName, questionId, setVolume } = this.props
+    const { assessmentName, questionId, setVolume, tracker } = this.props
 
     // TODO: Either fix this or remove...
     // TODO: isTouchDevice should really be hasEverReceivedHoverEvent
@@ -89,6 +92,13 @@ class Question extends PureComponent {
     //     setVolume({ assessmentName, volume: v, questionId })
     //   )
     // }
+
+    tracker.event({
+      category: 'SelfAssessment',
+      action: 'SetVolume',
+      value,
+      label: questionId
+    })
   }
 
   render() {

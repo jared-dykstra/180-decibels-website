@@ -34,12 +34,6 @@ const THEME = createMuiTheme({
 })
 
 class Router extends PureComponent {
-  componentDidMount = () => {
-    const { logPageView } = this.props
-    const { pathname, search } = window.location
-    logPageView({ pathname, search })
-  }
-
   render() {
     const { store, history } = this.props
     return (
@@ -57,7 +51,6 @@ class Router extends PureComponent {
 }
 
 Router.propTypes = {
-  logPageView: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   store: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types

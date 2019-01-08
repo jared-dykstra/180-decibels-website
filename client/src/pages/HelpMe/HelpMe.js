@@ -6,7 +6,7 @@ import { Quote, SelfAssessment, Template } from 'components'
 
 import styles from './HelpMe.module.scss'
 
-export default () => (
+const HelpMe = props => (
   <Template className={styles['help-me']}>
     <Helmet>
       <title>180 Decibels - Help Me</title>
@@ -38,7 +38,7 @@ export default () => (
           enough to create an initial report, which will contain concrete,
           actionable steps that you can immediately use.
         </p>
-        <SelfAssessment assessmentName="helpMe" id="quiz" />
+        <SelfAssessment assessmentName="helpMe" id="quiz" {...props} />
         <p>
           Maybe your company grew very quickly or maybe you have people in seats
           that were never trained to manage…that is all very normal. But an
@@ -51,3 +51,5 @@ export default () => (
     </Row>
   </Template>
 )
+
+export default HelpMe

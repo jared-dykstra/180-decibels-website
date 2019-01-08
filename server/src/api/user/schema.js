@@ -16,8 +16,9 @@ const typeDefs = gql`
   }
 
   type AuthResponse @cacheControl(scope: PRIVATE) {
-    user: User!
-    userProfileToken: String!
+    userId: ID!
+    user: User
+    userProfileToken: String
   }
 
   input UserInput {

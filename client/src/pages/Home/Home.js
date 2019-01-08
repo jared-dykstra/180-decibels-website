@@ -29,7 +29,7 @@ export class Home extends PureComponent {
   }
 
   render() {
-    const { doClickHelpMe, doClickHelpMyTeam } = this.props
+    const { doClickHelpMe, doClickHelpMyTeam, tracker } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
     return (
       <Template className={styles.home}>
@@ -124,7 +124,8 @@ export class Home extends PureComponent {
                   <Video
                     {...{
                       poster: `${CDN}/intro-video-poster.jpg`,
-                      src: `${CDN}/180Voiceover2.mp4`
+                      src: `${CDN}/180Voiceover2.mp4`,
+                      tracker
                     }}
                   />
                 </Paper>
@@ -139,7 +140,8 @@ export class Home extends PureComponent {
                 <Video
                   {...{
                     poster: `${CDN}/sun-video-poster.jpg`,
-                    src: `${CDN}/180DecibelsSunMetaphor.mp4`
+                    src: `${CDN}/180DecibelsSunMetaphor.mp4`,
+                    tracker
                   }}
                 />
               </Paper>
@@ -160,12 +162,15 @@ Home.propTypes = {
   doClickHelpMe: PropTypes.func.isRequired,
   doClickHelpMyTeam: PropTypes.func.isRequired,
   history: PropTypes.shape({
-    replace: PropTypes.func
+    replace: PropTypes.func.isRequired
   }).isRequired, // <-- Passed down from react router
   location: PropTypes.shape({
-    location: PropTypes.string,
+    search: PropTypes.string,
     path: PropTypes.string
-  }).isRequired // <-- Passed down from react router
+  }).isRequired, // <-- Passed down from react router
+  tracker: PropTypes.shape({
+    event: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default connect(

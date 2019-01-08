@@ -92,22 +92,21 @@ export default class UserAPI extends DataSource {
     try {
       user = await jwt.verify(userProfileToken, config.get('jwtSecret'))
     } catch (err) {
-      throw new Error('Authentication token not found or expired.')
-    }
-
-    if (!user) {
-      throw new Error('User not found.  Sign in again?')
+      console.log('Authentication token not found or expired.')
     }
 
     await appendLogEvent({
       userId,
       source: AUTH,
-      event: 'Authenticated'
+      event: user
+        ? `Authenticated with verified jwtToken - userId=${userId}`
+        : `Authenticated (no valid jwtToken) - userId=${userId}`
     })
 
     return {
       user,
-      userProfileToken
+      userProfileToken,
+      userId
     }
   }
 
@@ -190,6 +189,7 @@ export default class UserAPI extends DataSource {
     // Everything is OK
     const userProfileToken = getAndSetUserProfile({ user, res })
     return {
+      userId,
       user,
       userProfileToken
     }

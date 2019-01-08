@@ -8,7 +8,7 @@ import { initializedSelector } from 'reduxStore/selfAssessment/selfAssessmentSel
 import Heading from './Heading'
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-const Intro = ({ isInitialized, next }) => (
+const Intro = ({ isInitialized, next, tracker }) => (
   <div onClick={next} role="presentation" className="h-100">
     <Heading align="center">
       How loudly will each of the following questions resonate for your
@@ -20,7 +20,14 @@ const Intro = ({ isInitialized, next }) => (
           variant="contained"
           color="primary"
           size="large"
-          onClick={e => next || e.stopPropagation()}
+          onClick={e => {
+            const retval = next || e.stopPropagation()
+            tracker.event({
+              category: 'SelfAssessment',
+              action: 'Begin'
+            })
+            return retval
+          }}
           style={{ marginTop: '3rem' }}
           disabled={!isInitialized}
         >
@@ -36,7 +43,10 @@ Intro.propTypes = {
   // assessmentName is used via initializedSelector
   // eslint-disable-next-line react/no-unused-prop-types
   assessmentName: PropTypes.string.isRequired,
-  isInitialized: PropTypes.bool.isRequired
+  isInitialized: PropTypes.bool.isRequired,
+  tracker: PropTypes.shape({
+    event: PropTypes.func.isRequired
+  }).isRequired
 }
 
 Intro.defaultProps = {
