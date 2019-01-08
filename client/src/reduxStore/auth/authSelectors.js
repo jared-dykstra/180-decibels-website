@@ -28,3 +28,8 @@ export const nameSelector = createSelector(
   userSelector,
   user => (user ? user[REGISTER_FORM_FIRST_NAME_KEY] : null)
 )
+
+export const userIdSelector = createSelector(
+  authSelector,
+  auth => auth.userId
+)

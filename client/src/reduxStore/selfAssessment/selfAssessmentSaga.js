@@ -98,14 +98,15 @@ function* setVolumeHandler(action) {
 }
 
 function* loadResultHandler(action) {
+  const { payload } = action
+  const { resultId } = payload
   try {
-    const { payload } = action
-    const { resultId } = payload
     const results = yield call(getQuizResults, resultId)
     yield put(loadResultsComplete({ results, resultId }))
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(`loadResultHandler.  err=${JSON.stringify(err)}`)
+    yield put(loadResultsComplete({ results: null, resultId }))
     throw err
   }
 }

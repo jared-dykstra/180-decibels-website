@@ -33,7 +33,10 @@ class Question extends PureComponent {
     next: PropTypes.func.isRequired,
     hintLow: PropTypes.string.isRequired,
     hintHigh: PropTypes.string.isRequired,
-    autoAdvanceTimeMs: PropTypes.number
+    autoAdvanceTimeMs: PropTypes.number,
+    tracker: PropTypes.shape({
+      event: PropTypes.func.isRequired
+    }).isRequired
   }
 
   static defaultProps = {
@@ -73,22 +76,15 @@ class Question extends PureComponent {
   }
 
   doSetVolume = value => {
-    const { assessmentName, questionId, setVolume } = this.props
-
-    // TODO: Either fix this or remove...
-    // TODO: isTouchDevice should really be hasEverReceivedHoverEvent
-    // // See: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
-    // const isTouchDevice =
-    //   'ontouchstart' in window ||
-    //   (window.DocumentTouch && document instanceof window.DocumentTouch)
-
-    // if (!value || !isTouchDevice) {
+    const { assessmentName, questionId, setVolume, tracker } = this.props
     setVolume({ assessmentName, volume: value, questionId })
-    // } else {
-    //   this.animateVolume(value, v =>
-    //     setVolume({ assessmentName, volume: v, questionId })
-    //   )
-    // }
+    // This is important enough to warrant tracking
+    tracker.event({
+      category: 'SelfAssessment',
+      action: 'SetVolume',
+      value,
+      label: questionId
+    })
   }
 
   render() {

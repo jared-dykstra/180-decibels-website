@@ -31,8 +31,9 @@ export default (state = initialState, action) => {
     // Set user data in the store and close the signin Modal, if open
     case AUTH_SIGNIN_SUCCESS: {
       const { payload } = action
-      const { user, userProfileToken } = payload
+      const { user, userProfileToken, userId } = payload
       return state
+        .setIn(['userId'], userId)
         .setIn(['user'], user)
         .setIn(['userProfileToken'], userProfileToken)
         .setIn(['signInModalIsOpen'], false)

@@ -14,7 +14,7 @@ const SelfAssessmentLazy = ({ children, assessmentName, ...props }) => (
         <div className={`${styles.carousel} carousel slide`}>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <Intro assessmentName={assessmentName} />
+              <Intro {...{ assessmentName, ...props }} />
             </div>
           </div>
         </div>

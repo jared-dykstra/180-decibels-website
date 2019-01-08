@@ -6,7 +6,7 @@ import { Quote, SelfAssessment, Template } from 'components'
 
 import styles from './HelpMyTeam.module.scss'
 
-export default () => (
+const HelpMyTeam = props => (
   <Template className={styles['help-my-team']}>
     <Helmet>
       <title>180 Decibels - Help My Team</title>
@@ -42,8 +42,10 @@ export default () => (
           enough to create an initial report, which will contain concrete,
           actionable steps that you can immediately use.
         </p>
-        <SelfAssessment assessmentName="helpMyTeam" id="quiz" />
+        <SelfAssessment assessmentName="helpMyTeam" id="quiz" {...props} />
       </Col>
     </Row>
   </Template>
 )
+
+export default HelpMyTeam

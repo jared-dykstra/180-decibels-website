@@ -39,7 +39,10 @@ class SelfAssessment extends PureComponent {
     currentIndex: PropTypes.number.isRequired,
     doInitialize: PropTypes.func.isRequired,
     doPrevSlide: PropTypes.func.isRequired,
-    doNextSlide: PropTypes.func.isRequired
+    doNextSlide: PropTypes.func.isRequired,
+    tracker: PropTypes.shape({
+      event: PropTypes.func.isRequired
+    }).isRequired
   }
 
   constructor(props) {
@@ -88,7 +91,8 @@ class SelfAssessment extends PureComponent {
       isInitialized,
       questions,
       responses,
-      currentIndex
+      currentIndex,
+      tracker
     } = this.props
     const indicatorPadding = styles['var-control-width']
 
@@ -98,7 +102,7 @@ class SelfAssessment extends PureComponent {
         onExited={this.onExited}
         key="intro"
       >
-        <Intro assessmentName={assessmentName} next={this.next} />
+        <Intro {...{ assessmentName, next: this.next, tracker }} />
       </CarouselItem>
     ]
 
@@ -154,6 +158,7 @@ class SelfAssessment extends PureComponent {
               next={this.next}
               hintHigh={question.promptRight}
               hintLow={question.promptLeft}
+              tracker={tracker}
             />
           </div>
         </CarouselItem>

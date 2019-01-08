@@ -25,6 +25,7 @@ export const signIn = async credentials => {
     query: gql`
       mutation signIn($email: String!, $password: String!) {
         signIn(email: $email, password: $password) {
+          userId
           user {
             firstName
             lastName
@@ -61,6 +62,7 @@ export const authenticate = async () => {
     query: gql`
       query authenticate {
         authenticate {
+          userId
           user {
             firstName
             lastName
