@@ -96,7 +96,7 @@ class App extends PureComponent {
 
   logPageView = () => {
     const { userId } = this.props
-    // this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about
+    // this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about, but it might be related to withRouter() below
     const { pathname, search, hash } = window.location
     const uri = `${pathname}${search && search.length > 0 ? search : ''}${
       hash && hash.length > 0 ? hash : ''
@@ -142,17 +142,20 @@ class App extends PureComponent {
       [ROUTE_SERVICES]: Services
     }
 
-    const propsWithTracker = {
-      ...this.props,
-      tracker: {
-        pageView: this.logPageView,
-        event: this.logEvent,
-        modalView: this.logModalView
-      }
+    const tracker = {
+      pageView: this.logPageView,
+      event: this.logEvent,
+      modalView: this.logModalView
     }
 
+    const mergeProps = (props = {}) => ({
+      ...this.props,
+      ...props,
+      tracker
+    })
+
     return (
-      <ScrollToTop {...propsWithTracker}>
+      <ScrollToTop {...mergeProps()}>
         <Helmet>
           {/* site-wide defaults, which can be overridden by each page */}
           <title>180 Decibels</title>
@@ -164,17 +167,17 @@ class App extends PureComponent {
               exact
               path={path}
               key={path}
-              render={() => <Component {...propsWithTracker} />}
+              render={props => <Component {...mergeProps(props)} />}
             />
           ))}
           <Route
             path={`(${ROUTE_HELP_ME}|${ROUTE_HELP_MY_TEAM})/result/:id`}
-            render={() => <AssessmentResult {...propsWithTracker} />}
+            render={props => <AssessmentResult {...mergeProps(props)} />}
           />
-          <Route render={() => <NotFound {...propsWithTracker} />} />
+          <Route render={props => <NotFound {...mergeProps(props)} />} />
         </Switch>
 
-        <GetStartedModal {...propsWithTracker} />
+        <GetStartedModal {...mergeProps()} />
       </ScrollToTop>
     )
   }
