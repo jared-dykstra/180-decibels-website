@@ -20,10 +20,7 @@ it('renders without crashing', () => {
         history,
         location,
         tracker: {
-          logPageView: identityFn,
-          logModalView: identityFn,
-          logEvent: identityFn,
-          logError: identityFn
+          event: identityFn
         }
       }}
     />
