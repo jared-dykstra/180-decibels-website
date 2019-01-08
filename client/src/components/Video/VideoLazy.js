@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react'
-import PropTypes from 'prop-types'
 
 const Video = React.lazy(async () => import('./Video'))
 
@@ -29,9 +28,10 @@ const LogInModalLazy = ({ children, ...props }) => {
   )
 }
 
-Video.propTypes = {
-  poster: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired
-}
+// PropTypes on lazy are not supported
+// Video.propTypes = {
+//   poster: PropTypes.string.isRequired,
+//   src: PropTypes.string.isRequired
+// }
 
 export default LogInModalLazy
