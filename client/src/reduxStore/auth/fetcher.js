@@ -138,3 +138,71 @@ export const isEmailInUse = async email => {
   const retval = await clientExecuteAsync(operation, 'isEmailInUse')
   return retval
 }
+
+export const logPageView = async pageView => {
+  const operation = {
+    query: gql`
+      mutation logPageView($pageView: LogPageView!) {
+        logPageView(pageView: $pageView) {
+          id
+        }
+      }
+    `,
+    variables: {
+      pageView
+    }
+  }
+  const retval = await clientExecuteAsync(operation, 'logPageView')
+  return retval
+}
+
+export const logModalView = async modalView => {
+  const operation = {
+    query: gql`
+      mutation logModalView($modalView: LogModalView!) {
+        logModalView(modalView: $modalView) {
+          id
+        }
+      }
+    `,
+    variables: {
+      modalView
+    }
+  }
+  const retval = await clientExecuteAsync(operation, 'logModalView')
+  return retval
+}
+
+export const logEvent = async event => {
+  const operation = {
+    query: gql`
+      mutation logEvent($event: LogEvent!) {
+        logEvent(event: $event) {
+          id
+        }
+      }
+    `,
+    variables: {
+      event
+    }
+  }
+  const retval = await clientExecuteAsync(operation, 'logEvent')
+  return retval
+}
+
+export const logError = async error => {
+  const operation = {
+    query: gql`
+      mutation logError($error: LogError!) {
+        logError(error: $error) {
+          id
+        }
+      }
+    `,
+    variables: {
+      error
+    }
+  }
+  const retval = await clientExecuteAsync(operation, 'logError')
+  return retval
+}

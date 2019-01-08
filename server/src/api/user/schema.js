@@ -40,10 +40,39 @@ const typeDefs = gql`
     isEmailInUse(email: String!): Boolean!
   }
 
+  type LogResponse {
+    id: ID
+  }
+
+  input LogPageView {
+    uri: String!
+  }
+
+  input LogModalView {
+    modalName: String!
+  }
+
+  input LogEvent {
+    category: String!
+    action: String!
+    label: String
+    value: String
+  }
+
+  input LogError {
+    error: String!
+    info: String
+    fatal: Boolean!
+  }
+
   type Mutation {
     registerUser(user: UserInput!): AuthResponse!
     signIn(email: String!, password: String!): AuthResponse!
     signOut: String
+    logPageView(pageView: LogPageView!): LogResponse
+    logModalView(modalView: LogModalView!): LogResponse
+    logEvent(event: LogEvent!): LogResponse
+    logError(error: LogError!): LogResponse
   }
 `
 

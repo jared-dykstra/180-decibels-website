@@ -232,4 +232,34 @@ export default class UserAPI extends DataSource {
       userProfileToken
     }
   }
+
+  async logPageView(args, context) {
+    const { userId } = context
+    const { pageView } = args
+
+    console.log(`Tracker - logPageView ${userId} - ${JSON.stringify(pageView)}`)
+  }
+
+  async logModalView(args, context) {
+    const { userId } = context
+    const { modalView } = args
+
+    console.log(
+      `Tracker - logModalView ${userId} - ${JSON.stringify(modalView)}`
+    )
+  }
+
+  async logEvent(args, context) {
+    const { userId } = context
+    const { event } = args
+
+    console.log(`Tracker - logEvent ${userId} - ${JSON.stringify(event)}`)
+  }
+
+  async logError(args, context) {
+    const { userId } = context
+    const { error } = args
+
+    console.log(`Tracker - logError ${userId} - ${JSON.stringify(error)}`)
+  }
 }

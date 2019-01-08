@@ -18,7 +18,13 @@ it('renders without crashing', () => {
         doClickHelpMe: identityFn,
         doClickHelpMyTeam: identityFn,
         history,
-        location
+        location,
+        tracker: {
+          logPageView: identityFn,
+          logModalView: identityFn,
+          logEvent: identityFn,
+          logError: identityFn
+        }
       }}
     />
   )

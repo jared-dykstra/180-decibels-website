@@ -6,6 +6,11 @@ export const AUTH_REGISTER = 'auth/register'
 export const AUTH_OPEN_SIGNIN_MODAL = 'auth/signInModalOpen'
 export const AUTH_CLOSE_SIGNIN_MODAL = 'auth/signInModalClose'
 
+export const AUTH_LOG_PAGE_VIEW = 'auth/logPageView'
+export const AUTH_LOG_MODAL_VIEW = 'auth/logModalView'
+export const AUTH_LOG_EVENT = 'auth/logEvent'
+export const AUTH_LOG_ERROR = 'auth/logError'
+
 // Private Actions
 export const AUTH_SIGNIN_SUCCESS = 'auth/signInSuccess'
 
