@@ -19,6 +19,8 @@ To Run:
    1. Create a local empty database - `cd server; yarn run db:create`
    1. Start the development server - `yarn run dev` (Opens a browser window automatically)
 
+If you want to see into the locally running database, install sqlLiteBrowser (`https://sqlitebrowser.org/`) and open `website/server/dev.sqlite3`  This file is not committed to the git repo, but generated via the steps above
+
 ## Developers
 
 Use VSCode as an editor

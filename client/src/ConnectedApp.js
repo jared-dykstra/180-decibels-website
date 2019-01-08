@@ -88,23 +88,20 @@ class App extends PureComponent {
   }
 
   logPageView = () => {
-    const { userId /* , location  */ } = this.props
-    // const { pathname, search, hash } = location
+    const { userId } = this.props
+    // this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about
     const { pathname, search, hash } = window.location
     const uri = `${pathname}${search && search.length > 0 ? search : ''}${
       hash && hash.length > 0 ? hash : ''
     }`
-
-    // TODO: Read the UserID from the cookie
     // TODO: Send event to our own API
-
     console.log(`Tracker - LogPageView: ${userId} - ${uri}`)
-
     ReactGA.pageview(uri)
   }
 
   logModalView = ({ modalName }) => {
     const { userId } = this.props
+    // TODO: Send event to our own API
     console.log(`Tracker - ModalName: ${userId} - ${modalName}`)
     ReactGA.modalview(modalName)
   }
@@ -112,6 +109,7 @@ class App extends PureComponent {
   // See: https://github.com/react-ga/react-ga#reactgaeventargs
   logEvent = ({ category, action, label, value }) => {
     const { userId } = this.props
+    // TODO: Send event to our own API
     console.log(`Tracker - LogEvent ${userId}, ${category}, ${action}`)
     ReactGA.event({ category, action, label, value })
   }

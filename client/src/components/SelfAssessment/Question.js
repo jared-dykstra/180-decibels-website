@@ -77,22 +77,8 @@ class Question extends PureComponent {
 
   doSetVolume = value => {
     const { assessmentName, questionId, setVolume, tracker } = this.props
-
-    // TODO: Either fix this or remove...
-    // TODO: isTouchDevice should really be hasEverReceivedHoverEvent
-    // // See: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
-    // const isTouchDevice =
-    //   'ontouchstart' in window ||
-    //   (window.DocumentTouch && document instanceof window.DocumentTouch)
-
-    // if (!value || !isTouchDevice) {
     setVolume({ assessmentName, volume: value, questionId })
-    // } else {
-    //   this.animateVolume(value, v =>
-    //     setVolume({ assessmentName, volume: v, questionId })
-    //   )
-    // }
-
+    // This is important enough to warrant tracking
     tracker.event({
       category: 'SelfAssessment',
       action: 'SetVolume',
