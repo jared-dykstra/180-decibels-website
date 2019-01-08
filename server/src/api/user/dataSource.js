@@ -13,7 +13,8 @@ import {
   createUserId
 } from '../../db/dbAdapter'
 
-import { AUTH } from '../../db/eventSources'
+import { AUTH, TRACKER } from '../../db/eventSources'
+import { INFO, ERROR } from '../../../build/db/logLevels'
 
 const cookieOptions = () => ({
   maxAge: config.get('authDuration'),
@@ -235,31 +236,45 @@ export default class UserAPI extends DataSource {
 
   async logPageView(args, context) {
     const { userId } = context
-    const { pageView } = args
 
-    console.log(`Tracker - logPageView ${userId} - ${JSON.stringify(pageView)}`)
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: INFO
+    })
   }
 
   async logModalView(args, context) {
     const { userId } = context
-    const { modalView } = args
 
-    console.log(
-      `Tracker - logModalView ${userId} - ${JSON.stringify(modalView)}`
-    )
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: INFO
+    })
   }
 
   async logEvent(args, context) {
     const { userId } = context
-    const { event } = args
 
-    console.log(`Tracker - logEvent ${userId} - ${JSON.stringify(event)}`)
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: INFO
+    })
   }
 
   async logError(args, context) {
     const { userId } = context
-    const { error } = args
 
-    console.log(`Tracker - logError ${userId} - ${JSON.stringify(error)}`)
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: ERROR
+    })
   }
 }
