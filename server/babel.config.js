@@ -9,7 +9,7 @@ module.exports = {
       }
     ]
   ],
-  plugins: ['macros'],
+  plugins: ['@babel/plugin-transform-react-jsx', 'macros'],
   sourceMaps: true,
   retainLines: true
 }
