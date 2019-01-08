@@ -49,6 +49,9 @@ class App extends PureComponent {
     userId: undefined
   }
 
+  // Start by just defining componentDidCatch(), so at least errors get logged
+  // static getDerivedStateFromError = error => ({ fatalError: true })
+
   constructor(props) {
     super(props)
     props.history.listen(location => {
@@ -67,6 +70,10 @@ class App extends PureComponent {
   componentDidMount = () => {
     const { doAuthenticate } = this.props
     doAuthenticate(null)
+  }
+
+  componentDidCatch = (error, info) => {
+    this.logError({ error, info, fatal: true })
   }
 
   initializeTracker = () => {
@@ -112,6 +119,15 @@ class App extends PureComponent {
     // TODO: Send event to our own API
     console.log(`Tracker - LogEvent ${userId}, ${category}, ${action}`)
     ReactGA.event({ category, action, label, value })
+  }
+
+  logError = ({ error, info, fatal = true }) => {
+    const description = `Error: ${error}${
+      info ? ` info=${JSON.stringify(info)}` : ''
+    }`
+    // TODO: Send event to our own API
+    console.error(`Tracker - LogError ${description}`)
+    ReactGA.exception({ description, fatal })
   }
 
   render() {
