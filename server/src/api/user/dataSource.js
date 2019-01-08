@@ -14,7 +14,7 @@ import {
 } from '../../db/dbAdapter'
 
 import { AUTH, TRACKER } from '../../db/eventSources'
-import { INFO, ERROR } from '../../../build/db/logLevels'
+import { INFO, ERROR } from '../../db/logLevels'
 
 const cookieOptions = () => ({
   maxAge: config.get('authDuration'),
