@@ -5,7 +5,13 @@ import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { authenticate } from 'reduxStore/auth/authActions'
+import {
+  authenticate,
+  logPageView,
+  logModalView,
+  logEvent,
+  logError
+} from 'reduxStore/auth/authActions'
 import { userIdSelector } from 'reduxStore/auth/authSelectors'
 import {
   AssessmentResult,
@@ -42,7 +48,11 @@ import { get as configGet } from './config'
 class App extends PureComponent {
   static propTypes = {
     userId: PropTypes.string,
-    doAuthenticate: PropTypes.func.isRequired
+    doAuthenticate: PropTypes.func.isRequired,
+    doLogPageView: PropTypes.func.isRequired,
+    doLogModalView: PropTypes.func.isRequired,
+    doLogEvent: PropTypes.func.isRequired,
+    doLogError: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -50,11 +60,12 @@ class App extends PureComponent {
   }
 
   // Start by just defining componentDidCatch(), so at least errors get logged
+  // When I define getDerivedStateFromError it seems to change error handling... will revisit later
   // static getDerivedStateFromError = error => ({ fatalError: true })
 
   constructor(props) {
     super(props)
-    props.history.listen(location => {
+    props.history.listen((/* location */) => {
       this.logPageView()
     })
   }
@@ -94,39 +105,60 @@ class App extends PureComponent {
     }
   }
 
+  // TODO: It would be more user-friendly to use a React Context for the tracker vs. spreading these props throughtout
   logPageView = () => {
-    const { userId } = this.props
+    const { /* userId, */ doLogPageView } = this.props
     // this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about, but it might be related to withRouter() below
     const { pathname, search, hash } = window.location
     const uri = `${pathname}${search && search.length > 0 ? search : ''}${
       hash && hash.length > 0 ? hash : ''
     }`
-    // TODO: Send event to our own API
-    console.log(`Tracker - LogPageView: ${userId} - ${uri}`)
+
+    // Send event to our own API
+    // console.log(`Tracker - LogPageView: ${userId} - ${uri}`)
+    doLogPageView({ uri })
+
+    // Send event to Google Analytics
     ReactGA.pageview(uri)
   }
 
   logModalView = ({ modalName }) => {
-    const { userId } = this.props
-    // TODO: Send event to our own API
-    console.log(`Tracker - ModalName: ${userId} - ${modalName}`)
+    const { /* userId, */ doLogModalView } = this.props
+    // Send event to our own API
+    // console.log(`Tracker - ModalName: ${userId} - ${modalName}`)
+    doLogModalView({ modalName })
+
+    // Send event to Google Analytics
     ReactGA.modalview(modalName)
   }
 
   // See: https://github.com/react-ga/react-ga#reactgaeventargs
   logEvent = ({ category, action, label, value }) => {
-    const { userId } = this.props
-    // TODO: Send event to our own API
-    console.log(`Tracker - LogEvent ${userId}, ${category}, ${action}`)
-    ReactGA.event({ category, action, label, value })
+    const { /* userId, */ doLogEvent } = this.props
+    const event = { category, action, label, value }
+    // Send event to our own API
+    // console.log(`Tracker - LogEvent ${userId}, ${category}, ${action}`)
+    doLogEvent(event)
+
+    ReactGA.event(event)
   }
 
   logError = ({ error, info, fatal = true }) => {
+    const { doLogError } = this.props
     const description = `Error: ${error}${
       info ? ` info=${JSON.stringify(info)}` : ''
     }`
-    // TODO: Send event to our own API
+
+    // Send event to our own API
+    // eslint-disable-next-line no-console
     console.error(`Tracker - LogError ${description}`)
+    doLogError({
+      error: JSON.stringify(error),
+      info: JSON.stringify(info),
+      fatal
+    })
+
+    // Send event to Google Analytics
     ReactGA.exception({ description, fatal })
   }
 
@@ -190,7 +222,11 @@ export default withRouter(
       userId: userIdSelector(state)
     }),
     dispatch => ({
-      doAuthenticate: () => dispatch(authenticate())
+      doAuthenticate: () => dispatch(authenticate()),
+      doLogPageView: args => dispatch(logPageView(args)),
+      doLogModalView: args => dispatch(logModalView(args)),
+      doLogEvent: args => dispatch(logEvent(args)),
+      doLogError: args => dispatch(logError(args))
     })
   )(App)
 )

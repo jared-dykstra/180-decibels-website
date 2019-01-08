@@ -16,6 +16,14 @@ export default {
     signIn: (parent, args, context, info) =>
       dsSelector(context).signIn(args, context),
     signOut: (parent, args, context, info) =>
-      dsSelector(context).signOut(args, context)
+      dsSelector(context).signOut(args, context),
+    logPageView: (parent, args, context, info) =>
+      dsSelector(context).logPageView(args, context),
+    logModalView: (parent, args, context, info) =>
+      dsSelector(context).logModalView(args, context),
+    logEvent: (parent, args, context, info) =>
+      dsSelector(context).logEvent(args, context),
+    logError: (parent, args, context, info) =>
+      dsSelector(context).logError(args, context)
   }
 }

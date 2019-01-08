@@ -13,7 +13,8 @@ import {
   createUserId
 } from '../../db/dbAdapter'
 
-import { AUTH } from '../../db/eventSources'
+import { AUTH, TRACKER } from '../../db/eventSources'
+import { INFO, ERROR } from '../../db/logLevels'
 
 const cookieOptions = () => ({
   maxAge: config.get('authDuration'),
@@ -231,5 +232,49 @@ export default class UserAPI extends DataSource {
       user: newUser,
       userProfileToken
     }
+  }
+
+  async logPageView(args, context) {
+    const { userId } = context
+
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: INFO
+    })
+  }
+
+  async logModalView(args, context) {
+    const { userId } = context
+
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: INFO
+    })
+  }
+
+  async logEvent(args, context) {
+    const { userId } = context
+
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: INFO
+    })
+  }
+
+  async logError(args, context) {
+    const { userId } = context
+
+    await appendLogEvent({
+      userId,
+      source: TRACKER,
+      event: JSON.stringify(args),
+      severity: ERROR
+    })
   }
 }
