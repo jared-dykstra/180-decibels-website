@@ -187,7 +187,7 @@ const config = {
     },
     'bdda783c-acb6-4fff-8b2f-4b477f0d4b9a': {
       text:
-        'People are aware of when they in-line with expected behavior or not',
+        'People are made aware when they step out-of-line with expected behavior',
       accountability: 0,
       people: 10,
       strategy: 0,
