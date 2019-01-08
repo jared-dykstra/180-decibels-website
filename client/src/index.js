@@ -14,12 +14,20 @@ const store = createStore(history)
 
 ReactGA.initialize(configGet('googleTrackingId'))
 
+console.log('HERE')
+
 const logPageView = location => {
-  const { search } = location
-  const uri = window.location.pathname + search
+  const { pathname, search, hash } = location
+  const uri = `${pathname}${search && search.length > 0 ? search : ''}${
+    hash && hash.length > 0 ? hash : ''
+  }`
+
   // TODO: Read the UserID from the cookie
   // TODO: Send event to our own API
   // TODO: Set the ReactGA UserID parameter - https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference
+
+  // console.log(`logPageView: ${uri}`)
+
   ReactGA.pageview(uri)
 }
 
