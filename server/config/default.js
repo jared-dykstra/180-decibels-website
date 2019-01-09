@@ -27,5 +27,10 @@ module.exports = {
     seeds: {
       directory: './src/db/seeds'
     }
+  },
+  aws: {
+    accessKeyId: 'AKIAIAF4STTYUYBWXCTA',
+    secretAccessKey: '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',
+    region: 'us-west-2'
   }
 }

@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer'
 import aws from 'aws-sdk'
 
+import config from 'config'
+
 export const sendEmail = async ({
   from,
   to,
@@ -10,21 +12,17 @@ export const sendEmail = async ({
   attachments
 }) => {
   try {
+    const awsConfig = config.get('aws')
     // See: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
-    aws.config = new aws.Config({
-      accessKeyId: 'AKIAIAF4STTYUYBWXCTA',
-      secretAccessKey: '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',
-      region: 'us-west-2'
-    })
+    aws.config = new aws.Config(awsConfig)
 
     // create Nodemailer SES transporter
     const transporter = nodemailer.createTransport({
       SES: new aws.SES({
-        apiVersion: '2010-12-01'
+        apiVersion: '2010-12-01',
+        sendingRate: 1 // <== Max 1 message per second
       })
     })
-
-    console.log('Created Transporter')
 
     // send some mail
     const retval = await transporter.sendMail({
