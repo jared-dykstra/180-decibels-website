@@ -15,7 +15,7 @@ export default () => (
     <Button
       color="primary"
       variant="contained"
-      size="lg"
+      size="large"
       component={Link}
       to={ROUTE_HOME}
     >

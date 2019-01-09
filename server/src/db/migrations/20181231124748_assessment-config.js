@@ -530,19 +530,22 @@ exports.up = async (knex, Promise) => {
     t.text('name')
       .notNull()
       .unique()
+    t.text('route').notNull()
     t.jsonb('rubric').notNull()
   })
   const ID_HELP_ME = '439a564d-adc9-497b-9dba-a9d8de6caf75'
   await knex(T_QUIZ).insert({
     id: ID_HELP_ME,
     name: 'helpMe',
-    rubric: JSON.stringify(config.helpMe.rubric)
+    rubric: JSON.stringify(config.helpMe.rubric),
+    route: 'help-me'
   })
   const ID_HELP_MY_TEAM = '853020dd-ebc6-458c-8bf2-eb5a1cc6101f'
   await knex(T_QUIZ).insert({
     id: ID_HELP_MY_TEAM,
     name: 'helpMyTeam',
-    rubric: JSON.stringify(config.helpMyTeam.rubric)
+    rubric: JSON.stringify(config.helpMyTeam.rubric),
+    route: 'help-my-team'
   })
 
   // Map questions to Quizzes

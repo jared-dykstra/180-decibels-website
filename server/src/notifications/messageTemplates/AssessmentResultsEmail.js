@@ -36,4 +36,7 @@ EmailTemplate.propTypes = {
   to: PropTypes.string.isRequired
 }
 
+export const getText = ({ resultsUrl }) =>
+  `Congratulations! You're on your way towards improving productivity and reducing costs.  Use the following link to access to your results--and tips on how to improve: ${resultsUrl}`
+
 export default AssessmentResultEmail

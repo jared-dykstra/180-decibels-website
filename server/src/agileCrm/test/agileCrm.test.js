@@ -1,4 +1,5 @@
 import { handleGetStarted } from '..'
+import { createNoteForContact } from '../agileCrm'
 
 // TODO: Change from integration test to unit test--will actually manipulate agileCRM
 it.skip('creates a contact', async () => {
@@ -19,6 +20,20 @@ it.skip('creates a contact', async () => {
 
     console.log(`AgileCRM Task=${JSON.stringify(task, null, 2)}`)
     expect(task).toBeDefined()
+  } catch (err) {
+    console.log(`Test Error: ${err}`)
+    throw err
+  }
+})
+
+it.skip('Adds a note to a contact', async () => {
+  const testEmail = 'foo@bar.com'
+  try {
+    await createNoteForContact({
+      email: testEmail,
+      subject: 'Test Note',
+      description: 'Test Description.  meow'
+    })
   } catch (err) {
     console.log(`Test Error: ${err}`)
     throw err
