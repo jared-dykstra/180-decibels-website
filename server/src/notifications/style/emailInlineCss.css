@@ -1,17 +1,5 @@
-import React from 'react'
-
-/* eslint-disable react/no-danger */
-
-const MuiEmailInlineCss = () => [
-  // <link
-  //   key="cdn"
-  //   href="https://cdn.muicss.com/mui-0.9.41/email/mui-email-inline.css"
-  //   rel="stylesheet"
-  // />,
-  <style
-    key="local"
-    dangerouslySetInnerHTML={{
-      __html: `
+/* Downloaded from: https://cdn.muicss.com/mui-0.9.41/email/mui-email-inline.css */
+/* See: https://www.muicss.com/docs/v1/email/customization */
 body {
   width: 100% !important;
   min-width: 100%;
@@ -698,9 +686,3 @@ table.mui-btn--large > tbody > tr > td > a {
   line-height: 18px;
   text-transform: uppercase;
 }
-      `
-    }}
-  />
-]
-
-export default MuiEmailInlineCss
