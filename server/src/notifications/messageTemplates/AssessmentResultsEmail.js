@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import EmailTemplate from '../components/EmailTemplate'
 import Panel from '../components/Panel'
+import Button from '../components/Button'
 
 /* See: https://www.muicss.com/docs/v1/email/boilerplate-html */
 const AssessmentResultEmail = ({ to }) => (
@@ -23,19 +24,12 @@ const AssessmentResultEmail = ({ to }) => (
       <div>
         <em>Emphasis</em>
       </div>
+
       <div>
-        <a href="#" className="mui-btn">
-          Button
-        </a>
-        <a href="#" className="mui-btn mui-btn--primary">
-          Button
-        </a>
-        <a href="#" className="mui-btn mui-btn--danger">
-          Button
-        </a>
-        <a href="#" className="mui-btn mui-btn--accent">
-          Button
-        </a>
+        <Button>Button</Button>
+        <Button color="primary">Button</Button>
+        <Button color="danger">Button</Button>
+        <Button color="accent">Button</Button>
       </div>
     </Panel>
   </EmailTemplate>
