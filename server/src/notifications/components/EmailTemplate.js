@@ -3,6 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import InlineCss from './InlineCss'
 
+import Logo from './Logo'
+import Panel from './Panel'
+
 /* eslint-disable react/no-danger */
 
 const EmailTemplate = ({ children, to }) => (
@@ -38,9 +41,23 @@ body,
             <center>
               {/* <!--[if mso]><table><tr><td class="mui-container-fixed"><![endif]--> */}
               <div className="mui-container">
-                {children}
-                <hr />
-                <div className="mui--text-dark-hint">
+                <Panel>
+                  <Logo
+                    style={{
+                      marginLeft: '-15px',
+                      marginTop: '-15px',
+                      marginRight: '-15px'
+                    }}
+                  />
+                  <div className="mui--text-dark-secondary mui--text-headline">
+                    Removing the Complexity from Managing Your Team
+                  </div>
+                  {children}
+                </Panel>
+                <div
+                  className="mui--text-dark-hint"
+                  style={{ paddingTop: '20px' }}
+                >
                   <small>
                     <p>
                       You are receiving this email because {to} is signed up to

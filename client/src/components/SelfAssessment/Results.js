@@ -21,15 +21,18 @@ const Results = ({ resultsUrl, resultsEmail }) => (
       <h2>Results</h2>
     </Grid>
     <Grid item>
+      {/* Note: Any changes to the text here need to also be reflected in AssessmentResultsEmail.js */}
       <h5 style={{ marginTop: '1em' }}>
-        Thank you for taking the time to answer. Your results will be sent to{' '}
+        Congratulations! You&apos;re on your way towards improving productivity
+        and reducing costs. Your results will be sent to{' '}
         <a href={`mailto:${resultsEmail}`} style={{ color: 'inherit' }}>
           {resultsEmail}
         </a>
       </h5>
     </Grid>
     <Grid item>
-      Or copy and use the following link for direct access to your results:
+      Or copy and use the following link to access to your results--and tips on
+      how to improve:
     </Grid>
     <Grid item align="center">
       <a href={resultsUrl}>{resultsUrl}</a>

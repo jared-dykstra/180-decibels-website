@@ -1,7 +1,14 @@
 import nodemailer from 'nodemailer'
 import aws from 'aws-sdk'
 
-export const sendEmail = async ({ from, to, subject, text, html }) => {
+export const sendEmail = async ({
+  from,
+  to,
+  subject,
+  text,
+  html,
+  attachments
+}) => {
   try {
     // See: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
     aws.config = new aws.Config({
@@ -26,6 +33,7 @@ export const sendEmail = async ({ from, to, subject, text, html }) => {
       subject,
       text,
       html,
+      attachments,
       ses: {
         // optional extra arguments for SendRawEmail
         // Tags: [
@@ -36,8 +44,6 @@ export const sendEmail = async ({ from, to, subject, text, html }) => {
         // ]
       }
     })
-
-    console.log(`Finished Test. retval=${JSON.stringify(retval)}`)
     return retval
   } catch (err) {
     console.error(`sendEmail exception: ${err}`)

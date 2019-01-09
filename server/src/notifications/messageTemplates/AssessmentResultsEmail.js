@@ -2,36 +2,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import EmailTemplate from '../components/EmailTemplate'
-import Panel from '../components/Panel'
 import Button from '../components/Button'
 
 /* See: https://www.muicss.com/docs/v1/email/boilerplate-html */
-const AssessmentResultEmail = ({ to }) => (
+const AssessmentResultEmail = ({ to, resultsUrl }) => (
   <EmailTemplate {...{ to }}>
-    <Panel>
-      <h1>Heading 1 - W00t</h1>
-      <h2>Heading 2</h2>
-      <h3>Heading 3</h3>
-      <h4>Heading 4</h4>
-      <h5>Heading 5</h5>
-      <hr />
-      <p>Paragraph 1</p>
-      <p>Paragraph 2</p>
-      <p>Paragraph 3</p>
-      <div>
-        <strong>Strong</strong>
-      </div>
-      <div>
-        <em>Emphasis</em>
-      </div>
-
-      <div>
-        <Button>Button</Button>
-        <Button color="primary">Button</Button>
-        <Button color="danger">Button</Button>
-        <Button color="accent">Button</Button>
-      </div>
-    </Panel>
+    <p style={{ marginTop: '1em' }}>
+      Congratulations! You&apos;re on your way towards improving productivity
+      and reducing costs
+    </p>
+    <div style={{ marginTop: '40px', marginBottom: '40px' }}>
+      <center>
+        <Button raised href={resultsUrl} color="primary">
+          Click to See how you&apos;re doing
+        </Button>
+      </center>
+    </div>
+    <p />
+    <p>
+      Or use the following link to access to your results--and tips on how to
+      improve:
+    </p>
+    <a href={resultsUrl}>{resultsUrl}</a>
+    <hr style={{ marginTop: '30px' }} />
+    <p className="mui--text-dark-secondary">
+      Take the survey again any time:{' '}
+      <a href="https://180decibels.com">www.180Decibels.com</a>
+    </p>
   </EmailTemplate>
 )
 
