@@ -31,6 +31,8 @@
     "key",
     "mailto",
     "nbsp",
+    "noopener",
+    "noreferrer",
     "parallelize",
     "reactstrap",
     "resave",

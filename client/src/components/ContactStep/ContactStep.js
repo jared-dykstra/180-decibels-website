@@ -30,7 +30,7 @@ const ContactStep = ({
     </StepLabel>
     <StepContent>
       {children}
-      <Grid container spacing={24}>
+      <Grid container spacing={12}>
         <Grid item md={promptForPhone ? 6 : 12}>
           <Field
             label="Email"

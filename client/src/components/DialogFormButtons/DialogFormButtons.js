@@ -11,9 +11,10 @@ const Buttons = ({
   reset,
   cancelLabel,
   submitLabel,
-  resetLabel
+  resetLabel,
+  style
 }) => (
-  <DialogActions>
+  <DialogActions style={style}>
     <Button key="reset" type="reset" disabled={isResetDisabled} onClick={reset}>
       {resetLabel}
     </Button>
@@ -41,12 +42,14 @@ Buttons.propTypes = {
   reset: PropTypes.func.isRequired,
   submitLabel: PropTypes.string.isRequired,
   cancelLabel: PropTypes.string,
-  resetLabel: PropTypes.string.isRequired
+  resetLabel: PropTypes.string.isRequired,
+  style: PropTypes.objectOf(PropTypes.string)
 }
 
 Buttons.defaultProps = {
   doCloseDialog: () => {},
-  cancelLabel: undefined
+  cancelLabel: undefined,
+  style: {}
 }
 
 export default Buttons

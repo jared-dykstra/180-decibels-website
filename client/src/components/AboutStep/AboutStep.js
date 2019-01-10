@@ -30,7 +30,7 @@ const AboutStep = ({
     </StepLabel>
     <StepContent>
       {children}
-      <Grid container spacing={24}>
+      <Grid container spacing={12}>
         <Grid item md={6}>
           <Field
             label="First Name"

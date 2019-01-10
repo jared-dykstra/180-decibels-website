@@ -161,6 +161,10 @@ class EmailMe extends PureComponent {
         </Stepper>
         <DialogFormButtons
           {...{
+            style: {
+              marginTop: '0px',
+              marginBottom: '0px'
+            },
             isSubmitDisabled,
             isResetDisabled,
             reset: () => {
