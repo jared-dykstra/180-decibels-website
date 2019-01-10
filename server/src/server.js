@@ -10,7 +10,10 @@ import config from 'config'
 
 import { createApi } from './api'
 
-export const makeServer = ({ clientRoot }) => {
+const { NODE_ENV } = process.env
+const isProduction = NODE_ENV === 'production'
+
+export const makeServer = ({ id, clientRoot }) => {
   const app = express()
 
   // Logging middleware
@@ -45,7 +48,6 @@ export const makeServer = ({ clientRoot }) => {
     res.send('User-agent: *\nDisallow: /')
   })
 
-  const isProduction = process.env.NODE_ENV === 'production'
   const unhashedCacheDuration = isProduction ? 3600 : 0
 
   // serve-static middleware for all files in the clientRoot directory
@@ -81,6 +83,6 @@ export const makeServer = ({ clientRoot }) => {
 
   // eslint-disable-next-line no-console
   console.log(
-    `Server is listening on port ${port}.  NODE_ENV=${process.env.NODE_ENV}`
+    `Server worker ${id} is listening on port ${port}.  NODE_ENV=${NODE_ENV}`
   )
 }
