@@ -1,5 +1,5 @@
 import { filter } from 'lodash'
-import FormData from 'form-data'
+// import FormData from 'form-data'
 import config from 'config'
 // TODO: This method is deprecated
 import { isNullOrUndefined } from 'util'
@@ -166,15 +166,27 @@ export const createTaskForContact = async ({
   return agileCrmTask
 }
 
+// See: https://github.com/agilecrm/rest-api#42-add-note-to-a-contact-using-email-id
 export const createNoteForContact = async ({ email, subject, description }) => {
   const { restEndpoint } = config.get('agileCrm')
   const url = `${restEndpoint}api/contacts/email/note/add`
-  const formData = new FormData()
-  formData.append('email', email)
-  formData.append('note', JSON.stringify({ subject, description }))
-  const qs = new URLSearchParams(formData).toString()
+  // TODO: Using formData a la node-fetch instructions causes agileCRM to return 204, but not do anything
+  // See: https://www.npmjs.com/package/node-fetch#post-with-form-data-detect-multipart
+  // const form = new FormData()
+  // form.append('email', email)
+  // form.append('note', JSON.stringify({ subject, description }))
+
+  const qs = new URLSearchParams({
+    email,
+    note: JSON.stringify({ subject, description })
+  }).toString()
+
+  console.log(`qs=${qs}`)
+
   const res = await fetch(url, {
     method: 'POST',
+    // body: form,
+    // body: `email=${email}&note=${JSON.stringify({ subject, description })}`,
     body: qs,
     headers: buildHeaders({ contentType: 'form' })
   })
@@ -183,5 +195,5 @@ export const createNoteForContact = async ({ email, subject, description }) => {
   checkStatus(res)
 
   // 204 indicates success
-  // console.log(`HERE2.  res.status=${res.status}`)
+  console.log(`createNoteForContact.  res.status=${res.status}`)
 }

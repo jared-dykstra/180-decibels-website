@@ -26,8 +26,8 @@ it.skip('creates a contact', async () => {
   }
 })
 
-it.skip('Adds a note to a contact', async () => {
-  const testEmail = 'foo@bar.com'
+it('Adds a note to a contact', async () => {
+  const testEmail = 'darlene.dykstra@gmail.com'
   try {
     await createNoteForContact({
       email: testEmail,

@@ -128,6 +128,7 @@ export const handleAssessmentResponder = async ({
     decibelsUid,
     tags: [TAG_WEBSITE_LEAD, TAG_ASSESSMENT]
   })
+
   // Add a task - The contact (via specified email) must already exist
   const task = await createTaskForContact({
     email,
@@ -138,7 +139,7 @@ export const handleAssessmentResponder = async ({
   // Add a note for the contact
   await createNoteForContact({
     email,
-    subject: 'SelfAssessment Results',
+    subject: 'Self-Assessment Results',
     description: asText(gradedResponse)
   })
 

@@ -16,8 +16,8 @@ To Run:
 1. From the shell in VSCode (or any shell, opened to the `Website` folder)
    1. Install dependencies - `yarn`
    1. Build a client distribution - `yarn run build`
-   1. Create a local empty database - `cd server; yarn run db:create`
-   1. Start the development server - `yarn run dev` (Opens a browser window automatically)
+   1. Create a local empty database - `yarn run db:create`
+   1. Start the development server & client webpack server - `yarn run dev` (Opens a browser window automatically)
 
 If you want to see into the locally running database, install sqlLiteBrowser (`https://sqlitebrowser.org/`) and open `website/server/dev.sqlite3`  This file is not committed to the git repo, but generated via the steps above
 

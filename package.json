@@ -34,6 +34,7 @@
   "scripts": {
     "postinstall": "yarn --cwd server && yarn --cwd client",
     "heroku-postbuild": "yarn run build",
+    "db:create": "yarn --cwd server db:create",
     "dev": "concurrently \"yarn --cwd server dev\" \"yarn --cwd client dev\"",
     "build": "yarn run build:client && yarn run build:server",
     "build:server": "yarn --cwd server build",

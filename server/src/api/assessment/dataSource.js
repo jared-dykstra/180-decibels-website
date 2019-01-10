@@ -34,48 +34,63 @@ export default class AssessmentApi extends DataSource {
     return answerId
   }
 
+  async answerQuizBackgroundTask({ resultId, response, contactInfo, userId }) {
+    try {
+      const rootUrl = config.get('rootUrl')
+
+      // Send an email to the user
+      const getRoute = () => {
+        const ID_HELP_ME = '439a564d-adc9-497b-9dba-a9d8de6caf75'
+        const ID_HELP_MY_TEAM = '853020dd-ebc6-458c-8bf2-eb5a1cc6101f'
+        switch (response.quizId) {
+          // TODO: Lookup the following route constants from the database
+          case ID_HELP_ME:
+            return 'help-me'
+          case ID_HELP_MY_TEAM:
+            return 'help-my-team'
+          default:
+            console.error('Unexpected Quiz ID')
+            return ''
+        }
+      }
+      const resultsUrl = `${rootUrl}/${getRoute()}/result/${resultId}`
+      await sendAssessmentResultsEmail({ resultsUrl, email: contactInfo.email })
+
+      // Create the contact in Agile CRM, with the graded assessment
+      const gradedResponse = await getGradedAssessmentResult(resultId)
+      await handleAssessmentResponder({
+        email: contactInfo.email,
+        firstName: contactInfo.firstName,
+        lastName: contactInfo.lastName,
+        title: undefined,
+        company: contactInfo.company,
+        phone: undefined,
+        decibelsUid: userId,
+        gradedResponse
+      })
+    } catch (err) {
+      console.error(`Error in answerQuizBackgroundTask: ${err}`)
+    }
+  }
+
   async answerQuiz(args, context) {
     const { userId } = context
     const { response } = args
     const { contactInfo } = response
-    const { email } = contactInfo
 
-    // Update user's contact information
+    // Update user's contact information in our DB
     await updateUser(userId, contactInfo)
 
     // Store their answers in our DB
     const resultId = await answerQuiz(userId, response)
-    const rootUrl = config.get('rootUrl')
 
-    // Send an email to the user
-    const getRoute = () => {
-      const ID_HELP_ME = '439a564d-adc9-497b-9dba-a9d8de6caf75'
-      const ID_HELP_MY_TEAM = '853020dd-ebc6-458c-8bf2-eb5a1cc6101f'
-      switch (response.quizId) {
-        // TODO: Lookup the following route constants from the database
-        case ID_HELP_ME:
-          return 'help-me'
-        case ID_HELP_MY_TEAM:
-          return 'help-my-team'
-        default:
-          console.error('Unexpected Quiz ID')
-          return ''
-      }
-    }
-    const resultsUrl = `${rootUrl}/${getRoute()}/result/${resultId}`
-    await sendAssessmentResultsEmail({ resultsUrl, email })
-
-    // Create the contact in Agile CRM, with the graded assessment
-    const gradedResponse = await getGradedAssessmentResult(resultId)
-    await handleAssessmentResponder({
-      email,
-      firstName: contactInfo.firstName,
-      lastName: contactInfo.lastName,
-      title: undefined,
-      company: contactInfo.company,
-      phone: undefined,
-      decibelsUid: userId,
-      gradedResponse
+    // No need to block the user's form for the rest of this stull
+    // Lack of await is intentional...
+    /* await */ this.answerQuizBackgroundTask({
+      resultId,
+      response,
+      contactInfo,
+      userId
     })
 
     return resultId
