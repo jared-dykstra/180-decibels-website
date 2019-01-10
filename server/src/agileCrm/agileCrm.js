@@ -181,7 +181,7 @@ export const createNoteForContact = async ({ email, subject, description }) => {
     note: JSON.stringify({ subject, description })
   }).toString()
 
-  console.log(`qs=${qs}`)
+  // console.log(`qs=${qs}`)
 
   const res = await fetch(url, {
     method: 'POST',
@@ -195,5 +195,5 @@ export const createNoteForContact = async ({ email, subject, description }) => {
   checkStatus(res)
 
   // 204 indicates success
-  console.log(`createNoteForContact.  res.status=${res.status}`)
+  // console.log(`createNoteForContact.  res.status=${res.status}`)
 }
