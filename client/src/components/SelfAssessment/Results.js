@@ -23,8 +23,9 @@ const Results = ({ resultsUrl, resultsEmail }) => (
     <Grid item>
       {/* Note: Any changes to the text here need to also be reflected in AssessmentResultsEmail.js */}
       <h5 style={{ marginTop: '1em' }}>
-        Congratulations! You&apos;re on your way towards improving productivity
-        and reducing costs. Your results will be sent to{' '}
+        Congratulations for taking the time to evaluate the health of your
+        organization. You&apos;re on your way towards improving productivity and
+        reducing costs. Your results will be sent to{' '}
         <a
           href={`mailto:${resultsEmail}`}
           target="_blank"
@@ -36,8 +37,8 @@ const Results = ({ resultsUrl, resultsEmail }) => (
       </h5>
     </Grid>
     <Grid item>
-      Or copy and use the following link to access to your results--and tips on
-      how to improve:
+      Or copy and use the following link to access to your results--and learn
+      about the steps you can take to boost team’s productivity.
     </Grid>
     <Grid item align="center">
       <a href={resultsUrl}>{resultsUrl}</a>
