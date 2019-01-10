@@ -1,31 +1,20 @@
 // See: https://github.com/apollographql/fullstack-tutorial/blob/master/final/server/src/datasources/user.js
 import { DataSource } from 'apollo-datasource'
+import config from 'config'
+
 import {
   getAssessment,
-  getAssessmentResult,
   answerQuestion,
   answerQuiz,
   updateUser,
-  getCompetencies
+  getGradedAssessmentResult
 } from '../../db/dbAdapter'
-
-import gradeQuiz from './GradeQuiz'
+import { sendAssessmentResultsEmail } from '../../notifications/assessmentResultsEmail'
+import { handleAssessmentResponder } from '../../agileCrm'
 
 /* eslint-disable class-methods-use-this */
 
-const getGradedAssessmentResult = async resultId => {
-  const { quizRubric, ...response } = await getAssessmentResult(resultId)
-  const competencies = await getCompetencies()
-  const grade = gradeQuiz({ competencies, quizRubric, response })
-  const gradedResponse = { ...response, grade }
-  return gradedResponse
-}
-
 export default class AssessmentApi extends DataSource {
-  initialize(config) {
-    this.context = config.context
-  }
-
   async getAssessment(args) {
     const { name } = args
     const assessment = await getAssessment(name)
@@ -35,20 +24,7 @@ export default class AssessmentApi extends DataSource {
   async getAssessmentResult(args) {
     const { id: resultId } = args
     const gradedResponse = await getGradedAssessmentResult(resultId)
-
-    const { quizTimestamp, originalUserId, contactInfo, grade } = gradedResponse
-    const grades = Object.entries(grade).map(([competencyId, value]) => ({
-      competencyId,
-      ...value
-    }))
-    const response = {
-      quizTimestamp: `${quizTimestamp}`,
-      originalUserId,
-      contactInfo,
-      grades
-    }
-
-    return response
+    return gradedResponse
   }
 
   async answerQuestion(args, context) {
@@ -59,14 +35,49 @@ export default class AssessmentApi extends DataSource {
   }
 
   async answerQuiz(args, context) {
-    const { response } = args
     const { userId } = context
-    await updateUser(userId, response.contactInfo)
-    const responseId = await answerQuiz(userId, response)
+    const { response } = args
+    const { contactInfo } = response
+    const { email } = contactInfo
 
-    // TODO: Start background task (non-awaited promise) to build graded response and add to AgileCRM
-    // const gradedResponse = getGradedAssessmentResult(responseId)
+    // Update user's contact information
+    await updateUser(userId, contactInfo)
 
-    return responseId
+    // Store their answers in our DB
+    const resultId = await answerQuiz(userId, response)
+    const rootUrl = config.get('rootUrl')
+
+    // Send an email to the user
+    const getRoute = () => {
+      const ID_HELP_ME = '439a564d-adc9-497b-9dba-a9d8de6caf75'
+      const ID_HELP_MY_TEAM = '853020dd-ebc6-458c-8bf2-eb5a1cc6101f'
+      switch (response.quizId) {
+        // TODO: Lookup the following route constants from the database
+        case ID_HELP_ME:
+          return 'help-me'
+        case ID_HELP_MY_TEAM:
+          return 'help-my-team'
+        default:
+          console.error('Unexpected Quiz ID')
+          return ''
+      }
+    }
+    const resultsUrl = `${rootUrl}/${getRoute()}/result/${resultId}`
+    await sendAssessmentResultsEmail({ resultsUrl, email })
+
+    // Create the contact in Agile CRM, with the graded assessment
+    const gradedResponse = await getGradedAssessmentResult(resultId)
+    await handleAssessmentResponder({
+      email,
+      firstName: contactInfo.firstName,
+      lastName: contactInfo.lastName,
+      title: undefined,
+      company: contactInfo.company,
+      phone: undefined,
+      decibelsUid: userId,
+      gradedResponse
+    })
+
+    return resultId
   }
 }

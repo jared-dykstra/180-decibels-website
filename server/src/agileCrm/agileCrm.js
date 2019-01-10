@@ -1,4 +1,5 @@
 import { filter } from 'lodash'
+import FormData from 'form-data'
 import config from 'config'
 // TODO: This method is deprecated
 import { isNullOrUndefined } from 'util'
@@ -12,11 +13,15 @@ const checkStatus = res => {
   throw new Error(`${res.status} - ${res.statusText}`)
 }
 
-const buildHeaders = () => {
+const buildHeaders = ({ contentType } = { contentType: 'json' }) => {
   const { restApiUser, restApiKey } = config.get('agileCrm')
+
   return {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type':
+      contentType === 'json'
+        ? 'application/json'
+        : 'application/x-www-form-urlencoded',
     Authorization: `Basic ${Buffer.from(
       `${restApiUser}:${restApiKey}`
     ).toString('base64')}`
@@ -159,4 +164,24 @@ export const createTaskForContact = async ({
   // Process the response
   const agileCrmTask = await res.json()
   return agileCrmTask
+}
+
+export const createNoteForContact = async ({ email, subject, description }) => {
+  const { restEndpoint } = config.get('agileCrm')
+  const url = `${restEndpoint}api/contacts/email/note/add`
+  const formData = new FormData()
+  formData.append('email', email)
+  formData.append('note', JSON.stringify({ subject, description }))
+  const qs = new URLSearchParams(formData).toString()
+  const res = await fetch(url, {
+    method: 'POST',
+    body: qs,
+    headers: buildHeaders({ contentType: 'form' })
+  })
+
+  // Check for any other HTTP error
+  checkStatus(res)
+
+  // 204 indicates success
+  // console.log(`HERE2.  res.status=${res.status}`)
 }

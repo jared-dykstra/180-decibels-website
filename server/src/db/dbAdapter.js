@@ -12,6 +12,7 @@ import { UserInputError } from 'apollo-server-express'
 import Knex from 'knex'
 
 import logLevels, { NOTICE, CRITICAL } from './logLevels'
+import gradeQuiz from './GradeQuiz'
 
 const knexConfig = config.get('knex')
 const knex = Knex(knexConfig)
@@ -270,7 +271,7 @@ export const answerQuiz = async (userId, response) => {
   return row.response_id
 }
 
-export const getAssessmentResult = async responseId => {
+const getAssessmentResult = async responseId => {
   const quizResponse = await knex('assessment_quiz_responses')
     .where({ response_id: responseId })
     .first()
@@ -362,7 +363,26 @@ export const getAssessmentResult = async responseId => {
   return retval
 }
 
-export const getCompetencies = async () => {
+const getCompetencies = async () => {
   const competencies = await knex('assessment_competencies')
   return competencies
+}
+
+export const getGradedAssessmentResult = async resultId => {
+  const { quizRubric, ...response } = await getAssessmentResult(resultId)
+  const competencies = await getCompetencies()
+  const grade = gradeQuiz({ competencies, quizRubric, response })
+  const { quizTimestamp, originalUserId, contactInfo } = response
+  const grades = Object.entries(grade).map(([competencyId, value]) => ({
+    competencyId,
+    ...value
+  }))
+  return {
+    quizTimestamp: `${quizTimestamp}`,
+    originalUserId,
+    contactInfo,
+    grades,
+    competencies,
+    response
+  }
 }

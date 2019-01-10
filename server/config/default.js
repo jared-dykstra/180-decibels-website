@@ -1,6 +1,7 @@
 const defer = require('config/defer').deferConfig
 
 module.exports = {
+  rootUrl: 'https://decibels180.herokuapp.com',
   authDuration: 24 * 60 * 60,
   bcryptHashRounds: 9, // <-- See: https://www.npmjs.com/package/bcrypt#a-note-on-rounds
   idCookieName: 'id',
@@ -27,5 +28,10 @@ module.exports = {
     seeds: {
       directory: './src/db/seeds'
     }
+  },
+  aws: {
+    accessKeyId: 'AKIAIAF4STTYUYBWXCTA',
+    secretAccessKey: '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',
+    region: 'us-west-2'
   }
 }
