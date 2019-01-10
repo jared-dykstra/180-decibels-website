@@ -41,8 +41,8 @@ export const makeServer = ({ clientRoot }) => {
 
   app.get('/robots.txt', (req, res) => {
     res.type('text/plain')
-    // TODO: Currently disallowing everything.  Change to "Disallow: " before going live
-    res.send('User-agent: *\nDisallow: /')
+    // TODO: Either get rid of the static robots.txt file, or serve the contents of that file.  DRY
+    res.send('User-agent: *\nSitemap: https://180decibels.com/sitemap.xml')
   })
 
   const isProduction = process.env.NODE_ENV === 'production'
