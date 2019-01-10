@@ -5,6 +5,9 @@
     }
   ],
   "env": {
+    "YARN_PRODUCTION": {
+      "value": "false"
+    }
   },
   "environments": {
     "test": {
