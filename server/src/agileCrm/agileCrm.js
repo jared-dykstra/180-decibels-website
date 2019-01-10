@@ -1,4 +1,5 @@
 import { filter } from 'lodash'
+import FormData from 'form-data'
 import config from 'config'
 // TODO: This method is deprecated
 import { isNullOrUndefined } from 'util'
@@ -178,9 +179,9 @@ export const createNoteForContact = async ({ email, subject, description }) => {
     headers: buildHeaders({ contentType: 'form' })
   })
 
-  console.log('HERE1')
   // Check for any other HTTP error
   checkStatus(res)
 
-  console.log(`HERE2.  res.status=${res.status}`)
+  // 204 indicates success
+  // console.log(`HERE2.  res.status=${res.status}`)
 }

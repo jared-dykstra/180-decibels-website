@@ -25,7 +25,12 @@ const Results = ({ resultsUrl, resultsEmail }) => (
       <h5 style={{ marginTop: '1em' }}>
         Congratulations! You&apos;re on your way towards improving productivity
         and reducing costs. Your results will be sent to{' '}
-        <a href={`mailto:${resultsEmail}`} style={{ color: 'inherit' }}>
+        <a
+          href={`mailto:${resultsEmail}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit' }}
+        >
           {resultsEmail}
         </a>
       </h5>
