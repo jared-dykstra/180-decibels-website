@@ -89,7 +89,7 @@ export class Home extends PureComponent {
                 <p>
                   Are you a manager or leader who is frustrated by your team’s
                   results? Is there confusion on who is accountable for what? Do
-                  team members KNOW what they need to do EACH DAY to meet
+                  team members know what they need to do each week to meet
                   targets? IF THIS SOUNDS LIKE YOUR COMPANY, WE GET IT AND WE
                   CAN HELP.
                 </p>
