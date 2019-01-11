@@ -1,7 +1,7 @@
 const defer = require('config/defer').deferConfig
 
 module.exports = {
-  rootUrl: 'https://decibels180.herokuapp.com',
+  rootUrl: 'https://decibels-website-test.herokuapp.com',
   authDuration: 24 * 60 * 60,
   bcryptHashRounds: 9, // <-- See: https://www.npmjs.com/package/bcrypt#a-note-on-rounds
   idCookieName: 'id',
