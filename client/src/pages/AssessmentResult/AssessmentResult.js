@@ -105,7 +105,12 @@ class AssessmentResult extends PureComponent {
             </h5>
           </Grid>
           <Grid item xs={12}>
-            <p style={{ marginTop: '2em', textAlign: 'center' }}>
+            <p
+              style={{
+                marginTop: '2em',
+                textAlign: 'center'
+              }}
+            >
               <i>Prepared for {displayName}</i>
             </p>
           </Grid>
