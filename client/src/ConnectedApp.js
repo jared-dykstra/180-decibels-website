@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 
 import {
   authenticate,
@@ -188,11 +187,6 @@ class App extends PureComponent {
 
     return (
       <ScrollToTop {...mergeProps()}>
-        <Helmet>
-          {/* site-wide defaults, which can be overridden by each page */}
-          <title>180 Decibels</title>
-        </Helmet>
-
         <Switch>
           {Object.entries(routes).map(([path, Component]) => (
             <Route

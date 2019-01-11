@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import {
   Button,
@@ -49,7 +48,12 @@ class AssessmentResult extends PureComponent {
     // Supplied by react-router
     match: PropTypes.shape({
       id: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    location: PropTypes.shape({
+      hash: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+      search: PropTypes.string.isRequired
+    }).isRequired // <-- Passed down from react router
   }
 
   static defaultProps = {
@@ -63,7 +67,7 @@ class AssessmentResult extends PureComponent {
   }
 
   render() {
-    const { displayName, grades, hasError } = this.props
+    const { displayName, grades, hasError, location } = this.props
 
     // Should probably use withStyles() and make this a css class
     const flexCenter = {
@@ -84,7 +88,10 @@ class AssessmentResult extends PureComponent {
 
     const Report = () => (
       <div>
-        <h2>How are you Doing?</h2>
+        <p>
+          Congratulations! You&apos;re on your way towards improving
+          productivity and reducing costs.
+        </p>
         <br />
         <Grid container>
           <Grid item xs={4} sm={3} align="right">
@@ -173,11 +180,13 @@ class AssessmentResult extends PureComponent {
     )
 
     return (
-      <Template>
-        <Helmet>
-          <title>180 Decibels - Confidentiality</title>
-          <meta name="description" content="How are you doing?" />
-        </Helmet>
+      <Template
+        {...{
+          title: '180 Decibels - Assessment Results',
+          description: `Congratulations! You're on your way towards improving productivity and reducing costs.`,
+          location
+        }}
+      >
         {hasError === undefined && <h5>Loading...</h5>}
         {hasError === true && (
           <div>

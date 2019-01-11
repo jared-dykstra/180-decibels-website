@@ -1,20 +1,20 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Row, Col } from 'reactstrap'
-import { Helmet } from 'react-helmet'
 
 import { GetStartedButton, Template } from 'components'
 
 import styles from './Services.module.scss'
 
-export default () => (
-  <Template className={styles.services}>
-    <Helmet>
-      <title>180 Decibels - Services</title>
-      <meta
-        name="description"
-        content="Operations, Organization and Team Health, Enterprise Performance Management, and People Advisory Services"
-      />
-    </Helmet>
+const Services = ({ location }) => (
+  <Template
+    {...{
+      title: '180 Decibels - Services',
+      description: `Operations, Organization and Team Health, Enterprise Performance Management, and People Advisory Services`,
+      location,
+      className: styles.services
+    }}
+  >
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <h1>Services</h1>
@@ -85,3 +85,13 @@ export default () => (
     </Row>
   </Template>
 )
+
+Services.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired // <-- Passed down from react router
+}
+
+export default Services
