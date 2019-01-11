@@ -125,31 +125,29 @@ class AssessmentResult extends PureComponent {
             <ExpansionPanel key={grade.competencyId} style={{ margin: '1em' }}>
               <ExpansionPanelSummary>
                 <Grid container spacing={24}>
-                  <Grid
-                    item
-                    xs={2}
-                    sm={1}
-                    style={{
-                      fontSize: '2.5rem',
-                      ...flexCenter
-                    }}
-                  >
-                    <CompetencyIcon
-                      competencyId={grade.competencyId}
-                      fontSize="inherit"
-                    />
+                  <Grid item xs={2} sm={1} style={flexCenter}>
+                    <h2>
+                      <CompetencyIcon
+                        competencyId={grade.competencyId}
+                        fontSize="inherit"
+                        nativeColor="black"
+                      />
+                    </h2>
                   </Grid>
                   <Grid item xs={10} sm={5} md={3} style={flexCenter}>
                     <h3>{grade.name}</h3>
                   </Grid>
                   <Grid item xs={2} sm={1} style={flexCenter}>
-                    <h2>
-                      {grade.thumbsUp ? (
-                        <ThumbUp fontSize="inherit" />
-                      ) : (
-                        <ThumbDown fontSize="inherit" color="disabled" />
-                      )}
-                    </h2>
+                    <div>
+                      <h2>
+                        {grade.thumbsUp ? (
+                          <ThumbUp fontSize="inherit" />
+                        ) : (
+                          <ThumbDown fontSize="inherit" color="disabled" />
+                        )}
+                      </h2>
+                      <h5>{`${Math.round(grade.score * 100)}%`}</h5>
+                    </div>
                   </Grid>
                   <Grid item xs={10} sm={5} md={7}>
                     {grade.comment}
