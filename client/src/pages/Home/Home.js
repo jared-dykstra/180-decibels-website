@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { Helmet } from 'react-helmet'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
 import Waypoint from 'react-waypoint'
 import { Paper } from '@material-ui/core'
@@ -22,20 +21,24 @@ export class Home extends PureComponent {
   handleWaypoint = (id = '') => {
     const { location, history } = this.props
     history.replace({
-      pathname: location.path,
+      pathname: location.pathname,
       search: location.search,
       hash: id
     })
   }
 
   render() {
-    const { doClickHelpMe, doClickHelpMyTeam, tracker } = this.props
+    const { doClickHelpMe, doClickHelpMyTeam, tracker, location } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
     return (
-      <Template className={styles.home}>
-        <Helmet>
-          <meta name="description" content={tagline} />
-        </Helmet>
+      <Template
+        {...{
+          title: '180 Decibels',
+          description: tagline,
+          location,
+          className: styles.home
+        }}
+      >
         <Col>
           <div className={styles.wrapper}>
             <div className={styles.banner}>
@@ -165,8 +168,9 @@ Home.propTypes = {
     replace: PropTypes.func.isRequired
   }).isRequired, // <-- Passed down from react router
   location: PropTypes.shape({
-    search: PropTypes.string,
-    path: PropTypes.string
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
   }).isRequired, // <-- Passed down from react router
   tracker: PropTypes.shape({
     event: PropTypes.func.isRequired
