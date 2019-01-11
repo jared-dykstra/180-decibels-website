@@ -170,7 +170,7 @@ class AssessmentResult extends PureComponent {
               </ExpansionPanelDetails>
             </ExpansionPanel>
           ))}
-          <Grid item xs={11} align="center">
+          <Grid item xs={12} align="center">
             <TakeTestAction />
           </Grid>
         </Grid>
