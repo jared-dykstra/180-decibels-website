@@ -11,7 +11,11 @@ it('renders without crashing', () => {
   const history = {
     replace: identityFn
   }
-  const location = {}
+  const location = {
+    hash: '',
+    search: '',
+    pathname: '/'
+  }
   renderer.render(
     <Home
       {...{
