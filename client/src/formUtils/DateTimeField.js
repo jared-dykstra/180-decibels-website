@@ -9,10 +9,10 @@ import FormComponent from './FormComponent'
 const isAvailable = date => !isWeekend(date)
 
 const nextAvailable = (date = new Date()) => {
-  let next
+  let next = date
   do {
-    next = addDays(date, 1)
-  } while (!isAvailable(date))
+    next = addDays(next, 1)
+  } while (!isAvailable(next))
   return next
 }
 
