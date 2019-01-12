@@ -151,7 +151,8 @@ export const gradesSelector = createSelector(
     return _sortBy(grades, o => o.order).map(
       ({ threshold, score, ...rest }) => ({
         ...rest,
-        thumbsUp: score > threshold
+        thumbsUp: score > threshold,
+        score
       })
     )
   }
