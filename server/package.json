@@ -69,5 +69,12 @@
     "test": "jest .*test.*test.js --watchAll",
     "test:ci": "jest .*test.*test.js",
     "ci": "yarn run lint && yarn run test:ci"
+  },
+  "reactSnap": {
+    "skipThirdPartyRequests": true,
+    "cacheAjaxRequests": true,
+    "inlineCss": false,
+    "http2PushManifest": true,
+    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"]
   }
 }

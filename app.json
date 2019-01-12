@@ -1,7 +1,18 @@
 {
   "buildpacks": [
     {
+      "url": "https://github.com/jontewks/puppeteer-heroku-buildpack.git"
+    },
+    {
       "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql"
     }
   ],
   "env": {
