@@ -17,6 +17,7 @@ const Template = ({
   title,
   description,
   location,
+  locationHashOverride,
   imageUrl,
   type,
   twitterCardType,
@@ -25,7 +26,12 @@ const Template = ({
   children
 }) => {
   const rootUrl = configGet('rootUrl')
-  const { pathname, hash, search } = location
+  // location.hash and location.search will always be blank when the page is pre-rendered since
+  // meta tags can only be used when the page is pre-rendered with `react-snap`, `og:url` will never
+  // include a hash or search query string unless `locationHashOverride` is set.  It can only be set
+  // once-per-page, and must be a static string.  Changing it on the client-side will have no effect
+  const { pathname, hash: originalHash, search } = location
+  const hash = originalHash || locationHashOverride
   const url = `${rootUrl}${pathname}${
     search && search.length > 0 ? search : ''
   }${hash && hash.length > 0 ? hash : ''}`
@@ -58,6 +64,7 @@ Template.propTypes = {
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired
   }).isRequired, // <-- Passed down from react router
+  locationHashOverride: PropTypes.string,
   type: PropTypes.string,
   twitterCardType: PropTypes.oneOf([
     'summary',
@@ -81,6 +88,7 @@ Template.defaultProps = {
   type: 'website',
   twitterCardType: 'summary_large_image',
   twitterCreator: '1Decibels',
+  locationHashOverride: undefined,
   className: undefined
 }
 

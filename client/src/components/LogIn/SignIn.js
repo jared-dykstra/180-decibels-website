@@ -111,5 +111,7 @@ const ConnectedSignIn = connect(
 export default reduxForm({
   form: SIGNIN_FORM_KEY,
   validate: validateSignIn,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true
 })(ConnectedSignIn)

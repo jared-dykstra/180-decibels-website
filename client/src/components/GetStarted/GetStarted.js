@@ -274,5 +274,7 @@ const ConnectedGetStarted = connect(
 export default reduxForm({
   form: GET_STARTED_FORM_KEY,
   validate: validateGetStarted,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true
 })(ConnectedGetStarted)

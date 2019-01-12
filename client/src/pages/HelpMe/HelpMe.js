@@ -13,6 +13,7 @@ const HelpMe = ({ location, ...props }) => (
       description:
         'We re-focus managers: driving to outcomes and creating urgency',
       location,
+      locationHashOverride: '#quiz',
       className: styles['help-me']
     }}
   >

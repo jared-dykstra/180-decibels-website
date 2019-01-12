@@ -42,18 +42,11 @@ export const makeServer = ({ id, clientRoot }) => {
 
   app.use(favicon(path.join(clientRoot, 'favicon.ico')))
 
-  app.get('/robots.txt', (req, res) => {
-    res.type('text/plain')
-    // TODO: Either get rid of the static robots.txt file, or serve the contents of that file.  DRY
-    res.send('User-agent: *\nSitemap: https://180decibels.com/sitemap.xml')
-  })
-
   const unhashedCacheDuration = isProduction ? 3600 : 0
 
   // serve-static middleware for all files in the clientRoot directory
   app.use(
     express.static(clientRoot, {
-      index: false,
       immutable: true,
       maxAge: 31536000000, // <== serve-static accepts 'ms' and converts it to 's' for Cache-Control
       setHeaders: (res, p) => {
@@ -75,7 +68,7 @@ export const makeServer = ({ id, clientRoot }) => {
   // This includes the bare URL
   app.get('*', (req, res) => {
     // TODO: Add ETag generation
-    res.sendFile(path.join(clientRoot, 'index.html'))
+    res.sendFile(path.join(clientRoot, '404.html'))
   })
 
   const port = process.env.PORT || 5000

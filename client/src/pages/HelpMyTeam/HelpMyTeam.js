@@ -12,6 +12,7 @@ const HelpMyTeam = ({ location, ...props }) => (
       title: '180 Decibels - Help My Team',
       description: `We generate real ROI and substantially grow confidence team's ability to execute`,
       location,
+      locationHashOverride: '#quiz',
       className: styles['help-my-team']
     }}
   >
@@ -23,7 +24,7 @@ const HelpMyTeam = ({ location, ...props }) => (
           ability to execute.
         </p>
         <Quote cite="John, Executive Director" className={styles.quote}>
-          “My very first sit down with 180Decibels was eye opening, to say the
+          “My very first sit down with 180 Decibels was eye opening, to say the
           least. From the first few questions I knew that I had much to discover
           and was about to enter a learning cycle that would take me to a great
           future. I am discovering new aspects of myself and how I can cooperate

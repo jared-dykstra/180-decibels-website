@@ -221,5 +221,7 @@ const ConnectedEmailMe = connect(
 export default reduxForm({
   form: ASSESSMENT_RESULT_FORM_KEY,
   validate: validateAssessmentResults,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true
 })(ConnectedEmailMe)

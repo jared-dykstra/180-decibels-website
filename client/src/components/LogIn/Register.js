@@ -311,5 +311,7 @@ export default reduxForm({
   form: REGISTER_FORM_KEY,
   validate: validateRegistration,
   asyncValidate,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true
 })(ConnectedRegister)
