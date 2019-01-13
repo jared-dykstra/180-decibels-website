@@ -13,7 +13,10 @@ import {
 } from 'reduxStore/routes/routesConstants'
 
 import { get as configGet } from '../../config'
+
 import styles from './Home.module.scss'
+import overviewVideoPoster from './overview-video-poster.jpg'
+import sunVideoPoster from './sun-video-poster.jpg'
 
 const CDN = configGet('cdn')
 
@@ -122,11 +125,11 @@ export class Home extends PureComponent {
               onLeave={() => this.handleWaypoint()}
             >
               <section id="intro">
-                <Paper>
+                <Paper style={{ paddingBottom: '3em' }}>
                   <Video
                     {...{
-                      poster: `${CDN}/intro-video-poster.jpg`,
-                      src: `${CDN}/180Voiceover2.mp4`,
+                      poster: overviewVideoPoster,
+                      src: `${CDN}/180DecibelsOverview1.2.mp4`,
                       tracker
                     }}
                   />
@@ -138,11 +141,11 @@ export class Home extends PureComponent {
         <Row className={styles['video-row']}>
           <Col md="8">
             <section id="focus">
-              <Paper>
+              <Paper style={{ paddingBottom: '3em' }}>
                 <Video
                   {...{
-                    poster: `${CDN}/sun-video-poster.jpg`,
-                    src: `${CDN}/180DecibelsSunMetaphor.mp4`,
+                    poster: sunVideoPoster,
+                    src: `${CDN}/180DecibelsSunMetaphor_2.mp4`,
                     tracker
                   }}
                 />

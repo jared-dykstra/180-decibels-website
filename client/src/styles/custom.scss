@@ -32,6 +32,17 @@ $headings-color: $decibels-red;
   .video-react .video-react-poster {
     background-color: initial !important;
   }
+
+  .video-react .video-react-control-bar {
+    display: flex !important;
+    font-family: Ubuntu;
+    font-size: 16px;
+    margin-bottom: -3em;
+  }
+
+  .video-react {
+    background-color: transparent;
+  }
 }
 
 /* stylelint disable property-no-unknown */
