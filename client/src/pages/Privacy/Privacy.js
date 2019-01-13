@@ -6,6 +6,7 @@ import { Template } from 'components'
 const PrivacyPolicy = ({ location }) => (
   <Template
     {...{
+      title: '180 Decibels - Privacy',
       location
     }}
   >

@@ -9,6 +9,7 @@ import styles from './HelpMyTeam.module.scss'
 const HelpMyTeam = ({ location, ...props }) => (
   <Template
     {...{
+      title: '180 Decibels - Help My Team',
       location,
       className: styles['help-my-team']
     }}

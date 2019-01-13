@@ -10,7 +10,8 @@ import {
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
   ROUTE_OUR_TEAM,
-  ROUTE_SERVICES
+  ROUTE_SERVICES,
+  ROUTE_PRIVACY
 } from '../../client/src/reduxStore/routes/routesConstants'
 
 const OG_TITLE = '__DECIBELS_OG_TITLE__'
@@ -76,6 +77,11 @@ export const getOgValuesForRoute = req => {
         [OG_DESCRIPTION]: `Operations, Organization and Team Health, Enterprise Performance Management, and People Advisory Services`
       }
 
+    case ROUTE_PRIVACY:
+      return {
+        [OG_TITLE]: '180 Decibels - Privacy'
+      }
+
     case ROUTE_HELP_ME_QUIZ:
     case ROUTE_HELP_ME:
       return {
@@ -86,7 +92,7 @@ export const getOgValuesForRoute = req => {
     case ROUTE_HELP_MY_TEAM_QUIZ:
     case ROUTE_HELP_MY_TEAM:
       return {
-        [OG_TITLE]: '180 Decibels - Help Me',
+        [OG_TITLE]: '180 Decibels - Help My Team',
         [OG_URL]: `${rootUrl}${ROUTE_HELP_MY_TEAM_QUIZ}`,
         [OG_DESCRIPTION]: `We generate real ROI and substantially grow confidence team's ability to execute`
       }

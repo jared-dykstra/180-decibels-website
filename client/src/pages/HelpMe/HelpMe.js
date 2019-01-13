@@ -51,6 +51,7 @@ const HelpMe = ({ location, ...props }) => {
   return (
     <Template
       {...{
+        title: '180 Decibels - Help Me',
         location,
         className: styles['help-me']
       }}

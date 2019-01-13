@@ -180,6 +180,7 @@ class AssessmentResult extends PureComponent {
     return (
       <Template
         {...{
+          title: '180 Decibels - Assessment Results',
           location
         }}
       >

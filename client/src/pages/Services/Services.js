@@ -9,6 +9,7 @@ import styles from './Services.module.scss'
 const Services = ({ location }) => (
   <Template
     {...{
+      title: '180 Decibels - Services',
       location,
       className: styles.services
     }}

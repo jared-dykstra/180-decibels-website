@@ -9,6 +9,7 @@ import styles from './HowWeWork.module.scss'
 const HowWeWork = ({ location }) => (
   <Template
     {...{
+      title: '180 Decibels - How We Work',
       location,
       className: styles['how-we-work']
     }}

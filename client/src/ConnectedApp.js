@@ -108,10 +108,10 @@ class App extends PureComponent {
     }
   }
 
-  // TODO: It would be more user-friendly to use a React Context for the tracker vs. spreading these props throughtout
+  // TODO: It would be more user-friendly to use a React Context for the tracker vs. spreading these props throughout
   logPageView = () => {
     const { /* userId, */ doLogPageView } = this.props
-    // this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about, but it might be related to withRouter() below
+    // TODO: this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about
     const { pathname, search, hash } = window.location
     const uri = `${pathname}${search && search.length > 0 ? search : ''}${
       hash && hash.length > 0 ? hash : ''

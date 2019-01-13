@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render, hydrate } from 'react-dom'
 import { createBrowserHistory } from 'history'
 
 import createStore from 'reduxStore/createStore'
@@ -14,7 +14,15 @@ const store = createStore(history)
 const rootElement = document.getElementById('root')
 const props = { store, history }
 
-ReactDOM.render(<App {...props} />, rootElement)
+const renderRootNode = fn => {
+  if (rootElement.hasChildNodes()) {
+    hydrate(fn(), rootElement)
+  } else {
+    render(fn(), rootElement)
+  }
+}
+
+renderRootNode(() => <App {...props} />)
 
 if (process.env.NODE_ENV !== 'production') {
   if (module.hot) {
@@ -23,7 +31,7 @@ if (process.env.NODE_ENV !== 'production') {
       console.warn('[HMR] - Updating App')
       // eslint-disable-next-line global-require
       const NextApp = require('./App').default
-      ReactDOM.render(<NextApp {...props} />, rootElement)
+      renderRootNode(() => <NextApp {...props} />)
     })
   }
 }

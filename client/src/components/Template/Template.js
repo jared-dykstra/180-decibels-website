@@ -6,7 +6,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Container } from 'reactstrap'
-// import Helmet from 'react-helmet'
+import Helmet from 'react-helmet'
 
 import { Header, Footer } from 'components'
 // import { get as configGet } from '../../config'
@@ -14,7 +14,7 @@ import { Header, Footer } from 'components'
 import styles from './template.module.scss'
 
 const Template = ({
-  // title,
+  title,
   // description,
   // location,
   // imageUrl,
@@ -31,10 +31,10 @@ const Template = ({
   // }${hash && hash.length > 0 ? hash : ''}`
   [
     <Container key="container" className={styles.page}>
-      {/* Not currently being used--but this is useful if SSR or pre-rendering is enabled in the future.
-          To set these tags, see server/src/openGraph.js
-       <Helmet>
+      <Helmet>
         <title>{title}</title>
+        {/* Not currently being used--but this is useful if SSR or pre-rendering is enabled in the future.
+          To set these tags, see server/src/openGraph.js
         <meta name="description" content={description} />
         <meta property="og:url" content={url} />,
         <meta property="og:title" content={title} />,
@@ -43,7 +43,8 @@ const Template = ({
         <meta property="og:type" content={type} />,
         <meta name="twitter:card" content={twitterCardType} />,
         <meta name="twitter:creator" content={twitterCreator} />
-      </Helmet> */}
+              */}
+      </Helmet>
       <Header />
       <div className={className}>{children}</div>
     </Container>,
@@ -56,7 +57,7 @@ Template.propTypes = {
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired
   }).isRequired, // <-- Passed down from react router
-  // title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   // description: PropTypes.string.isRequired,
   // imageUrl: PropTypes.string.isRequired,
   // type: PropTypes.string,
@@ -75,7 +76,7 @@ Template.propTypes = {
 }
 
 Template.defaultProps = {
-  // title: '180 Decibels',
+  title: '180 Decibels',
   // description:
   //   'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity with tactical operational tools and processes.',
   // imageUrl: 'https://www.180decibels.com/180-Decibels.png',
