@@ -9,8 +9,6 @@ import styles from './Confidentiality.module.scss'
 const Confidentiality = ({ location }) => (
   <Template
     {...{
-      title: '180 Decibels - Confidentiality',
-      description: `Your business is Your business`,
       location
     }}
   >

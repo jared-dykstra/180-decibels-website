@@ -9,7 +9,6 @@ import { ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 const NotFound = ({ location }) => (
   <Template
     {...{
-      title: '180 Decibels - 404',
       location
     }}
   >

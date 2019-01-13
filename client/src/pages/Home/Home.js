@@ -33,8 +33,6 @@ export class Home extends PureComponent {
     return (
       <Template
         {...{
-          title: '180 Decibels',
-          description: tagline,
           location,
           className: styles.home
         }}

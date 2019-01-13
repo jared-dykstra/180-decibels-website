@@ -12,8 +12,6 @@ import jared from './jared.jpg'
 const OurTeam = ({ location }) => (
   <Template
     {...{
-      title: '180 Decibels - Our Team',
-      description: `Our Founders: Dayton Foster, Kerri McGovern, Jared Dykstra`,
       location,
       className: styles['our-team']
     }}
