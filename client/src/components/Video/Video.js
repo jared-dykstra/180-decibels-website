@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 
+import ShareButton from './ShareButton'
+
 const Video = ({ poster, src }) => (
   <Player
     // preload="auto"
@@ -11,7 +13,7 @@ const Video = ({ poster, src }) => (
   >
     <source src={src} />
     <BigPlayButton position="center" />
-    <ControlBar autoHide />
+    <ControlBar autoHide={false}>{/* <ShareButton order={7} /> */}</ControlBar>
   </Player>
 )
 
