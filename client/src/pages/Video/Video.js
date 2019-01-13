@@ -4,13 +4,16 @@ import { Paper } from '@material-ui/core'
 
 import { Template, Video } from 'components'
 
-const VideoPage = ({ title, poster, src, tracker, location, className }) => (
-  <Template {...{ title, location, className }}>
-    <Paper style={{ paddingBottom: '3em' }}>
-      <Video {...{ poster, src, tracker }} />
-    </Paper>
-  </Template>
-)
+const VideoPage = props => {
+  const { title, location, className } = props
+  return (
+    <Template {...{ title, location, className }}>
+      <Paper style={{ paddingBottom: '3em' }}>
+        <Video {...props} />
+      </Paper>
+    </Template>
+  )
+}
 
 VideoPage.propTypes = {
   title: PropTypes.string.isRequired,

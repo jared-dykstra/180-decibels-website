@@ -8,7 +8,9 @@ import { Paper } from '@material-ui/core'
 import { GetStartedButton, Quote, Template, Video } from 'components'
 import {
   ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM
+  ROUTE_HELP_MY_TEAM,
+  ROUTE_VIDEO_INTRO,
+  ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
 
 import {
@@ -20,12 +22,15 @@ import {
   src as sunVideoSrc
 } from 'pages/Video/SunVideo'
 
+import { get as configGet } from '../../config'
+
 import styles from './Home.module.scss'
 
 export class Home extends PureComponent {
   render() {
     const { doClickHelpMe, doClickHelpMyTeam, tracker, location } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
+    const rootUrl = configGet('rootUrl')
     return (
       <Template
         {...{
@@ -119,7 +124,8 @@ export class Home extends PureComponent {
                   {...{
                     poster: overviewVideoPoster,
                     src: overviewVideoSrc,
-                    tracker
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
                   }}
                 />
               </Paper>
@@ -134,7 +140,8 @@ export class Home extends PureComponent {
                   {...{
                     poster: sunVideoPoster,
                     src: sunVideoSrc,
-                    tracker
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
                   }}
                 />
               </Paper>

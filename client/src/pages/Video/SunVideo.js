@@ -7,12 +7,14 @@ const CDN = configGet('cdn')
 export const src = `${CDN}/180DecibelsSunMetaphor_2.mp4`
 export const poster = '/sun-video-poster.jpg'
 
-const IntroVideo = () => (
+const IntroVideo = props => (
   <Video
     {...{
       title: '180 Decibels - Introduction',
       poster,
-      src
+      src,
+      shareUrl: 'www.google.com',
+      ...props
     }}
   />
 )
