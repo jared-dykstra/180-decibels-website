@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -9,11 +10,23 @@ import compression from 'compression'
 import config from 'config'
 
 import { createApi } from './api'
+import { getOgDefaults, getOgValuesForRoute } from './openGraph'
 
 const { NODE_ENV } = process.env
 const isProduction = NODE_ENV === 'production'
 
+/**
+ *  Replace a set of tokens in a file with corresponding values.
+ */
+const replaceTagsInFile = (fileAsString, mapObj) => {
+  const re = new RegExp(Object.keys(mapObj).join('|'), 'gi')
+  // .replace() returns a new string (does not mutate the original)
+  return fileAsString.replace(re, matched => mapObj[matched])
+}
+
 export const makeServer = ({ id, clientRoot }) => {
+  const indexHtml = fs.readFileSync(path.join(clientRoot, 'index.html'), 'utf8')
+
   const app = express()
 
   // Logging middleware
@@ -42,12 +55,6 @@ export const makeServer = ({ id, clientRoot }) => {
 
   app.use(favicon(path.join(clientRoot, 'favicon.ico')))
 
-  app.get('/robots.txt', (req, res) => {
-    res.type('text/plain')
-    // TODO: Either get rid of the static robots.txt file, or serve the contents of that file.  DRY
-    res.send('User-agent: *\nSitemap: https://180decibels.com/sitemap.xml')
-  })
-
   const unhashedCacheDuration = isProduction ? 3600 : 0
 
   // serve-static middleware for all files in the clientRoot directory
@@ -75,7 +82,14 @@ export const makeServer = ({ id, clientRoot }) => {
   // This includes the bare URL
   app.get('*', (req, res) => {
     // TODO: Add ETag generation
-    res.sendFile(path.join(clientRoot, 'index.html'))
+
+    // Generate OpenGraph values for the request
+    const values = getOgValuesForRoute(req)
+    const defaults = getOgDefaults(req)
+    const mapObj = { ...defaults, ...values }
+
+    // Update OpenGraph values when sending the response
+    res.send(replaceTagsInFile(indexHtml, mapObj))
   })
 
   const port = process.env.PORT || 5000

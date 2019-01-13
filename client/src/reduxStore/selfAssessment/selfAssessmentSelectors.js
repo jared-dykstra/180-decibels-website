@@ -53,6 +53,7 @@ export const currentSlideSelector = createSelector(
 export const resultsUrlSelector = createSelector(
   selfAssessmentSelector,
   selfAssessment =>
+    // TODO: Replace window.location.href with redux-router's location property, because this could break SSR and other things in the future
     `${window.location.href}/result/${selfAssessment.results.responseId}`
 )
 

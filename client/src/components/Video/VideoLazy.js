@@ -20,6 +20,7 @@ const VideoLazy = ({ children, ...props }) => {
               }}
             />
           </a>
+          <div className="video-react-control-bar" />
         </div>
       }
     >

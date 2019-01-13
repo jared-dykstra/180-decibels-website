@@ -7,7 +7,6 @@ const PrivacyPolicy = ({ location }) => (
   <Template
     {...{
       title: '180 Decibels - Privacy',
-      description: `Privacy Policy`,
       location
     }}
   >
