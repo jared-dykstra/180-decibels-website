@@ -22,7 +22,8 @@ import {
   NotFound,
   OurTeam,
   Privacy,
-  Services
+  Services,
+  IntroVideo
 } from 'pages'
 import { GetStartedModal, ScrollToTop } from 'components'
 import {
@@ -37,7 +38,9 @@ import {
   ROUTE_PRIVACY,
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
-  ROUTE_SERVICES
+  ROUTE_SERVICES,
+  ROUTE_VIDEO_INTRO,
+  ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
 
 import 'bootstrap'
@@ -166,6 +169,7 @@ class App extends PureComponent {
   }
 
   render() {
+    console.log(`JARED: ROUTE_VIDEO_INTRO: ${ROUTE_VIDEO_INTRO}`)
     const routes = {
       [ROUTE_HOME]: Home,
       [ROUTE_HELP_ME]: HelpMe,
@@ -176,7 +180,9 @@ class App extends PureComponent {
       [ROUTE_OUR_TEAM]: OurTeam,
       [ROUTE_CONFIDENTIALITY]: Confidentiality,
       [ROUTE_PRIVACY]: Privacy,
-      [ROUTE_SERVICES]: Services
+      [ROUTE_SERVICES]: Services,
+      [ROUTE_VIDEO_INTRO]: IntroVideo,
+      [ROUTE_VIDEO_SUN]: IntroVideo
     }
 
     const tracker = {

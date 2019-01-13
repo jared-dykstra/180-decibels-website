@@ -12,11 +12,17 @@ import {
   ROUTE_HELP_MY_TEAM
 } from 'reduxStore/routes/routesConstants'
 
+import {
+  poster as overviewVideoPoster,
+  src as overviewVideoSrc
+} from 'pages/Video/IntroVideo'
+import {
+  poster as sunVideoPoster,
+  src as sunVideoSrc
+} from 'pages/Video/SunVideo'
 import { get as configGet } from '../../config'
 
 import styles from './Home.module.scss'
-import overviewVideoPoster from './overview-video-poster.jpg'
-import sunVideoPoster from './sun-video-poster.jpg'
 
 const CDN = configGet('cdn')
 
@@ -129,7 +135,7 @@ export class Home extends PureComponent {
                   <Video
                     {...{
                       poster: overviewVideoPoster,
-                      src: `${CDN}/180DecibelsOverview1.2.mp4`,
+                      src: overviewVideoSrc,
                       tracker
                     }}
                   />
@@ -145,7 +151,7 @@ export class Home extends PureComponent {
                 <Video
                   {...{
                     poster: sunVideoPoster,
-                    src: `${CDN}/180DecibelsSunMetaphor_2.mp4`,
+                    src: sunVideoSrc,
                     tracker
                   }}
                 />
