@@ -169,7 +169,6 @@ class App extends PureComponent {
   }
 
   render() {
-    console.log(`JARED: ROUTE_VIDEO_INTRO: ${ROUTE_VIDEO_INTRO}`)
     const routes = {
       [ROUTE_HOME]: Home,
       [ROUTE_HELP_ME]: HelpMe,
