@@ -3,21 +3,18 @@ import Video from './Video'
 
 import { get as configGet } from '../../config'
 
-import sunPoster from './sun-video-poster.jpg'
-
 const CDN = configGet('cdn')
-export const src = `${CDN}/180DecibelsOverview1.2.mp4`
+export const src = `${CDN}/180DecibelsSunMetaphor_2.mp4`
+export const poster = '/sun-video-poster.jpg'
 
 const IntroVideo = () => (
   <Video
     {...{
       title: '180 Decibels - Introduction',
-      poster: sunPoster,
+      poster,
       src
     }}
   />
 )
 
 export default IntroVideo
-
-export const poster = sunPoster

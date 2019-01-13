@@ -97,6 +97,8 @@ export const makeServer = ({ id, clientRoot }) => {
 
   // eslint-disable-next-line no-console
   console.log(
-    `Server worker ${id} is listening on port ${port}.  NODE_ENV=${NODE_ENV}`
+    `Server ${
+      id > 0 ? `throng worker ${id} ` : ''
+    }is listening on port ${port}.  NODE_ENV=${NODE_ENV}`
   )
 }

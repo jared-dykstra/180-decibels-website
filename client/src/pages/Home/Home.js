@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
-import Waypoint from 'react-waypoint'
 import { Paper } from '@material-ui/core'
 
 import { GetStartedButton, Quote, Template, Video } from 'components'
@@ -20,22 +19,10 @@ import {
   poster as sunVideoPoster,
   src as sunVideoSrc
 } from 'pages/Video/SunVideo'
-import { get as configGet } from '../../config'
 
 import styles from './Home.module.scss'
 
-const CDN = configGet('cdn')
-
 export class Home extends PureComponent {
-  handleWaypoint = (id = '') => {
-    const { location, history } = this.props
-    history.replace({
-      pathname: location.pathname,
-      search: location.search,
-      hash: id
-    })
-  }
-
   render() {
     const { doClickHelpMe, doClickHelpMyTeam, tracker, location } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
@@ -126,22 +113,17 @@ export class Home extends PureComponent {
             </Quote>
           </Col>
           <Col md="8">
-            <Waypoint
-              onEnter={() => this.handleWaypoint('intro')}
-              onLeave={() => this.handleWaypoint()}
-            >
-              <section id="intro">
-                <Paper style={{ paddingBottom: '3em' }}>
-                  <Video
-                    {...{
-                      poster: overviewVideoPoster,
-                      src: overviewVideoSrc,
-                      tracker
-                    }}
-                  />
-                </Paper>
-              </section>
-            </Waypoint>
+            <section id="intro">
+              <Paper style={{ paddingBottom: '3em' }}>
+                <Video
+                  {...{
+                    poster: overviewVideoPoster,
+                    src: overviewVideoSrc,
+                    tracker
+                  }}
+                />
+              </Paper>
+            </section>
           </Col>
         </Row>
         <Row className={styles['video-row']}>
