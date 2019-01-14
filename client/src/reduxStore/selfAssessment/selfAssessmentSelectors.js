@@ -1,6 +1,12 @@
 import { sortBy as _sortBy } from 'lodash'
 import { createSelector } from 'reselect'
+import {
+  ROUTE_HELP_ME_RESULT,
+  ROUTE_HELP_MY_TEAM_RESULT
+} from 'reduxStore/routes/routesConstants'
 import { mountPoint } from '.'
+
+import { get as configGet } from '../../config'
 
 /* Begin Self Assesment Selectors */
 
@@ -22,6 +28,11 @@ const configSelector = createSelector(
 const volumeConfigSelector = createSelector(
   configSelector,
   config => config.volume
+)
+
+const quizIdSelector = createSelector(
+  configSelector,
+  config => config.quizId
 )
 
 export const questionListSelector = createSelector(
@@ -52,8 +63,31 @@ export const currentSlideSelector = createSelector(
 
 export const resultsUrlSelector = createSelector(
   selfAssessmentSelector,
-  selfAssessment =>
-    `${window.location.href}/result/${selfAssessment.results.responseId}`
+  quizIdSelector,
+  (selfAssessment, quizId) => {
+    const rootUrl = configGet('rootUrl')
+    const ID_HELP_ME = '439a564d-adc9-497b-9dba-a9d8de6caf75'
+    const ID_HELP_MY_TEAM = '853020dd-ebc6-458c-8bf2-eb5a1cc6101f'
+
+    if (!quizId) {
+      return rootUrl
+    }
+
+    const getRoute = () => {
+      // NOTE: Similar logic exists on the server, in assessment/dataSource
+      // TODO: Include the URL in the payload sent back to the server, and remove server-side logic
+      switch (quizId) {
+        case ID_HELP_ME:
+          return ROUTE_HELP_ME_RESULT
+        case ID_HELP_MY_TEAM:
+          return ROUTE_HELP_MY_TEAM_RESULT
+        default:
+          throw new Error(`Unexpected Quiz ID: "${quizId}"`)
+      }
+    }
+
+    return `${rootUrl}${getRoute()}/${selfAssessment.results.responseId}`
+  }
 )
 
 export const emailSelector = createSelector(
@@ -151,7 +185,8 @@ export const gradesSelector = createSelector(
     return _sortBy(grades, o => o.order).map(
       ({ threshold, score, ...rest }) => ({
         ...rest,
-        thumbsUp: score > threshold
+        thumbsUp: score > threshold,
+        score
       })
     )
   }

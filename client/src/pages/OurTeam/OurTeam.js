@@ -1,6 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Col, Row } from 'reactstrap'
-import { Helmet } from 'react-helmet'
 
 import { Quote, Template } from 'components'
 
@@ -9,15 +9,14 @@ import dayton from './dayton.jpg'
 import kerri from './kerri.jpg'
 import jared from './jared.jpg'
 
-export default () => (
-  <Template className={styles['our-team']}>
-    <Helmet>
-      <title>180 Decibels - Our Team</title>
-      <meta
-        name="description"
-        content="Our Founders: Dayton Foster, Kerri McGovern, Jared Dykstra"
-      />
-    </Helmet>
+const OurTeam = ({ location }) => (
+  <Template
+    {...{
+      title: '180 Decibels - Our Team',
+      location,
+      className: styles['our-team']
+    }}
+  >
     <h1>Our Team</h1>
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
@@ -148,3 +147,13 @@ export default () => (
     </div>
   </Template>
 )
+
+OurTeam.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired // <-- Passed down from react router
+}
+
+export default OurTeam

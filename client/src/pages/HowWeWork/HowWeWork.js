@@ -1,20 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Row, Col } from 'reactstrap'
-import { Helmet } from 'react-helmet'
 
 import { GetStartedButton, Quote, Template } from 'components'
 
 import styles from './HowWeWork.module.scss'
 
-export default () => (
-  <Template className={styles['how-we-work']}>
-    <Helmet>
-      <title>180 Decibels - How We Work</title>
-      <meta
-        name="description"
-        content="Do you want more respect? less conflict? Get results without changing who you are as a person"
-      />
-    </Helmet>
+const HowWeWork = ({ location }) => (
+  <Template
+    {...{
+      title: '180 Decibels - How We Work',
+      location,
+      className: styles['how-we-work']
+    }}
+  >
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <section id="approach" className="p-3">
@@ -115,3 +114,13 @@ export default () => (
     </Row>
   </Template>
 )
+
+HowWeWork.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired // <-- Passed down from react router
+}
+
+export default HowWeWork

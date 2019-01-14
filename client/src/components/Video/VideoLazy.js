@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 
 const Video = React.lazy(async () => import('./Video'))
 
-const LogInModalLazy = ({ children, ...props }) => {
+const VideoLazy = ({ children, ...props }) => {
   const { poster, src } = props
   // Display the cover poster which can play video in new tab while loading
   return (
@@ -20,6 +20,7 @@ const LogInModalLazy = ({ children, ...props }) => {
               }}
             />
           </a>
+          <div className="video-react-control-bar" />
         </div>
       }
     >
@@ -34,4 +35,4 @@ const LogInModalLazy = ({ children, ...props }) => {
 //   src: PropTypes.string.isRequired
 // }
 
-export default LogInModalLazy
+export default VideoLazy

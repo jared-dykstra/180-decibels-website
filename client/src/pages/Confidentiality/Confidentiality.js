@@ -1,17 +1,18 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import PropTypes from 'prop-types'
 
 import { Template } from 'components'
 
 import Sssh from './sssh-cropped.jpg'
 import styles from './Confidentiality.module.scss'
 
-export default () => (
-  <Template>
-    <Helmet>
-      <title>180 Decibels - Confidentiality</title>
-      <meta name="description" content="Your business is Your business" />
-    </Helmet>
+const Confidentiality = ({ location }) => (
+  <Template
+    {...{
+      title: '180 Decibels - Confidentiality',
+      location
+    }}
+  >
     <img
       src={Sssh}
       alt="sssh"
@@ -35,3 +36,13 @@ export default () => (
     </p>
   </Template>
 )
+
+Confidentiality.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired // <-- Passed down from react router
+}
+
+export default Confidentiality

@@ -1,21 +1,19 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import PropTypes from 'prop-types'
 import { Row, Col } from 'reactstrap'
 
 import { Quote, SelfAssessment, Template } from 'components'
 
 import styles from './HelpMyTeam.module.scss'
 
-const HelpMyTeam = props => (
-  <Template className={styles['help-my-team']}>
-    <Helmet>
-      <title>180 Decibels - Help My Team</title>
-      <meta
-        name="description"
-        content="We generate real ROI and substantially grow confidence team's
-        ability to execute"
-      />
-    </Helmet>
+const HelpMyTeam = ({ location, ...props }) => (
+  <Template
+    {...{
+      title: '180 Decibels - Help My Team',
+      location,
+      className: styles['help-my-team']
+    }}
+  >
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
         <h1>Help My Team</h1>
@@ -47,5 +45,13 @@ const HelpMyTeam = props => (
     </Row>
   </Template>
 )
+
+HelpMyTeam.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired // <-- Passed down from react router
+}
 
 export default HelpMyTeam

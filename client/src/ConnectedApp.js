@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 
 import {
   authenticate,
@@ -23,18 +22,26 @@ import {
   NotFound,
   OurTeam,
   Privacy,
-  Services
+  Services,
+  IntroVideo,
+  SunVideo
 } from 'pages'
 import { GetStartedModal, ScrollToTop } from 'components'
 import {
   ROUTE_HOME,
   ROUTE_HELP_ME,
+  ROUTE_HELP_ME_QUIZ,
+  ROUTE_HELP_ME_RESULT,
   ROUTE_HELP_MY_TEAM,
+  ROUTE_HELP_MY_TEAM_QUIZ,
+  ROUTE_HELP_MY_TEAM_RESULT,
   ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
-  ROUTE_SERVICES
+  ROUTE_SERVICES,
+  ROUTE_VIDEO_INTRO,
+  ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
 
 import 'bootstrap'
@@ -105,10 +112,10 @@ class App extends PureComponent {
     }
   }
 
-  // TODO: It would be more user-friendly to use a React Context for the tracker vs. spreading these props throughtout
+  // TODO: It would be more user-friendly to use a React Context for the tracker vs. spreading these props throughout
   logPageView = () => {
     const { /* userId, */ doLogPageView } = this.props
-    // this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about, but it might be related to withRouter() below
+    // TODO: this.props.location doesn't always give the up-to-date pathname, but window.location does.  Not sure what that's all about
     const { pathname, search, hash } = window.location
     const uri = `${pathname}${search && search.length > 0 ? search : ''}${
       hash && hash.length > 0 ? hash : ''
@@ -167,11 +174,15 @@ class App extends PureComponent {
       [ROUTE_HOME]: Home,
       [ROUTE_HELP_ME]: HelpMe,
       [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
+      [ROUTE_HELP_ME_QUIZ]: HelpMe,
+      [ROUTE_HELP_MY_TEAM_QUIZ]: HelpMyTeam,
       [ROUTE_HOW_WE_WORK]: HowWeWork,
       [ROUTE_OUR_TEAM]: OurTeam,
       [ROUTE_CONFIDENTIALITY]: Confidentiality,
       [ROUTE_PRIVACY]: Privacy,
-      [ROUTE_SERVICES]: Services
+      [ROUTE_SERVICES]: Services,
+      [ROUTE_VIDEO_INTRO]: IntroVideo,
+      [ROUTE_VIDEO_SUN]: SunVideo
     }
 
     const tracker = {
@@ -188,11 +199,6 @@ class App extends PureComponent {
 
     return (
       <ScrollToTop {...mergeProps()}>
-        <Helmet>
-          {/* site-wide defaults, which can be overridden by each page */}
-          <title>180 Decibels</title>
-        </Helmet>
-
         <Switch>
           {Object.entries(routes).map(([path, Component]) => (
             <Route
@@ -203,7 +209,7 @@ class App extends PureComponent {
             />
           ))}
           <Route
-            path={`(${ROUTE_HELP_ME}|${ROUTE_HELP_MY_TEAM})/result/:id`}
+            path={`(${ROUTE_HELP_ME_RESULT}|${ROUTE_HELP_MY_TEAM_RESULT})/:id`}
             render={props => <AssessmentResult {...mergeProps(props)} />}
           />
           <Route render={props => <NotFound {...mergeProps(props)} />} />

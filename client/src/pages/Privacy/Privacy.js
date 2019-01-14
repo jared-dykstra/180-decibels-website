@@ -1,14 +1,15 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import PropTypes from 'prop-types'
 
 import { Template } from 'components'
 
-export default () => (
-  <Template>
-    <Helmet>
-      <title>180 Decibels - Privacy</title>
-      <meta name="description" content="Privacy Policy" />
-    </Helmet>
+const PrivacyPolicy = ({ location }) => (
+  <Template
+    {...{
+      title: '180 Decibels - Privacy',
+      location
+    }}
+  >
     <h1>Privacy Policy</h1>
 
     <p>Effective date: December 10, 2018</p>
@@ -283,3 +284,13 @@ export default () => (
     </ul>
   </Template>
 )
+
+PrivacyPolicy.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired // <-- Passed down from react router
+}
+
+export default PrivacyPolicy

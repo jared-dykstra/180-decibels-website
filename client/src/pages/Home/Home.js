@@ -2,40 +2,43 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { Helmet } from 'react-helmet'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
-import Waypoint from 'react-waypoint'
 import { Paper } from '@material-ui/core'
 
 import { GetStartedButton, Quote, Template, Video } from 'components'
 import {
   ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM
+  ROUTE_HELP_MY_TEAM,
+  ROUTE_VIDEO_INTRO,
+  ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
 
+import {
+  poster as overviewVideoPoster,
+  src as overviewVideoSrc
+} from 'pages/Video/IntroVideo'
+import {
+  poster as sunVideoPoster,
+  src as sunVideoSrc
+} from 'pages/Video/SunVideo'
+
 import { get as configGet } from '../../config'
+
 import styles from './Home.module.scss'
 
-const CDN = configGet('cdn')
-
 export class Home extends PureComponent {
-  handleWaypoint = (id = '') => {
-    const { location, history } = this.props
-    history.replace({
-      pathname: location.path,
-      search: location.search,
-      hash: id
-    })
-  }
-
   render() {
-    const { doClickHelpMe, doClickHelpMyTeam, tracker } = this.props
+    const { doClickHelpMe, doClickHelpMyTeam, tracker, location } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
+    const rootUrl = configGet('rootUrl')
     return (
-      <Template className={styles.home}>
-        <Helmet>
-          <meta name="description" content={tagline} />
-        </Helmet>
+      <Template
+        {...{
+          title: '180 Decibels',
+          location,
+          className: styles.home
+        }}
+      >
         <Col>
           <div className={styles.wrapper}>
             <div className={styles.banner}>
@@ -115,33 +118,30 @@ export class Home extends PureComponent {
             </Quote>
           </Col>
           <Col md="8">
-            <Waypoint
-              onEnter={() => this.handleWaypoint('intro')}
-              onLeave={() => this.handleWaypoint()}
-            >
-              <section id="intro">
-                <Paper>
-                  <Video
-                    {...{
-                      poster: `${CDN}/intro-video-poster.jpg`,
-                      src: `${CDN}/180Voiceover2.mp4`,
-                      tracker
-                    }}
-                  />
-                </Paper>
-              </section>
-            </Waypoint>
+            <section id="intro">
+              <Paper style={{ paddingBottom: '3em' }}>
+                <Video
+                  {...{
+                    poster: overviewVideoPoster,
+                    src: overviewVideoSrc,
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
+                  }}
+                />
+              </Paper>
+            </section>
           </Col>
         </Row>
         <Row className={styles['video-row']}>
           <Col md="8">
             <section id="focus">
-              <Paper>
+              <Paper style={{ paddingBottom: '3em' }}>
                 <Video
                   {...{
-                    poster: `${CDN}/sun-video-poster.jpg`,
-                    src: `${CDN}/180DecibelsSunMetaphor.mp4`,
-                    tracker
+                    poster: sunVideoPoster,
+                    src: sunVideoSrc,
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
                   }}
                 />
               </Paper>
@@ -165,8 +165,9 @@ Home.propTypes = {
     replace: PropTypes.func.isRequired
   }).isRequired, // <-- Passed down from react router
   location: PropTypes.shape({
-    search: PropTypes.string,
-    path: PropTypes.string
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
   }).isRequired, // <-- Passed down from react router
   tracker: PropTypes.shape({
     event: PropTypes.func.isRequired
