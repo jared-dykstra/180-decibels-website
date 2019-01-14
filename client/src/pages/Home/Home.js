@@ -3,36 +3,34 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Button, Col, Jumbotron, Row } from 'reactstrap'
-import Waypoint from 'react-waypoint'
 import { Paper } from '@material-ui/core'
 
 import { GetStartedButton, Quote, Template, Video } from 'components'
 import {
   ROUTE_HELP_ME,
-  ROUTE_HELP_MY_TEAM
+  ROUTE_HELP_MY_TEAM,
+  ROUTE_VIDEO_INTRO,
+  ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
+
+import {
+  poster as overviewVideoPoster,
+  src as overviewVideoSrc
+} from 'pages/Video/IntroVideo'
+import {
+  poster as sunVideoPoster,
+  src as sunVideoSrc
+} from 'pages/Video/SunVideo'
 
 import { get as configGet } from '../../config'
 
 import styles from './Home.module.scss'
-import overviewVideoPoster from './overview-video-poster.jpg'
-import sunVideoPoster from './sun-video-poster.jpg'
-
-const CDN = configGet('cdn')
 
 export class Home extends PureComponent {
-  handleWaypoint = (id = '') => {
-    const { location, history } = this.props
-    history.replace({
-      pathname: location.pathname,
-      search: location.search,
-      hash: id
-    })
-  }
-
   render() {
     const { doClickHelpMe, doClickHelpMyTeam, tracker, location } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
+    const rootUrl = configGet('rootUrl')
     return (
       <Template
         {...{
@@ -120,22 +118,18 @@ export class Home extends PureComponent {
             </Quote>
           </Col>
           <Col md="8">
-            <Waypoint
-              onEnter={() => this.handleWaypoint('intro')}
-              onLeave={() => this.handleWaypoint()}
-            >
-              <section id="intro">
-                <Paper style={{ paddingBottom: '3em' }}>
-                  <Video
-                    {...{
-                      poster: overviewVideoPoster,
-                      src: `${CDN}/180DecibelsOverview1.2.mp4`,
-                      tracker
-                    }}
-                  />
-                </Paper>
-              </section>
-            </Waypoint>
+            <section id="intro">
+              <Paper style={{ paddingBottom: '3em' }}>
+                <Video
+                  {...{
+                    poster: overviewVideoPoster,
+                    src: overviewVideoSrc,
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
+                  }}
+                />
+              </Paper>
+            </section>
           </Col>
         </Row>
         <Row className={styles['video-row']}>
@@ -145,8 +139,9 @@ export class Home extends PureComponent {
                 <Video
                   {...{
                     poster: sunVideoPoster,
-                    src: `${CDN}/180DecibelsSunMetaphor_2.mp4`,
-                    tracker
+                    src: sunVideoSrc,
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
                   }}
                 />
               </Paper>

@@ -11,7 +11,9 @@ import {
   ROUTE_HOW_WE_WORK,
   ROUTE_OUR_TEAM,
   ROUTE_SERVICES,
-  ROUTE_PRIVACY
+  ROUTE_PRIVACY,
+  ROUTE_VIDEO_INTRO,
+  ROUTE_VIDEO_SUN
 } from '../../client/src/reduxStore/routes/routesConstants'
 
 const OG_TITLE = '__DECIBELS_OG_TITLE__'
@@ -96,6 +98,20 @@ export const getOgValuesForRoute = req => {
         [OG_URL]: `${rootUrl}${ROUTE_HELP_MY_TEAM_QUIZ}`,
         [OG_DESCRIPTION]: `We generate real ROI and substantially grow confidence team's ability to execute`
       }
+    case ROUTE_VIDEO_INTRO:
+      return {
+        [OG_TITLE]: '180 Decibels - Introduction',
+        [OG_IMAGE]: `${rootUrl}/overview-video-poster.jpg`,
+        [OG_DESCRIPTION]:
+          'How would you like to take your management skills to a whole new level of awesome?  There is a better, faster, more practical way to manage a team.'
+      }
+    case ROUTE_VIDEO_SUN:
+      return {
+        [OG_TITLE]: '180 Decibels - Getting it Done',
+        [OG_IMAGE]: `${rootUrl}/sun-video-poster.jpg`,
+        [OG_DESCRIPTION]: `Like the sun, most teams have plenty of Potential power.  Now, imagine what it would be like if everyone focused their energy.  Getting it done: That's our specialty.`
+      }
+
     default: {
       // Dynamic Route Matching
 
