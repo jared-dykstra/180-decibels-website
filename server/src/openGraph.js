@@ -38,7 +38,7 @@ export const getOgDefaults = req => {
   const rootUrl = getRootUrl(req)
   return {
     [OG_TITLE]: '180 Decibels',
-    [OG_URL]: originalUrl,
+    [OG_URL]: url.resolve(rootUrl, originalUrl),
     [OG_DESCRIPTION]:
       'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity with tactical operational tools and processes.',
     [OG_IMAGE]: `${rootUrl}/180-Decibels.png`,
