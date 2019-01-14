@@ -89,6 +89,7 @@ export const getOgValuesForRoute = req => {
       return {
         [OG_TITLE]: '180 Decibels - Help Me',
         [OG_URL]: `${rootUrl}${ROUTE_HELP_ME_QUIZ}`,
+        [OG_IMAGE]: `${rootUrl}/quiz-image.jpg`,
         [OG_DESCRIPTION]: `We re-focus managers: driving to outcomes and creating urgency`
       }
     case ROUTE_HELP_MY_TEAM_QUIZ:
@@ -96,6 +97,7 @@ export const getOgValuesForRoute = req => {
       return {
         [OG_TITLE]: '180 Decibels - Help My Team',
         [OG_URL]: `${rootUrl}${ROUTE_HELP_MY_TEAM_QUIZ}`,
+        [OG_IMAGE]: `${rootUrl}/quiz-image.jpg`,
         [OG_DESCRIPTION]: `We generate real ROI and substantially grow confidence team's ability to execute`
       }
     case ROUTE_VIDEO_INTRO:
