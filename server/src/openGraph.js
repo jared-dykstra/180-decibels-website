@@ -1,4 +1,5 @@
 import url from 'url'
+import config from 'config'
 
 import {
   ROUTE_HELP_ME,
@@ -24,18 +25,12 @@ const OG_DESCRIPTION = '__DECIBELS_OG_DESCRIPTION__'
 const OG_IMAGE = '__DECIBELS_OG_IMAGE__'
 const OG_VIDEO = '__DECIBELS_OG_VIDEO__'
 
-const getRootUrl = req => {
-  const { protocol } = req
-  const host = req.get('host')
-  return url.format({ protocol, host })
-}
-
 /**
  * Default OpenGraph replacement values for a given URL
  */
 export const getOgDefaults = req => {
   const { originalUrl } = req
-  const rootUrl = getRootUrl(req)
+  const rootUrl = config.get('rootUrl')
   return {
     [OG_TITLE]: '180 Decibels',
     [OG_URL]: url.resolve(rootUrl, originalUrl),
@@ -55,7 +50,7 @@ export const getOgDefaults = req => {
 // NOTE: Also keep in sync with Sitemap.xml
 export const getOgValuesForRoute = req => {
   const { path } = req
-  const rootUrl = getRootUrl(req)
+  const rootUrl = config.get('rootUrl')
 
   switch (path) {
     // Static Routes
