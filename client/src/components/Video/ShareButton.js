@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Popover, Typography } from '@material-ui/core'
+import { Fab, Grid, Popover, Typography } from '@material-ui/core'
 import ShareIcon from '@material-ui/icons/Share'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+
+import CopyIcon from './CopyToClipboardIcon'
 
 const styles = theme => ({
   typography: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing.unit
   }
 })
 
@@ -27,7 +30,8 @@ class ShareButton extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      copied: false
     }
   }
 
@@ -39,14 +43,17 @@ class ShareButton extends PureComponent {
 
   handleClose = () => {
     this.setState({
+      copied: false,
       anchorEl: null
     })
   }
 
   render() {
     const { player, classes, shareUrl } = this.props
-    const { anchorEl } = this.state
+    const { anchorEl, copied } = this.state
     const { currentSrc } = player
+
+    const copyUrl = shareUrl || currentSrc
 
     const open = Boolean(anchorEl)
     return (
@@ -67,8 +74,33 @@ class ShareButton extends PureComponent {
             horizontal: 'right'
           }}
         >
-          <Typography className={classes.typography}>{`Share: ${shareUrl ||
-            currentSrc}`}</Typography>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            className={classes.typography}
+            spacing={24}
+            style={{ width: '100%' }}
+          >
+            <Grid item>
+              <a href={copyUrl} target="_blank" rel="noopener noreferrer">
+                {copyUrl}
+              </a>
+              <br />
+              <Typography>{copied ? 'Copied to Clipboard.' : null}</Typography>
+            </Grid>
+            <Grid item>
+              <CopyToClipboard
+                text={copyUrl}
+                onCopy={() => this.setState({ copied: true })}
+              >
+                <Fab color="primary" size="small">
+                  <CopyIcon />
+                </Fab>
+              </CopyToClipboard>
+            </Grid>
+          </Grid>
         </Popover>
         <ShareIcon
           fontSize="inherit"
