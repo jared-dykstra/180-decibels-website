@@ -16,10 +16,13 @@ import {
   ROUTE_VIDEO_SUN
 } from '../../client/src/reduxStore/routes/routesConstants'
 
+const CDN = 'https://dm88nuc3kw2st.cloudfront.net/'
+
 const OG_TITLE = '__DECIBELS_OG_TITLE__'
 const OG_URL = '__DECIBELS_OG_URL__'
 const OG_DESCRIPTION = '__DECIBELS_OG_DESCRIPTION__'
 const OG_IMAGE = '__DECIBELS_OG_IMAGE__'
+const OG_VIDEO = '__DECIBELS_OG_VIDEO__'
 
 const getRootUrl = req => {
   const { protocol } = req
@@ -38,7 +41,8 @@ export const getOgDefaults = req => {
     [OG_URL]: originalUrl,
     [OG_DESCRIPTION]:
       'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity with tactical operational tools and processes.',
-    [OG_IMAGE]: `${rootUrl}/180-Decibels.png`
+    [OG_IMAGE]: `${rootUrl}/180-Decibels.png`,
+    [OG_VIDEO]: `${CDN}180DecibelsOverview1.2.mp4`
   }
 }
 
@@ -111,7 +115,8 @@ export const getOgValuesForRoute = req => {
       return {
         [OG_TITLE]: '180 Decibels - Getting it Done',
         [OG_IMAGE]: `${rootUrl}/sun-video-poster.jpg`,
-        [OG_DESCRIPTION]: `Like the sun, most teams have plenty of Potential power.  Now, imagine what it would be like if everyone focused their energy.  Getting it done: That's our specialty.`
+        [OG_DESCRIPTION]: `Like the sun, most teams have plenty of Potential power.  Now, imagine what it would be like if everyone focused their energy.  Getting it done: That's our specialty.`,
+        [OG_VIDEO]: `${CDN}180DecibelsSunMetaphor_2.mp4`
       }
 
     default: {
