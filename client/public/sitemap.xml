@@ -3,11 +3,11 @@
       <loc>https://www.180decibels.com/</loc>
       <priority>0.9</priority>
       <video:video>
-         <video:thumbnail_loc>https://dm88nuc3kw2st.cloudfront.net/intro-video-poster.jpg</video:thumbnail_loc>
-         <video:title>From Surviving to Excelling</video:title>
-         <video:description>180 Decibels transforms your business.  Quick to implement; high impact; no new people skills--Anyone can do it!</video:description>
-         <video:content_loc>https://dm88nuc3kw2st.cloudfront.net/180Voiceover2.mp4</video:content_loc>
-         <video:player_loc>https://www.180decibels.com/#intro</video:player_loc>
+         <video:thumbnail_loc>https://www.180decibels.com/overview-video-poster.jpg</video:thumbnail_loc>
+         <video:title>180 Decibels - Introduction</video:title>
+         <video:description>How would you like to take your management skills to a whole new level of awesome?  There is a better, faster, more practical way to manage a team.</video:description>
+         <video:content_loc>https://dm88nuc3kw2st.cloudfront.net/180DecibelsOverview1.2.mp4</video:content_loc>
+         <video:player_loc>https://www.180decibels.com#intro</video:player_loc>
          <video:duration>130</video:duration>
          <video:family_friendly>yes</video:family_friendly>
          <video:requires_subscription>no</video:requires_subscription>
