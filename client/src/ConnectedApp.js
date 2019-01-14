@@ -23,7 +23,8 @@ import {
   OurTeam,
   Privacy,
   Services,
-  IntroVideo
+  IntroVideo,
+  SunVideo
 } from 'pages'
 import { GetStartedModal, ScrollToTop } from 'components'
 import {
@@ -181,7 +182,7 @@ class App extends PureComponent {
       [ROUTE_PRIVACY]: Privacy,
       [ROUTE_SERVICES]: Services,
       [ROUTE_VIDEO_INTRO]: IntroVideo,
-      [ROUTE_VIDEO_SUN]: IntroVideo
+      [ROUTE_VIDEO_SUN]: SunVideo
     }
 
     const tracker = {
