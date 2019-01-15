@@ -169,6 +169,8 @@ export default class UserAPI extends DataSource {
     // then note the aliased user.  This happens when a user accesses the site using a 2nd browser or device
     // or if they have deleted cookies
     if (user.id !== userId) {
+      // TODO: Update AgileCRM meta-information for the associated contact.
+      // Add additional google analytics link(s) for each uuid
       await appendLogEvent({
         userId: user.id,
         source: AUTH,

@@ -101,6 +101,11 @@ export const createContact = async ({
       type: 'CUSTOM',
       name: '180Decibels User ID',
       value: decibelsUid
+    },
+    {
+      type: 'CUSTOM',
+      name: 'Google Analytics',
+      value: `https://analytics.google.com/analytics/web/?authuser=2#/report/visitors-user-id/a129693169w190016213p187771570/explorer-table.filter=${decibelsUid}&explorer-table.plotKeys=%5B%5D/`
     }
   ]
 
