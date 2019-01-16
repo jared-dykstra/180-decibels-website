@@ -1,4 +1,5 @@
 import { get as _get, has as _has } from 'lodash'
+import fetch from 'unfetch'
 import { ApolloLink, execute, makePromise } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 
@@ -10,7 +11,8 @@ const uri = configGet('apiEndpoint')
 // See this for an example of authenticating via a token in localstore:  https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#middleware
 const httpLink = new HttpLink({
   uri,
-  credentials: 'same-origin'
+  credentials: 'same-origin',
+  fetch
 })
 const link = ApolloLink.from([httpLink])
 

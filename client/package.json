@@ -58,6 +58,7 @@
     "reselect": "^4.0.0",
     "seamless-immutable": "^7.1.4",
     "styled-components": "^4.1.2",
+    "unfetch": "^4.0.1",
     "video-react": "^0.13.1"
   },
   "devDependencies": {
@@ -85,9 +86,13 @@
   },
   "browserslist": [
     ">0.2%",
+    "Chrome >= 41",
+    "last 2 Safari versions",
+    "last 2 FireFox versions",
+    "last 1 Edge versions",
     "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+    "last 2 iOS versions",
+    "last 2 Android versions"
   ],
   "proxy": "http://localhost:5000"
 }
