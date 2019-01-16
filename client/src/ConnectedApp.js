@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
   authenticate,
@@ -15,6 +16,7 @@ import { userIdSelector } from 'reduxStore/auth/authSelectors'
 import {
   AssessmentResult,
   Confidentiality,
+  Error,
   HelpMe,
   HelpMyTeam,
   Home,
@@ -72,6 +74,7 @@ class App extends PureComponent {
 
   constructor(props) {
     super(props)
+    this.state = { error: null }
     props.history.listen((/* location */) => {
       this.logPageView()
     })
@@ -91,6 +94,13 @@ class App extends PureComponent {
   }
 
   componentDidCatch = (error, info) => {
+    this.setState({ error })
+    Sentry.withScope(scope => {
+      Object.keys(info).forEach(key => {
+        scope.setExtra(key, info[key])
+      })
+      Sentry.captureException(error)
+    })
     this.logError({ error, info, fatal: true })
   }
 
@@ -170,6 +180,12 @@ class App extends PureComponent {
   }
 
   render() {
+    const { error } = this.state
+    if (error) {
+      // render fallback UI
+      return <Error />
+    }
+
     const routes = {
       [ROUTE_HOME]: Home,
       [ROUTE_HELP_ME]: HelpMe,
