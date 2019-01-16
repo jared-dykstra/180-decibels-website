@@ -2,11 +2,16 @@ import 'babel-polyfill'
 import React from 'react'
 import { render, hydrate } from 'react-dom'
 import { createBrowserHistory } from 'history'
+import * as Sentry from '@sentry/browser'
 
 import createStore from 'reduxStore/createStore'
 
 import * as serviceWorker from './serviceWorker'
 import App from './App'
+
+Sentry.init({
+  dsn: 'https://ee37c41764604fbeb3a875ce09e6d9fe@sentry.io/1373036'
+})
 
 const history = createBrowserHistory()
 const store = createStore(history)
