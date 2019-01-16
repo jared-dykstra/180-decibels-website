@@ -95,12 +95,14 @@ class App extends PureComponent {
 
   componentDidCatch = (error, info) => {
     this.setState({ error })
-    Sentry.withScope(scope => {
-      Object.keys(info).forEach(key => {
-        scope.setExtra(key, info[key])
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.withScope(scope => {
+        Object.keys(info).forEach(key => {
+          scope.setExtra(key, info[key])
+        })
+        Sentry.captureException(error)
       })
-      Sentry.captureException(error)
-    })
+    }
     this.logError({ error, info, fatal: true })
   }
 
