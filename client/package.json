@@ -84,10 +84,13 @@
     "test:ci": "cross-env CI=true react-scripts test"
   },
   "browserslist": [
-    ">0.2%",
+    "Chrome >= 41",
+    "last 2 Safari versions",
+    "last 2 FireFox versions",
+    "last 1 Edge versions",
     "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+    "last 2 iOS versions",
+    "last 2 Android versions"
   ],
   "proxy": "http://localhost:5000"
 }
