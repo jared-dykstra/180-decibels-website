@@ -58,6 +58,7 @@
     "reselect": "^4.0.0",
     "seamless-immutable": "^7.1.4",
     "styled-components": "^4.1.2",
+    "unfetch": "^4.0.1",
     "video-react": "^0.13.1"
   },
   "devDependencies": {
