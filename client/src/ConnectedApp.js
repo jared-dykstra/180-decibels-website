@@ -21,7 +21,7 @@ import {
   HelpMyTeam,
   Home,
   HowWeWork,
-  NotFound,
+  // NotFound,
   OurTeam,
   Privacy,
   Services,
@@ -95,14 +95,12 @@ class App extends PureComponent {
 
   componentDidCatch = (error, info) => {
     this.setState({ error })
-    if (process.env.NODE_ENV === 'production') {
-      Sentry.withScope(scope => {
-        Object.keys(info).forEach(key => {
-          scope.setExtra(key, info[key])
-        })
-        Sentry.captureException(error)
+    Sentry.withScope(scope => {
+      Object.keys(info).forEach(key => {
+        scope.setExtra(key, info[key])
       })
-    }
+      Sentry.captureException(error)
+    })
     this.logError({ error, info, fatal: true })
   }
 
@@ -230,7 +228,8 @@ class App extends PureComponent {
             path={`(${ROUTE_HELP_ME_RESULT}|${ROUTE_HELP_MY_TEAM_RESULT})/:id`}
             render={props => <AssessmentResult {...mergeProps(props)} />}
           />
-          <Route render={props => <NotFound {...mergeProps(props)} />} />
+          <Route render={props => <Home {...mergeProps(props)} />} />
+          {/* <Route render={props => <NotFound {...mergeProps(props)} />} /> */}
         </Switch>
 
         <GetStartedModal {...mergeProps()} />

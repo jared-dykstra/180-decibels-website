@@ -12,7 +12,9 @@ import * as serviceWorker from './serviceWorker'
 import App from './App'
 
 Sentry.init({
-  dsn: 'https://ee37c41764604fbeb3a875ce09e6d9fe@sentry.io/1373036'
+  dsn: 'https://ee37c41764604fbeb3a875ce09e6d9fe@sentry.io/1373036',
+  environment: process.env.NODE_ENV,
+  enabled: process.env.NODE_ENV === 'production'
 })
 
 const history = createBrowserHistory()
