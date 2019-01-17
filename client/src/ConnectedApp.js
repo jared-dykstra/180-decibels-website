@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Route, Switch } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 
@@ -228,7 +228,7 @@ class App extends PureComponent {
             path={`(${ROUTE_HELP_ME_RESULT}|${ROUTE_HELP_MY_TEAM_RESULT})/:id`}
             render={props => <AssessmentResult {...mergeProps(props)} />}
           />
-          <Route render={props => <Home {...mergeProps(props)} />} />
+          <Route render={props => <Redirect to={ROUTE_HOME} />} />
           {/* <Route render={props => <NotFound {...mergeProps(props)} />} /> */}
         </Switch>
 
