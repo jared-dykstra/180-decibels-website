@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import vis from 'vis'
 
@@ -8,20 +7,12 @@ import {
   getEdgesSelector
 } from 'reduxStore/vast/vastSelectors'
 
-class Vast extends PureComponent {
+import visDataSetPropType from './visDataSetPropType'
+
+class Graph extends PureComponent {
   static propTypes = {
-    nodes: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        label: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    edges: PropTypes.arrayOf(
-      PropTypes.shape({
-        from: PropTypes.number.isRequired,
-        to: PropTypes.number.isRequired
-      })
-    ).isRequired
+    nodes: visDataSetPropType.isRequired,
+    edges: visDataSetPropType.isRequired
   }
 
   constructor(props) {
@@ -32,10 +23,7 @@ class Vast extends PureComponent {
 
   componentDidMount() {
     const { nodes, edges } = this.props
-    const data = {
-      nodes: new vis.DataSet(nodes.asMutable({ deep: true })),
-      edges: new vis.DataSet(edges.asMutable({ deep: true }))
-    }
+    const data = { nodes, edges }
     const options = {
       autoResize: true,
       height: '100%',
@@ -48,7 +36,7 @@ class Vast extends PureComponent {
 
   handleNodeClick = selection => {
     console.log('Node Click')
-    console.log(`Node ID=${selection.nodes[0].id}`)
+    console.log(`Node ID=${selection.nodes[0]}`)
   }
 
   render() {
@@ -69,4 +57,4 @@ export default connect(
     edges: getEdgesSelector(state)
   }),
   dispatch => ({})
-)(Vast)
+)(Graph)
