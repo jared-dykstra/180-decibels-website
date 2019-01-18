@@ -59,7 +59,8 @@
     "seamless-immutable": "^7.1.4",
     "styled-components": "^4.1.2",
     "unfetch": "^4.0.1",
-    "video-react": "^0.13.1"
+    "video-react": "^0.13.1",
+    "vis": "^4.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

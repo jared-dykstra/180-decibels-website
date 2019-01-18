@@ -26,7 +26,8 @@ import {
   Privacy,
   Services,
   IntroVideo,
-  SunVideo
+  SunVideo,
+  Vast
 } from 'pages'
 import { GetStartedModal, ScrollToTop } from 'components'
 import {
@@ -43,7 +44,8 @@ import {
   ROUTE_HOW_WE_WORK,
   ROUTE_SERVICES,
   ROUTE_VIDEO_INTRO,
-  ROUTE_VIDEO_SUN
+  ROUTE_VIDEO_SUN,
+  ROUTE_VAST
 } from 'reduxStore/routes/routesConstants'
 
 import 'bootstrap'
@@ -198,7 +200,8 @@ class App extends PureComponent {
       [ROUTE_PRIVACY]: Privacy,
       [ROUTE_SERVICES]: Services,
       [ROUTE_VIDEO_INTRO]: IntroVideo,
-      [ROUTE_VIDEO_SUN]: SunVideo
+      [ROUTE_VIDEO_SUN]: SunVideo,
+      [ROUTE_VAST]: Vast
     }
 
     const tracker = {
