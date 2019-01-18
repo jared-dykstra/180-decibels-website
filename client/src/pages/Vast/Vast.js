@@ -1,3 +1,4 @@
+import { without as _without } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -48,9 +49,6 @@ const styles = theme => ({
   },
   chip: {
     margin: theme.spacing.unit / 4
-  },
-  noLabel: {
-    marginTop: theme.spacing.unit * 3
   }
 })
 
@@ -59,6 +57,11 @@ class Vast extends PureComponent {
     selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
     doAddNode: PropTypes.func.isRequired,
     doSetSelectedNodeTypes: PropTypes.func.isRequired
+  }
+
+  handleRemoveNodeType = value => {
+    const { selectedNodeTypes, doSetSelectedNodeTypes } = this.props
+    doSetSelectedNodeTypes(_without(selectedNodeTypes, value))
   }
 
   render() {
@@ -94,21 +97,7 @@ class Vast extends PureComponent {
             </Grid>
             <Grid item>
               <FormControl>
-                <InputLabel htmlFor="input-node-types">Node Types</InputLabel>
-                {/* <Select
-                  multiple
-                  value={selectedNodeTypes}
-                  onChange={e => doSetSelectedNodeTypes(e.target.value)}
-                  inputProps={{
-                    id: 'input-node-types'
-                  }}
-                >
-                  {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
-                    <MenuItem key={k} value={k}>
-                      {v}
-                    </MenuItem>
-                  ))}
-                </Select> */}
+                <InputLabel htmlFor="input-node-types">View</InputLabel>
                 <Select
                   multiple
                   value={selectedNodeTypes}
@@ -121,6 +110,7 @@ class Vast extends PureComponent {
                           key={value}
                           label={value}
                           className={classes.chip}
+                          onDelete={() => this.handleRemoveNodeType(value)}
                         />
                       ))}
                     </div>
