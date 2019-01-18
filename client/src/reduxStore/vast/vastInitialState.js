@@ -1,12 +1,52 @@
+import Immutable from 'seamless-immutable'
 import vis from 'vis'
 
+import {
+  NODE_TYPE_ACCOUNTABILITY,
+  NODE_TYPE_PERSON,
+  NODE_TYPE_PRIORITY
+} from './vastConstants'
+
 export default {
+  prefs: Immutable.from({
+    selectedGroup: '',
+    networkOptions: {
+      layout: {
+        randomSeed: 42
+      },
+      nodes: {
+        shape: 'dot',
+        size: 20,
+        font: {
+          size: 15
+          // color: '#ffffff'
+        },
+        borderWidth: 2
+      },
+      edges: {
+        width: 2
+      },
+      groups: {
+        [NODE_TYPE_PERSON]: {
+          color: { background: 'red' /* , border: 'white' */ },
+          shape: 'diamond'
+        },
+        [NODE_TYPE_ACCOUNTABILITY]: {
+          shape: 'square',
+          color: 'cyan'
+        },
+        [NODE_TYPE_PRIORITY]: {
+          color: 'rgb(0,255,140)'
+        }
+      }
+    }
+  }),
   nodes: new vis.DataSet([
-    { id: 1, label: 'Node 1' },
-    { id: 2, label: 'Node 2' },
-    { id: 3, label: 'Node 3' },
-    { id: 4, label: 'Node 4' },
-    { id: 5, label: 'Node 5' }
+    { id: 1, label: 'Person A', group: NODE_TYPE_PERSON },
+    { id: 2, label: 'Person B', group: NODE_TYPE_PERSON },
+    { id: 3, label: 'Accountability 1', group: NODE_TYPE_ACCOUNTABILITY },
+    { id: 4, label: 'Accountability 2', group: NODE_TYPE_ACCOUNTABILITY },
+    { id: 5, label: 'Accountability 3', group: NODE_TYPE_ACCOUNTABILITY }
   ]),
   edges: new vis.DataSet([
     { from: 1, to: 3 },

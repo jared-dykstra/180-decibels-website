@@ -34,6 +34,7 @@
     "noopener",
     "noreferrer",
     "parallelize",
+    "prefs",
     "reactstrap",
     "resave",
     "reselect",
