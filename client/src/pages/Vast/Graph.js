@@ -1,3 +1,4 @@
+import { includes as _includes } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -7,7 +8,7 @@ import {
   networkOptionsSelector,
   getEdgesSelector,
   makeGetFilteredNodesSelector,
-  selectedGroupSelector
+  selectedNodeTypesSelector
 } from 'reduxStore/vast/vastSelectors'
 
 import visDataSetPropType from './visDataSetPropType'
@@ -18,11 +19,7 @@ class Graph extends PureComponent {
     options: PropTypes.object.isRequired,
     nodes: visDataSetPropType.isRequired,
     edges: visDataSetPropType.isRequired,
-    selectedGroup: PropTypes.string
-  }
-
-  static defaultProps = {
-    selectedGroup: ''
+    selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
@@ -49,20 +46,16 @@ class Graph extends PureComponent {
     this.network.on('select', selection => this.handleNodeClick(selection))
   }
 
-  // Refresh the network when filter preferences change
   componentDidUpdate(prevProps) {
-    const { selectedGroup } = this.props
-    if (prevProps.selectedGroup !== selectedGroup) {
-      this.nodesView.refresh()
-    }
+    // Refresh the network when filter preferences change (Updates the filter)
+    this.nodesView.refresh()
   }
 
   filterNodes = item => {
-    const { selectedGroup } = this.props
-    console.log(`selectedGroup=${selectedGroup} item.group=${item.group}`)
-    const isInSelectedGroup =
-      selectedGroup === '' || item.group === selectedGroup
-    return isInSelectedGroup
+    const { selectedNodeTypes } = this.props
+
+    const retval = _includes(selectedNodeTypes, item.group)
+    return retval
   }
 
   handleNodeClick = selection => {
@@ -89,7 +82,7 @@ export default connect(
       options: networkOptionsSelector(state),
       nodes: getFilteredNodesSelector(state),
       edges: getEdgesSelector(state),
-      selectedGroup: selectedGroupSelector(state)
+      selectedNodeTypes: selectedNodeTypesSelector(state)
     }
   },
   dispatch => ({})

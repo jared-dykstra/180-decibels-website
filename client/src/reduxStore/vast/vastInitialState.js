@@ -9,7 +9,11 @@ import {
 
 export default {
   prefs: Immutable.from({
-    selectedGroup: '',
+    selectedNodeTypes: [
+      NODE_TYPE_ACCOUNTABILITY,
+      NODE_TYPE_PERSON,
+      NODE_TYPE_PRIORITY
+    ],
     networkOptions: {
       layout: {
         randomSeed: 42

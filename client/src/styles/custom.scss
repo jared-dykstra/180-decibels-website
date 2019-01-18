@@ -53,6 +53,6 @@ $headings-color: $decibels-red;
   var-font-weight-normal: $font-weight-normal;
   var-primary: $decibels-teal;
   var-secondary: $decibels-red;
-  var-white: $white;
+  var-white: #fff; //$white;
 }
 /* stylelint enable */

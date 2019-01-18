@@ -2,18 +2,22 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+  Chip,
   Button,
   Grid,
   FormControl,
+  Input,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Paper
 } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
 import { Template } from 'components'
 
-import { selectedGroupSelector } from 'reduxStore/vast/vastSelectors'
-import { addNode, setSelectedGroup } from 'reduxStore/vast/vastActions'
+import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
+import { addNode, setSelectedNodeTypes } from 'reduxStore/vast/vastActions'
 import {
   NODE_TYPE_ACCOUNTABILITY,
   NODE_TYPE_PERSON,
@@ -28,23 +32,42 @@ const NODE_TYPE_LABELS = {
   [NODE_TYPE_PRIORITY]: 'Priority'
 }
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+    maxWidth: 300
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  chip: {
+    margin: theme.spacing.unit / 4
+  },
+  noLabel: {
+    marginTop: theme.spacing.unit * 3
+  }
+})
+
 class Vast extends PureComponent {
   static propTypes = {
-    selectedGroup: PropTypes.string,
+    selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
     doAddNode: PropTypes.func.isRequired,
-    doSetSelectedGroup: PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    selectedGroup: ''
+    doSetSelectedNodeTypes: PropTypes.func.isRequired
   }
 
   render() {
     const {
       location,
-      selectedGroup,
+      selectedNodeTypes,
       doAddNode,
-      doSetSelectedGroup
+      doSetSelectedNodeTypes,
+      classes
     } = this.props
     return (
       <Template
@@ -54,42 +77,67 @@ class Vast extends PureComponent {
         }}
       >
         <h1>Vast</h1>
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="flex-end"
-          spacing={24}
-        >
-          <Grid item>
-            <Button variant="contained" onClick={() => doAddNode()}>
-              Add Node
-            </Button>
+        <Paper>
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="flex-end"
+            spacing={24}
+          >
+            <Grid item>
+              <FormControl>
+                <Button variant="contained" onClick={() => doAddNode()}>
+                  Add Node
+                </Button>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl>
+                <InputLabel htmlFor="input-node-types">Node Types</InputLabel>
+                {/* <Select
+                  multiple
+                  value={selectedNodeTypes}
+                  onChange={e => doSetSelectedNodeTypes(e.target.value)}
+                  inputProps={{
+                    id: 'input-node-types'
+                  }}
+                >
+                  {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
+                    <MenuItem key={k} value={k}>
+                      {v}
+                    </MenuItem>
+                  ))}
+                </Select> */}
+                <Select
+                  multiple
+                  value={selectedNodeTypes}
+                  onChange={e => doSetSelectedNodeTypes(e.target.value)}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip
+                          key={value}
+                          label={value}
+                          className={classes.chip}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  // MenuProps={MenuProps}
+                >
+                  {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
+                    <MenuItem key={k} value={k}>
+                      {v}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item>
-            <FormControl>
-              <InputLabel htmlFor="input-group">Group</InputLabel>
-              <Select
-                value={selectedGroup}
-                onChange={e => doSetSelectedGroup(e.target.value)}
-                inputProps={{
-                  name: 'group',
-                  id: 'input-group'
-                }}
-              >
-                <MenuItem value="">
-                  <em>Choose a Group</em>
-                </MenuItem>
-                {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
-                  <MenuItem key={k} value={k}>
-                    {v}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Graph />
+          <Graph />
+        </Paper>
       </Template>
     )
   }
@@ -97,10 +145,11 @@ class Vast extends PureComponent {
 
 export default connect(
   state => ({
-    selectedGroup: selectedGroupSelector(state)
+    selectedNodeTypes: selectedNodeTypesSelector(state)
   }),
   dispatch => ({
     doAddNode: () => dispatch(addNode()),
-    doSetSelectedGroup: group => dispatch(setSelectedGroup({ group }))
+    doSetSelectedNodeTypes: nodeTypes =>
+      dispatch(setSelectedNodeTypes(nodeTypes))
   })
-)(Vast)
+)(withStyles(styles, { withTheme: true })(Vast))

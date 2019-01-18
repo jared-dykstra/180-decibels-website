@@ -1,5 +1,5 @@
 // Actions affecting ui state
-export const SET_SELECTED_GROUP = 'vast/set-selected-group'
+export const SET_SELECTED_NODE_TYPES = 'vast/set-selected-node-types'
 
 // Actions affecting contents of the graph
 export const ADD_NODE = 'vast/add-node'

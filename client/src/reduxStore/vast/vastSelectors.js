@@ -10,9 +10,9 @@ export const prefsSelector = createSelector(
   vast => vast.prefs
 )
 
-export const selectedGroupSelector = createSelector(
+export const selectedNodeTypesSelector = createSelector(
   prefsSelector,
-  prefs => prefs.selectedGroup
+  prefs => prefs.selectedNodeTypes
 )
 
 export const networkOptionsSelector = createSelector(
