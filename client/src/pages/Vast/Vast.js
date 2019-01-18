@@ -54,6 +54,7 @@ const styles = theme => ({
 
 class Vast extends PureComponent {
   static propTypes = {
+    title: PropTypes.string.isRequired,
     selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
     doAddNode: PropTypes.func.isRequired,
     doSetSelectedNodeTypes: PropTypes.func.isRequired
@@ -66,6 +67,7 @@ class Vast extends PureComponent {
 
   render() {
     const {
+      title,
       location,
       selectedNodeTypes,
       doAddNode,
@@ -75,7 +77,7 @@ class Vast extends PureComponent {
     return (
       <Template
         {...{
-          title: '180 Decibels - Vast',
+          title,
           location
         }}
       >
@@ -91,7 +93,7 @@ class Vast extends PureComponent {
             <Grid item>
               <FormControl>
                 <Button variant="contained" onClick={() => doAddNode()}>
-                  Add Node
+                  Add Priority
                 </Button>
               </FormControl>
             </Grid>

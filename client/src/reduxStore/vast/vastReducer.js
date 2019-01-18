@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
       const { nodes } = state
 
       nodes.add({
-        id: 7,
+        // id: 7,
         label: 'jared',
         group: NODE_TYPE_PRIORITY
       })
