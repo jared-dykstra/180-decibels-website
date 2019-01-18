@@ -1,6 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import vis from 'vis'
+
+import {
+  getNodesSelector,
+  getEdgesSelector
+} from 'reduxStore/vast/vastSelectors'
 
 class Vast extends PureComponent {
   static propTypes = {
@@ -37,6 +43,12 @@ class Vast extends PureComponent {
     }
 
     this.network = new vis.Network(this.vis, data, options)
+    this.network.on('select', selection => this.handleNodeClick(selection))
+  }
+
+  handleNodeClick = selection => {
+    console.log('Node Click')
+    console.log(`Node ID=${selection.nodes[0].id}`)
   }
 
   render() {
@@ -51,4 +63,10 @@ class Vast extends PureComponent {
   }
 }
 
-export default Vast
+export default connect(
+  state => ({
+    nodes: getNodesSelector(state),
+    edges: getEdgesSelector(state)
+  }),
+  dispatch => ({})
+)(Vast)

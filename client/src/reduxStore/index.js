@@ -14,11 +14,17 @@ import {
   reducer as getStartedReducer,
   saga as getStartedSaga
 } from './getStarted'
+import {
+  mountPoint as vastMountPoint,
+  reducer as vastReducer
+  // saga as getStartedSaga
+} from './vast'
 
 export const reducers = {
   [selfAssessmentMountPoint]: selfAssessmentReducer,
   [authMountPoint]: authReducer,
-  [getStartedMountPoint]: getStartedReducer
+  [getStartedMountPoint]: getStartedReducer,
+  [vastMountPoint]: vastReducer
 }
 
 export function* rootSaga() {
