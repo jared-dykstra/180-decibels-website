@@ -1,9 +1,13 @@
 import { createSelector } from 'reselect'
-import vis from 'vis'
 
 import { mountPoint } from '.'
 
 const vastSelector = state => state[mountPoint]
+
+export const graphSelector = createSelector(
+  vastSelector,
+  vast => vast.graph
+)
 
 export const prefsSelector = createSelector(
   vastSelector,
@@ -15,9 +19,14 @@ export const selectedNodeTypesSelector = createSelector(
   prefs => prefs.selectedNodeTypes
 )
 
-export const networkOptionsSelector = createSelector(
-  prefsSelector,
-  prefs => prefs.networkOptions
+export const graphStyleSelector = createSelector(
+  vastSelector,
+  vast => vast.graphStyle
+)
+
+export const graphLayoutSelector = createSelector(
+  vastSelector,
+  vast => vast.graphLayout
 )
 
 const getNodesSelector = createSelector(

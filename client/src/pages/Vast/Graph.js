@@ -2,73 +2,95 @@ import { includes as _includes } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import vis from 'vis'
+import cytoscape from 'cytoscape'
 
 import {
-  networkOptionsSelector,
-  getEdgesSelector,
-  makeGetFilteredNodesSelector,
-  selectedNodeTypesSelector
+  graphSelector,
+  graphStyleSelector,
+  graphLayoutSelector
 } from 'reduxStore/vast/vastSelectors'
-
-import visDataSetPropType from './visDataSetPropType'
 
 class Graph extends PureComponent {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    options: PropTypes.object.isRequired,
-    nodes: visDataSetPropType.isRequired,
-    edges: visDataSetPropType.isRequired,
-    selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired
+    graph: PropTypes.object.isRequired,
+    style: PropTypes.arrayOf(
+      PropTypes.shape({
+        selector: PropTypes.string.isRequired,
+        style: PropTypes.object.isRequired
+      })
+    ).isRequired,
+    layout: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    }).isRequired
   }
 
   constructor(props) {
     super(props)
-    this.vis = null
-    this.network = null
-    this.nodesView = null
+    this.ref = null
   }
 
+  // Mount the graph (previously running headless)
   componentDidMount() {
-    const { options, nodes, edges } = this.props
-    this.nodesView = new vis.DataView(nodes, { filter: this.filterNodes })
-    const data = {
-      nodes: this.nodesView,
-      edges
+    if (this.ref) {
+      const { graph } = this.props
+      graph.mount(this.ref)
+      this.handleStyleChange()
     }
-
-    // subscribe to any change in the DataView
-    this.nodesView.on('*', (event, properties, senderId) => {
-      console.log('NodesView event', event, properties)
-    })
-
-    this.network = new vis.Network(this.vis, data, options)
-    this.network.on('select', selection => this.handleNodeClick(selection))
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
   }
 
   componentDidUpdate(prevProps) {
-    // Refresh the network when filter preferences change (Updates the filter)
-    this.nodesView.refresh()
+    const { style } = this.props
+    if (prevProps.style !== style) {
+      this.handleStyleChange()
+    }
   }
 
-  filterNodes = item => {
-    const { selectedNodeTypes } = this.props
+  // filterNodes = item => {
+  //   const { selectedNodeTypes } = this.props
 
-    const retval = _includes(selectedNodeTypes, item.group)
-    return retval
+  //   const retval = _includes(selectedNodeTypes, item.group)
+  //   return retval
+  // }
+
+  componentWillUnmount() {
+    const { graph } = this.props
+    if (graph) {
+      graph.unmount()
+    }
+  }
+
+  handleResize = () => {
+    const { graph, layout } = this.props
+    graph.resize()
+    graph.layout(layout).run()
+    // graph.fit()
+  }
+
+  handleStyleChange = () => {
+    const { graph, style } = this.props
+    graph
+      .style()
+      .fromJson(style)
+      .update()
   }
 
   handleNodeClick = selection => {
     console.log('Node Click')
-    console.log(`Node ID=${selection.nodes[0]}`)
+    // console.log(`Node ID=${selection.nodes[0]}`)
   }
 
   render() {
     return (
       <div
-        style={{ height: '100vh' }}
+        style={{
+          height: '800px',
+          display: 'block'
+        }}
         ref={ref => {
-          this.vis = ref
+          this.ref = ref
         }}
       />
     )
@@ -76,14 +98,10 @@ class Graph extends PureComponent {
 }
 
 export default connect(
-  state => {
-    const getFilteredNodesSelector = makeGetFilteredNodesSelector()
-    return {
-      options: networkOptionsSelector(state),
-      nodes: getFilteredNodesSelector(state),
-      edges: getEdgesSelector(state),
-      selectedNodeTypes: selectedNodeTypesSelector(state)
-    }
-  },
+  state => ({
+    graph: graphSelector(state),
+    style: graphStyleSelector(state),
+    layout: graphLayoutSelector(state)
+  }),
   dispatch => ({})
 )(Graph)
