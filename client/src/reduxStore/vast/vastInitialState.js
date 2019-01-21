@@ -61,16 +61,53 @@ const edges = [
   { data: { id: 'e25', source: '2', target: '5' } }
 ]
 
-const cy = cytoscape({
-  elements: {
-    nodes,
-    edges
+const style = [
+  // the stylesheet for the graph
+  {
+    selector: 'node',
+    style: {
+      'background-color': '#666',
+      // so we can see the ids
+      label: 'data(label)'
+    }
   },
-  style: []
-})
+  {
+    selector: `node.${CLASS_PERSON}`,
+    style: {
+      'background-color': '#FF0000'
+    }
+  },
+  {
+    selector: `node.${CLASS_ACCOUNTABILITY}`,
+    style: {
+      'background-color': '#00FF00'
+    }
+  },
+  {
+    selector: `node.${CLASS_PRIORITY}`,
+    style: {
+      'background-color': '#0000FF'
+    }
+  },
+  {
+    selector: 'edge',
+    style: {
+      width: 3,
+      'line-color': '#ccc',
+      'target-arrow-color': '#ccc',
+      'target-arrow-shape': 'triangle'
+    }
+  }
+]
 
 export default {
-  graph: cy,
+  graph: cytoscape({
+    elements: {
+      nodes,
+      edges
+    },
+    style
+  }),
   prefs: Immutable.from({
     selectedNodeTypes: [
       NODE_TYPE_ACCOUNTABILITY,
@@ -81,42 +118,6 @@ export default {
   graphLayout: Immutable.from({
     name: 'grid',
     rows: 3
-  }),
-  graphStyle: Immutable.from({
-    // the stylesheet for the graph
-    node: {
-      style: {
-        'background-color': '#666',
-        // so we can see the ids
-        label: 'data(label)'
-      }
-    },
-    [`node.${CLASS_PERSON}`]: {
-      nodeType: NODE_TYPE_PERSON,
-      style: {
-        'background-color': '#FF0000'
-      }
-    },
-    [`node.${CLASS_ACCOUNTABILITY}`]: {
-      nodeType: NODE_TYPE_ACCOUNTABILITY,
-      style: {
-        'background-color': '#00FF00'
-      }
-    },
-    [`node.${CLASS_PRIORITY}`]: {
-      nodeType: NODE_TYPE_PRIORITY,
-      style: {
-        'background-color': '#0000FF'
-      }
-    },
-    edge: {
-      style: {
-        width: 3,
-        'line-color': '#ccc',
-        'target-arrow-color': '#ccc',
-        'target-arrow-shape': 'triangle'
-      }
-    }
   }),
 
   // Customize what's displayed in Redux Devtools.  - Note: Cannot use the arrow function

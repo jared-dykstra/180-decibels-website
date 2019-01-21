@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import {
   graphSelector,
-  graphStyleSelector,
   graphLayoutSelector
 } from 'reduxStore/vast/vastSelectors'
 
@@ -12,12 +11,6 @@ class Graph extends PureComponent {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     graph: PropTypes.object.isRequired,
-    style: PropTypes.arrayOf(
-      PropTypes.shape({
-        selector: PropTypes.string.isRequired,
-        style: PropTypes.object.isRequired
-      })
-    ).isRequired,
     layout: PropTypes.shape({
       name: PropTypes.string.isRequired
     }).isRequired
@@ -33,20 +26,12 @@ class Graph extends PureComponent {
     if (this.ref) {
       const { graph } = this.props
       graph.mount(this.ref)
-      this.handleStyleChange()
     }
     this.handleResize()
     window.addEventListener('resize', this.handleResize)
   }
 
-  componentDidUpdate(prevProps) {
-    const { style } = this.props
-
-    // Apply updated style?
-    if (prevProps.style !== style) {
-      this.handleStyleChange()
-    }
-  }
+  // componentDidUpdate(prevProps) {}
 
   componentWillUnmount() {
     const { graph } = this.props
@@ -60,14 +45,6 @@ class Graph extends PureComponent {
     graph.resize()
     graph.layout(layout).run()
     // graph.fit()
-  }
-
-  handleStyleChange = () => {
-    const { graph, style } = this.props
-    graph
-      .style()
-      .fromJson(style)
-      .update()
   }
 
   render() {
@@ -88,7 +65,6 @@ class Graph extends PureComponent {
 export default connect(
   state => ({
     graph: graphSelector(state),
-    style: graphStyleSelector(state),
     layout: graphLayoutSelector(state)
   }),
   dispatch => ({})

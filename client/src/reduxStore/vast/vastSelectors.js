@@ -1,4 +1,3 @@
-import { includes as _includes } from 'lodash'
 import { createSelector } from 'reselect'
 
 import { mountPoint } from '.'
@@ -18,25 +17,6 @@ export const prefsSelector = createSelector(
 export const selectedNodeTypesSelector = createSelector(
   prefsSelector,
   prefs => prefs.selectedNodeTypes
-)
-
-// Cytoscape expects an array: [[selector: '', style: {}], ...]
-export const graphStyleSelector = createSelector(
-  vastSelector,
-  selectedNodeTypesSelector,
-  (vast, selectedNodeTypes) =>
-    Object.entries(vast.graphStyle).map(([k, v]) => {
-      const { nodeType, style } = v
-      let newStyle = style
-      if (nodeType) {
-        const isSelected = _includes(selectedNodeTypes, nodeType)
-        newStyle = style.setIn(['display'], isSelected ? undefined : 'none')
-      }
-      return {
-        selector: k,
-        style: newStyle
-      }
-    })
 )
 
 export const graphLayoutSelector = createSelector(
