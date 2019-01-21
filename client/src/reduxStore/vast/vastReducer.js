@@ -2,7 +2,7 @@ import { includes as _includes } from 'lodash'
 import initialState from './vastInitialState'
 import { ADD_NODE, SET_SELECTED_NODE_TYPES } from './vastConstants'
 
-const buildNewStyle = ({ graph, selectedNodeTypes }) => {
+const updateStyle = ({ graph, selectedNodeTypes }) => {
   const styleJson = graph.style().json()
   const newStyleJson = styleJson.map(s => {
     const { selector, style } = s
@@ -19,13 +19,10 @@ const buildNewStyle = ({ graph, selectedNodeTypes }) => {
 
     return { selector, style }
   })
-  return newStyleJson
-}
 
-const applyStyle = ({ graph, style }) => {
   graph
     .style()
-    .fromJson(style)
+    .fromJson(newStyleJson)
     .update()
 }
 
@@ -37,9 +34,7 @@ export default (state = initialState, action) => {
     case SET_SELECTED_NODE_TYPES: {
       const { nodeTypes } = action.payload
       const { graph, prefs, ...rest } = state
-      const newStyle = buildNewStyle({ graph, selectedNodeTypes: nodeTypes })
-      applyStyle({ graph, style: newStyle })
-
+      updateStyle({ graph, selectedNodeTypes: nodeTypes })
       return {
         graph,
         prefs: prefs.setIn(['selectedNodeTypes'], nodeTypes),

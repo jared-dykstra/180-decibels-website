@@ -31,7 +31,12 @@ class Graph extends PureComponent {
     window.addEventListener('resize', this.handleResize)
   }
 
-  // componentDidUpdate(prevProps) {}
+  componentDidUpdate(prevProps) {
+    const { layout } = this.props
+    if (layout !== prevProps.layout) {
+      this.handleResize()
+    }
+  }
 
   componentWillUnmount() {
     const { graph } = this.props
