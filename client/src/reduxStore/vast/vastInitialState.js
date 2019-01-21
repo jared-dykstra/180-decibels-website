@@ -7,29 +7,50 @@ import {
   NODE_TYPE_PRIORITY
 } from './vastConstants'
 
+const CLASS_PERSON = 'person'
+const CLASS_ACCOUNTABILITY = 'accountability'
+const CLASS_PRIORITY = 'priority'
+
 const nodes = [
-  { data: { id: '1', label: 'Person A', group: NODE_TYPE_PERSON } },
-  { data: { id: '2', label: 'Person B', group: NODE_TYPE_PERSON } },
+  {
+    data: {
+      id: '1',
+      label: 'Person A',
+      group: NODE_TYPE_PERSON
+    },
+    classes: [CLASS_PERSON]
+  },
+  {
+    data: {
+      id: '2',
+      label: 'Person B',
+      group: NODE_TYPE_PERSON
+    },
+    classes: [CLASS_PERSON]
+  },
   {
     data: {
       id: '3',
       label: 'Accountability 1',
       group: NODE_TYPE_ACCOUNTABILITY
-    }
+    },
+    classes: [CLASS_ACCOUNTABILITY]
   },
   {
     data: {
       id: '4',
       label: 'Accountability 2',
       group: NODE_TYPE_ACCOUNTABILITY
-    }
+    },
+    classes: [CLASS_ACCOUNTABILITY]
   },
   {
     data: {
       id: '5',
       label: 'Accountability 3',
       group: NODE_TYPE_ACCOUNTABILITY
-    }
+    },
+    classes: [CLASS_ACCOUNTABILITY]
   }
 ]
 
@@ -71,7 +92,24 @@ export default {
         label: 'data(label)'
       }
     },
-
+    {
+      selector: `node.${CLASS_PERSON}`,
+      style: {
+        'background-color': '#FF0000'
+      }
+    },
+    {
+      selector: `node.${CLASS_ACCOUNTABILITY}`,
+      style: {
+        'background-color': '#00FF00'
+      }
+    },
+    {
+      selector: `node.${CLASS_PRIORITY}`,
+      style: {
+        'background-color': '#0000FF'
+      }
+    },
     {
       selector: 'edge',
       style: {

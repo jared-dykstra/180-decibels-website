@@ -1,8 +1,6 @@
-import { includes as _includes } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import cytoscape from 'cytoscape'
 
 import {
   graphSelector,
@@ -43,17 +41,12 @@ class Graph extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { style } = this.props
+
+    // Apply updated style?
     if (prevProps.style !== style) {
       this.handleStyleChange()
     }
   }
-
-  // filterNodes = item => {
-  //   const { selectedNodeTypes } = this.props
-
-  //   const retval = _includes(selectedNodeTypes, item.group)
-  //   return retval
-  // }
 
   componentWillUnmount() {
     const { graph } = this.props
@@ -75,11 +68,6 @@ class Graph extends PureComponent {
       .style()
       .fromJson(style)
       .update()
-  }
-
-  handleNodeClick = selection => {
-    console.log('Node Click')
-    // console.log(`Node ID=${selection.nodes[0]}`)
   }
 
   render() {
