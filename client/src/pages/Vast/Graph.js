@@ -9,8 +9,12 @@ import {
 
 class Graph extends PureComponent {
   static propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types
-    graph: PropTypes.object.isRequired,
+    graph: PropTypes.shape({
+      mount: PropTypes.func.isRequired,
+      unmount: PropTypes.func.isRequired,
+      resize: PropTypes.func.isRequired,
+      layout: PropTypes.func.isRequired
+    }).isRequired,
     layout: PropTypes.shape({
       name: PropTypes.string.isRequired
     }).isRequired

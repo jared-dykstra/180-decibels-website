@@ -33,14 +33,27 @@ const updateStyle = ({ graph, selectedNodeTypes }) => {
     .update()
 }
 
+const animateFit = ({ graph, duration = 500, padding = 20 }) => {
+  const allElements = graph.$('node')
+  graph.animate(
+    {
+      fit: {
+        eles: allElements,
+        padding
+      }
+    },
+    {
+      duration
+    }
+  )
+}
+
 // Note: Nodes and Edges use a *mutable* data structure
 // The graph component listens for changes and no re-render is needed
 // See: http://visjs.org/docs/data/dataset.html?keywords=DataSet
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const { graph } = state
-
       const nodes = [
         {
           data: {
@@ -83,9 +96,11 @@ export default (state = initialState, action) => {
         { data: { id: 'e13', source: '1', target: '3' } },
         { data: { id: 'e12', source: '1', target: '2' } },
         { data: { id: 'e24', source: '2', target: '4' } },
+        { data: { id: 'e15', source: '1', target: '5' } },
         { data: { id: 'e25', source: '2', target: '5' } }
       ]
 
+      const { graph } = state
       graph.add([
         ...nodes.map(n => ({ group: 'nodes', ...n })),
         ...edges.map(e => ({ group: 'edges', ...e }))
@@ -106,6 +121,20 @@ export default (state = initialState, action) => {
     }
 
     case ADD_NODE: {
+      const { graph } = state
+      graph.add([
+        {
+          data: {
+            id: '10',
+            label: 'Priority 1'
+          },
+          classes: [CLASS_PRIORITY]
+        }
+      ])
+
+      // Make everything visible in the viewport
+      animateFit({ graph })
+
       return state
     }
 

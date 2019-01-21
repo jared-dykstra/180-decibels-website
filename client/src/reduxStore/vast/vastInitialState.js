@@ -49,6 +49,11 @@ const style = [
   }
 ]
 
+const layout = {
+  name: 'grid',
+  rows: 3
+}
+
 export default {
   graph: cytoscape({
     elements: {
@@ -57,16 +62,13 @@ export default {
     },
     style
   }),
+  graphLayout: Immutable.from(layout),
   prefs: Immutable.from({
     selectedNodeTypes: [
       NODE_TYPE_ACCOUNTABILITY,
       NODE_TYPE_PERSON,
       NODE_TYPE_PRIORITY
     ]
-  }),
-  graphLayout: Immutable.from({
-    name: 'grid',
-    rows: 3
   }),
 
   // Customize what's displayed in Redux Devtools.  - Note: Cannot use the arrow function
