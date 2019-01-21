@@ -1,4 +1,4 @@
-import { ADD_NODE, SET_SELECTED_NODE_TYPES } from './vastConstants'
+import { ADD_NODE, SET_SELECTED_NODE_TYPES, LOAD } from './vastConstants'
 
 // Actions affecting ui state
 export const setSelectedNodeTypes = nodeTypes => ({
@@ -7,6 +7,11 @@ export const setSelectedNodeTypes = nodeTypes => ({
 })
 
 // Actions affecting contents of the graph
+export const load = () => ({
+  type: LOAD,
+  payload: {}
+})
+
 export const addNode = () => ({
   type: ADD_NODE,
   payload: {}

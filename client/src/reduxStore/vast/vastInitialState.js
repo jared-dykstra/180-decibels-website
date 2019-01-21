@@ -4,62 +4,11 @@ import cytoscape from 'cytoscape'
 import {
   NODE_TYPE_ACCOUNTABILITY,
   NODE_TYPE_PERSON,
-  NODE_TYPE_PRIORITY
+  NODE_TYPE_PRIORITY,
+  CLASS_ACCOUNTABILITY,
+  CLASS_PERSON,
+  CLASS_PRIORITY
 } from './vastConstants'
-
-const CLASS_PERSON = NODE_TYPE_PERSON
-const CLASS_ACCOUNTABILITY = NODE_TYPE_ACCOUNTABILITY
-const CLASS_PRIORITY = NODE_TYPE_PRIORITY
-
-const nodes = [
-  {
-    data: {
-      id: '1',
-      label: 'Person A',
-      group: NODE_TYPE_PERSON
-    },
-    classes: [CLASS_PERSON]
-  },
-  {
-    data: {
-      id: '2',
-      label: 'Person B',
-      group: NODE_TYPE_PERSON
-    },
-    classes: [CLASS_PERSON]
-  },
-  {
-    data: {
-      id: '3',
-      label: 'Accountability 1',
-      group: NODE_TYPE_ACCOUNTABILITY
-    },
-    classes: [CLASS_ACCOUNTABILITY]
-  },
-  {
-    data: {
-      id: '4',
-      label: 'Accountability 2',
-      group: NODE_TYPE_ACCOUNTABILITY
-    },
-    classes: [CLASS_ACCOUNTABILITY]
-  },
-  {
-    data: {
-      id: '5',
-      label: 'Accountability 3',
-      group: NODE_TYPE_ACCOUNTABILITY
-    },
-    classes: [CLASS_ACCOUNTABILITY]
-  }
-]
-
-const edges = [
-  { data: { id: 'e13', source: '1', target: '3' } },
-  { data: { id: 'e12', source: '1', target: '2' } },
-  { data: { id: 'e24', source: '2', target: '4' } },
-  { data: { id: 'e25', source: '2', target: '5' } }
-]
 
 const style = [
   // the stylesheet for the graph
@@ -103,8 +52,8 @@ const style = [
 export default {
   graph: cytoscape({
     elements: {
-      nodes,
-      edges
+      nodes: [],
+      edges: []
     },
     style
   }),

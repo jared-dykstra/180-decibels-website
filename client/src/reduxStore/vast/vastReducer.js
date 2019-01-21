@@ -1,6 +1,13 @@
 import { includes as _includes } from 'lodash'
 import initialState from './vastInitialState'
-import { ADD_NODE, SET_SELECTED_NODE_TYPES } from './vastConstants'
+import {
+  LOAD,
+  ADD_NODE,
+  SET_SELECTED_NODE_TYPES,
+  CLASS_PERSON,
+  CLASS_ACCOUNTABILITY,
+  CLASS_PRIORITY
+} from './vastConstants'
 
 const updateStyle = ({ graph, selectedNodeTypes }) => {
   const styleJson = graph.style().json()
@@ -31,6 +38,62 @@ const updateStyle = ({ graph, selectedNodeTypes }) => {
 // See: http://visjs.org/docs/data/dataset.html?keywords=DataSet
 export default (state = initialState, action) => {
   switch (action.type) {
+    case LOAD: {
+      const { graph } = state
+
+      const nodes = [
+        {
+          data: {
+            id: '1',
+            label: 'Person A'
+          },
+          classes: [CLASS_PERSON]
+        },
+        {
+          data: {
+            id: '2',
+            label: 'Person B'
+          },
+          classes: [CLASS_PERSON]
+        },
+        {
+          data: {
+            id: '3',
+            label: 'Accountability 1'
+          },
+          classes: [CLASS_ACCOUNTABILITY]
+        },
+        {
+          data: {
+            id: '4',
+            label: 'Accountability 2'
+          },
+          classes: [CLASS_ACCOUNTABILITY]
+        },
+        {
+          data: {
+            id: '5',
+            label: 'Accountability 3'
+          },
+          classes: [CLASS_ACCOUNTABILITY]
+        }
+      ]
+
+      const edges = [
+        { data: { id: 'e13', source: '1', target: '3' } },
+        { data: { id: 'e12', source: '1', target: '2' } },
+        { data: { id: 'e24', source: '2', target: '4' } },
+        { data: { id: 'e25', source: '2', target: '5' } }
+      ]
+
+      graph.add([
+        ...nodes.map(n => ({ group: 'nodes', ...n })),
+        ...edges.map(e => ({ group: 'edges', ...e }))
+      ])
+
+      return state
+    }
+
     case SET_SELECTED_NODE_TYPES: {
       const { nodeTypes } = action.payload
       const { graph, prefs, ...rest } = state

@@ -18,7 +18,11 @@ import { withStyles } from '@material-ui/core/styles'
 import { Template } from 'components'
 
 import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
-import { addNode, setSelectedNodeTypes } from 'reduxStore/vast/vastActions'
+import {
+  load,
+  addNode,
+  setSelectedNodeTypes
+} from 'reduxStore/vast/vastActions'
 import {
   NODE_TYPE_ACCOUNTABILITY,
   NODE_TYPE_PERSON,
@@ -56,8 +60,15 @@ class Vast extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
     selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    doLoad: PropTypes.func.isRequired,
     doAddNode: PropTypes.func.isRequired,
     doSetSelectedNodeTypes: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    const { doLoad } = this.props
+    doLoad()
   }
 
   handleRemoveNodeType = value => {
@@ -140,6 +151,7 @@ export default connect(
     selectedNodeTypes: selectedNodeTypesSelector(state)
   }),
   dispatch => ({
+    doLoad: () => dispatch(load()),
     doAddNode: () => dispatch(addNode()),
     doSetSelectedNodeTypes: nodeTypes =>
       dispatch(setSelectedNodeTypes(nodeTypes))
