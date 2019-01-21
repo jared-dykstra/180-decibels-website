@@ -7,9 +7,9 @@ import {
   NODE_TYPE_PRIORITY
 } from './vastConstants'
 
-const CLASS_PERSON = 'person'
-const CLASS_ACCOUNTABILITY = 'accountability'
-const CLASS_PRIORITY = 'priority'
+const CLASS_PERSON = NODE_TYPE_PERSON
+const CLASS_ACCOUNTABILITY = NODE_TYPE_ACCOUNTABILITY
+const CLASS_PRIORITY = NODE_TYPE_PRIORITY
 
 const nodes = [
   {
@@ -82,36 +82,34 @@ export default {
     name: 'grid',
     rows: 3
   }),
-  graphStyle: Immutable.from([
+  graphStyle: Immutable.from({
     // the stylesheet for the graph
-    {
-      selector: 'node',
+    node: {
       style: {
         'background-color': '#666',
         // so we can see the ids
         label: 'data(label)'
       }
     },
-    {
-      selector: `node.${CLASS_PERSON}`,
+    [`node.${CLASS_PERSON}`]: {
+      nodeType: NODE_TYPE_PERSON,
       style: {
         'background-color': '#FF0000'
       }
     },
-    {
-      selector: `node.${CLASS_ACCOUNTABILITY}`,
+    [`node.${CLASS_ACCOUNTABILITY}`]: {
+      nodeType: NODE_TYPE_ACCOUNTABILITY,
       style: {
         'background-color': '#00FF00'
       }
     },
-    {
-      selector: `node.${CLASS_PRIORITY}`,
+    [`node.${CLASS_PRIORITY}`]: {
+      nodeType: NODE_TYPE_PRIORITY,
       style: {
         'background-color': '#0000FF'
       }
     },
-    {
-      selector: 'edge',
+    edge: {
       style: {
         width: 3,
         'line-color': '#ccc',
@@ -119,5 +117,5 @@ export default {
         'target-arrow-shape': 'triangle'
       }
     }
-  ])
+  })
 }

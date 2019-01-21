@@ -1,3 +1,4 @@
+import { includes as _includes } from 'lodash'
 import { createSelector } from 'reselect'
 
 import { mountPoint } from '.'
@@ -19,9 +20,23 @@ export const selectedNodeTypesSelector = createSelector(
   prefs => prefs.selectedNodeTypes
 )
 
+// Cytoscape expects an array: [[selector: '', style: {}], ...]
 export const graphStyleSelector = createSelector(
   vastSelector,
-  vast => vast.graphStyle
+  selectedNodeTypesSelector,
+  (vast, selectedNodeTypes) =>
+    Object.entries(vast.graphStyle).map(([k, v]) => {
+      const { nodeType, style } = v
+      let newStyle = style
+      if (nodeType) {
+        const isSelected = _includes(selectedNodeTypes, nodeType)
+        newStyle = style.setIn(['display'], isSelected ? undefined : 'none')
+      }
+      return {
+        selector: k,
+        style: newStyle
+      }
+    })
 )
 
 export const graphLayoutSelector = createSelector(
@@ -38,35 +53,6 @@ export const getEdgesSelector = createSelector(
   vastSelector,
   vast => vast.edges
 )
-
-// NOTE: For filtering subsets of nodes, see: http://visjs.org/docs/data/dataview.html
-
-// export const makeGetFilteredNodesSelector = () => {
-//   console.log('JARED - makeGetFilteredNodesSelector')
-//   return createSelector(
-//     getNodesSelector,
-//     prefsSelector,
-//     (nodes, prefs) => {
-//       console.log('JARED - getFilteredNodesSelector')
-
-//       const view = vis.DataView(nodes, {
-//         filter: item => {
-//           const isInSelectedGroup = prefs.group
-//             ? item.group === prefs.group
-//             : true
-//           console.log(
-//             `item.id=${item.id} group=${item.group} selectedGroup=${
-//               prefs.group
-//             } isInSelectedGroup? ${isInSelectedGroup}`
-//           )
-//           return isInSelectedGroup
-//         }
-//       })
-
-//       return view.get()
-//     }
-//   )
-// }
 
 export const makeGetFilteredNodesSelector = () => {
   console.log('JARED - makeGetFilteredNodesSelector')
