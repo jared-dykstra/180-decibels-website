@@ -117,5 +117,16 @@ export default {
         'target-arrow-shape': 'triangle'
       }
     }
-  })
+  }),
+
+  // Customize what's displayed in Redux Devtools.  - Note: Cannot use the arrow function
+  // see: https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md
+  toJSON() {
+    const { graph, ...rest } = this
+    return {
+      // Use Cytoscape's built-in json() serialization method
+      graph: this.graph.json(),
+      ...rest
+    }
+  }
 }
