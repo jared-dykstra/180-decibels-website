@@ -2,22 +2,17 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import {
-  graphSelector,
-  graphLayoutSelector
-} from 'reduxStore/vast/vastSelectors'
+import { graphSelector } from 'reduxStore/vast/vastSelectors'
+import { layout } from 'reduxStore/vast/vastActions'
 
 class Graph extends PureComponent {
   static propTypes = {
     graph: PropTypes.shape({
       mount: PropTypes.func.isRequired,
       unmount: PropTypes.func.isRequired,
-      resize: PropTypes.func.isRequired,
-      layout: PropTypes.func.isRequired
+      resize: PropTypes.func.isRequired
     }).isRequired,
-    layout: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }).isRequired
+    doLayout: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -35,13 +30,6 @@ class Graph extends PureComponent {
     window.addEventListener('resize', this.handleResize)
   }
 
-  componentDidUpdate(prevProps) {
-    const { layout } = this.props
-    if (layout !== prevProps.layout) {
-      this.handleResize()
-    }
-  }
-
   componentWillUnmount() {
     const { graph } = this.props
     if (graph) {
@@ -50,10 +38,9 @@ class Graph extends PureComponent {
   }
 
   handleResize = () => {
-    const { graph, layout } = this.props
+    const { graph, doLayout } = this.props
     graph.resize()
-    graph.layout(layout).run()
-    // graph.fit()
+    doLayout()
   }
 
   render() {
@@ -73,8 +60,9 @@ class Graph extends PureComponent {
 
 export default connect(
   state => ({
-    graph: graphSelector(state),
-    layout: graphLayoutSelector(state)
+    graph: graphSelector(state)
   }),
-  dispatch => ({})
+  dispatch => ({
+    doLayout: () => dispatch(layout())
+  })
 )(Graph)

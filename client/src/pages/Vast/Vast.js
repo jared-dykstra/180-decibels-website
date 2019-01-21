@@ -20,6 +20,7 @@ import { Template } from 'components'
 import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
 import {
   load,
+  layout,
   addNode,
   setSelectedNodeTypes
 } from 'reduxStore/vast/vastActions'
@@ -82,6 +83,7 @@ class Vast extends PureComponent {
       location,
       selectedNodeTypes,
       doAddNode,
+      doLayout,
       doSetSelectedNodeTypes,
       classes
     } = this.props
@@ -101,6 +103,13 @@ class Vast extends PureComponent {
             alignItems="flex-end"
             spacing={24}
           >
+            <Grid item>
+              <FormControl>
+                <Button variant="contained" onClick={() => doLayout()}>
+                  Layout
+                </Button>
+              </FormControl>
+            </Grid>
             <Grid item>
               <FormControl>
                 <Button variant="contained" onClick={() => doAddNode()}>
@@ -152,6 +161,7 @@ export default connect(
   }),
   dispatch => ({
     doLoad: () => dispatch(load()),
+    doLayout: () => dispatch(layout()),
     doAddNode: () => dispatch(addNode()),
     doSetSelectedNodeTypes: nodeTypes =>
       dispatch(setSelectedNodeTypes(nodeTypes))

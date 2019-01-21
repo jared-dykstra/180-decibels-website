@@ -1,5 +1,6 @@
 import Immutable from 'seamless-immutable'
 import cytoscape from 'cytoscape'
+import cola from 'cytoscape-cola'
 
 import {
   NODE_TYPE_ACCOUNTABILITY,
@@ -9,6 +10,8 @@ import {
   CLASS_PERSON,
   CLASS_PRIORITY
 } from './vastConstants'
+
+cytoscape.use(cola)
 
 const style = [
   // the stylesheet for the graph
@@ -50,8 +53,7 @@ const style = [
 ]
 
 const layout = {
-  name: 'grid',
-  rows: 3
+  name: 'cola'
 }
 
 export default {
@@ -74,7 +76,7 @@ export default {
   // Customize what's displayed in Redux Devtools.  - Note: Cannot use the arrow function
   // see: https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Arguments.md
   toJSON() {
-    const { graph, ...rest } = this
+    const { graph, graphLayout, ...rest } = this
     return {
       // Use Cytoscape's built-in json() serialization method
       graph: this.graph.json(),

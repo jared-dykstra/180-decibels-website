@@ -2,6 +2,7 @@ import { includes as _includes } from 'lodash'
 import initialState from './vastInitialState'
 import {
   LOAD,
+  LAYOUT,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   CLASS_PERSON,
@@ -33,19 +34,25 @@ const updateStyle = ({ graph, selectedNodeTypes }) => {
     .update()
 }
 
-const animateFit = ({ graph, duration = 500, padding = 20 }) => {
-  const allElements = graph.$('node')
-  graph.animate(
-    {
-      fit: {
-        eles: allElements,
-        padding
-      }
-    },
-    {
-      duration
-    }
-  )
+// Animates zoom + pan for the viewport
+// const animateFit = ({ graph, duration = 500, padding = 20 }) => {
+//   const allElements = graph.$('node')
+//   graph.animate(
+//     {
+//       fit: {
+//         eles: allElements,
+//         padding
+//       }
+//     },
+//     {
+//       duration
+//     }
+//   )
+// }
+
+const updateLayout = state => {
+  const { graph, graphLayout } = state
+  graph.makeLayout(graphLayout).run()
 }
 
 // Note: Nodes and Edges use a *mutable* data structure
@@ -109,6 +116,7 @@ export default (state = initialState, action) => {
       return state
     }
 
+    // Show / Hide nodes based on their node type
     case SET_SELECTED_NODE_TYPES: {
       const { nodeTypes } = action.payload
       const { graph, prefs, ...rest } = state
@@ -120,6 +128,7 @@ export default (state = initialState, action) => {
       }
     }
 
+    // Create a new node
     case ADD_NODE: {
       const { graph } = state
       graph.add([
@@ -131,10 +140,14 @@ export default (state = initialState, action) => {
           classes: [CLASS_PRIORITY]
         }
       ])
+      // Update the layout
+      updateLayout(state)
+      return state
+    }
 
-      // Make everything visible in the viewport
-      animateFit({ graph })
-
+    // Update the layout
+    case LAYOUT: {
+      updateLayout(state)
       return state
     }
 

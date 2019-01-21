@@ -3,6 +3,7 @@ export const SET_SELECTED_NODE_TYPES = 'vast/set-selected-node-types'
 
 // Actions affecting contents of the graph
 export const LOAD = 'vast/load'
+export const LAYOUT = 'vast/layout'
 export const ADD_NODE = 'vast/add-node'
 
 // Node Types
