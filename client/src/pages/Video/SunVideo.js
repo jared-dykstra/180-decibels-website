@@ -7,7 +7,7 @@ import { get as configGet } from '../../config'
 const CDN = configGet('cdn')
 const rootUrl = configGet('rootUrl')
 export const src = `${CDN}/180DecibelsSunMetaphor_2.mp4`
-export const poster = '/sun-video-poster.jpg'
+export const poster = '/sun-video-poster2.jpg'
 
 const IntroVideo = props => (
   <Video

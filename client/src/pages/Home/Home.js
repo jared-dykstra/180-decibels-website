@@ -67,6 +67,9 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 5,
     fontSize: 'larger'
   },
+  actionIcon: {
+    marginRight: '.5em'
+  },
   highlight: {
     color: theme.palette.secondary.main,
     fontWeight: '800'
@@ -108,18 +111,18 @@ export class Home extends PureComponent {
                   <Grid item zeroMinWidth className={classes.titleContainer}>
                     <Typography
                       align="center"
-                      variant="h2"
+                      variant="h3"
                       className={classes.title}
                     >
                       {tagline}
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <GetStartedButton size="large" variant="extendedFab">
-                      <NavigationIcon fontSize="large" />
-                      &nbsp; Schedule a Complimentary Results Coaching Session
+                    {/* <GetStartedButton size="large" variant="extendedFab">
+                      <NavigationIcon fontSize="large"  className={classes.actionIcon} />
+                      Schedule a Complimentary Results Coaching Session
                       Now
-                    </GetStartedButton>
+                    </GetStartedButton> */}
                   </Grid>
                 </Grid>
               </Paper>
@@ -134,14 +137,24 @@ export class Home extends PureComponent {
               justify="center"
               alignItems="center"
             >
-              <Grid item style={{ position: 'relative' }}>
+              <Grid item>
                 <Typography variant="body1" className={classes.intro}>
-                  Do you want to unlock latent productivity in your team to
-                  out-perform competitors? We help managers drive to outcome and
-                  create urgency in their organization. You get a practical,
-                  results-oriented process to build a high-performing culture so
-                  you can start feeling confident that your team is getting the
-                  right things done.
+                  <span className={classes.highlight}>
+                    Do you want to unlock latent productivity in your team and
+                    out-perform competitors?
+                  </span>
+                  <br />
+                  <br />
+                  We help managers drive to outcome and create urgency in their
+                  organization. You get a practical, results-oriented process to
+                  build a high-performing culture. Now you can start feeling
+                  confident that your team is getting the right things done.
+                  <br />
+                  <br />
+                  Complete a confidential{' '}
+                  <span className={classes.highlight}>Team Assessment</span> to
+                  determine your company&apos;s pain points and get a report
+                  with concrete, actionable next steps.
                 </Typography>
               </Grid>
               <Grid item style={{ maxWidth: '50%' }}>
@@ -149,15 +162,13 @@ export class Home extends PureComponent {
                   color="primary"
                   variant="extendedFab"
                   size="large"
-                  style={{ height: 'auto' }}
+                  style={{
+                    height: 'auto',
+                    fontSize: 'larger'
+                  }}
                 >
-                  <TeamIcon fontSize="large" />
-                  <span>
-                    Click here to Complete this confidential{' '}
-                    <span className={classes.highlight}>Team-Assessment</span>{' '}
-                    to determine your company&apos;s pain points and get a
-                    report with concrete, actionable next steps
-                  </span>
+                  <TeamIcon fontSize="large" className={classes.actionIcon} />
+                  Assess Your Team
                 </Button>
               </Grid>
             </Grid>
@@ -201,7 +212,7 @@ export class Home extends PureComponent {
               </Grid>
               <Grid item xs={4}>
                 <Quote right className="h3" cite="Patrick, Technical Lead">
-                  We are not <i>meeting</i> goals; We are <i>crushing</i> them
+                  We are not <i>meeting</i> goals. We are <i>crushing</i> them
                 </Quote>
               </Grid>
             </Grid>

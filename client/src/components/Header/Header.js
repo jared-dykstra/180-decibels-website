@@ -19,7 +19,10 @@ const styles = {
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 20,
+    '& svg': {
+      fontSize: '1.5em'
+    }
   },
   actionButton: {
     marginLeft: 10,
