@@ -45,7 +45,7 @@ export class Home extends PureComponent {
               <div className={styles.overlay}>
                 <h1 className="pt-2 pt-sm-4 pt-lg-5">{tagline}</h1>
                 <div className={`mb-2 pb-sm-3 ${styles['btn-container']}`}>
-                  <GetStartedButton size="lg" className="p-lg-3">
+                  <GetStartedButton size="large">
                     Schedule a Complimentary Results Coaching Session Now
                   </GetStartedButton>
                 </div>

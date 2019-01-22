@@ -15,7 +15,7 @@ import {
   makeVolumeStepSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
-import RocketIcon from './RocketIcon'
+import { RocketIcon } from 'components'
 import Heading from './Heading'
 
 class Question extends PureComponent {

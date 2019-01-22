@@ -1,25 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button } from 'reactstrap'
-
+import { Button } from '@material-ui/core'
 import { openDialog } from 'reduxStore/getStarted/getStartedActions'
 
-const GetStartedButton = ({ doOpenDialog, children, size, className }) => (
-  <Button color="primary" onClick={doOpenDialog} {...{ size, className }}>
+const GetStartedButton = ({
+  doOpenDialog,
+  children,
+  color,
+  variant,
+  ...rest
+}) => (
+  <Button
+    {...{
+      color,
+      variant,
+      onClick: doOpenDialog,
+      ...rest
+    }}
+  >
     {children}
   </Button>
 )
 
 GetStartedButton.propTypes = {
   children: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  size: PropTypes.string
+  color: PropTypes.string,
+  variant: PropTypes.string
 }
 
 GetStartedButton.defaultProps = {
-  className: undefined,
-  size: undefined
+  color: 'primary',
+  variant: 'contained'
 }
 
 export default connect(

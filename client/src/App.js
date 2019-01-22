@@ -30,6 +30,14 @@ const THEME = createMuiTheme({
     fontWeightLight: styles['var-font-weight-light'],
     fontWeightRegular: styles['var-font-weight-normal'],
     fontWeightMedium: styles['var-font-weight-bold']
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        fontWeight: styles['var-font-weight-light'],
+        textTransform: 'inherit'
+      }
+    }
   }
 })
 

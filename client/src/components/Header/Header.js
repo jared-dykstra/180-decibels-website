@@ -2,55 +2,91 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Col, Navbar } from 'reactstrap'
+import { AppBar, Button, Toolbar, IconButton } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import MenuIcon from '@material-ui/icons/Menu'
 
-import { GetStartedButton, LogInModal, Logo } from 'components'
+import { RocketIcon, GetStartedButton, LogInModal } from 'components'
 import { isHomePageSelector } from 'reduxStore/routes/routesSelectors'
 import { ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 
-import styles from './Header.module.scss'
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  grow: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20
+  },
+  actionButton: {
+    marginLeft: 10,
+    marginRight: 10
+  },
+  logo: {
+    fontSize: '2rem'
+  },
+  logoImage: {
+    fontSize: '4rem'
+  }
+}
 
 class Header extends PureComponent {
   static propTypes = {
-    isHomePage: PropTypes.bool.isRequired
+    isHomePage: PropTypes.bool.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   render() {
-    const { isHomePage } = this.props
+    const { isHomePage, classes } = this.props
 
     return (
-      <Navbar color="faded" light expand="md" className={styles.header}>
-        <Col xs="6" md="4" className={styles.brand}>
-          <span className="text-nowrap">
-            <Link className={styles['mini-brand']} to={ROUTE_HOME}>
-              <Logo /> 180 Decibels
-            </Link>
-          </span>
-        </Col>
-        <Col xs="6" md="3" className={styles.tel}>
-          <a className="text-nowrap float-right" href="tel:+18883214531">
-            1-888-321-4531
-          </a>
-        </Col>
-        <Col
-          xs={{ size: 12, offset: 0 }}
-          md={{ size: 5, offset: 0 }}
-          className={styles.buttons}
-        >
-          <div className="float-right" style={{ display: 'flex' }}>
-            <LogInModal />
-            {!isHomePage && (
-              <div>
-                &nbsp;&nbsp;<GetStartedButton>Contact Me</GetStartedButton>
-              </div>
-            )}
+      <AppBar position="static" color="default" elevation={0}>
+        <Toolbar>
+          <IconButton
+            className={classes.menuButton}
+            color="primary"
+            aria-label="Menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <div className={classes.grow}>
+            <Button
+              component={Link}
+              to={ROUTE_HOME}
+              className={classes.logo}
+              color="secondary"
+            >
+              <RocketIcon fontSize="inherit" className={classes.logoImage} />{' '}
+              180 Decibels
+            </Button>
           </div>
-        </Col>
-      </Navbar>
+          {isHomePage && (
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              className={classes.actionButton}
+            >
+              What We Do
+            </Button>
+          )}
+          <GetStartedButton
+            variant="contained"
+            size="large"
+            className={classes.actionButton}
+          >
+            Contact Us
+          </GetStartedButton>
+          <LogInModal className={classes.actionButton} />
+        </Toolbar>
+      </AppBar>
     )
   }
 }
 
 export default connect(state => ({
   isHomePage: isHomePageSelector(state)
-}))(Header)
+}))(withStyles(styles)(Header))

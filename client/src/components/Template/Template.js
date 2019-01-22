@@ -1,17 +1,24 @@
-/*
-  Wraps each page in a layout container, and header and footer
-  An optional className prop can be specified, which is useful to scope modular sass
-*/
-
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'reactstrap'
 import Helmet from 'react-helmet'
+import { CssBaseline } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
 import { Header, Footer } from 'components'
-// import { get as configGet } from '../../config'
 
-import styles from './template.module.scss'
+const styles = theme => ({
+  layout: {
+    width: 'auto',
+    minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  }
+})
 
 const Template = ({
   title,
@@ -21,6 +28,7 @@ const Template = ({
   // type,
   // twitterCardType,
   // twitterCreator,
+  classes,
   className,
   children
 }) =>
@@ -30,10 +38,9 @@ const Template = ({
   //   search && search.length > 0 ? search : ''
   // }${hash && hash.length > 0 ? hash : ''}`
   [
-    <Container key="container" className={styles.page}>
-      <Helmet>
-        <title>{title}</title>
-        {/* Not currently being used--but this is useful if SSR or pre-rendering is enabled in the future.
+    <Helmet key="helmet">
+      <title>{title}</title>
+      {/* Not currently being used--but this is useful if SSR or pre-rendering is enabled in the future.
           To set these tags, see server/src/openGraph.js
         <meta name="description" content={description} />
         <meta property="og:url" content={url} />,
@@ -44,10 +51,12 @@ const Template = ({
         <meta name="twitter:card" content={twitterCardType} />,
         <meta name="twitter:creator" content={twitterCreator} />
               */}
-      </Helmet>
-      <Header />
-      <div className={className}>{children}</div>
-    </Container>,
+    </Helmet>,
+    <CssBaseline key="baseline" />,
+    <Header key="header" />,
+    <div key="body" className={`${classes.layout} ${className}`}>
+      {children}
+    </div>,
     <Footer key="footer" />
   ]
 
@@ -72,7 +81,8 @@ Template.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired
+  ]).isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 Template.defaultProps = {
@@ -86,4 +96,4 @@ Template.defaultProps = {
   className: undefined
 }
 
-export default Template
+export default withStyles(styles)(Template)
