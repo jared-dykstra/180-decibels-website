@@ -4,12 +4,12 @@ import { Row, Col } from 'reactstrap'
 
 import { GetStartedButton, Template } from 'components'
 
-import styles from './Services.module.scss'
+import styles from './WhatWeDo.module.scss'
 
-const Services = ({ location }) => (
+const WhatWeDo = ({ location }) => (
   <Template
     {...{
-      title: '180 Decibels - Services',
+      title: '180 Decibels - What We Do',
       location,
       className: styles.services
     }}
@@ -85,7 +85,7 @@ const Services = ({ location }) => (
   </Template>
 )
 
-Services.propTypes = {
+WhatWeDo.propTypes = {
   location: PropTypes.shape({
     hash: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired,
@@ -93,4 +93,4 @@ Services.propTypes = {
   }).isRequired // <-- Passed down from react router
 }
 
-export default Services
+export default WhatWeDo

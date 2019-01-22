@@ -9,29 +9,38 @@ const GetStartedButton = ({
   children,
   color,
   variant,
+  component: Component,
+  onClick,
   ...rest
 }) => (
-  <Button
+  <Component
     {...{
       color,
       variant,
-      onClick: doOpenDialog,
+      onClick: e => {
+        doOpenDialog(e)
+        onClick(e)
+      },
       ...rest
     }}
   >
     {children}
-  </Button>
+  </Component>
 )
 
 GetStartedButton.propTypes = {
   children: PropTypes.string.isRequired,
   color: PropTypes.string,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  component: PropTypes.func, // <== Function that returns a react Element
+  onClick: PropTypes.func
 }
 
 GetStartedButton.defaultProps = {
   color: 'primary',
-  variant: 'contained'
+  variant: 'contained',
+  component: Button,
+  onClick: () => {}
 }
 
 export default connect(

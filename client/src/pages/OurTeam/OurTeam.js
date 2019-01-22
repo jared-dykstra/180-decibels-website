@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { Col, Row } from 'reactstrap'
 
+import { ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 import { Quote, Template } from 'components'
 
 import styles from './OurTeam.module.scss'
@@ -35,10 +37,8 @@ const OurTeam = ({ location }) => (
         </p>
       </Col>
     </Row>
-
-    <h2>Founders</h2>
+    <h2 id="founders">Founders</h2>
     <hr />
-
     <div className={styles.founder}>
       <Row>
         <Col sm="6" md={{ size: 4, offset: 1 }}>
@@ -74,7 +74,6 @@ const OurTeam = ({ location }) => (
         </Col>
       </Row>
     </div>
-
     <div className={styles.founder}>
       <Row>
         <Col sm="6" md={{ size: 4, offset: 1 }}>
@@ -110,7 +109,6 @@ const OurTeam = ({ location }) => (
         </Col>
       </Row>
     </div>
-
     <div className={styles.founder}>
       <Row>
         <Col sm="6" md={{ size: 4, offset: 1 }}>
@@ -144,6 +142,37 @@ const OurTeam = ({ location }) => (
           </Quote>
         </Col>
       </Row>
+    </div>
+    <h2 id="location">Get In Touch</h2>
+    <hr />
+    <h3>Address:</h3>
+    <div className={styles.address}>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.google.ca/maps/place/180+Decibels/@51.0441532,-114.0819514,15z/data=!4m5!3m4!1s0x0:0xdea918161b2807cd!8m2!3d51.0441532!4d-114.0819514"
+      >
+        445 – 999 8TH ST. SW
+        <br />
+        CALGARY, AB
+        <br />
+        T2R 1J5
+      </a>
+    </div>
+    <h3>Phone:</h3>
+    <div className={styles.address}>
+      <a href="tel:+18883214531" className="text-nowrap">
+        1-888-321-4531
+      </a>{' '}
+      or <a href="tel:+14039845457">(403) 984-5457</a>
+    </div>
+    <h3> Email:</h3>
+    <div className={styles.address}>
+      <a href="mailto:info@180decibels.com" className="text-nowrap">
+        info@180decibels.com
+      </a>
+      <br />
+      <Link to={ROUTE_HOME}>www.180decibels.com</Link>
     </div>
   </Template>
 )

@@ -22,7 +22,8 @@ import { isHomePageSelector } from 'reduxStore/routes/routesSelectors'
 import {
   ROUTE_HOME,
   ROUTE_OUR_TEAM,
-  ROUTE_HOW_WE_WORK
+  ROUTE_HOW_WE_WORK,
+  ROUTE_WHAT_WE_DO
 } from 'reduxStore/routes/routesConstants'
 
 const styles = theme => ({
@@ -116,9 +117,11 @@ class Header extends PureComponent {
                             <MenuItem onClick={this.handleClose}>Home</MenuItem>
                           </Link>
                         }
-                        <MenuItem onClick={this.handleClose}>
-                          What We Do
-                        </MenuItem>
+                        <Link to={ROUTE_WHAT_WE_DO}>
+                          <MenuItem onClick={this.handleClose}>
+                            What We Do
+                          </MenuItem>
+                        </Link>
                         <Link to={ROUTE_HOW_WE_WORK}>
                           <MenuItem onClick={this.handleClose}>
                             How We Work
@@ -129,6 +132,12 @@ class Header extends PureComponent {
                             Our Team
                           </MenuItem>
                         </Link>
+                        <GetStartedButton
+                          component={MenuItem}
+                          onClick={this.handleClose}
+                        >
+                          Contact
+                        </GetStartedButton>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -153,6 +162,8 @@ class Header extends PureComponent {
               variant="contained"
               size="large"
               className={classes.actionButton}
+              component={Link}
+              to={ROUTE_WHAT_WE_DO}
             >
               What We Do
             </Button>

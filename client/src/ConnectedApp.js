@@ -23,7 +23,7 @@ import {
   // NotFound,
   OurTeam,
   Privacy,
-  Services,
+  WhatWeDo,
   IntroVideo,
   SunVideo
 } from 'pages'
@@ -40,6 +40,7 @@ import {
   ROUTE_PRIVACY,
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
+  ROUTE_WHAT_WE_DO,
   ROUTE_SERVICES,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_SUN
@@ -195,7 +196,8 @@ class App extends PureComponent {
       [ROUTE_OUR_TEAM]: OurTeam,
       [ROUTE_CONFIDENTIALITY]: Confidentiality,
       [ROUTE_PRIVACY]: Privacy,
-      [ROUTE_SERVICES]: Services,
+      [ROUTE_SERVICES]: WhatWeDo, // <== Deprecated; remove in next version
+      [ROUTE_WHAT_WE_DO]: WhatWeDo,
       [ROUTE_VIDEO_INTRO]: IntroVideo,
       [ROUTE_VIDEO_SUN]: SunVideo
     }

@@ -11,7 +11,7 @@ import {
   ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
   ROUTE_HOW_WE_WORK,
-  ROUTE_SERVICES
+  ROUTE_WHAT_WE_DO
 } from 'reduxStore/routes/routesConstants'
 import { SocialLinks } from 'components'
 
@@ -67,13 +67,13 @@ const footer = ({ classes }) => (
         </Link>
         <ul>
           <li>
-            <Link to={ROUTE_HELP_MY_TEAM}>Help My Team</Link>
+            <Link to={ROUTE_WHAT_WE_DO}>What We Do</Link>
           </li>
           <li>
             <Link to={ROUTE_HOW_WE_WORK}>How We Work</Link>
           </li>
           <li>
-            <Link to={ROUTE_SERVICES}>Services</Link>
+            <Link to={ROUTE_HELP_MY_TEAM}>Help My Team</Link>
           </li>
         </ul>
       </Grid>
