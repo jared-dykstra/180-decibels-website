@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { Button, Col, Jumbotron, Row } from 'reactstrap'
-import { Paper } from '@material-ui/core'
+import { Button, Grid, Paper, Typography } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles/colorManipulator'
+import NavigationIcon from '@material-ui/icons/Navigation'
 
 import { GetStartedButton, Quote, Template, Video } from 'components'
 import {
@@ -24,135 +26,187 @@ import {
 
 import { get as configGet } from '../../config'
 
-import styles from './Home.module.scss'
+import bannerImage from './noisy-kid.jpg'
+import TeamIcon from './TeamIcon'
+
+const styles = theme => ({
+  main: {
+    paddingBottom: '4em'
+  },
+  banner: {
+    marginBottom: '1em',
+    minHeight: '20em',
+    paddingBottom: '35%', // 56.25%;  // <-- 16:9 aspect ratio
+    width: '100%',
+    backgroundImage: `url(${bannerImage})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    position: 'relative'
+  },
+  overlay: {
+    backgroundColor: fade(theme.palette.primary.main, 0.1),
+    position: 'absolute',
+    top: '0',
+    bottom: '0'
+  },
+  title: {
+    color: 'white',
+    fontWeight: '800',
+    textShadow: '0 0 15px rgba(0,0,0,1)',
+    maxWidth: '1000px',
+    paddingTop: '.25em', // <== For IE 11
+    paddingBottom: '1em' // <== For IE 11
+  },
+  titleContainer: {
+    maxWidth: '100%' // <== For IE 11
+  },
+  intro: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 5,
+    paddingRight: theme.spacing.unit * 5,
+    fontSize: 'larger'
+  },
+  highlight: {
+    color: theme.palette.secondary.main,
+    fontWeight: '800'
+  },
+  videoRow: {
+    marginTop: '2em'
+  }
+})
 
 export class Home extends PureComponent {
   render() {
-    const { doClickHelpMe, doClickHelpMyTeam, tracker, location } = this.props
+    const {
+      doClickHelpMe,
+      doClickHelpMyTeam,
+      tracker,
+      location,
+      classes
+    } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
     const rootUrl = configGet('rootUrl')
     return (
       <Template
         {...{
           title: '180 Decibels',
-          location,
-          className: styles.home
+          location
         }}
       >
-        <Col>
-          <div className={styles.wrapper}>
-            <div className={styles.banner}>
-              <div className={styles.overlay}>
-                <h1 className="pt-2 pt-sm-4 pt-lg-5">{tagline}</h1>
-                <div className={`mb-2 pb-sm-3 ${styles['btn-container']}`}>
-                  <GetStartedButton size="large">
-                    Schedule a Complimentary Results Coaching Session Now
-                  </GetStartedButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Col>
-        <Row id="i-am">
-          <Col sm="6">
-            <Paper elevation={6}>
-              <Jumbotron
-                className={`${styles.persona} ${styles.owner}`}
-                onClick={doClickHelpMe}
-              >
-                <h2>I am an Owner Operator</h2>
-                <p>
-                  We re-focus managers on driving to outcome and on creating
-                  urgency. We offer a practical, results-oriented process to
-                  build a high-performing culture so you can start feeling more
-                  competent and more confident--getting huge productivity gains
-                  out of your team.
-                </p>
-                <Button
-                  size="lg"
-                  block
-                  color="primary"
-                  onClick={e => {
-                    doClickHelpMe()
-                    e.stopPropagation()
-                  }}
+        <Paper className={classes.main} elevation={2}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Paper className={classes.banner} elevation={0} square>
+                <Grid
+                  container
+                  direction="column"
+                  justify="space-evenly"
+                  alignItems="center"
+                  className={classes.overlay}
                 >
-                  Discover how 180 Decibels can help you
-                </Button>
-              </Jumbotron>
-            </Paper>
-          </Col>
-          <Col sm="6">
-            <Paper elevation={6}>
-              <Jumbotron
-                className={`${styles.persona} ${styles.manager}`}
-                onClick={doClickHelpMyTeam}
-              >
-                <h2>I am a Manager</h2>
-                <p>
-                  Are you a manager or leader who is frustrated by your team’s
-                  results? Is there confusion on who is accountable for what? Do
-                  team members KNOW what they need to do EACH DAY to meet
-                  targets? IF THIS SOUNDS LIKE YOUR COMPANY, WE GET IT AND WE
-                  CAN HELP.
-                </p>
+                  <Grid item zeroMinWidth className={classes.titleContainer}>
+                    <Typography
+                      align="center"
+                      variant="h2"
+                      className={classes.title}
+                    >
+                      {tagline}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <GetStartedButton size="large" variant="extendedFab">
+                      <NavigationIcon fontSize="large" />
+                      &nbsp; Schedule a Complimentary Results Coaching Session
+                      Now
+                    </GetStartedButton>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid
+              container
+              spacing={24}
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Grid item style={{ position: 'relative' }}>
+                <Typography variant="body1" className={classes.intro}>
+                  Do you want to unlock latent productivity in your team to
+                  out-perform competitors? We help managers drive to outcome and
+                  create urgency in their organization. You get a practical,
+                  results-oriented process to build a high-performing culture so
+                  you can start feeling confident that your team is getting the
+                  right things done.
+                </Typography>
+              </Grid>
+              <Grid item style={{ maxWidth: '50%' }}>
                 <Button
-                  size="lg"
-                  block
                   color="primary"
-                  onClick={e => {
-                    doClickHelpMyTeam()
-                    e.stopPropagation()
-                  }}
+                  variant="extendedFab"
+                  size="large"
+                  style={{ height: 'auto' }}
                 >
-                  Discover what 180 Decibels can do for your team
+                  <TeamIcon fontSize="large" />
+                  <span>
+                    Click here to Complete this confidential{' '}
+                    <span className={classes.highlight}>Team-Assessment</span>{' '}
+                    to determine your company&apos;s pain points and get a
+                    report with concrete, actionable next steps
+                  </span>
                 </Button>
-              </Jumbotron>
-            </Paper>
-          </Col>
-        </Row>
-        <Row className={styles['video-row']}>
-          <Col md="4" className="d-none d-md-block">
-            <Quote className="h3" cite="Vincent, CEO">
-              180 Decibels increased my team&apos;s results by 22%
-            </Quote>
-          </Col>
-          <Col md="8">
-            <section id="intro">
-              <Paper style={{ paddingBottom: '3em' }}>
-                <Video
-                  {...{
-                    poster: overviewVideoPoster,
-                    src: overviewVideoSrc,
-                    tracker,
-                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
-                  }}
-                />
-              </Paper>
-            </section>
-          </Col>
-        </Row>
-        <Row className={styles['video-row']}>
-          <Col md="8">
-            <section id="focus">
-              <Paper style={{ paddingBottom: '3em' }}>
-                <Video
-                  {...{
-                    poster: sunVideoPoster,
-                    src: sunVideoSrc,
-                    tracker,
-                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
-                  }}
-                />
-              </Paper>
-            </section>
-          </Col>
-          <Col md="4" className="d-none d-md-block">
-            <Quote right className="h3" cite="Patrick, Technical Lead">
-              We are not <i>meeting</i> goals; We are <i>crushing</i> them
-            </Quote>
-          </Col>
-        </Row>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} style={{ padding: '1em' }}>
+              <Grid container spacing={24} className={classes.videoRow}>
+                <Grid item xs={4}>
+                  <Quote className="h3" cite="Vincent, CEO">
+                    180 Decibels increased my team&apos;s results by 22%
+                  </Quote>
+                </Grid>
+                <Grid item xs={8}>
+                  <Paper style={{ paddingBottom: '3em' }}>
+                    <Video
+                      {...{
+                        poster: overviewVideoPoster,
+                        src: overviewVideoSrc,
+                        tracker,
+                        shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
+                      }}
+                    />
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} style={{ padding: '1em' }}>
+            <Grid container spacing={24} className={classes.videoRow}>
+              <Grid item xs={8}>
+                <Paper style={{ paddingBottom: '3em' }}>
+                  <Video
+                    {...{
+                      poster: sunVideoPoster,
+                      src: sunVideoSrc,
+                      tracker,
+                      shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
+                    }}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={4}>
+                <Quote right className="h3" cite="Patrick, Technical Lead">
+                  We are not <i>meeting</i> goals; We are <i>crushing</i> them
+                </Quote>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Paper>
       </Template>
     )
   }
@@ -180,4 +234,4 @@ export default connect(
     doClickHelpMe: () => dispatch(push(ROUTE_HELP_ME)),
     doClickHelpMyTeam: () => dispatch(push(ROUTE_HELP_MY_TEAM))
   })
-)(Home)
+)(withStyles(styles)(Home))
