@@ -4,7 +4,6 @@ export {
 export { default as Confidentiality } from './Confidentiality/Confidentiality'
 export { default as Error } from './Error/Error'
 export { default as Home } from './Home/Home'
-export { default as HelpMe } from './HelpMe/HelpMe'
 export { default as HelpMyTeam } from './HelpMyTeam/HelpMyTeam'
 export { default as NotFound } from './NotFound/NotFound'
 export { default as OurTeam } from './OurTeam/OurTeam'

@@ -17,7 +17,6 @@ import {
   AssessmentResult,
   Confidentiality,
   Error,
-  HelpMe,
   HelpMyTeam,
   Home,
   HowWeWork,
@@ -188,9 +187,9 @@ class App extends PureComponent {
 
     const routes = {
       [ROUTE_HOME]: Home,
-      [ROUTE_HELP_ME]: HelpMe,
+      [ROUTE_HELP_ME]: HelpMyTeam, // <== Deprecated; remove in next version
+      [ROUTE_HELP_ME_QUIZ]: HelpMyTeam, // <== Deprecated; remove in next version
       [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
-      [ROUTE_HELP_ME_QUIZ]: HelpMe,
       [ROUTE_HELP_MY_TEAM_QUIZ]: HelpMyTeam,
       [ROUTE_HOW_WE_WORK]: HowWeWork,
       [ROUTE_OUR_TEAM]: OurTeam,

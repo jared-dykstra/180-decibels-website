@@ -13,7 +13,6 @@ const renderQuiz = props => (
 const renderFullPage = props => (
   <Row>
     <Col md={{ size: 10, offset: 1 }}>
-      <h1>Help My Team</h1>
       <p className="lead">
         We generate real ROI and substantially grow confidence team&apos;s
         ability to execute.
