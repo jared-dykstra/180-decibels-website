@@ -1,15 +1,13 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import { Button, Grid, Paper, Typography } from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { Fab, Grid, Paper, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-import NavigationIcon from '@material-ui/icons/Navigation'
+// import NavigationIcon from '@material-ui/icons/Navigation'
 
-import { GetStartedButton, Quote, Template, Video } from 'components'
+import { /* GetStartedButton, */ Quote, Template, Video } from 'components'
 import {
-  ROUTE_HELP_ME,
   ROUTE_HELP_MY_TEAM,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_SUN
@@ -76,18 +74,16 @@ const styles = theme => ({
   },
   videoRow: {
     marginTop: '2em'
+  },
+  fab: {
+    fontSize: 'larger',
+    textTransform: 'none'
   }
 })
 
 export class Home extends PureComponent {
   render() {
-    const {
-      doClickHelpMe,
-      doClickHelpMyTeam,
-      tracker,
-      location,
-      classes
-    } = this.props
+    const { tracker, location, classes } = this.props
     const tagline = 'Removing the Complexity from Managing Your Team'
     const rootUrl = configGet('rootUrl')
     return (
@@ -151,25 +147,24 @@ export class Home extends PureComponent {
                   confident that your team is getting the right things done.
                   <br />
                   <br />
-                  Complete a confidential{' '}
+                  Use our confidential{' '}
                   <span className={classes.highlight}>Team Assessment</span> to
                   determine your company&apos;s pain points and get a report
                   with concrete, actionable next steps.
                 </Typography>
               </Grid>
               <Grid item style={{ maxWidth: '50%' }}>
-                <Button
+                <Fab
                   color="primary"
-                  variant="extendedFab"
+                  variant="extended"
                   size="large"
-                  style={{
-                    height: 'auto',
-                    fontSize: 'larger'
-                  }}
+                  className={classes.fab}
+                  component={Link}
+                  to={ROUTE_HELP_MY_TEAM}
                 >
                   <TeamIcon fontSize="large" className={classes.actionIcon} />
                   Assess Your Team
-                </Button>
+                </Fab>
               </Grid>
             </Grid>
 
@@ -224,8 +219,6 @@ export class Home extends PureComponent {
 }
 
 Home.propTypes = {
-  doClickHelpMe: PropTypes.func.isRequired,
-  doClickHelpMyTeam: PropTypes.func.isRequired,
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired
   }).isRequired, // <-- Passed down from react router
@@ -239,10 +232,4 @@ Home.propTypes = {
   }).isRequired
 }
 
-export default connect(
-  () => ({}),
-  dispatch => ({
-    doClickHelpMe: () => dispatch(push(ROUTE_HELP_ME)),
-    doClickHelpMyTeam: () => dispatch(push(ROUTE_HELP_MY_TEAM))
-  })
-)(withStyles(styles)(Home))
+export default withStyles(styles)(Home)

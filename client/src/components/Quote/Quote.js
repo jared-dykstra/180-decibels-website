@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
@@ -32,22 +31,20 @@ const styles = theme => ({
 })
 
 const Quote = ({ elevation, children, cite, className, classes, right }) => (
-  <Paper elevation={elevation}>
-    <div className={`${className} ${classes.quote}`}>
-      <blockquote
-        key="body"
-        className={`${right ? `text-right ${classes.right}` : classes.left}`}
-      >
-        <span className={classes.glyph}>&ldquo;</span>
-        {children}
-        {cite && (
-          <footer className="blockquote-footer">
-            <cite key="cite">{cite}</cite>
-          </footer>
-        )}
-      </blockquote>
-    </div>
-  </Paper>
+  <div className={`${className} ${classes.quote}`}>
+    <blockquote
+      key="body"
+      className={`${right ? `text-right ${classes.right}` : classes.left}`}
+    >
+      <span className={classes.glyph}>&ldquo;</span>
+      {children}
+      {cite && (
+        <footer className="blockquote-footer">
+          <cite key="cite">{cite}</cite>
+        </footer>
+      )}
+    </blockquote>
+  </div>
 )
 
 Quote.propTypes = {
