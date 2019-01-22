@@ -37,6 +37,13 @@ const THEME = createMuiTheme({
         fontWeight: styles['var-font-weight-light'],
         textTransform: 'inherit'
       }
+    },
+    MuiFab: {
+      root: {
+        fontWeight: styles['var-font-weight-light'],
+        fontSize: 'larger',
+        textTransform: 'inherit'
+      }
     }
   }
 })

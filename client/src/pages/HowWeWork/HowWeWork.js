@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Fab } from '@material-ui/core'
 import { Row, Col } from 'reactstrap'
 
 import { GetStartedButton, Quote, Template } from 'components'
@@ -50,7 +51,7 @@ const HowWeWork = ({ location }) => (
             </p>
           </Col>
           <Col xs="12" className="d-flex">
-            <GetStartedButton size="large">
+            <GetStartedButton size="large" component={Fab} variant="extended">
               Get Started with our Unique Approach Today!
             </GetStartedButton>
           </Col>
@@ -105,7 +106,7 @@ const HowWeWork = ({ location }) => (
             </p>
           </Col>
           <Col xs="12" className="d-flex">
-            <GetStartedButton size="large">
+            <GetStartedButton size="large" component={Fab} variant="extended">
               Experience a 180 Today!
             </GetStartedButton>
           </Col>

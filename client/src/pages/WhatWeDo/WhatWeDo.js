@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'reactstrap'
+import { Fab } from '@material-ui/core'
 
 import { GetStartedButton, Template } from 'components'
 
@@ -16,7 +17,7 @@ const WhatWeDo = ({ location }) => (
   >
     <Row>
       <Col md={{ size: 10, offset: 1 }}>
-        <h1>Services</h1>
+        <h1>What We Do</h1>
         <p className="lead">
           Our services are custom for each client AND everything we do is
           centred around implementing best practices to create healthy, high
@@ -76,7 +77,7 @@ const WhatWeDo = ({ location }) => (
           </p>
         </Col>
         <Col xs="12" className="d-flex">
-          <GetStartedButton size="large">
+          <GetStartedButton size="large" component={Fab} variant="extended">
             Get Started with 180 Decibels Today!
           </GetStartedButton>
         </Col>

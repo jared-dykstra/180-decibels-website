@@ -74,10 +74,6 @@ const styles = theme => ({
   },
   videoRow: {
     marginTop: '2em'
-  },
-  fab: {
-    fontSize: 'larger',
-    textTransform: 'none'
   }
 })
 
