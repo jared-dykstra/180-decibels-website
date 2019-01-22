@@ -126,7 +126,7 @@ class Header extends PureComponent {
                         </Link>
                         <Link to={ROUTE_OUR_TEAM}>
                           <MenuItem onClick={this.handleClose}>
-                            About Us
+                            Our Team
                           </MenuItem>
                         </Link>
                       </MenuList>
