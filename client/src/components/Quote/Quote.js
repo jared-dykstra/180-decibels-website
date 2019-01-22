@@ -1,17 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Paper } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
-import styles from './Quote.module.scss'
+const styles = theme => ({
+  quote: {
+    background: 'rgb(249, 249, 249)', // $decibels-soft-white;  TODO - Add color to mui theme
+    color: theme.palette.secondary.main,
 
-const Quote = ({ elevation, children, cite, className, right }) => (
+    '&>blockquote': {
+      fontSize: '1em',
+      padding: '0.5em 10px'
+    }
+  },
+
+  left: {
+    borderLeft: `10px solid ${theme.palette.secondary.main}`
+  },
+
+  right: {
+    borderRight: `10px solid ${theme.palette.secondary.main}`
+  },
+
+  glyph: {
+    color: 'rgb(100, 100, 100)', // $decibels-light-grey;  TODO - Add color to mui theme
+    fontSize: '4em',
+    lineHeight: '0.1em',
+    marginRight: '0.25em',
+    verticalAlign: '-0.4em'
+  }
+})
+
+const Quote = ({ elevation, children, cite, className, classes, right }) => (
   <Paper elevation={elevation}>
-    <div className={`${className} ${styles.quote}`}>
+    <div className={`${className} ${classes.quote}`}>
       <blockquote
         key="body"
-        className={`${right ? `text-right ${styles.right}` : styles.left}`}
+        className={`${right ? `text-right ${classes.right}` : classes.left}`}
       >
-        <span className={styles.glyph}>&ldquo;</span>
+        <span className={classes.glyph}>&ldquo;</span>
         {children}
         {cite && (
           <footer className="blockquote-footer">
@@ -31,7 +58,8 @@ Quote.propTypes = {
   ]).isRequired,
   right: PropTypes.bool,
   className: PropTypes.string,
-  elevation: PropTypes.number
+  elevation: PropTypes.number,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 Quote.defaultProps = {
@@ -41,4 +69,4 @@ Quote.defaultProps = {
   className: '' // Intended to be Bootstrap's .h1, .h2, .h3, etc. to set font size
 }
 
-export default Quote
+export default withStyles(styles)(Quote)
