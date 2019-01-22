@@ -17,7 +17,7 @@ import {
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 
-import { RocketIcon, GetStartedButton, LogInModal } from 'components'
+import { RocketIcon, GetStartedButton /* , LogInModal */ } from 'components'
 import { isHomePageSelector } from 'reduxStore/routes/routesSelectors'
 import {
   ROUTE_HOME,
@@ -45,7 +45,8 @@ const styles = theme => ({
     marginRight: 10
   },
   logo: {
-    fontSize: '2rem'
+    fontSize: '1.5rem',
+    whiteSpace: 'nowrap'
   },
   logoImage: {
     fontSize: '4rem'
@@ -175,7 +176,7 @@ class Header extends PureComponent {
           >
             Contact Us
           </GetStartedButton>
-          <LogInModal className={classes.actionButton} />
+          {/* <LogInModal className={classes.actionButton} /> */}
         </Toolbar>
       </AppBar>
     )
