@@ -76,7 +76,7 @@ const Services = ({ location }) => (
           </p>
         </Col>
         <Col xs="12" className="d-flex">
-          <GetStartedButton size="lg" className="ml-auto">
+          <GetStartedButton size="large">
             Get Started with 180 Decibels Today!
           </GetStartedButton>
         </Col>

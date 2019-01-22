@@ -50,7 +50,7 @@ const HowWeWork = ({ location }) => (
             </p>
           </Col>
           <Col xs="12" className="d-flex">
-            <GetStartedButton size="lg" className="ml-auto">
+            <GetStartedButton size="large">
               Get Started with our Unique Approach Today!
             </GetStartedButton>
           </Col>
@@ -105,7 +105,7 @@ const HowWeWork = ({ location }) => (
             </p>
           </Col>
           <Col xs="12" className="d-flex">
-            <GetStartedButton size="lg" className="ml-auto">
+            <GetStartedButton size="large">
               Experience a 180 Today!
             </GetStartedButton>
           </Col>

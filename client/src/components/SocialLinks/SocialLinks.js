@@ -3,6 +3,7 @@
 */
 
 import React from 'react'
+import { Grid } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTwitter,
@@ -10,7 +11,6 @@ import {
   faFacebook,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons'
-import { NavItem, NavLink } from 'reactstrap'
 
 const social = [
   {
@@ -33,13 +33,13 @@ const social = [
 ]
 
 export default () => (
-  <span className="d-none d-md-flex">
+  <Grid container direction="row" justify="space-evenly" alignItems="center">
     {Object.entries(social).map(([i, s]) => (
-      <NavItem key={i}>
-        <NavLink href={s.url}>
+      <Grid item key={i}>
+        <a href={s.url}>
           <FontAwesomeIcon icon={s.icon} />
-        </NavLink>
-      </NavItem>
+        </a>
+      </Grid>
     ))}
-  </span>
+  </Grid>
 )
