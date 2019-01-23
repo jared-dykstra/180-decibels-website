@@ -32,34 +32,43 @@ const styles = theme => ({
     paddingBottom: '2em'
   },
   aboveTheFold: {
-    minHeight: 'calc(100vh - 80px)', // AppBar is assumed to be 80px tall
+    minHeight: 'calc(100vh - 64px)', // AppBar is assumed to be 64px tall
     display: 'flex',
     flexDirection: 'column'
   },
   grow: {
     flexGrow: 1
   },
+  container: {
+    maxHeight: '20em',
+    overflow: 'hidden'
+  },
   banner: {
     marginBottom: '1em',
-    minHeight: '20em',
+    minHeight: '15em',
     paddingBottom: '35%', // 56.25%;  // <-- 16:9 aspect ratio
     width: '100%',
     backgroundImage: `url(${bannerImage})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
+    backgroundPosition: 'center',
     position: 'relative'
   },
   overlay: {
     backgroundColor: fade(theme.palette.primary.main, 0.1),
     position: 'absolute',
     top: '0',
-    bottom: '0'
+    bottom: '0',
+    left: '0',
+    right: '0'
   },
   title: {
     color: 'white',
     fontWeight: '800',
     textShadow: '0 0 15px rgba(0,0,0,1)',
-    maxWidth: '1000px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '1em',
     paddingTop: '.25em', // <== For IE 11
     paddingBottom: '1em' // <== For IE 11
   },
@@ -80,8 +89,9 @@ const styles = theme => ({
     fontWeight: '800'
   },
   videoRow: {
-    marginBottom: '4em',
-    padding: '1em'
+    paddingBottom: '4em',
+    paddingLeft: '1em',
+    paddingRight: '1em'
   },
   fab: {
     marginBottom: '2em'
@@ -102,31 +112,18 @@ export class Home extends PureComponent {
       >
         <Paper className={classes.main} elevation={2}>
           <div className={classes.aboveTheFold}>
-            <div className={classes.banner}>
-              <Grid
-                container
-                direction="column"
-                justify="space-evenly"
-                alignItems="center"
-                className={classes.overlay}
-              >
-                <Grid item zeroMinWidth className={classes.maxWidth}>
+            <div className={classes.container}>
+              <div className={classes.banner}>
+                <div className={classes.overlay}>
                   <Typography
                     align="center"
-                    variant="h3"
+                    variant="h4"
                     className={classes.title}
                   >
                     {tagline}
                   </Typography>
-                </Grid>
-                <Grid item>
-                  {/* <GetStartedButton size="large" variant="extendedFab">
-                      <NavigationIcon fontSize="large"  className={classes.actionIcon} />
-                      Schedule a Complimentary Results Coaching Session
-                      Now
-                    </GetStartedButton> */}
-                </Grid>
-              </Grid>
+                </div>
+              </div>
             </div>
 
             <Grid
@@ -172,44 +169,40 @@ export class Home extends PureComponent {
             </Grid>
           </div>
 
-          <Grid container spacing={24} className={classes.videoRow}>
+          <Grid container className={classes.videoRow}>
             <Hidden xsDown>
               <Grid item xs={12} sm={4}>
-                <Quote className="h3" cite="Vincent, CEO">
+                <Quote cite="Vincent, CEO">
                   180 Decibels increased my team&apos;s results by 22%
                 </Quote>
               </Grid>
             </Hidden>
             <Grid item xs={12} sm={8}>
-              <Paper style={{ paddingBottom: '3em' }}>
-                <Video
-                  {...{
-                    poster: overviewVideoPoster,
-                    src: overviewVideoSrc,
-                    tracker,
-                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
-                  }}
-                />
-              </Paper>
+              <Video
+                {...{
+                  poster: overviewVideoPoster,
+                  src: overviewVideoSrc,
+                  tracker,
+                  shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
+                }}
+              />
             </Grid>
           </Grid>
 
-          <Grid container spacing={24} className={classes.videoRow}>
+          <Grid container className={classes.videoRow}>
             <Grid item xs={12} sm={8}>
-              <Paper style={{ paddingBottom: '3em' }}>
-                <Video
-                  {...{
-                    poster: sunVideoPoster,
-                    src: sunVideoSrc,
-                    tracker,
-                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
-                  }}
-                />
-              </Paper>
+              <Video
+                {...{
+                  poster: sunVideoPoster,
+                  src: sunVideoSrc,
+                  tracker,
+                  shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
+                }}
+              />
             </Grid>
             <Hidden xsDown>
               <Grid item xs={12} sm={4}>
-                <Quote right className="h3" cite="Patrick, Technical Lead">
+                <Quote right cite="Patrick, Technical Lead">
                   We are not <i>meeting</i> goals. We are <i>crushing</i> them!
                 </Quote>
               </Grid>

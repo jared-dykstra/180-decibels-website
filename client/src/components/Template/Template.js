@@ -10,8 +10,6 @@ const styles = theme => ({
   layout: {
     width: 'auto',
     minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
       width: 1100,
       marginLeft: 'auto',
@@ -28,9 +26,9 @@ const Template = ({
   // type,
   // twitterCardType,
   // twitterCreator,
-  classes,
   className,
-  children
+  children,
+  classes
 }) =>
   // const rootUrl = configGet('rootUrl')
   // const { pathname, hash, search } = location

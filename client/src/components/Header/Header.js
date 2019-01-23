@@ -28,29 +28,29 @@ import {
 } from 'reduxStore/routes/routesConstants'
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
   grow: {
     flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 10,
     '& svg': {
       fontSize: '1.5em'
     }
   },
   actionButton: {
-    marginLeft: 10,
-    marginRight: 10
+    marginLeft: 10
   },
   logo: {
-    fontSize: '1.5rem',
+    fontSize: '1.5em',
     whiteSpace: 'nowrap'
   },
   logoImage: {
-    fontSize: '4rem'
+    // fontSize: '4rem'
+    fontSize: '1.5em'
+  },
+  popper: {
+    zIndex: '100'
   }
 })
 
@@ -104,7 +104,7 @@ class Header extends PureComponent {
             anchorEl={this.anchorEl}
             transition
             disablePortal
-            style={{ zIndex: '100' }}
+            className={classes.popper}
           >
             {({ TransitionProps, placement }) => {
               const onBottom = placement === 'bottom'
@@ -121,7 +121,7 @@ class Header extends PureComponent {
                     <ClickAwayListener onClickAway={this.handleClose}>
                       <MenuList>
                         {
-                          /* !isHomePage && */ <Link to={ROUTE_HOME}>
+                          <Link to={ROUTE_HOME}>
                             <MenuItem onClick={this.handleClose}>Home</MenuItem>
                           </Link>
                         }
@@ -175,15 +175,14 @@ class Header extends PureComponent {
             >
               What We Do
             </Button>
+            <GetStartedButton
+              variant="contained"
+              size="large"
+              className={classes.actionButton}
+            >
+              Contact Us
+            </GetStartedButton>
           </Hidden>
-
-          <GetStartedButton
-            variant="contained"
-            size="large"
-            className={classes.actionButton}
-          >
-            Contact Us
-          </GetStartedButton>
           {/* <LogInModal className={classes.actionButton} /> */}
         </Toolbar>
       </AppBar>

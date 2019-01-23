@@ -1,5 +1,3 @@
-@import '~styles/custom';
-
 $assessment-height: 600px;
 $control-width: 2em;
 
@@ -22,7 +20,7 @@ $control-width: 2em;
     padding-bottom: 40px;
 
     h2 {
-      color: $decibels-red;
+      // color: $decibels-red;
       text-align: center;
     }
   }
@@ -37,12 +35,12 @@ $control-width: 2em;
   }
 
   .carousel-indicators li {
-    background-color: $decibels-dark-grey;
+    // background-color: $decibels-dark-grey;
     cursor: default;
   }
 
   .carousel-indicators .active {
-    background-color: $decibels-red;
+    // background-color: $decibels-red;
   }
 
   .carousel-control-prev,

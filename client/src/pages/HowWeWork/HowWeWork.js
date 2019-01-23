@@ -50,16 +50,15 @@ const HowWeWork = ({ location, tracker, classes }) => {
           performance-driven culture.
         </Typography>
 
-        <Paper style={{ paddingBottom: '3em' }} className={classes.video}>
-          <Video
-            {...{
-              poster: sunVideoPoster,
-              src: sunVideoSrc,
-              tracker,
-              shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
-            }}
-          />
-        </Paper>
+        <Video
+          {...{
+            poster: sunVideoPoster,
+            src: sunVideoSrc,
+            tracker,
+            shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`,
+            className: classes.video
+          }}
+        />
 
         <h1>Our Unique Approach</h1>
         <h2>No people-skills required</h2>
