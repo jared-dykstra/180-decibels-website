@@ -70,8 +70,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 5,
-    paddingRight: theme.spacing.unit * 5,
-    fontSize: 'larger'
+    paddingRight: theme.spacing.unit * 5
   },
   actionIcon: {
     marginRight: '.5em'
@@ -211,7 +210,7 @@ export class Home extends PureComponent {
             <Hidden xsDown>
               <Grid item xs={12} sm={4}>
                 <Quote right className="h3" cite="Patrick, Technical Lead">
-                  We are not <i>meeting</i> goals. We are <i>crushing</i> them
+                  We are not <i>meeting</i> goals. We are <i>crushing</i> them!
                 </Quote>
               </Grid>
             </Hidden>

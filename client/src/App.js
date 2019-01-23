@@ -32,6 +32,11 @@ const THEME = createMuiTheme({
     fontWeightMedium: styles['var-font-weight-bold']
   },
   overrides: {
+    MuiTypography: {
+      body1: {
+        fontSize: '1.25rem'
+      }
+    },
     MuiButton: {
       root: {
         fontWeight: styles['var-font-weight-light'],
