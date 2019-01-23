@@ -9,27 +9,44 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 
-import styles from 'styles/custom.scss'
-
 import App from './ConnectedApp'
 
 // NOTE: Keep in sync with bootstrap, until bootstrap is removed.
+
+const decibelsRed = 'rgb(146, 26, 15)'
+const decibelsTeal = 'rgb(54, 207, 218)'
+const decibelsSoftWhite = 'rgb(249, 249, 249)'
+const decibelsLightGrey = 'rgb(100, 100, 100)'
+const decibelsDarkGrey = 'rgb(50, 50, 50)'
+const white = '#fff'
+const fontWeightLight = 200
+const fontWeightNormal = 300
+const fontWeightBold = 800
+
 const THEME = createMuiTheme({
+  decibels: {
+    red: decibelsRed,
+    teal: decibelsTeal,
+    softWhite: decibelsSoftWhite,
+    lightGrey: decibelsLightGrey,
+    darkGrey: decibelsDarkGrey,
+    white
+  },
   palette: {
     primary: {
-      main: styles['var-primary'],
-      contrastText: styles['var-white']
+      main: decibelsTeal,
+      contrastText: white
     },
     secondary: {
-      main: styles['var-secondary']
+      main: decibelsRed
     }
   },
   typography: {
     useNextVariants: true,
-    fontFamily: styles['var-font-family-sans-serif'],
-    fontWeightLight: styles['var-font-weight-light'],
-    fontWeightRegular: styles['var-font-weight-normal'],
-    fontWeightMedium: styles['var-font-weight-bold']
+    fontFamily: `'Ubuntu', sans-serif`,
+    fontWeightLight,
+    fontWeightRegular: fontWeightNormal,
+    fontWeightMedium: fontWeightBold
   },
   overrides: {
     MuiTypography: {
@@ -39,13 +56,13 @@ const THEME = createMuiTheme({
     },
     MuiButton: {
       root: {
-        fontWeight: styles['var-font-weight-light'],
+        fontWeight: fontWeightLight,
         textTransform: 'inherit'
       }
     },
     MuiFab: {
       root: {
-        fontWeight: styles['var-font-weight-light'],
+        fontWeight: fontWeightLight,
         fontSize: 'larger',
         textTransform: 'inherit'
       }

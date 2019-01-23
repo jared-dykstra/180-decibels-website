@@ -45,14 +45,3 @@ $headings-color: $decibels-red;
   }
 }
 
-/* stylelint disable property-no-unknown */
-:export {
-  var-font-family-sans-serif: $font-family-sans-serif;
-  var-font-weight-bold: $font-weight-bold;
-  var-font-weight-light: $font-weight-light;
-  var-font-weight-normal: $font-weight-normal;
-  var-primary: $decibels-teal;
-  var-secondary: $decibels-red;
-  var-white: $white;
-}
-/* stylelint enable */

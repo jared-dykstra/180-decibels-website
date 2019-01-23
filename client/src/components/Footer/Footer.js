@@ -15,42 +15,37 @@ import {
 } from 'reduxStore/routes/routesConstants'
 import { SocialLinks } from 'components'
 
-const styles2 = theme => {
-  const decibelsSoftWhite = 'rgb(249, 249, 249)' // $decibels-soft-white; TODO: Add this color to the MUI theme
-  const decibelsLightGrey = 'rgb(100, 100, 100)' // $decibels-light-grey; TODO: Add this color to the MUI theme
-  const decibelsDarkGrey = 'rgb(50, 50, 50)' // $decibels-dark-grey; TODO: Add this color to the MUI theme
-  return {
-    root: {
-      marginTop: '3em',
-      padding: '1em',
-      backgroundColor: decibelsDarkGrey,
-      color: decibelsSoftWhite,
-      fontSize: 'larger',
-      '& hr': {
-        borderColor: decibelsLightGrey
-      },
-      '& a': {
-        color: decibelsSoftWhite
-      },
-      '& :hover': {
-        color: `${theme.palette.primary.main}!important`
-      }
+const styles2 = theme => ({
+  root: {
+    marginTop: '3em',
+    padding: '1em',
+    backgroundColor: theme.decibels.darkGrey,
+    color: theme.decibels.softWhite,
+    fontSize: 'larger',
+    '& hr': {
+      borderColor: theme.decibels.lightGrey
     },
-    siteMap: {
-      '& ul': {
-        listStyle: 'none'
-      }
+    '& a': {
+      color: theme.decibels.softWhite
     },
-    social: {
-      // width: '400px',
-      '& a': {
-        // color: decibelsSoftWhite,
-        paddingLeft: '1em',
-        paddingRight: '1em'
-      }
+    '& :hover': {
+      color: `${theme.palette.primary.main}!important`
+    }
+  },
+  siteMap: {
+    '& ul': {
+      listStyle: 'none'
+    }
+  },
+  social: {
+    // width: '400px',
+    '& a': {
+      // color: decibelsSoftWhite,
+      paddingLeft: '1em',
+      paddingRight: '1em'
     }
   }
-}
+})
 
 const footer = ({ classes }) => (
   <Grid container className={classes.root}>

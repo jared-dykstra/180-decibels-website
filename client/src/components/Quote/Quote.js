@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   quote: {
-    background: 'rgb(249, 249, 249)', // $decibels-soft-white;  TODO - Add color to mui theme
+    background: theme.decibels.softWhite,
     color: theme.palette.secondary.main,
 
     '&>blockquote': {
@@ -22,7 +22,7 @@ const styles = theme => ({
   },
 
   glyph: {
-    color: 'rgb(100, 100, 100)', // $decibels-light-grey;  TODO - Add color to mui theme
+    color: theme.decibels.lightGrey,
     fontSize: '4em',
     lineHeight: '0.1em',
     marginRight: '0.25em',
