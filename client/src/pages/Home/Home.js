@@ -18,7 +18,7 @@ import {
   src as overviewVideoSrc
 } from 'pages/Video/IntroVideo'
 import {
-  poster as sunVideoPoster,
+  posterAlt as sunVideoPoster,
   src as sunVideoSrc
 } from 'pages/Video/SunVideo'
 

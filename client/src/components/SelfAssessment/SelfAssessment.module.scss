@@ -10,7 +10,6 @@ $control-width: 2em;
 
 .carousel :global {
   .carousel-inner {
-    background-color: $decibels-soft-white;
     // See: https://github.com/reactstrap/reactstrap/issues/677
     // Eventually this will be fixed in reactstrap and this can be removed
     height: $assessment-height;

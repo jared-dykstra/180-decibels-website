@@ -73,7 +73,7 @@ const footer = ({ classes }) => (
             <Link to={ROUTE_HOW_WE_WORK}>How We Work</Link>
           </li>
           <li>
-            <Link to={ROUTE_HELP_MY_TEAM}>Team Assessment</Link>
+            <Link to={ROUTE_HELP_MY_TEAM}>Self Assessment</Link>
           </li>
         </ul>
       </Grid>
