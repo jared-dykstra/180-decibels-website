@@ -80,7 +80,7 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { isHomePage, classes } = this.props
+    const { classes } = this.props
     const { open } = this.state
 
     return (
