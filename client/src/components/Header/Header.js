@@ -12,7 +12,8 @@ import {
   MenuList,
   MenuItem,
   Toolbar,
-  IconButton
+  IconButton,
+  Hidden
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -157,7 +158,7 @@ class Header extends PureComponent {
               180 Decibels
             </Button>
           </div>
-          {isHomePage && (
+          <Hidden xsDown>
             <Button
               color="primary"
               variant="contained"
@@ -168,7 +169,8 @@ class Header extends PureComponent {
             >
               What We Do
             </Button>
-          )}
+          </Hidden>
+
           <GetStartedButton
             variant="contained"
             size="large"
