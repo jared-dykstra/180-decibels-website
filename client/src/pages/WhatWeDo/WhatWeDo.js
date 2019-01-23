@@ -14,9 +14,6 @@ const styles = theme => ({
   },
   mission: {
     margin: theme.spacing.unit * 6
-  },
-  quote: {
-    margin: theme.spacing.unit * 10
   }
 })
 

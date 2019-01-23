@@ -1,6 +1,9 @@
 const styles = theme => ({
   paper: {
     padding: theme.spacing.unit,
+    '& h2': {
+      marginTop: theme.spacing.unit * 2
+    },
     [theme.breakpoints.up('sm')]: {
       padding: theme.spacing.unit * 3,
       paddingRight: theme.spacing.unit * 5,
@@ -9,7 +12,6 @@ const styles = theme => ({
         paddingBottom: theme.spacing.unit
       },
       '& h2': {
-        marginTop: theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit
       },
       '& p': {
@@ -32,6 +34,15 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit * 4,
         paddingBottom: theme.spacing.unit
       }
+    }
+  },
+  quote: {
+    margin: theme.spacing.unit * 2,
+    [theme.breakpoints.up('2m')]: {
+      margin: theme.spacing.unit * 5
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing.unit * 10
     }
   }
 })
