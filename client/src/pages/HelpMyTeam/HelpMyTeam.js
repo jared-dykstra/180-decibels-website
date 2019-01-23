@@ -44,7 +44,7 @@ const renderFullPage = props => {
       </Typography>
       {renderQuiz(props)}
       <Typography variant="body1" className={classes.addendum}>
-        We generate real ROI and substantially grow confidence team&apos;s
+        180 Decibels generates real ROI and substantially improves teams&apos;s
         ability to execute.
       </Typography>
       <Typography variant="body1">
