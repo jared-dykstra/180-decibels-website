@@ -20,8 +20,11 @@ const styles2 = theme => ({
   intro: {
     marginBottom: theme.spacing.unit * 7
   },
+  addendum: {
+    marginTop: theme.spacing.unit * 7
+  },
   quote: {
-    margin: theme.spacing.unit * 10
+    margin: theme.spacing.unit * 7
   }
 })
 
@@ -34,17 +37,17 @@ const renderFullPage = props => {
       <Typography variant="body1">
         It only takes one minute to get results you can use.
       </Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" className={classes.intro}>
         Use this self-assessment to understand your situation. These questions
         are enough to create an initial report, which will contain concrete,
         actionable steps that you can immediately use.
       </Typography>
       {renderQuiz(props)}
-      <Typography variant="body1">
+      <Typography variant="body1" className={classes.addendum}>
         We generate real ROI and substantially grow confidence team&apos;s
         ability to execute.
       </Typography>
-      <Typography variant="body1" className={classes.intro}>
+      <Typography variant="body1">
         We let you set the direction while we saturate your organization with a
         proven process for getting where you want to go. Our mission is to
         measurably improve team productivity with tactical operational tools and
