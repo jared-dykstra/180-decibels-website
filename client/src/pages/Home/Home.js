@@ -154,8 +154,10 @@ export class Home extends PureComponent {
                 </Typography>
                 <Typography variant="body1" className={classes.intro}>
                   Use our confidential{' '}
-                  <span className={classes.highlight}>Team Assessment</span> to
-                  determine your company&apos;s pain points and get a report
+                  <Link to={ROUTE_HELP_MY_TEAM} className={classes.highlight}>
+                    Team Assessment
+                  </Link>{' '}
+                  to determine your company&apos;s pain points and get a report
                   with concrete, actionable next steps.
                 </Typography>
               </Grid>

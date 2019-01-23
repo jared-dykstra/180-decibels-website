@@ -7,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles'
 import {
   ROUTE_CONFIDENTIALITY,
   ROUTE_HELP_MY_TEAM,
-  ROUTE_HOME,
   ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
   ROUTE_HOW_WE_WORK,
@@ -34,7 +33,8 @@ const styles2 = theme => ({
   },
   siteMap: {
     '& ul': {
-      listStyle: 'none'
+      listStyle: 'none',
+      paddingLeft: '0'
     }
   },
   social: {
@@ -57,9 +57,6 @@ const footer = ({ classes }) => (
       alignItems="center"
     >
       <Grid item className={classes.siteMap}>
-        <Link to={ROUTE_HOME}>
-          <b>What We Do</b>
-        </Link>
         <ul>
           <li>
             <Link to={ROUTE_WHAT_WE_DO}>What We Do</Link>
@@ -73,9 +70,6 @@ const footer = ({ classes }) => (
         </ul>
       </Grid>
       <Grid item className={classes.siteMap}>
-        <Link to={ROUTE_HOME}>
-          <b>Who We Are</b>
-        </Link>
         <ul>
           <li>
             <Link to={ROUTE_OUR_TEAM}>Our Team</Link>
