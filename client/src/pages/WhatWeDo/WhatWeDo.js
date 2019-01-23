@@ -21,6 +21,9 @@ const styles = theme => ({
   },
   mission: {
     margin: theme.spacing.unit * 6
+  },
+  services: {
+    marginTop: theme.spacing.unit * 6
   }
 })
 
@@ -78,12 +81,6 @@ const WhatWeDo = ({ location, classes, tracker }) => {
           morale).
         </Typography>
 
-        <Quote cite="Patrick, Technical Lead" className={`h4 ${classes.quote}`}>
-          I have much more confidence and feel like I am achieving something in
-          a day. I have a tonne more motivation to work on what I am supposed to
-          be working on.
-        </Quote>
-
         <Quote
           right
           cite="John, Executive Director"
@@ -102,6 +99,9 @@ const WhatWeDo = ({ location, classes, tracker }) => {
           costs and create more wealth and success.
         </Typography>
 
+        <h1 className={classes.services} id="services">
+          Services
+        </h1>
         <Typography variant="body1">
           We offer the following services to help your company:
         </Typography>

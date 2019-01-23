@@ -5,14 +5,13 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { SelfAssessment, Template } from 'components'
 
-import styles from './HelpMyTeam.module.scss'
 import pageStyles from '../pageStyles'
 
 const renderQuiz = props => (
   <SelfAssessment assessmentName="helpMyTeam" id="quiz" {...props} />
 )
 
-const styles2 = theme => ({
+const styles = theme => ({
   ...pageStyles(theme),
   fullHeight: {
     minHeight: '100vh'
@@ -57,8 +56,7 @@ const HelpMyTeam = ({ location, ...props }) => {
     <Template
       {...{
         title: '180 Decibels - Help My Team',
-        location,
-        className: styles['help-my-team']
+        location
       }}
     >
       {quizMode && renderQuiz(props)}
@@ -76,4 +74,4 @@ HelpMyTeam.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
-export default withStyles(styles2)(HelpMyTeam)
+export default withStyles(styles)(HelpMyTeam)
