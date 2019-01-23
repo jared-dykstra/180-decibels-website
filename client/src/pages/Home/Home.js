@@ -95,6 +95,12 @@ const styles = theme => ({
   },
   fab: {
     marginBottom: '2em'
+  },
+  quoteRight: {
+    marginLeft: '1em'
+  },
+  quoteLeft: {
+    marginRight: '1em'
   }
 })
 
@@ -172,7 +178,7 @@ export class Home extends PureComponent {
           <Grid container className={classes.videoRow}>
             <Hidden xsDown>
               <Grid item xs={12} sm={4}>
-                <Quote cite="Vincent, CEO">
+                <Quote cite="Vincent, CEO" className={classes.quoteLeft}>
                   180 Decibels increased my team&apos;s results by 22%
                 </Quote>
               </Grid>
@@ -202,7 +208,11 @@ export class Home extends PureComponent {
             </Grid>
             <Hidden xsDown>
               <Grid item xs={12} sm={4}>
-                <Quote right cite="Patrick, Technical Lead">
+                <Quote
+                  right
+                  cite="Patrick, Technical Lead"
+                  className={classes.quoteRight}
+                >
                   We are not <i>meeting</i> goals. We are <i>crushing</i> them!
                 </Quote>
               </Grid>

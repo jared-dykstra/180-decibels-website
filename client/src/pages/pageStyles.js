@@ -44,6 +44,15 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       margin: theme.spacing.unit * 10
     }
+  },
+  video: {
+    marginTop: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit * 15,
+    [theme.breakpoints.up('md')]: {
+      width: '75%',
+      marginRight: 'auto',
+      marginLeft: 'auto'
+    }
   }
 })
 

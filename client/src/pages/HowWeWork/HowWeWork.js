@@ -18,10 +18,6 @@ const styles = theme => ({
   action: {
     marginTop: theme.spacing.unit * 10,
     marginBottom: theme.spacing.unit * 6
-  },
-  video: {
-    marginTop: theme.spacing.unit * 5,
-    marginBottom: theme.spacing.unit * 15
   }
 })
 
