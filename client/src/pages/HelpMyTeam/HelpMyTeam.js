@@ -13,30 +13,23 @@ const renderQuiz = props => (
 
 const styles = theme => ({
   ...pageStyles(theme),
-  fullHeight: {
-    minHeight: '100vh'
-  },
   intro: {
     marginBottom: theme.spacing.unit * 7
   },
   addendum: {
     marginTop: theme.spacing.unit * 7
-  },
-  quote: {
-    margin: theme.spacing.unit * 7
   }
 })
 
 const renderFullPage = props => {
   const { classes } = props
   return (
-    <Paper className={`${classes.paper} ${classes.fullHeight}`}>
+    <Paper className={classes.paper}>
       <h1>Self Assessment</h1>
-
-      <Typography variant="body1">
+      <Typography variant="body1" paragraph>
         It only takes one minute to get results you can use.
       </Typography>
-      <Typography variant="body1" className={classes.intro}>
+      <Typography variant="body1" paragraph className={classes.intro}>
         Use this self-assessment to understand your situation. These questions
         are enough to create an initial report, which will contain concrete,
         actionable steps that you can immediately use.

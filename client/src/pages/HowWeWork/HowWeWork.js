@@ -33,11 +33,11 @@ const HowWeWork = ({ location, tracker, classes }) => {
       <Paper className={classes.paper}>
         <h1>Experience a 180</h1>
 
-        <Typography variant="body1">
+        <Typography variant="body1" paragraph>
           <b>Do you want more respect? Less conflict? Higher morale?</b>
         </Typography>
 
-        <Typography variant="body1">
+        <Typography variant="body1" paragraph>
           We are uniquely qualified to help you turn the ship and experience a
           radical change in how you establish accountability and create a
           performance-driven culture.
@@ -55,7 +55,7 @@ const HowWeWork = ({ location, tracker, classes }) => {
 
         <h1>Our Unique Approach</h1>
         <h2>No people-skills required</h2>
-        <Typography variant="body1">
+        <Typography variant="body1" paragraph>
           <i>You heard us right.</i> Our system does not depend on changing{' '}
           <b>
             <i>who</i>
@@ -66,20 +66,20 @@ const HowWeWork = ({ location, tracker, classes }) => {
           without changing who you are.
         </Typography>
         <h2>Blinding speed and powerful results</h2>
-        <Typography variant="body1">
+        <Typography variant="body1" paragraph>
           Because we don’t rely on making you over, we can equip you with tools
           to create dramatic change within weeks, not years. That’s right, no
           deep dive, no ‘extended engagement’s, just a fast, valuable process
           with impressive ROI.
         </Typography>
         <h2>Flexible approach</h2>
-        <Typography variant="body1">
+        <Typography variant="body1" paragraph>
           <b>Online or In-person support.</b> When your spouse asks you how your
           day was do you say, ‘hectic’, ‘crazy’, ‘constantly on the run’? We get
           it, time is precious - we can work in person or online.
         </Typography>
 
-        <Quote cite="Sarah, Manager" className={`h4 ${classes.quote}`}>
+        <Quote cite="Sarah, Manager" className={classes.quote}>
           This process brought clarity and focus to our team. I was able to take
           alot OFF my plate. I now know what I am NOT accountable for. We even
           streamlined our meeting process and spent LESS time in meetings.

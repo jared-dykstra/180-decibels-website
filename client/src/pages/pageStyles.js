@@ -1,5 +1,6 @@
 const styles = theme => ({
   paper: {
+    minHeight: '100vh',
     padding: theme.spacing.unit,
     '& h2': {
       marginTop: theme.spacing.unit * 2
@@ -11,12 +12,11 @@ const styles = theme => ({
       '& h1': {
         paddingBottom: theme.spacing.unit
       },
-      '& h2': {
+      '& h2, h3, h4': {
         marginLeft: theme.spacing.unit
       },
       '& p': {
-        marginLeft: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit
+        marginLeft: theme.spacing.unit * 2
       }
     },
     [theme.breakpoints.up('md')]: {
@@ -26,13 +26,12 @@ const styles = theme => ({
       '& h1': {
         paddingBottom: theme.spacing.unit
       },
-      '& h2': {
+      '& h2, h3, h4': {
         marginTop: theme.spacing.unit * 5,
         marginLeft: theme.spacing.unit * 2
       },
       '& p': {
-        marginLeft: theme.spacing.unit * 4,
-        paddingBottom: theme.spacing.unit
+        marginLeft: theme.spacing.unit * 4
       }
     }
   },
@@ -53,6 +52,12 @@ const styles = theme => ({
       marginRight: 'auto',
       marginLeft: 'auto'
     }
+  },
+  center: {
+    textAlign: 'center !important;'
+  },
+  muted: {
+    color: theme.decibels.lightGrey
   }
 })
 

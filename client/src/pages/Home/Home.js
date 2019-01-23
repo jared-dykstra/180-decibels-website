@@ -76,8 +76,6 @@ const styles = theme => ({
     maxWidth: '100%' // <== For IE 11
   },
   intro: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 5,
     paddingRight: theme.spacing.unit * 5
   },
@@ -140,19 +138,19 @@ export class Home extends PureComponent {
               className={classes.grow}
             >
               <Grid item className={classes.maxWidth}>
-                <Typography variant="body1" className={classes.intro}>
+                <Typography variant="body1" paragraph className={classes.intro}>
                   <span className={classes.highlight}>
                     Do you want to unlock latent productivity in your team and
                     out-perform competitors?
                   </span>
                 </Typography>
-                <Typography variant="body1" className={classes.intro}>
+                <Typography variant="body1" paragraph className={classes.intro}>
                   We help managers drive to outcome and create urgency in their
                   organization. You get a practical, results-oriented process to
                   build a high-performing culture. Now you can start feeling
                   confident that your team is getting the right things done.
                 </Typography>
-                <Typography variant="body1" className={classes.intro}>
+                <Typography variant="body1" paragraph className={classes.intro}>
                   Use our confidential{' '}
                   <Link to={ROUTE_HELP_MY_TEAM} className={classes.highlight}>
                     Team Assessment
