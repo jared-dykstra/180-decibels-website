@@ -99,7 +99,13 @@ class Header extends PureComponent {
           >
             <MenuIcon />
           </IconButton>
-          <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+          <Popper
+            open={open}
+            anchorEl={this.anchorEl}
+            transition
+            disablePortal
+            style={{ zIndex: '100' }}
+          >
             {({ TransitionProps, placement }) => {
               const onBottom = placement === 'bottom'
               const growStyle = {
