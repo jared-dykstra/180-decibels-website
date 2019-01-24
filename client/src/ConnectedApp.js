@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Route, Switch } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 
@@ -17,14 +17,13 @@ import {
   AssessmentResult,
   Confidentiality,
   Error,
-  HelpMe,
   HelpMyTeam,
   Home,
   HowWeWork,
-  NotFound,
+  // NotFound,
   OurTeam,
   Privacy,
-  Services,
+  WhatWeDo,
   IntroVideo,
   SunVideo
 } from 'pages'
@@ -41,15 +40,13 @@ import {
   ROUTE_PRIVACY,
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
+  ROUTE_WHAT_WE_DO,
   ROUTE_SERVICES,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
 
-import 'bootstrap'
 import 'styles/fonts.scss'
-import 'styles/theme.scss'
-import 'video-react/dist/video-react.css'
 
 import ReactGA from 'react-ga'
 import { get as configGet } from './config'
@@ -95,14 +92,12 @@ class App extends PureComponent {
 
   componentDidCatch = (error, info) => {
     this.setState({ error })
-    if (process.env.NODE_ENV === 'production') {
-      Sentry.withScope(scope => {
-        Object.keys(info).forEach(key => {
-          scope.setExtra(key, info[key])
-        })
-        Sentry.captureException(error)
+    Sentry.withScope(scope => {
+      Object.keys(info).forEach(key => {
+        scope.setExtra(key, info[key])
       })
-    }
+      Sentry.captureException(error)
+    })
     this.logError({ error, info, fatal: true })
   }
 
@@ -190,15 +185,16 @@ class App extends PureComponent {
 
     const routes = {
       [ROUTE_HOME]: Home,
-      [ROUTE_HELP_ME]: HelpMe,
+      [ROUTE_HELP_ME]: HelpMyTeam, // <== Deprecated; remove in next version
+      [ROUTE_HELP_ME_QUIZ]: HelpMyTeam, // <== Deprecated; remove in next version
       [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
-      [ROUTE_HELP_ME_QUIZ]: HelpMe,
       [ROUTE_HELP_MY_TEAM_QUIZ]: HelpMyTeam,
       [ROUTE_HOW_WE_WORK]: HowWeWork,
       [ROUTE_OUR_TEAM]: OurTeam,
       [ROUTE_CONFIDENTIALITY]: Confidentiality,
       [ROUTE_PRIVACY]: Privacy,
-      [ROUTE_SERVICES]: Services,
+      [ROUTE_SERVICES]: WhatWeDo, // <== Deprecated; remove in next version
+      [ROUTE_WHAT_WE_DO]: WhatWeDo,
       [ROUTE_VIDEO_INTRO]: IntroVideo,
       [ROUTE_VIDEO_SUN]: SunVideo
     }
@@ -230,7 +226,8 @@ class App extends PureComponent {
             path={`(${ROUTE_HELP_ME_RESULT}|${ROUTE_HELP_MY_TEAM_RESULT})/:id`}
             render={props => <AssessmentResult {...mergeProps(props)} />}
           />
-          <Route render={props => <NotFound {...mergeProps(props)} />} />
+          <Route render={props => <Redirect to={ROUTE_HOME} />} />
+          {/* <Route render={props => <NotFound {...mergeProps(props)} />} /> */}
         </Switch>
 
         <GetStartedModal {...mergeProps()} />

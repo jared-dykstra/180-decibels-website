@@ -1,6 +1,8 @@
-// TODO: Confirm if the polyfill is still needed.  Originally added for google search console, but that was before
-// adding unfetch and including Chrome 41 in the browser list
+// Begin Polyfills for IE 11
 import 'babel-polyfill'
+import 'custom-event-polyfill'
+// End IE 11 Polyfills
+
 import React from 'react'
 import { render, hydrate } from 'react-dom'
 import { createBrowserHistory } from 'history'
@@ -12,7 +14,9 @@ import * as serviceWorker from './serviceWorker'
 import App from './App'
 
 Sentry.init({
-  dsn: 'https://ee37c41764604fbeb3a875ce09e6d9fe@sentry.io/1373036'
+  dsn: 'https://ee37c41764604fbeb3a875ce09e6d9fe@sentry.io/1373036',
+  environment: process.env.NODE_ENV,
+  enabled: process.env.NODE_ENV === 'production'
 })
 
 const history = createBrowserHistory()

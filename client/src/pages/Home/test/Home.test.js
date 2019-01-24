@@ -19,13 +19,12 @@ it('renders without crashing', () => {
   renderer.render(
     <Home
       {...{
-        doClickHelpMe: identityFn,
-        doClickHelpMyTeam: identityFn,
         history,
         location,
         tracker: {
           event: identityFn
-        }
+        },
+        classes: {}
       }}
     />
   )

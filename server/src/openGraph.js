@@ -12,6 +12,7 @@ import {
   ROUTE_HOW_WE_WORK,
   ROUTE_OUR_TEAM,
   ROUTE_SERVICES,
+  ROUTE_WHAT_WE_DO,
   ROUTE_PRIVACY,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_SUN
@@ -72,9 +73,10 @@ export const getOgValuesForRoute = req => {
         [OG_DESCRIPTION]: `Our Founders: Dayton Foster, Kerri McGovern, Jared Dykstra`
       }
 
-    case ROUTE_SERVICES:
+    case ROUTE_SERVICES: // <== Deprecated - remove in next version
+    case ROUTE_WHAT_WE_DO:
       return {
-        [OG_TITLE]: '180 Decibels - Services',
+        [OG_TITLE]: '180 Decibels - What We Do',
         [OG_DESCRIPTION]: `Operations, Organization and Team Health, Enterprise Performance Management, and People Advisory Services`
       }
 
@@ -83,14 +85,8 @@ export const getOgValuesForRoute = req => {
         [OG_TITLE]: '180 Decibels - Privacy'
       }
 
-    case ROUTE_HELP_ME_QUIZ:
-    case ROUTE_HELP_ME:
-      return {
-        [OG_TITLE]: '180 Decibels - Help Me',
-        [OG_URL]: `${rootUrl}${ROUTE_HELP_ME_QUIZ}`,
-        [OG_IMAGE]: `${rootUrl}/quiz-image.jpg`,
-        [OG_DESCRIPTION]: `We re-focus managers: driving to outcomes and creating urgency`
-      }
+    case ROUTE_HELP_ME_QUIZ: // <== Deprecated - remove in next version
+    case ROUTE_HELP_ME: // <== Deprecated - remove in next version
     case ROUTE_HELP_MY_TEAM_QUIZ:
     case ROUTE_HELP_MY_TEAM:
       return {

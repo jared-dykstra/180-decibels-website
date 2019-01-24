@@ -1,5 +1,3 @@
-@import '~styles/custom';
-
 $assessment-height: 600px;
 $control-width: 2em;
 
@@ -10,7 +8,6 @@ $control-width: 2em;
 
 .carousel :global {
   .carousel-inner {
-    background-color: $decibels-soft-white;
     // See: https://github.com/reactstrap/reactstrap/issues/677
     // Eventually this will be fixed in reactstrap and this can be removed
     height: $assessment-height;
@@ -23,7 +20,7 @@ $control-width: 2em;
     padding-bottom: 40px;
 
     h2 {
-      color: $decibels-red;
+      // color: $decibels-red;
       text-align: center;
     }
   }
@@ -38,12 +35,14 @@ $control-width: 2em;
   }
 
   .carousel-indicators li {
-    background-color: $decibels-dark-grey;
+    // background-color: $decibels-dark-grey;
+    background-color: rgb(50, 50, 50);
     cursor: default;
   }
 
   .carousel-indicators .active {
-    background-color: $decibels-red;
+    // background-color: $decibels-red;
+    background-color: rgb(146, 26, 15)
   }
 
   .carousel-control-prev,

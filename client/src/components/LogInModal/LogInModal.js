@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+// NOTE: Have to import bootstrap theme to get this to work.  TODO: Completely remove reactstrap
+// import 'styles/theme.scss'
 import {
   Button,
   Dropdown,
