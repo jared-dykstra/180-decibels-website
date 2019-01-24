@@ -48,66 +48,68 @@ const styles2 = theme => ({
 })
 
 const footer = ({ classes }) => (
-  <Grid container className={classes.root}>
-    <Grid
-      item
-      container
-      direction="row"
-      justify="space-around"
-      alignItems="center"
-    >
-      <Grid item className={classes.siteMap}>
-        <ul>
-          <li>
-            <Link to={ROUTE_WHAT_WE_DO}>What We Do</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_HOW_WE_WORK}>How We Work</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_HELP_MY_TEAM}>Self Assessment</Link>
-          </li>
-        </ul>
+  <footer>
+    <Grid container className={classes.root}>
+      <Grid
+        item
+        container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+      >
+        <Grid item className={classes.siteMap}>
+          <ul>
+            <li>
+              <Link to={ROUTE_WHAT_WE_DO}>What We Do</Link>
+            </li>
+            <li>
+              <Link to={ROUTE_HOW_WE_WORK}>How We Work</Link>
+            </li>
+            <li>
+              <Link to={ROUTE_HELP_MY_TEAM}>Self Assessment</Link>
+            </li>
+          </ul>
+        </Grid>
+        <Grid item className={classes.siteMap}>
+          <ul>
+            <li>
+              <Link to={ROUTE_OUR_TEAM}>Our Team</Link>
+            </li>
+            <li>
+              <Link to={ROUTE_CONFIDENTIALITY}>Confidentiality</Link>
+            </li>
+            <li>
+              <Link to={ROUTE_PRIVACY}>Privacy</Link>
+            </li>
+          </ul>
+        </Grid>
       </Grid>
-      <Grid item className={classes.siteMap}>
-        <ul>
-          <li>
-            <Link to={ROUTE_OUR_TEAM}>Our Team</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_CONFIDENTIALITY}>Confidentiality</Link>
-          </li>
-          <li>
-            <Link to={ROUTE_PRIVACY}>Privacy</Link>
-          </li>
-        </ul>
+      <Grid item xs={12}>
+        <hr />
+      </Grid>
+      <Grid
+        item
+        container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+      >
+        <Grid item>
+          <a href="mailto:info@180decibels.com" className="text-nowrap">
+            info@180decibels.com
+          </a>
+        </Grid>
+        <Grid item className={classes.social}>
+          <SocialLinks />
+        </Grid>
+        <Grid item>
+          <a href="tel:+18883214531" className="text-nowrap">
+            1-888-321-4531
+          </a>
+        </Grid>
       </Grid>
     </Grid>
-    <Grid item xs={12}>
-      <hr />
-    </Grid>
-    <Grid
-      item
-      container
-      direction="row"
-      justify="space-around"
-      alignItems="center"
-    >
-      <Grid item>
-        <a href="mailto:info@180decibels.com" className="text-nowrap">
-          info@180decibels.com
-        </a>
-      </Grid>
-      <Grid item className={classes.social}>
-        <SocialLinks />
-      </Grid>
-      <Grid item>
-        <a href="tel:+18883214531" className="text-nowrap">
-          1-888-321-4531
-        </a>
-      </Grid>
-    </Grid>
-  </Grid>
+  </footer>
 )
 
 footer.propTypes = {

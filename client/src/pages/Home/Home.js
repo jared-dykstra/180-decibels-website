@@ -121,7 +121,7 @@ export class Home extends PureComponent {
         }}
       >
         <Paper className={classes.main} elevation={2}>
-          <div className={classes.aboveTheFold}>
+          <section id="main" className={classes.aboveTheFold}>
             <div className={classes.container}>
               <div className={classes.banner}>
                 <div className={classes.overlay}>
@@ -175,51 +175,56 @@ export class Home extends PureComponent {
                 </Fab>
               </Grid>
             </Grid>
-          </div>
+          </section>
 
-          <Grid container className={classes.videoRow}>
-            <Hidden xsDown>
-              <Grid item xs={12} sm={4}>
-                <Quote cite="Vincent, CEO" className={classes.quoteLeft}>
-                  180 Decibels increased my team&apos;s results by 22%
-                </Quote>
+          <section id="intro">
+            <Grid container className={classes.videoRow}>
+              <Hidden xsDown>
+                <Grid item xs={12} sm={4}>
+                  <Quote cite="Vincent, CEO" className={classes.quoteLeft}>
+                    180 Decibels increased my team&apos;s results by 22%
+                  </Quote>
+                </Grid>
+              </Hidden>
+              <Grid item xs={12} sm={8}>
+                <Video
+                  {...{
+                    poster: overviewVideoPoster,
+                    src: overviewVideoSrc,
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
+                  }}
+                />
               </Grid>
-            </Hidden>
-            <Grid item xs={12} sm={8}>
-              <Video
-                {...{
-                  poster: overviewVideoPoster,
-                  src: overviewVideoSrc,
-                  tracker,
-                  shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
-                }}
-              />
             </Grid>
-          </Grid>
+          </section>
 
-          <Grid container className={classes.videoRow}>
-            <Grid item xs={12} sm={8}>
-              <Video
-                {...{
-                  poster: sunVideoPoster,
-                  src: sunVideoSrc,
-                  tracker,
-                  shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
-                }}
-              />
-            </Grid>
-            <Hidden xsDown>
-              <Grid item xs={12} sm={4}>
-                <Quote
-                  right
-                  cite="Patrick, Technical Lead"
-                  className={classes.quoteRight}
-                >
-                  We are not <i>meeting</i> goals. We are <i>crushing</i> them!
-                </Quote>
+          <section id="sun">
+            <Grid container className={classes.videoRow}>
+              <Grid item xs={12} sm={8}>
+                <Video
+                  {...{
+                    poster: sunVideoPoster,
+                    src: sunVideoSrc,
+                    tracker,
+                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
+                  }}
+                />
               </Grid>
-            </Hidden>
-          </Grid>
+              <Hidden xsDown>
+                <Grid item xs={12} sm={4}>
+                  <Quote
+                    right
+                    cite="Patrick, Technical Lead"
+                    className={classes.quoteRight}
+                  >
+                    We are not <i>meeting</i> goals. We are <i>crushing</i>{' '}
+                    them!
+                  </Quote>
+                </Grid>
+              </Hidden>
+            </Grid>
+          </section>
         </Paper>
       </Template>
     )

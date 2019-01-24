@@ -70,9 +70,9 @@ const Template = ({
     </Helmet>,
     <CssBaseline key="baseline" />,
     <Header key="header" />,
-    <div key="body" className={`${classes.layout} ${className}`}>
+    <main key="body" className={`${classes.layout} ${className}`}>
       {children}
-    </div>,
+    </main>,
     <Footer key="footer" />
   ]
 
