@@ -65,12 +65,18 @@ const styles = theme => ({
   title: {
     color: `${theme.decibels.white} !important`,
     fontWeight: theme.decibels.fontWeightMedium,
+    fontSize: '2em',
     textShadow: '0 0 15px rgba(0,0,0,1)',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '1em',
+    paddingLeft: '1em',
+    paddingRight: '1em',
     paddingTop: '.25em', // <== For IE 11
-    paddingBottom: '1em' // <== For IE 11
+    paddingBottom: '1em', // <== For IE 11
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '2.5em'
+    }
   },
   maxWidth: {
     maxWidth: '100%' // <== For IE 11
@@ -119,11 +125,7 @@ export class Home extends PureComponent {
             <div className={classes.container}>
               <div className={classes.banner}>
                 <div className={classes.overlay}>
-                  <Typography
-                    align="center"
-                    variant="h4"
-                    className={classes.title}
-                  >
+                  <Typography align="center" className={classes.title}>
                     {tagline}
                   </Typography>
                 </div>
