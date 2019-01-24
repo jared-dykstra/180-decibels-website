@@ -168,7 +168,6 @@ class Header extends PureComponent {
             <Button
               color="primary"
               variant="contained"
-              size="large"
               className={classes.actionButton}
               component={Link}
               to={ROUTE_WHAT_WE_DO}
@@ -177,7 +176,6 @@ class Header extends PureComponent {
             </Button>
             <GetStartedButton
               variant="contained"
-              size="large"
               className={classes.actionButton}
             >
               Contact Us

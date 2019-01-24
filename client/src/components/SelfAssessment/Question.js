@@ -129,12 +129,18 @@ class Question extends PureComponent {
           </span>
         ),
         full: (
-          <div>
-            <span style={style}>
-              <RocketIcon color="secondary" opacity={opacity} />
-            </span>
-            <h4>{currentValue}</h4>
-          </div>
+          <span style={style}>
+            <RocketIcon color="secondary" opacity={opacity} />
+            <div
+              style={{
+                fontSize: '20px',
+                marginBottom: '.5rem'
+              }}
+            >
+              {currentValue}
+            </div>
+          </span>
+          // <h4>{currentValue}</h4>
         )
       }
     })

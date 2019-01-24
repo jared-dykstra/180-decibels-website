@@ -63,8 +63,8 @@ const styles = theme => ({
     right: '0'
   },
   title: {
-    color: 'white',
-    fontWeight: '800',
+    color: `${theme.decibels.white} !important`,
+    fontWeight: theme.decibels.fontWeightMedium,
     textShadow: '0 0 15px rgba(0,0,0,1)',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -83,8 +83,8 @@ const styles = theme => ({
     marginRight: '.5em'
   },
   highlight: {
-    color: theme.palette.secondary.main,
-    fontWeight: '800'
+    color: `${theme.palette.secondary.main} !important`,
+    fontWeight: theme.decibels.fontWeightMedium
   },
   videoRow: {
     paddingBottom: '4em',

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
+import { Grid, Typography } from '@material-ui/core'
 
 import {
   resultsUrlSelector,
@@ -22,11 +22,11 @@ const Results = ({ resultsUrl, resultsEmail }) => (
     </Grid>
     <Grid item>
       {/* Note: Any changes to the text here need to also be reflected in AssessmentResultsEmail.js */}
-      <h5 style={{ marginTop: '1em' }}>
+      <Typography variant="body1" paragraph align="center">
         Congratulations! You&apos;re on your way towards improving productivity
         and reducing costs.
-      </h5>
-      <p>
+      </Typography>
+      <Typography variant="body1" paragraph align="center">
         Your results will be sent to{' '}
         <a
           href={`mailto:${resultsEmail}`}
@@ -36,17 +36,19 @@ const Results = ({ resultsUrl, resultsEmail }) => (
         >
           {resultsEmail}
         </a>
-      </p>
+      </Typography>
     </Grid>
     <Grid item>
-      Or copy and use the following link to access to your results--and tips on
-      how to improve:
+      <Typography variant="body1" paragraph align="center">
+        Or copy and use the following link to access to your results--and tips
+        on how to improve:
+        <br />
+        <a href={resultsUrl} target="_blank" rel="noopener noreferrer">
+          {resultsUrl}
+        </a>
+      </Typography>
     </Grid>
-    <Grid item align="center">
-      <a href={resultsUrl} target="_blank" rel="noopener noreferrer">
-        {resultsUrl}
-      </a>
-    </Grid>
+    <Grid item align="center" />
   </Grid>
 )
 

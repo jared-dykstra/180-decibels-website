@@ -143,7 +143,7 @@ class EmailMe extends PureComponent {
               promptForPhone: false
             }}
           >
-            Your report will be sent to this email address
+            <p>Your report will be sent to this email address</p>
           </ContactStep>
           <AboutStep
             {...{
@@ -156,7 +156,7 @@ class EmailMe extends PureComponent {
               companyKey: ASSESSMENT_RESULT_FORM_COMPANY_KEY
             }}
           >
-            Optional: Include your name and/or Company name in the report
+            <p>Optional: Include your name and/or Company name in the report</p>
           </AboutStep>
         </Stepper>
         <DialogFormButtons

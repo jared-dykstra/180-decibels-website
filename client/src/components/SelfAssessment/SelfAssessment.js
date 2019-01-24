@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+// TODO: Remove ReactStrap (Carousel) and remove bootstrap
+import 'styles/theme.scss'
 import {
   Carousel,
   CarouselItem,
@@ -118,7 +121,7 @@ class SelfAssessment extends PureComponent {
             paddingRight: indicatorPadding
           }}
         >
-          <h2>Your Results are Ready</h2>
+          <h2 style={{ marginTop: '0' }}>Your Results are Ready</h2>
           <DialogContentText>
             Thanks for taking the time to answer these questions. A report is
             ready for you, which contains concrete, actionable steps that you

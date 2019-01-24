@@ -7,6 +7,21 @@ import { withStyles } from '@material-ui/core/styles'
 import { Header, Footer } from 'components'
 
 const styles = theme => ({
+  root: {
+    fontFamily: `'Ubuntu', 'Helvetica', 'Arial', sans-serif`,
+    lineHeight: '1.75em',
+    '& a': {
+      textDecoration: 'none',
+      color: theme.palette.primary.main
+    },
+    '& a:hover': {
+      color: theme.palette.secondary.main
+    },
+    '& h1, h2, h3, h4, h5, h6, h7': {
+      color: theme.palette.secondary.main,
+      fontWeight: theme.decibels.fontWeightLight
+    }
+  },
   layout: {
     width: 'auto',
     minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
@@ -51,11 +66,11 @@ const Template = ({
               */}
     </Helmet>,
     <CssBaseline key="baseline" />,
-    <Header key="header" />,
-    <div key="body" className={`${classes.layout} ${className}`}>
-      {children}
-    </div>,
-    <Footer key="footer" />
+    <div key="body" className={classes.root}>
+      <Header />
+      <div className={`${classes.layout} ${className}`}>{children}</div>,
+      <Footer />
+    </div>
   ]
 
 Template.propTypes = {
@@ -91,7 +106,7 @@ Template.defaultProps = {
   // type: 'website',
   // twitterCardType: 'summary_large_image',
   // twitterCreator: '1Decibels',
-  className: undefined
+  className: ''
 }
 
 export default withStyles(styles)(Template)

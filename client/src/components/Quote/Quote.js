@@ -6,8 +6,10 @@ const styles = theme => ({
   quote: {
     background: theme.decibels.softWhite,
     color: theme.palette.secondary.main,
+    fontSize: 'larger',
 
     '&>blockquote': {
+      margin: '0',
       fontSize: '1em',
       padding: '0.5em 10px'
     }
@@ -18,6 +20,7 @@ const styles = theme => ({
   },
 
   right: {
+    textAlign: 'right',
     borderRight: `10px solid ${theme.palette.secondary.main}`
   },
 
@@ -27,20 +30,22 @@ const styles = theme => ({
     lineHeight: '0.1em',
     marginRight: '0.25em',
     verticalAlign: '-0.4em'
+  },
+
+  footer: {
+    fontSize: '80%',
+    color: theme.decibels.lightGrey
   }
 })
 
 const Quote = ({ elevation, children, cite, className, classes, right }) => (
   <div className={`${className} ${classes.quote}`}>
-    <blockquote
-      key="body"
-      className={`${right ? `text-right ${classes.right}` : classes.left}`}
-    >
+    <blockquote className={`${right ? classes.right : classes.left}`}>
       <span className={classes.glyph}>&ldquo;</span>
       {children}
       {cite && (
-        <footer className="blockquote-footer">
-          <cite key="cite">{cite}</cite>
+        <footer className={classes.footer}>
+          <cite>&ndash; {cite}</cite>
         </footer>
       )}
     </blockquote>

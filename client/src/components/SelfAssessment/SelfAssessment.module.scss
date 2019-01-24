@@ -36,11 +36,13 @@ $control-width: 2em;
 
   .carousel-indicators li {
     // background-color: $decibels-dark-grey;
+    background-color: rgb(50, 50, 50);
     cursor: default;
   }
 
   .carousel-indicators .active {
     // background-color: $decibels-red;
+    background-color: rgb(146, 26, 15)
   }
 
   .carousel-control-prev,

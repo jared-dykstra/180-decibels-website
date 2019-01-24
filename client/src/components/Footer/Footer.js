@@ -25,10 +25,10 @@ const styles2 = theme => ({
       borderColor: theme.decibels.lightGrey
     },
     '& a': {
-      color: theme.decibels.softWhite
+      color: `${theme.decibels.softWhite} !important`
     },
     '& :hover': {
-      color: `${theme.palette.primary.main}!important`
+      color: `${theme.palette.primary.main} !important`
     }
   },
   siteMap: {
