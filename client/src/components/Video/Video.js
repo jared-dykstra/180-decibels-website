@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
@@ -31,35 +32,97 @@ const styles = theme => {
   }
 }
 
-const Video = ({ poster, src, shareUrl, classes, className, elevation }) => (
-  <Paper {...{ elevation, className: `${classes.root} ${className}` }}>
-    <Player
-      // preload="auto"
-      aspectRatio="16:9"
-      poster={poster}
-    >
-      <source src={src} />
-      <BigPlayButton position="center" />
-      <ControlBar autoHide={false}>
-        <ShareButton order={7} shareUrl={shareUrl} className={classes.share} />
-      </ControlBar>
-    </Player>
-  </Paper>
-)
+class VideoComponent extends PureComponent {
+  static propTypes = {
+    poster: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    shareUrl: PropTypes.string,
+    elevation: PropTypes.number,
+    className: PropTypes.string,
+    location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
+      .isRequired,
+    tracker: PropTypes.shape({
+      event: PropTypes.func.isRequired
+    }).isRequired,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired
+  }
 
-Video.propTypes = {
-  poster: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  shareUrl: PropTypes.string,
-  classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  className: PropTypes.string,
-  elevation: PropTypes.number
+  static defaultProps = {
+    shareUrl: undefined,
+    className: '',
+    elevation: 2
+  }
+
+  constructor(props) {
+    super(props)
+    this.player = null
+    this.state = {
+      playerState: {
+        started: false,
+        hasEnded: false
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.player.subscribeToStateChange(this.handleStateChange)
+  }
+
+  // See: https://video-react.js.org/components/player/#state
+  handleStateChange = state => {
+    const { playerState } = this.state
+    const { shareUrl, location, tracker } = this.props
+    const { hasStarted, ended } = state
+    const { hasStarted: prevHasStarted, ended: prevEnded } = playerState
+
+    if (ended && !prevEnded) {
+      if (tracker) {
+        tracker.event({
+          category: `Video-${location.pathname}-${shareUrl}`,
+          action: 'play complete'
+        })
+      }
+    }
+
+    if (hasStarted && !prevHasStarted) {
+      if (tracker) {
+        tracker.event({
+          category: `Video-${location.pathname}-${shareUrl}`,
+          action: 'begin play'
+        })
+      }
+    }
+
+    this.setState(() => ({
+      playerState: state
+    }))
+  }
+
+  render() {
+    const { poster, src, shareUrl, classes, className, elevation } = this.props
+    return (
+      <Paper {...{ elevation, className: `${classes.root} ${className}` }}>
+        <Player
+          // preload="auto"
+          aspectRatio="16:9"
+          poster={poster}
+          ref={player => {
+            this.player = player
+          }}
+        >
+          <source src={src} />
+          <BigPlayButton position="center" />
+          <ControlBar autoHide={false}>
+            <ShareButton
+              order={7}
+              shareUrl={shareUrl}
+              className={classes.share}
+            />
+          </ControlBar>
+        </Player>
+      </Paper>
+    )
+  }
 }
 
-Video.defaultProps = {
-  shareUrl: undefined,
-  className: '',
-  elevation: 2
-}
-
-export default withStyles(styles)(Video)
+export default withRouter(withStyles(styles)(VideoComponent))
