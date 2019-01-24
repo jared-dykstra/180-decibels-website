@@ -67,8 +67,8 @@ const WhatWeDo = ({ location, classes, tracker }) => {
           className={classes.mission}
         >
           <em>
-            Our mission is to measurably improve team productivity with tactical
-            operational tools and processes.
+            Our mission is to measurably improve team productivity and maximize
+            profitability.
           </em>
         </Typography>
 
@@ -115,8 +115,8 @@ const WhatWeDo = ({ location, classes, tracker }) => {
           Unhealthy teams produce mediocre results at best. “Health” sounds
           vague, but it is easy to measure. Healthy teams have minimal politics
           and confusion, boast high morale and productivity and very low
-          turnover of good people. Our mission is to remove the complexity from
-          managing your team.
+          turnover of good people. 180 Decibels provides objective metrics and
+          removes the complexity from managing your team.
         </Typography>
 
         <h2>Enterprise Performance Management</h2>

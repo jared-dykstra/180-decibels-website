@@ -104,7 +104,7 @@ Template.propTypes = {
 Template.defaultProps = {
   title: '180 Decibels',
   // description:
-  //   'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity with tactical operational tools and processes.',
+  //   'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity and maximize profitability.',
   // imageUrl: 'https://www.180decibels.com/180-Decibels.png',
   // type: 'website',
   // twitterCardType: 'summary_large_image',
