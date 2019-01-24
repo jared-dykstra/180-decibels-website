@@ -14,7 +14,7 @@ const styles = theme => {
   return {
     root: {
       paddingBottom: controlBarHeight,
-      '& .video-react .video-react-poster': {
+      '& .video-react, .video-react-poster': {
         backgroundColor: 'transparent !important'
       },
       '& .video-react .video-react-control-bar': {
@@ -104,7 +104,7 @@ class VideoComponent extends PureComponent {
       <Paper {...{ elevation, className: `${classes.root} ${className}` }}>
         <Player
           // preload="auto"
-          aspectRatio="16:9"
+          // aspectRatio="16:9"
           poster={poster}
           ref={player => {
             this.player = player
