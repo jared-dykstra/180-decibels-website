@@ -4,6 +4,8 @@ import { Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 
+import 'video-react/dist/video-react.css'
+
 import ShareButton from './ShareButton'
 
 const styles = theme => {
@@ -11,8 +13,8 @@ const styles = theme => {
   return {
     root: {
       paddingBottom: controlBarHeight,
-      '& .video-react, .video-react-poster': {
-        backgroundColor: 'transparent'
+      '& .video-react .video-react-poster': {
+        backgroundColor: 'transparent !important'
       },
       '& .video-react .video-react-control-bar': {
         display: 'flex !important',

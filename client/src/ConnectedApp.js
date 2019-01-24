@@ -47,9 +47,9 @@ import {
 } from 'reduxStore/routes/routesConstants'
 
 import 'bootstrap'
+// import 'typeface-ubuntu'  // <== TODO: Why does this lead to a differnt font weight?
 import 'styles/fonts.scss'
 import 'styles/theme.scss'
-import 'video-react/dist/video-react.css'
 
 import ReactGA from 'react-ga'
 import { get as configGet } from './config'
