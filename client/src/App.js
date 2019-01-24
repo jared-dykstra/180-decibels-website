@@ -85,6 +85,11 @@ const THEME = createMuiTheme({
       primary: {
         // Prevents `a` styling from overriding when component={Link}
         color: `${palette.primary.contrastText} !important`
+      },
+      extended: {
+        height: 'auto',
+        paddingTop: '8px',
+        paddingBottom: '8px'
       }
     }
   }
