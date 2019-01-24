@@ -15,7 +15,8 @@ import {
   ROUTE_WHAT_WE_DO,
   ROUTE_PRIVACY,
   ROUTE_VIDEO_INTRO,
-  ROUTE_VIDEO_SUN
+  ROUTE_VIDEO_SUN,
+  ROUTE_VIDEO_INTRO_KERRI
 } from '../../client/src/reduxStore/routes/routesConstants'
 
 const CDN = 'https://dm88nuc3kw2st.cloudfront.net/'
@@ -101,6 +102,13 @@ export const getOgValuesForRoute = req => {
         [OG_IMAGE]: `${rootUrl}/overview-video-poster.jpg`,
         [OG_DESCRIPTION]:
           'How would you like to take your management skills to a whole new level of awesome?  There is a better, faster, more practical way to manage a team.'
+      }
+    case ROUTE_VIDEO_INTRO_KERRI:
+      return {
+        [OG_TITLE]: '180 Decibels - Overview',
+        [OG_IMAGE]: `${rootUrl}/intro-video-kerri-poster.jpg`,
+        [OG_DESCRIPTION]:
+          'How would you like to run a more successful business?  A productive team can make all the difference'
       }
     case ROUTE_VIDEO_SUN:
       return {
