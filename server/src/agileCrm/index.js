@@ -86,23 +86,23 @@ Quiz Name: ${quizName}
 
 Grades:
 ${grades
-    .map(g => {
-      const score = `${Math.round(g.score * 100)}%`
-      const threshold = `${Math.round(g.threshold * 100)}%`
-      return `\t${g.name} - ${score}  (Threshold is set to ${threshold})`
-    })
-    .join('\n')}
+  .map(g => {
+    const score = `${Math.round(g.score * 100)}%`
+    const threshold = `${Math.round(g.threshold * 100)}%`
+    return `\t${g.name} - ${score}  (Threshold is set to ${threshold})`
+  })
+  .join('\n')}
 
 Answers:
 ${Object.values(questions)
-    .map((q, i) => {
-      const { normalizedScore, originalScore, total, text } = q
-      const normalizedScoreTxt = `Normalized Score ${normalizedScore}/${total}`
-      const scoreTxt = `Original Score ${originalScore}/${total}`
-      const n = i + 1
-      return `\t${n} - ${text}\n\t\t${normalizedScoreTxt}\n\t\t${scoreTxt}\n`
-    })
-    .join('\n')}
+  .map((q, i) => {
+    const { normalizedScore, originalScore, total, text } = q
+    const normalizedScoreTxt = `Normalized Score ${normalizedScore}/${total}`
+    const scoreTxt = `Original Score ${originalScore}/${total}`
+    const n = i + 1
+    return `\t${n} - ${text}\n\t\t${normalizedScoreTxt}\n\t\t${scoreTxt}\n`
+  })
+  .join('\n')}
 `
   return retval
 }
