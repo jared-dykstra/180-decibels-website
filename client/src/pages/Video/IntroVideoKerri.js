@@ -16,6 +16,7 @@ const IntroVideoKerri = props => (
       poster,
       src,
       shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO_KERRI}`,
+      aspectRatio: 'auto',
       ...props
     }}
   />
