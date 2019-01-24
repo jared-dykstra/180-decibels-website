@@ -75,32 +75,23 @@ class VideoComponent extends PureComponent {
     const { hasStarted, ended } = state
     const { hasStarted: prevHasStarted, ended: prevEnded } = playerState
 
-    const details = {
-      shareUrl,
-      pathname: location.pathname
-    }
-
     if (ended && !prevEnded) {
-      // console.log(`VideoComponent - onEnd(${JSON.stringify(details)})`)
       if (tracker) {
         tracker.event({
-          category: `Video-${shareUrl}`,
+          category: `Video-${location.pathname}-${shareUrl}`,
           action: 'play complete'
         })
       }
     }
 
     if (hasStarted && !prevHasStarted) {
-      // console.log(`VideoComponent onStart(${JSON.stringify(details)})`)
       if (tracker) {
         tracker.event({
-          category: `Video-${shareUrl}`,
+          category: `Video-${location.pathname}-${shareUrl}`,
           action: 'begin play'
         })
       }
     }
-
-    // console.log(`Video Player State: ${JSON.stringify(state, null, 2)}`)
 
     this.setState(() => ({
       playerState: state
