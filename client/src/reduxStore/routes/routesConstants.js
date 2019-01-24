@@ -14,6 +14,7 @@ module.exports = {
   ROUTE_HELP_MY_TEAM_RESULT: `${helpMyTeam}${result}`,
   ROUTE_HOME: '/',
   ROUTE_HOW_WE_WORK: '/how-we-work',
+  ROUTE_WHAT_WE_DO: '/what-we-do',
   ROUTE_OUR_TEAM: '/our-team',
   ROUTE_PRIVACY: '/privacy',
   ROUTE_SERVICES: '/services',

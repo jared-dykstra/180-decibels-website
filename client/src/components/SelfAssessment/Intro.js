@@ -9,7 +9,7 @@ import Heading from './Heading'
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 const Intro = ({ isInitialized, next, tracker }) => (
-  <div onClick={next} role="presentation" className="h-100">
+  <div onClick={next} role="presentation">
     <Heading align="center">
       How loudly will each of the following questions resonate for your
       business?

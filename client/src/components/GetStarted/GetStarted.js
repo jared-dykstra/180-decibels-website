@@ -4,10 +4,13 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, propTypes } from 'redux-form/immutable'
 import { addWeeks } from 'date-fns/fp'
 
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import StepContent from '@material-ui/core/StepContent'
+import {
+  Step,
+  StepLabel,
+  StepContent,
+  Stepper,
+  Typography
+} from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -169,11 +172,17 @@ class GetStarted extends PureComponent {
               </Button>
             </StepLabel>
             <StepContent>
-              Book a day that works for you within the next two weeks. If you
-              prefer to get started right away, call{' '}
-              <a href="tel:+18883214531" className="text-nowrap">
-                1-888-321-4531
-              </a>
+              <Typography variant="body2" paragraph>
+                Book a day that works for you within the next two weeks. If you
+                prefer to get started right away, call{' '}
+                <a href="tel:+18883214531" className="text-nowrap">
+                  1-888-321-4531
+                </a>{' '}
+                or email{' '}
+                <a href="mailto:info@180decibels.com" className="text-nowrap">
+                  info@180decibels.com
+                </a>
+              </Typography>
               <Field
                 label="Date and Time"
                 id={GET_STARTED_FORM_DATE_TIME_KEY}

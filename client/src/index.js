@@ -1,6 +1,8 @@
-// TODO: Confirm if the polyfill is still needed.  Originally added for google search console, but that was before
-// adding unfetch and including Chrome 41 in the browser list
+// Begin Polyfills for IE 11
 import 'babel-polyfill'
+import 'custom-event-polyfill'
+// End IE 11 Polyfills
+
 import React from 'react'
 import { render, hydrate } from 'react-dom'
 import { createBrowserHistory } from 'history'
