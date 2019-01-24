@@ -22,17 +22,8 @@ import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 
 import { GetStarted } from 'components'
 
-const styles = theme => ({
-  // TODO: This styling is replicated fro Template... Pull the style into a file that can be imported and shared
-  root: {
-    '& a': {
-      textDecoration: 'none',
-      color: theme.palette.primary.main
-    },
-    '& a:hover': {
-      color: theme.palette.secondary.main
-    }
-  }
+const styles = (/* theme */) => ({
+  root: {}
 })
 
 class GetStartedModal extends PureComponent {

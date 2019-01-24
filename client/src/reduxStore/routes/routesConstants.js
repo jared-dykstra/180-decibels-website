@@ -19,5 +19,6 @@ module.exports = {
   ROUTE_PRIVACY: '/privacy',
   ROUTE_SERVICES: '/services',
   ROUTE_VIDEO_INTRO: `${video}/intro`,
-  ROUTE_VIDEO_SUN: `${video}/sun`
+  ROUTE_VIDEO_SUN: `${video}/sun`,
+  ROUTE_VIDEO_INTRO_KERRI: `${video}/overview`
 }

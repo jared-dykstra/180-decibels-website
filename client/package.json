@@ -70,7 +70,8 @@
     "jest-fetch-mock": "^1.6.6",
     "react-test-renderer": "^16.6.3",
     "stylelint": "^9.7.1",
-    "stylelint-config-sass-guidelines": "^5.2.0"
+    "stylelint-config-sass-guidelines": "^5.2.0",
+    "webpack-bundle-analyzer": "^3.0.3"
   },
   "scripts": {
     "dev": "react-scripts start",
@@ -83,7 +84,8 @@
     "lint:eslint:fix": "eslint --ignore-path ../.gitignore --fix .",
     "lint:stylelint": "stylelint src/**/*.scss",
     "lint:stylelint:fix": "stylelint --fix src/**/*.scss",
-    "test:ci": "cross-env CI=true react-scripts test"
+    "test:ci": "cross-env CI=true react-scripts test",
+    "bundle:report": "node analyze.js"
   },
   "browserslist": [
     ">0.2%",

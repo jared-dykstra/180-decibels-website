@@ -21,6 +21,7 @@ const decibelsSoftWhite = 'rgb(249, 249, 249)'
 const decibelsLightGrey = 'rgb(100, 100, 100)'
 const decibelsDarkGrey = 'rgb(50, 50, 50)'
 const white = '#fff'
+const fontFamily = `'Ubuntu', 'Helvetica', 'Arial', sans-serif`
 const fontWeightLight = 200
 const fontWeightRegular = 300
 const fontWeightMedium = 800
@@ -38,7 +39,7 @@ const typography = createTypography(palette, {
   useNextVariants: true,
   htmlFontSize: 16, // px Using the MUI default.  See: https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/styles/createTypography.js#L64
   fontSize: 18, // px.  MUI default is 14px
-  fontFamily: `'Ubuntu', 'Helvetica', 'Arial', sans-serif`,
+  fontFamily,
   fontWeightLight,
   fontWeightRegular,
   fontWeightMedium,
@@ -56,6 +57,7 @@ const THEME = createMuiTheme({
     lightGrey: decibelsLightGrey,
     darkGrey: decibelsDarkGrey,
     white,
+    fontFamily,
     fontWeightLight,
     fontWeightRegular,
     fontWeightMedium

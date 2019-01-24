@@ -14,12 +14,12 @@ const styles = theme => {
   return {
     root: {
       paddingBottom: controlBarHeight,
-      '& .video-react .video-react-poster': {
+      '& .video-react, .video-react-poster': {
         backgroundColor: 'transparent !important'
       },
       '& .video-react .video-react-control-bar': {
         display: 'flex !important',
-        fontFamily: 'Ubuntu',
+        fontFamily: theme.decibels.fontFamily,
         marginBottom: `-${controlBarHeight}`
       }
     },
@@ -32,11 +32,15 @@ const styles = theme => {
   }
 }
 
+const AR_16_9 = '16:9'
+const AR_AUTO = 'auto'
+
 class VideoComponent extends PureComponent {
   static propTypes = {
     poster: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     shareUrl: PropTypes.string,
+    aspectRatio: PropTypes.oneOf([AR_16_9, AR_AUTO]),
     elevation: PropTypes.number,
     className: PropTypes.string,
     location: PropTypes.shape({ pathname: PropTypes.string.isRequired })
@@ -49,6 +53,7 @@ class VideoComponent extends PureComponent {
 
   static defaultProps = {
     shareUrl: undefined,
+    aspectRatio: AR_16_9,
     className: '',
     elevation: 2
   }
@@ -99,12 +104,20 @@ class VideoComponent extends PureComponent {
   }
 
   render() {
-    const { poster, src, shareUrl, classes, className, elevation } = this.props
+    const {
+      poster,
+      src,
+      shareUrl,
+      classes,
+      className,
+      elevation,
+      aspectRatio
+    } = this.props
     return (
       <Paper {...{ elevation, className: `${classes.root} ${className}` }}>
         <Player
           // preload="auto"
-          aspectRatio="16:9"
+          aspectRatio={aspectRatio === AR_AUTO ? undefined : aspectRatio}
           poster={poster}
           ref={player => {
             this.player = player

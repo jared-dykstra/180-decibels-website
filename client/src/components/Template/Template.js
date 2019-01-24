@@ -7,19 +7,22 @@ import { withStyles } from '@material-ui/core/styles'
 import { Header, Footer } from 'components'
 
 const styles = theme => ({
-  root: {
-    fontFamily: `'Ubuntu', 'Helvetica', 'Arial', sans-serif`,
-    lineHeight: '1.75em',
-    '& a': {
-      textDecoration: 'none',
-      color: theme.palette.primary.main
-    },
-    '& a:hover': {
-      color: theme.palette.secondary.main
-    },
-    '& h1, h2, h3, h4, h5, h6, h7': {
-      color: theme.palette.secondary.main,
-      fontWeight: theme.decibels.fontWeightLight
+  '@global': {
+    body: {
+      fontFamily: theme.decibels.fontFamily,
+      lineHeight: '1.75em',
+      '& a': {
+        textDecoration: 'none',
+        color: theme.palette.primary.main
+      },
+      '& a:hover': {
+        textDecoration: 'none',
+        color: theme.palette.secondary.main
+      },
+      '& h1, h2, h3, h4, h5, h6, h7': {
+        color: theme.palette.secondary.main,
+        fontWeight: theme.decibels.fontWeightLight
+      }
     }
   },
   layout: {
@@ -66,11 +69,11 @@ const Template = ({
               */}
     </Helmet>,
     <CssBaseline key="baseline" />,
-    <div key="body" className={classes.root}>
-      <Header />
-      <div className={`${classes.layout} ${className}`}>{children}</div>,
-      <Footer />
-    </div>
+    <Header key="header" />,
+    <div key="body" className={`${classes.layout} ${className}`}>
+      {children}
+    </div>,
+    <Footer key="footer" />
   ]
 
 Template.propTypes = {
@@ -101,7 +104,7 @@ Template.propTypes = {
 Template.defaultProps = {
   title: '180 Decibels',
   // description:
-  //   'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity with tactical operational tools and processes.',
+  //   'Removing the Complexity from Managing your Team.  Our mission is to measurably improve team productivity and maximize profitability.',
   // imageUrl: 'https://www.180decibels.com/180-Decibels.png',
   // type: 'website',
   // twitterCardType: 'summary_large_image',
