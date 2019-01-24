@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import expressJwt from 'express-jwt'
 import favicon from 'serve-favicon'
 import compression from 'compression'
+import enforce from 'express-sslify'
 import config from 'config'
 
 import { createApi } from './api'
@@ -28,6 +29,11 @@ export const makeServer = ({ id, clientRoot }) => {
   const indexHtml = fs.readFileSync(path.join(clientRoot, 'index.html'), 'utf8')
 
   const app = express()
+
+  if (isProduction) {
+    // https://www.npmjs.com/package/express-sslify#reverse-proxies-heroku-nodejitsu-and-others
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+  }
 
   // Logging middleware
   app.use(morgan('tiny'))
