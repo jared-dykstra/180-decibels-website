@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
 import {
   Dialog,
   DialogContent,
@@ -12,6 +11,7 @@ import {
   Typography,
   withWidth
 } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 
 import {
@@ -21,6 +21,10 @@ import {
 import { closeDialog } from 'reduxStore/getStarted/getStartedActions'
 
 import { GetStarted } from 'components'
+
+const styles = (/* theme */) => ({
+  root: {}
+})
 
 class GetStartedModal extends PureComponent {
   componentDidUpdate = prevProps => {
@@ -34,19 +38,24 @@ class GetStartedModal extends PureComponent {
   }
 
   render() {
-    const { isModalOpen, linkText, doCloseDialog, width } = this.props
+    const { isModalOpen, linkText, doCloseDialog, width, classes } = this.props
     return (
       <Dialog
         open={isModalOpen}
         onClose={doCloseDialog}
         aria-labelledby="getStarted-dialog-title"
         fullScreen={width === 'xs' || width === 'sm'}
+        className={classes.root}
       >
         <AppBar key="tabs" position="relative" color="default">
           <Toolbar variant="dense">
-            <div id="getStarted-dialog-title" style={{ flexGrow: 1 }}>
+            <Typography
+              variant="body1"
+              id="getStarted-dialog-title"
+              style={{ flexGrow: 1 }}
+            >
               Book a Free Clarity Session
-            </div>
+            </Typography>
             <IconButton
               aria-label="Close"
               style={{ marginRight: -20 }}
@@ -80,7 +89,8 @@ GetStartedModal.propTypes = {
   width: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']), // <== See https://material-ui.com/layout/breakpoints/#withwidth-options-higher-order-component
   tracker: PropTypes.shape({
     modalView: PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 GetStartedModal.defaultProps = {
@@ -97,4 +107,4 @@ export default connect(
   dispatch => ({
     doCloseDialog: () => dispatch(closeDialog())
   })
-)(withWidth()(GetStartedModal))
+)(withWidth()(withStyles(styles)(GetStartedModal)))

@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, withStyles, withWidth } from '@material-ui/core'
+import { withStyles } from '@material-ui/core'
 
-const styles = {
-  root: { minHeight: '2em' }
-}
+const styles = theme => ({
+  root: {
+    minHeight: '5em',
+    color: `${theme.decibels.darkGrey} !important`
+  }
+})
 
-const Heading = ({ width, children, ...hProps }) => (
-  <Typography variant={width === 'xs' ? 'h4' : 'h3'} {...hProps}>
+const Heading = ({ width, children, classes, ...hProps }) => (
+  <h2 {...hProps} className={classes.root}>
     {children}
-  </Typography>
+  </h2>
 )
 
 Heading.propTypes = {
@@ -21,4 +24,4 @@ Heading.defaultProps = {
   width: 'lg'
 }
 
-export default withStyles(styles)(withWidth()(Heading))
+export default withStyles(styles)(Heading)

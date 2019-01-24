@@ -14,10 +14,12 @@ module.exports = {
   ROUTE_HELP_MY_TEAM_RESULT: `${helpMyTeam}${result}`,
   ROUTE_HOME: '/',
   ROUTE_HOW_WE_WORK: '/how-we-work',
+  ROUTE_WHAT_WE_DO: '/what-we-do',
   ROUTE_OUR_TEAM: '/our-team',
   ROUTE_PRIVACY: '/privacy',
   ROUTE_SERVICES: '/services',
+  ROUTE_VAST: '/vast',
   ROUTE_VIDEO_INTRO: `${video}/intro`,
   ROUTE_VIDEO_SUN: `${video}/sun`,
-  ROUTE_VAST: '/vast'
+  ROUTE_VIDEO_INTRO_KERRI: `${video}/overview`
 }

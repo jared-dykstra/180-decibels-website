@@ -17,16 +17,16 @@ import {
   AssessmentResult,
   Confidentiality,
   Error,
-  HelpMe,
   HelpMyTeam,
   Home,
   HowWeWork,
   // NotFound,
   OurTeam,
   Privacy,
-  Services,
+  WhatWeDo,
   IntroVideo,
   SunVideo,
+  IntroVideoKerri,
   Vast
 } from 'pages'
 import { GetStartedModal, ScrollToTop } from 'components'
@@ -42,16 +42,16 @@ import {
   ROUTE_PRIVACY,
   ROUTE_CONFIDENTIALITY,
   ROUTE_HOW_WE_WORK,
+  ROUTE_WHAT_WE_DO,
   ROUTE_SERVICES,
+  ROUTE_VAST,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_SUN,
-  ROUTE_VAST
+  ROUTE_VIDEO_INTRO_KERRI,
+  ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'
 
-import 'bootstrap'
 import 'styles/fonts.scss'
-import 'styles/theme.scss'
-import 'video-react/dist/video-react.css'
 
 import ReactGA from 'react-ga'
 import { get as configGet } from './config'
@@ -194,18 +194,20 @@ class App extends PureComponent {
 
     const routes = {
       [ROUTE_HOME]: Home,
-      [ROUTE_HELP_ME]: HelpMe,
+      [ROUTE_HELP_ME]: HelpMyTeam, // <== Deprecated; remove in next version
+      [ROUTE_HELP_ME_QUIZ]: HelpMyTeam, // <== Deprecated; remove in next version
       [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
-      [ROUTE_HELP_ME_QUIZ]: HelpMe,
       [ROUTE_HELP_MY_TEAM_QUIZ]: HelpMyTeam,
       [ROUTE_HOW_WE_WORK]: HowWeWork,
       [ROUTE_OUR_TEAM]: OurTeam,
       [ROUTE_CONFIDENTIALITY]: Confidentiality,
       [ROUTE_PRIVACY]: Privacy,
-      [ROUTE_SERVICES]: Services,
+      [ROUTE_SERVICES]: WhatWeDo, // <== Deprecated; remove in next version
+      [ROUTE_WHAT_WE_DO]: WhatWeDo,
+      [ROUTE_VAST]: Vast,
       [ROUTE_VIDEO_INTRO]: IntroVideo,
       [ROUTE_VIDEO_SUN]: SunVideo,
-      [ROUTE_VAST]: Vast
+      [ROUTE_VIDEO_INTRO_KERRI]: IntroVideoKerri
     }
 
     const tracker = {

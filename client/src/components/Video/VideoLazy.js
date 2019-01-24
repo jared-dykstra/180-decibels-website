@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react'
 
-const Video = React.lazy(async () => import('./Video'))
+const Video = React.lazy(async () =>
+  import(/* webpackChunkName: 'Video' */ './Video')
+)
 
 const VideoLazy = ({ children, ...props }) => {
   const { poster, src } = props

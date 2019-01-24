@@ -27,32 +27,3 @@ $secondary: $decibels-red;
 // Headings
 $headings-color: $decibels-red;
 
-// Video Player
-:global {
-  .video-react .video-react-poster {
-    background-color: initial !important;
-  }
-
-  .video-react .video-react-control-bar {
-    display: flex !important;
-    font-family: Ubuntu;
-    font-size: 16px;
-    margin-bottom: -3em;
-  }
-
-  .video-react {
-    background-color: transparent;
-  }
-}
-
-/* stylelint disable property-no-unknown */
-:export {
-  var-font-family-sans-serif: $font-family-sans-serif;
-  var-font-weight-bold: $font-weight-bold;
-  var-font-weight-light: $font-weight-light;
-  var-font-weight-normal: $font-weight-normal;
-  var-primary: $decibels-teal;
-  var-secondary: $decibels-red;
-  var-white: #fff; //$white;
-}
-/* stylelint enable */

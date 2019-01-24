@@ -6,9 +6,9 @@
   },
   "version": "0.1.0",
   "engines": {
-    "node": ">=10.9.0",
-    "npm": ">=6.4.0",
-    "yarn": ">=1.10.0"
+    "node": "^10.9.0",
+    "npm": "^6.4.0",
+    "yarn": "^1.12.3"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +27,7 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.1.3",
     "connected-react-router": "^5.0.1",
+    "custom-event-polyfill": "^1.0.6",
     "cytoscape": "^3.3.2",
     "cytoscape-cola": "^2.3.0",
     "date-fns": "2.0.0-alpha.21",
@@ -71,7 +72,8 @@
     "jest-fetch-mock": "^1.6.6",
     "react-test-renderer": "^16.6.3",
     "stylelint": "^9.7.1",
-    "stylelint-config-sass-guidelines": "^5.2.0"
+    "stylelint-config-sass-guidelines": "^5.2.0",
+    "webpack-bundle-analyzer": "^3.0.3"
   },
   "scripts": {
     "dev": "react-scripts start",
@@ -84,7 +86,8 @@
     "lint:eslint:fix": "eslint --ignore-path ../.gitignore --fix .",
     "lint:stylelint": "stylelint src/**/*.scss",
     "lint:stylelint:fix": "stylelint --fix src/**/*.scss",
-    "test:ci": "cross-env CI=true react-scripts test"
+    "test:ci": "cross-env CI=true react-scripts test",
+    "bundle:report": "node analyze.js"
   },
   "browserslist": [
     ">0.2%",
