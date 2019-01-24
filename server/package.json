@@ -6,9 +6,9 @@
   },
   "version": "0.1.0",
   "engines": {
-    "node": ">=10.9.0",
-    "npm": ">=6.4.0",
-    "yarn": ">=1.10.0"
+    "node": "10.9.0",
+    "npm": "6.4.0",
+    "yarn": "1.12.3"
   },
   "private": true,
   "dependencies": {
