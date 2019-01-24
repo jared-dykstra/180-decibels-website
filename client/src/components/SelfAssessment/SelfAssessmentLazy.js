@@ -4,7 +4,9 @@ import { Paper } from '@material-ui/core'
 import Intro from './Intro'
 import styles from './SelfAssessment.module.scss'
 
-const SelfAssessment = React.lazy(async () => import('./SelfAssessment'))
+const SelfAssessment = React.lazy(async () =>
+  import(/* webpackChunkName: 'SelfAssessment' */ './SelfAssessment')
+)
 
 const SelfAssessmentLazy = ({ children, assessmentName, ...props }) => (
   <Paper elevation={6}>
