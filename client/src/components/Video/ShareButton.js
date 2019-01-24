@@ -19,12 +19,14 @@ class ShareButton extends PureComponent {
     // eslint-disable-next-line react/forbid-prop-types
     player: PropTypes.object,
     shareUrl: PropTypes.string,
-    classes: PropTypes.objectOf(PropTypes.string).isRequired
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    className: PropTypes.string
   }
 
   static defaultProps = {
     player: {},
-    shareUrl: undefined
+    shareUrl: undefined,
+    className: ''
   }
 
   constructor(props) {
@@ -49,7 +51,7 @@ class ShareButton extends PureComponent {
   }
 
   render() {
-    const { player, classes, shareUrl } = this.props
+    const { player, classes, shareUrl, className } = this.props
     const { anchorEl, copied } = this.state
     const { currentSrc } = player
 
@@ -59,7 +61,7 @@ class ShareButton extends PureComponent {
     return (
       <button
         type="button"
-        className="video-react-control video-react-button video-react-icon"
+        className={`video-react-control video-react-button video-react-icon ${className}`}
       >
         <Popover
           open={open}

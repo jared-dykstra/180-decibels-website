@@ -7,10 +7,14 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  Grid
+  Grid,
+  Paper,
+  Typography
 } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ThumbUp from '@material-ui/icons/ThumbUp'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { Template } from 'components'
 
@@ -27,9 +31,28 @@ import {
   resultsErrorSelector
 } from 'reduxStore/selfAssessment/selfAssessmentSelectors'
 
+import pageStyles from '../pageStyles'
+
 import CompetencyIcon from './CompetencyIcon'
 import CompetencyDetail from './CompetencyDetail'
 import Podium from './PodiumIcon'
+
+const styles = theme => ({
+  ...pageStyles(theme),
+  mainHeading: {
+    marginTop: '0 !important'
+  },
+  preparedFor: {
+    marginTop: '2em'
+  },
+  noMargin: {
+    margin: '0 !important'
+  },
+  expansionPanel: {
+    margin: '1em'
+    // backgroundColor: theme.decibels.softWhite
+  }
+})
 
 class AssessmentResult extends PureComponent {
   static propTypes = {
@@ -53,7 +76,8 @@ class AssessmentResult extends PureComponent {
       hash: PropTypes.string.isRequired,
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired
-    }).isRequired // <-- Passed down from react router
+    }).isRequired, // <-- Passed down from react router
+    classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   static defaultProps = {
@@ -67,7 +91,7 @@ class AssessmentResult extends PureComponent {
   }
 
   render() {
-    const { displayName, grades, hasError, location } = this.props
+    const { displayName, grades, hasError, location, classes } = this.props
 
     // Should probably use withStyles() and make this a css class
     const flexCenter = {
@@ -88,10 +112,10 @@ class AssessmentResult extends PureComponent {
 
     const Report = () => (
       <div>
-        <p>
+        <Typography variant="body1" paragraph>
           Congratulations! You&apos;re on your way towards improving
           productivity and reducing costs.
-        </p>
+        </Typography>
         <br />
         <Grid container>
           <Grid item xs={4} sm={3} align="right">
@@ -105,61 +129,60 @@ class AssessmentResult extends PureComponent {
             </span>
           </Grid>
           <Grid item xs={8} sm={7} style={flexCenter}>
-            <h5>
+            <h3 className={classes.mainHeading}>
               Teams that are strong in all competencies tend to be healthy with
               minimal politics &amp; confusion plus high degrees of morale &amp;
               productivity.
-            </h5>
+            </h3>
           </Grid>
           <Grid item xs={12}>
-            <p
-              style={{
-                marginTop: '2em',
-                textAlign: 'center'
-              }}
+            <Typography
+              variant="body2"
+              paragraph
+              align="center"
+              className={classes.preparedFor}
             >
               <i>Prepared for {displayName}</i>
-            </p>
+            </Typography>
           </Grid>
           {grades.map(grade => (
-            <ExpansionPanel key={grade.competencyId} style={{ margin: '1em' }}>
-              <ExpansionPanelSummary>
+            <ExpansionPanel
+              key={grade.competencyId}
+              className={classes.expansionPanel}
+            >
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Grid container spacing={24}>
                   <Grid item xs={2} sm={1} style={flexCenter}>
-                    <h2>
+                    <h1 className={classes.noMargin}>
                       <CompetencyIcon
                         competencyId={grade.competencyId}
                         fontSize="inherit"
                         nativeColor="black"
                       />
-                    </h2>
+                    </h1>
                   </Grid>
                   <Grid item xs={10} sm={5} md={3} style={flexCenter}>
-                    <h3>{grade.name}</h3>
+                    <h2 className={classes.noMargin}>{grade.name}</h2>
                   </Grid>
                   <Grid item xs={2} sm={1} style={flexCenter}>
                     <div>
-                      <h2>
+                      <h1>
                         {grade.thumbsUp ? (
                           <ThumbUp fontSize="inherit" />
                         ) : (
                           <ThumbDown fontSize="inherit" color="disabled" />
                         )}
-                      </h2>
-                      <h5>{`${Math.round(grade.score * 100)}%`}</h5>
+                      </h1>
+                      <h3 className={classes.noMargin}>{`${Math.round(
+                        grade.score * 100
+                      )}%`}</h3>
                     </div>
                   </Grid>
                   <Grid item xs={10} sm={5} md={7}>
-                    {grade.comment}
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      style={{
-                        justifyContent: 'left',
-                        textAlign: 'left',
-                        width: '100%'
-                      }}
-                    >
+                    <Typography variant="body2" className={classes.noMargin}>
+                      {grade.comment}
+                    </Typography>
+                    <Button color="primary" variant="contained">
                       {grade.link}
                     </Button>
                   </Grid>
@@ -171,7 +194,9 @@ class AssessmentResult extends PureComponent {
             </ExpansionPanel>
           ))}
           <Grid item xs={12} align="center">
-            <TakeTestAction />
+            <Typography variant="body2" paragraph align="center">
+              <TakeTestAction />
+            </Typography>
           </Grid>
         </Grid>
       </div>
@@ -184,30 +209,32 @@ class AssessmentResult extends PureComponent {
           location
         }}
       >
-        {hasError === undefined && <h5>Loading...</h5>}
-        {hasError === true && (
-          <div>
-            <br />
-            <h2>Not Found</h2>
-            <p>
-              We&apos;re sorry, but the the requested assessment was not found
-              or is no longer available
-            </p>
-            <TakeTestAction />
-            <br />
-            <br />
-            <Button
-              color="primary"
-              variant="contained"
-              size="large"
-              component={Link}
-              to={ROUTE_HOME}
-            >
-              Go to Home Page
-            </Button>
-          </div>
-        )}
-        {hasError === false && <Report />}
+        <Paper className={classes.paper}>
+          {hasError === undefined && <h5>Loading...</h5>}
+          {hasError === true && (
+            <div>
+              <h2>Not Found</h2>
+              <Typography variant="body1" paragraph>
+                We&apos;re sorry, but the the requested assessment was not found
+                or is no longer available
+              </Typography>
+              <Typography variant="body1" paragraph>
+                <TakeTestAction />
+              </Typography>
+              <br />
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                component={Link}
+                to={ROUTE_HOME}
+              >
+                Go to Home Page
+              </Button>
+            </div>
+          )}
+          {hasError === false && <Report />}
+        </Paper>
       </Template>
     )
   }
@@ -224,4 +251,4 @@ export default connect(
     doLoadResults: () =>
       dispatch(loadResults({ resultId: props.match.params.id }))
   })
-)(AssessmentResult)
+)(withStyles(styles)(AssessmentResult))

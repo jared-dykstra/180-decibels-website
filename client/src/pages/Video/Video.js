@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Paper } from '@material-ui/core'
+import { Hidden } from '@material-ui/core'
 
 import { Template, Video } from 'components'
 
@@ -8,9 +8,12 @@ const VideoPage = props => {
   const { title, location, className } = props
   return (
     <Template {...{ title, location, className }}>
-      <Paper style={{ paddingBottom: '3em' }}>
-        <Video {...props} />
-      </Paper>
+      <Hidden mdDown>
+        {/* Add some whitespace to offset the video on large displays */}
+        <br />
+        <br />
+      </Hidden>
+      <Video {...props} />
     </Template>
   )
 }

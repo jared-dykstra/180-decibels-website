@@ -8,11 +8,12 @@ const CDN = configGet('cdn')
 const rootUrl = configGet('rootUrl')
 export const src = `${CDN}/180DecibelsSunMetaphor_2.mp4`
 export const poster = '/sun-video-poster.jpg'
+export const posterAlt = '/sun-video-poster2.jpg'
 
-const IntroVideo = props => (
+const SunVideo = props => (
   <Video
     {...{
-      title: '180 Decibels - Introduction',
+      title: '180 Decibels - Sun Metaphor',
       poster,
       src,
       shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`,
@@ -21,4 +22,4 @@ const IntroVideo = props => (
   />
 )
 
-export default IntroVideo
+export default SunVideo

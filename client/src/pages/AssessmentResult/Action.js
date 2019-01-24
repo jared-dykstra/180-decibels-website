@@ -11,7 +11,7 @@ const Action = ({ children, doOpenDialog, ...props }) => (
   <Button
     color="primary"
     {...props}
-    style={{ padding: '0' }}
+    style={{ padding: '0', fontSize: '1.12em' }}
     onClick={doOpenDialog}
   >
     {children}

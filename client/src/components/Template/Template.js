@@ -1,17 +1,37 @@
-/*
-  Wraps each page in a layout container, and header and footer
-  An optional className prop can be specified, which is useful to scope modular sass
-*/
-
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container } from 'reactstrap'
 import Helmet from 'react-helmet'
+import { CssBaseline } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
 import { Header, Footer } from 'components'
-// import { get as configGet } from '../../config'
 
-import styles from './template.module.scss'
+const styles = theme => ({
+  root: {
+    fontFamily: `'Ubuntu', 'Helvetica', 'Arial', sans-serif`,
+    lineHeight: '1.75em',
+    '& a': {
+      textDecoration: 'none',
+      color: theme.palette.primary.main
+    },
+    '& a:hover': {
+      color: theme.palette.secondary.main
+    },
+    '& h1, h2, h3, h4, h5, h6, h7': {
+      color: theme.palette.secondary.main,
+      fontWeight: theme.decibels.fontWeightLight
+    }
+  },
+  layout: {
+    width: 'auto',
+    minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1100,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  }
+})
 
 const Template = ({
   title,
@@ -22,7 +42,8 @@ const Template = ({
   // twitterCardType,
   // twitterCreator,
   className,
-  children
+  children,
+  classes
 }) =>
   // const rootUrl = configGet('rootUrl')
   // const { pathname, hash, search } = location
@@ -30,10 +51,9 @@ const Template = ({
   //   search && search.length > 0 ? search : ''
   // }${hash && hash.length > 0 ? hash : ''}`
   [
-    <Container key="container" className={styles.page}>
-      <Helmet>
-        <title>{title}</title>
-        {/* Not currently being used--but this is useful if SSR or pre-rendering is enabled in the future.
+    <Helmet key="helmet">
+      <title>{title}</title>
+      {/* Not currently being used--but this is useful if SSR or pre-rendering is enabled in the future.
           To set these tags, see server/src/openGraph.js
         <meta name="description" content={description} />
         <meta property="og:url" content={url} />,
@@ -44,11 +64,13 @@ const Template = ({
         <meta name="twitter:card" content={twitterCardType} />,
         <meta name="twitter:creator" content={twitterCreator} />
               */}
-      </Helmet>
+    </Helmet>,
+    <CssBaseline key="baseline" />,
+    <div key="body" className={classes.root}>
       <Header />
-      <div className={className}>{children}</div>
-    </Container>,
-    <Footer key="footer" />
+      <div className={`${classes.layout} ${className}`}>{children}</div>,
+      <Footer />
+    </div>
   ]
 
 Template.propTypes = {
@@ -72,7 +94,8 @@ Template.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired
+  ]).isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 Template.defaultProps = {
@@ -83,7 +106,7 @@ Template.defaultProps = {
   // type: 'website',
   // twitterCardType: 'summary_large_image',
   // twitterCreator: '1Decibels',
-  className: undefined
+  className: ''
 }
 
-export default Template
+export default withStyles(styles)(Template)

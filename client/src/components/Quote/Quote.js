@@ -1,26 +1,55 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Paper } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
-import styles from './Quote.module.scss'
+const styles = theme => ({
+  quote: {
+    background: theme.decibels.softWhite,
+    color: theme.palette.secondary.main,
+    fontSize: 'larger',
 
-const Quote = ({ elevation, children, cite, className, right }) => (
-  <Paper elevation={elevation}>
-    <div className={`${className} ${styles.quote}`}>
-      <blockquote
-        key="body"
-        className={`${right ? `text-right ${styles.right}` : styles.left}`}
-      >
-        <span className={styles.glyph}>&ldquo;</span>
-        {children}
-        {cite && (
-          <footer className="blockquote-footer">
-            <cite key="cite">{cite}</cite>
-          </footer>
-        )}
-      </blockquote>
-    </div>
-  </Paper>
+    '&>blockquote': {
+      margin: '0',
+      fontSize: '1em',
+      padding: '0.5em 10px'
+    }
+  },
+
+  left: {
+    borderLeft: `10px solid ${theme.palette.secondary.main}`
+  },
+
+  right: {
+    textAlign: 'right',
+    borderRight: `10px solid ${theme.palette.secondary.main}`
+  },
+
+  glyph: {
+    color: theme.decibels.lightGrey,
+    fontSize: '4em',
+    lineHeight: '0.1em',
+    marginRight: '0.25em',
+    verticalAlign: '-0.4em'
+  },
+
+  footer: {
+    fontSize: '80%',
+    color: theme.decibels.lightGrey
+  }
+})
+
+const Quote = ({ elevation, children, cite, className, classes, right }) => (
+  <div className={`${className} ${classes.quote}`}>
+    <blockquote className={`${right ? classes.right : classes.left}`}>
+      <span className={classes.glyph}>&ldquo;</span>
+      {children}
+      {cite && (
+        <footer className={classes.footer}>
+          <cite>&ndash; {cite}</cite>
+        </footer>
+      )}
+    </blockquote>
+  </div>
 )
 
 Quote.propTypes = {
@@ -31,7 +60,8 @@ Quote.propTypes = {
   ]).isRequired,
   right: PropTypes.bool,
   className: PropTypes.string,
-  elevation: PropTypes.number
+  elevation: PropTypes.number,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 Quote.defaultProps = {
@@ -41,4 +71,4 @@ Quote.defaultProps = {
   className: '' // Intended to be Bootstrap's .h1, .h2, .h3, etc. to set font size
 }
 
-export default Quote
+export default withStyles(styles)(Quote)
