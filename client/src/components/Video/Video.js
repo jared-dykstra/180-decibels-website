@@ -19,7 +19,7 @@ const styles = theme => {
       },
       '& .video-react .video-react-control-bar': {
         display: 'flex !important',
-        fontFamily: 'Ubuntu',
+        fontFamily: theme.decibels.fontFamily,
         marginBottom: `-${controlBarHeight}`
       }
     },
