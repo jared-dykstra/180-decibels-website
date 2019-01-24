@@ -62,11 +62,11 @@ const OurTeam = ({ location, classes }) => (
       <h2 id="founders">Founders</h2>
       <hr />
       <Grid container className={classes.founder}>
-        <Grid item sm="1" />
+        <Grid item sm={1} />
         <Grid item xs>
           <Avatar src={dayton} alt="Dayton Foster" className={classes.avatar} />
         </Grid>
-        <Grid item sm="1" />
+        <Grid item sm={1} />
         <Grid item xs>
           <h2>
             <small className={classes.muted}>Dayton Foster</small>
@@ -77,7 +77,7 @@ const OurTeam = ({ location, classes }) => (
             implementing world-class operational practices.
           </Typography>
         </Grid>
-        <Grid item xs="12">
+        <Grid item xs={12}>
           <Quote right className={classes.quote} cite="Chris, Board Chair">
             Dayton brings an abundance of obvious business experience in a well
             thought out package and exposed us to the kinds of questions we
@@ -88,11 +88,11 @@ const OurTeam = ({ location, classes }) => (
       </Grid>
 
       <Grid container className={classes.founder}>
-        <Grid item sm="1" />
+        <Grid item sm={1} />
         <Grid item xs>
           <Avatar src={kerri} alt="Kerri McGovern" className={classes.avatar} />
         </Grid>
-        <Grid item sm="1" />
+        <Grid item sm={1} />
         <Grid item xs>
           <h2>
             <small className={classes.muted}>Kerri McGovern</small>
@@ -106,7 +106,7 @@ const OurTeam = ({ location, classes }) => (
             concern for affecting real change.
           </Typography>
         </Grid>
-        <Grid item xs="12">
+        <Grid item xs={12}>
           <Quote right className={classes.quote} cite="Derek, CEO">
             Kerri is an exceptionally talented individual who expertly seized
             and and excelled with any aspect of the business that I asked her to
@@ -118,11 +118,11 @@ const OurTeam = ({ location, classes }) => (
       </Grid>
 
       <Grid container className={classes.founder}>
-        <Grid item sm="1" />
+        <Grid item sm={1} />
         <Grid item xs>
           <Avatar src={jared} alt="Jared Dykstra" className={classes.avatar} />
         </Grid>
-        <Grid item sm="1" />
+        <Grid item sm={1} />
         <Grid item xs>
           <h2>
             <small className={classes.muted}>Jared Dykstra</small>
@@ -135,7 +135,7 @@ const OurTeam = ({ location, classes }) => (
             after building a blockchain platform for an industry front-runner.
           </Typography>
         </Grid>
-        <Grid item xs="12">
+        <Grid item xs={12}>
           <Quote right className={classes.quote} cite="Derek, CEO">
             Jared is passionate about software development and has a broad and
             deep range of technical skills spanning hardware, software,
@@ -148,8 +148,8 @@ const OurTeam = ({ location, classes }) => (
 
       <h2 id="location">Get In Touch</h2>
       <hr />
-      <h4>Address</h4>
-      <div className={classes.address}>
+      <h3>Address</h3>
+      <Typography variant="body1" paragraph className={classes.address}>
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -161,22 +161,22 @@ const OurTeam = ({ location, classes }) => (
           <br />
           T2R 1J5
         </a>
-      </div>
-      <h4>Phone</h4>
-      <div className={classes.address}>
+      </Typography>
+      <h3>Phone</h3>
+      <Typography variant="body1" paragraph className={classes.address}>
         <a href="tel:+18883214531" className="text-nowrap">
           1-888-321-4531
         </a>{' '}
         or <a href="tel:+14039845457">(403) 984-5457</a>
-      </div>
-      <h4>Email</h4>
-      <div className={classes.address}>
+      </Typography>
+      <h3>Email</h3>
+      <Typography variant="body1" paragraph className={classes.address}>
         <a href="mailto:info@180decibels.com" className="text-nowrap">
           info@180decibels.com
         </a>
         <br />
         <Link to={ROUTE_HOME}>www.180decibels.com</Link>
-      </div>
+      </Typography>
     </Paper>
   </Template>
 )
