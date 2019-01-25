@@ -46,7 +46,6 @@ import {
   ROUTE_SERVICES,
   ROUTE_VAST,
   ROUTE_VIDEO_INTRO,
-  ROUTE_VIDEO_SUN,
   ROUTE_VIDEO_INTRO_KERRI,
   ROUTE_VIDEO_SUN
 } from 'reduxStore/routes/routesConstants'

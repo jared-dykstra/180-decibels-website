@@ -30,6 +30,7 @@ import {
   NODE_TYPE_PRIORITY
 } from 'reduxStore/vast/vastConstants'
 
+import pageStyles from '../pageStyles'
 import Graph from './Graph'
 
 const NODE_TYPE_LABELS = {
@@ -39,15 +40,7 @@ const NODE_TYPE_LABELS = {
 }
 
 const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-    maxWidth: 300
-  },
+  ...pageStyles(theme),
   chips: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -94,8 +87,9 @@ class Vast extends PureComponent {
           location
         }}
       >
-        <h1>Vast</h1>
-        <Paper>
+        <Paper className={classes.paper}>
+          <h1>Vast</h1>
+
           <Grid
             container
             direction="row"
