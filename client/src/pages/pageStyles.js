@@ -4,7 +4,7 @@ const styles = ({ theme, fullWidth = false, pagePadding = true }) => {
     root: {
       minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
       width: 'auto',
-      paddingBottom: theme.spacing.unit * 15,
+      paddingBottom: fullWidth ? undefined : theme.spacing.unit * 15,
       [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: fullWidth
         ? {}
         : {

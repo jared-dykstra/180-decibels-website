@@ -40,6 +40,7 @@ class Graph extends PureComponent {
   handleResize = () => {
     const { graph, doLayout } = this.props
     graph.resize()
+    graph.fit()
     doLayout()
   }
 
@@ -47,8 +48,8 @@ class Graph extends PureComponent {
     return (
       <div
         style={{
-          height: '800px',
-          display: 'block'
+          // TODO: How to avoid a fixed height?
+          height: '100vh'
         }}
         ref={ref => {
           this.ref = ref

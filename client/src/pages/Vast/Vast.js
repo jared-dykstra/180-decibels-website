@@ -46,6 +46,13 @@ const styles = theme => ({
   },
   chip: {
     margin: theme.spacing.unit / 4
+  },
+  graphContainer: {
+    position: 'relative'
+  },
+  controls: {
+    position: 'absolute',
+    top: '0'
   }
 })
 
@@ -88,58 +95,61 @@ class Vast extends PureComponent {
           elevation: 0
         }}
       >
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="flex-end"
-        >
-          <Grid item>
-            <FormControl>
-              <Button variant="contained" onClick={() => doLayout()}>
-                Layout
-              </Button>
-            </FormControl>
+        <div className={classes.graphContainer}>
+          <Graph />
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="flex-end"
+            className={classes.controls}
+          >
+            <Grid item>
+              <FormControl>
+                <Button variant="contained" onClick={() => doLayout()}>
+                  Layout
+                </Button>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl>
+                <Button variant="contained" onClick={() => doAddNode()}>
+                  Add Priority
+                </Button>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl>
+                <InputLabel htmlFor="input-node-types">View</InputLabel>
+                <Select
+                  multiple
+                  value={selectedNodeTypes}
+                  onChange={e => doSetSelectedNodeTypes(e.target.value)}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip
+                          key={value}
+                          label={value}
+                          className={classes.chip}
+                          onDelete={() => this.handleRemoveNodeType(value)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  // MenuProps={MenuProps}
+                >
+                  {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
+                    <MenuItem key={k} value={k}>
+                      {v}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item>
-            <FormControl>
-              <Button variant="contained" onClick={() => doAddNode()}>
-                Add Priority
-              </Button>
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <FormControl>
-              <InputLabel htmlFor="input-node-types">View</InputLabel>
-              <Select
-                multiple
-                value={selectedNodeTypes}
-                onChange={e => doSetSelectedNodeTypes(e.target.value)}
-                input={<Input id="select-multiple-chip" />}
-                renderValue={selected => (
-                  <div className={classes.chips}>
-                    {selected.map(value => (
-                      <Chip
-                        key={value}
-                        label={value}
-                        className={classes.chip}
-                        onDelete={() => this.handleRemoveNodeType(value)}
-                      />
-                    ))}
-                  </div>
-                )}
-                // MenuProps={MenuProps}
-              >
-                {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
-                  <MenuItem key={k} value={k}>
-                    {v}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Graph />
+        </div>
       </Template>
     )
   }
