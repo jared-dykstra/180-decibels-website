@@ -1,15 +1,17 @@
 const styles = ({ theme, fullWidth = false, pagePadding = true }) => {
   const pagePaddingUnit = pagePadding ? theme.spacing.unit : 0
   return {
-    paper: {
+    root: {
       minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
       width: 'auto',
       paddingBottom: theme.spacing.unit * 15,
-      [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-        width: '1100px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      },
+      [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: fullWidth
+        ? {}
+        : {
+            width: '1100px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          },
       paddingTop: pagePaddingUnit,
       paddingRight: pagePaddingUnit,
       paddingLeft: pagePaddingUnit,

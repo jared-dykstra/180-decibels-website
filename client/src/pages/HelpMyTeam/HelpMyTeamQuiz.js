@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import { SelfAssessment, Template } from 'components'
@@ -8,10 +7,7 @@ import { SelfAssessment, Template } from 'components'
 import pageStyles from '../pageStyles'
 
 const styles = theme => ({
-  ...pageStyles({ theme }),
-  intro: {
-    marginBottom: theme.spacing.unit * 7
-  }
+  ...pageStyles({ theme })
 })
 
 const HelpMyTeam = ({ location, classes, ...props }) => (
@@ -19,19 +15,14 @@ const HelpMyTeam = ({ location, classes, ...props }) => (
     {...{
       title: '180 Decibels - Help My Team',
       location,
-      className: classes.root
+      className: classes.root,
+      elevation: 0
     }}
   >
-    <h1>Self Assessment</h1>
-    <Typography variant="body1" paragraph>
-      It only takes one minute to get results you can use.
-    </Typography>
-    <Typography variant="body1" paragraph className={classes.intro}>
-      Use this self-assessment to understand your situation. These questions are
-      enough to create an initial report, which will contain concrete,
-      actionable steps that you can immediately use.
-    </Typography>
-    <SelfAssessment assessmentName="helpMyTeam" {...props} />
+    <div className={classes.maxWidth}>
+      <h1>Self Assessment</h1>
+      <SelfAssessment assessmentName="helpMyTeam" {...props} />
+    </div>
   </Template>
 )
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline, Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import { Header, Footer } from 'components'
@@ -38,6 +38,7 @@ const Template = ({
   // type,
   // twitterCardType,
   // twitterCreator,
+  elevation,
   className,
   children,
   classes
@@ -64,8 +65,8 @@ const Template = ({
     </Helmet>,
     <CssBaseline key="baseline" />,
     <Header key="header" />,
-    <main key="body" className={`${classes.layout} ${className}`}>
-      {children}
+    <main key="body" className={classes.layout}>
+      <Paper {...{ className, elevation }}>{children}</Paper>
     </main>,
     <Footer key="footer" />
   ]
@@ -87,6 +88,7 @@ Template.propTypes = {
   //   'player'
   // ]),
   // twitterCreator: PropTypes.string,
+  elevation: PropTypes.number,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -103,6 +105,7 @@ Template.defaultProps = {
   // type: 'website',
   // twitterCardType: 'summary_large_image',
   // twitterCreator: '1Decibels',
+  elevation: 2,
   className: ''
 }
 
