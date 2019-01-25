@@ -84,7 +84,8 @@ class Vast extends PureComponent {
         {...{
           title,
           location,
-          className: classes.root
+          className: classes.root,
+          elevation: 0
         }}
       >
         <Grid
@@ -92,7 +93,6 @@ class Vast extends PureComponent {
           direction="row"
           justify="space-evenly"
           alignItems="flex-end"
-          spacing={24}
         >
           <Grid item>
             <FormControl>

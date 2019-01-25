@@ -66,7 +66,9 @@ const Template = ({
     <CssBaseline key="baseline" />,
     <Header key="header" />,
     <main key="body" className={classes.layout}>
-      <Paper {...{ className, elevation }}>{children}</Paper>
+      <Paper square {...{ className, elevation }}>
+        {children}
+      </Paper>
     </main>,
     <Footer key="footer" />
   ]
