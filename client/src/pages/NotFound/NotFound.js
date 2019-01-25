@@ -6,11 +6,20 @@ import { Link } from 'react-router-dom'
 import { Template } from 'components'
 import { ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 
-const NotFound = ({ location }) => (
+import { withStyles } from '@material-ui/core/styles'
+
+import pageStyles from '../pageStyles'
+
+const styles = theme => ({
+  ...pageStyles({ theme })
+})
+
+const NotFound = ({ location, classes }) => (
   <Template
     {...{
       title: '180 Decibels - Not Found',
-      location
+      location,
+      className: classes.root
     }}
   >
     <br />
@@ -35,7 +44,8 @@ NotFound.propTypes = {
     hash: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired
-  }).isRequired // <-- Passed down from react router
+  }).isRequired, // <-- Passed down from react router
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
-export default NotFound
+export default withStyles(styles)(NotFound)

@@ -8,7 +8,6 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   Grid,
-  Paper,
   Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
@@ -38,7 +37,7 @@ import CompetencyDetail from './CompetencyDetail'
 import Podium from './PodiumIcon'
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme }),
   mainHeading: {
     marginTop: '0 !important'
   },
@@ -206,35 +205,34 @@ class AssessmentResult extends PureComponent {
       <Template
         {...{
           title: '180 Decibels - Assessment Results',
-          location
+          location,
+          className: classes.root
         }}
       >
-        <Paper className={classes.paper}>
-          {hasError === undefined && <h5>Loading...</h5>}
-          {hasError === true && (
-            <div>
-              <h2>Not Found</h2>
-              <Typography variant="body1" paragraph>
-                We&apos;re sorry, but the the requested assessment was not found
-                or is no longer available
-              </Typography>
-              <Typography variant="body1" paragraph>
-                <TakeTestAction />
-              </Typography>
-              <br />
-              <Button
-                color="primary"
-                variant="contained"
-                size="large"
-                component={Link}
-                to={ROUTE_HOME}
-              >
-                Go to Home Page
-              </Button>
-            </div>
-          )}
-          {hasError === false && <Report />}
-        </Paper>
+        {hasError === undefined && <h5>Loading...</h5>}
+        {hasError === true && (
+          <div>
+            <h2>Not Found</h2>
+            <Typography variant="body1" paragraph>
+              We&apos;re sorry, but the the requested assessment was not found
+              or is no longer available
+            </Typography>
+            <Typography variant="body1" paragraph>
+              <TakeTestAction />
+            </Typography>
+            <br />
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              component={Link}
+              to={ROUTE_HOME}
+            >
+              Go to Home Page
+            </Button>
+          </div>
+        )}
+        {hasError === false && <Report />}
       </Template>
     )
   }

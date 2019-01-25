@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline, Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import { Header, Footer } from 'components'
@@ -19,20 +19,14 @@ const styles = theme => ({
         textDecoration: 'none',
         color: theme.palette.secondary.main
       },
-      '& h1, h2, h3, h4, h5, h6, h7': {
+      '& h1, h2, h3, h4, h5, h6': {
         color: theme.palette.secondary.main,
         fontWeight: theme.decibels.fontWeightLight
       }
     }
   },
   layout: {
-    width: 'auto',
-    minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
-    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
+    /* Required for global to work */
   }
 })
 
@@ -44,6 +38,7 @@ const Template = ({
   // type,
   // twitterCardType,
   // twitterCreator,
+  elevation,
   className,
   children,
   classes
@@ -70,8 +65,8 @@ const Template = ({
     </Helmet>,
     <CssBaseline key="baseline" />,
     <Header key="header" />,
-    <main key="body" className={`${classes.layout} ${className}`}>
-      {children}
+    <main key="body" className={classes.layout}>
+      <Paper {...{ className, elevation }}>{children}</Paper>
     </main>,
     <Footer key="footer" />
   ]
@@ -93,6 +88,7 @@ Template.propTypes = {
   //   'player'
   // ]),
   // twitterCreator: PropTypes.string,
+  elevation: PropTypes.number,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -109,6 +105,7 @@ Template.defaultProps = {
   // type: 'website',
   // twitterCardType: 'summary_large_image',
   // twitterCreator: '1Decibels',
+  elevation: 2,
   className: ''
 }
 

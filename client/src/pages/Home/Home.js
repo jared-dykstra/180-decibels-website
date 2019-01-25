@@ -23,14 +23,13 @@ import {
 } from 'pages/Video/SunVideo'
 
 import { get as configGet } from '../../config'
+import pageStyles from '../pageStyles'
 
 import bannerImage from './noisy-kid.jpg'
 import TeamIcon from './TeamIcon'
 
 const styles = theme => ({
-  main: {
-    paddingBottom: '2em'
-  },
+  ...pageStyles({ theme, pagePadding: false }),
   aboveTheFold: {
     minHeight: 'calc(100vh - 64px)', // AppBar is assumed to be 64px tall
     display: 'flex',
@@ -67,7 +66,7 @@ const styles = theme => ({
     fontWeight: theme.decibels.fontWeightMedium,
     fontSize: '2em',
     textShadow: '0 0 15px rgba(0,0,0,1)',
-    marginLeft: 'auto',
+    marginLeft: 'auto !important',
     marginRight: 'auto',
     marginTop: '1em',
     paddingLeft: '1em',
@@ -117,115 +116,113 @@ export class Home extends PureComponent {
       <Template
         {...{
           title: '180 Decibels',
-          location
+          location,
+          className: classes.root
         }}
       >
-        <Paper className={classes.main} elevation={2}>
-          <section id="main" className={classes.aboveTheFold}>
-            <div className={classes.container}>
-              <div className={classes.banner}>
-                <div className={classes.overlay}>
-                  <Typography align="center" className={classes.title}>
-                    {tagline}
-                  </Typography>
-                </div>
+        <section id="main" className={classes.aboveTheFold}>
+          <div className={classes.container}>
+            <div className={classes.banner}>
+              <div className={classes.overlay}>
+                <Typography align="center" className={classes.title}>
+                  {tagline}
+                </Typography>
               </div>
             </div>
+          </div>
 
-            <Grid
-              container
-              direction="column"
-              justify="space-around"
-              alignItems="center"
-              className={classes.grow}
-            >
-              <Grid item className={classes.maxWidth}>
-                <Typography variant="body1" paragraph className={classes.intro}>
-                  <span className={classes.highlight}>
-                    Do you want to unlock latent productivity in your team and
-                    out-perform competitors?
-                  </span>
-                </Typography>
-                <Typography variant="body1" paragraph className={classes.intro}>
-                  We help managers drive to outcome and create urgency in their
-                  organization. You get a practical, results-oriented process to
-                  build a high-performing culture. Now you can start feeling
-                  confident that your team is getting the right things done.
-                </Typography>
-                <Typography variant="body1" paragraph className={classes.intro}>
-                  Use our confidential{' '}
-                  <Link to={ROUTE_HELP_MY_TEAM} className={classes.highlight}>
-                    Team Assessment
-                  </Link>{' '}
-                  to determine your company&apos;s pain points and get a report
-                  with concrete, actionable next steps.
-                </Typography>
+          <Grid
+            container
+            direction="column"
+            justify="space-around"
+            alignItems="center"
+            className={classes.grow}
+          >
+            <Grid item className={classes.maxWidth}>
+              <Typography variant="body1" paragraph className={classes.intro}>
+                <span className={classes.highlight}>
+                  Do you want to unlock latent productivity in your team and
+                  out-perform competitors?
+                </span>
+              </Typography>
+              <Typography variant="body1" paragraph className={classes.intro}>
+                We help managers drive to outcome and create urgency in their
+                organization. You get a practical, results-oriented process to
+                build a high-performing culture. Now you can start feeling
+                confident that your team is getting the right things done.
+              </Typography>
+              <Typography variant="body1" paragraph className={classes.intro}>
+                Use our confidential{' '}
+                <Link to={ROUTE_HELP_MY_TEAM} className={classes.highlight}>
+                  Team Assessment
+                </Link>{' '}
+                to determine your company&apos;s pain points and get a report
+                with concrete, actionable next steps.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Fab
+                color="primary"
+                variant="extended"
+                size="large"
+                className={classes.fab}
+                component={Link}
+                to={ROUTE_HELP_MY_TEAM}
+              >
+                <TeamIcon fontSize="large" className={classes.actionIcon} />
+                Assess Your Team
+              </Fab>
+            </Grid>
+          </Grid>
+        </section>
+
+        <section id="intro">
+          <Grid container className={classes.videoRow}>
+            <Hidden xsDown>
+              <Grid item xs={12} sm={4}>
+                <Quote cite="Vincent, CEO" className={classes.quoteLeft}>
+                  180 Decibels increased my team&apos;s results by 22%
+                </Quote>
               </Grid>
-              <Grid item>
-                <Fab
-                  color="primary"
-                  variant="extended"
-                  size="large"
-                  className={classes.fab}
-                  component={Link}
-                  to={ROUTE_HELP_MY_TEAM}
+            </Hidden>
+            <Grid item xs={12} sm={8}>
+              <Video
+                {...{
+                  poster: overviewVideoPoster,
+                  src: overviewVideoSrc,
+                  tracker,
+                  shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
+                }}
+              />
+            </Grid>
+          </Grid>
+        </section>
+
+        <section id="sun">
+          <Grid container className={classes.videoRow}>
+            <Grid item xs={12} sm={8}>
+              <Video
+                {...{
+                  poster: sunVideoPoster,
+                  src: sunVideoSrc,
+                  tracker,
+                  shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
+                }}
+              />
+            </Grid>
+            <Hidden xsDown>
+              <Grid item xs={12} sm={4}>
+                <Quote
+                  right
+                  cite="Patrick, Technical Lead"
+                  className={classes.quoteRight}
                 >
-                  <TeamIcon fontSize="large" className={classes.actionIcon} />
-                  Assess Your Team
-                </Fab>
+                  We are not <i>meeting</i> goals. We are <i>crushing</i> them!
+                </Quote>
               </Grid>
-            </Grid>
-          </section>
-
-          <section id="intro">
-            <Grid container className={classes.videoRow}>
-              <Hidden xsDown>
-                <Grid item xs={12} sm={4}>
-                  <Quote cite="Vincent, CEO" className={classes.quoteLeft}>
-                    180 Decibels increased my team&apos;s results by 22%
-                  </Quote>
-                </Grid>
-              </Hidden>
-              <Grid item xs={12} sm={8}>
-                <Video
-                  {...{
-                    poster: overviewVideoPoster,
-                    src: overviewVideoSrc,
-                    tracker,
-                    shareUrl: `${rootUrl}${ROUTE_VIDEO_INTRO}`
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </section>
-
-          <section id="sun">
-            <Grid container className={classes.videoRow}>
-              <Grid item xs={12} sm={8}>
-                <Video
-                  {...{
-                    poster: sunVideoPoster,
-                    src: sunVideoSrc,
-                    tracker,
-                    shareUrl: `${rootUrl}${ROUTE_VIDEO_SUN}`
-                  }}
-                />
-              </Grid>
-              <Hidden xsDown>
-                <Grid item xs={12} sm={4}>
-                  <Quote
-                    right
-                    cite="Patrick, Technical Lead"
-                    className={classes.quoteRight}
-                  >
-                    We are not <i>meeting</i> goals. We are <i>crushing</i>{' '}
-                    them!
-                  </Quote>
-                </Grid>
-              </Hidden>
-            </Grid>
-          </section>
-        </Paper>
+            </Hidden>
+          </Grid>
+        </section>
       </Template>
     )
   }

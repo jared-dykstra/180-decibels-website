@@ -10,8 +10,7 @@ import {
   Input,
   InputLabel,
   Select,
-  MenuItem,
-  Paper
+  MenuItem
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -40,7 +39,7 @@ const NODE_TYPE_LABELS = {
 }
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme, fullWidth: true, pagePadding: false }),
   chips: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -84,66 +83,63 @@ class Vast extends PureComponent {
       <Template
         {...{
           title,
-          location
+          location,
+          className: classes.root
         }}
       >
-        <Paper className={classes.paper}>
-          <h1>Vast</h1>
-
-          <Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="flex-end"
-            spacing={24}
-          >
-            <Grid item>
-              <FormControl>
-                <Button variant="contained" onClick={() => doLayout()}>
-                  Layout
-                </Button>
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl>
-                <Button variant="contained" onClick={() => doAddNode()}>
-                  Add Priority
-                </Button>
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl>
-                <InputLabel htmlFor="input-node-types">View</InputLabel>
-                <Select
-                  multiple
-                  value={selectedNodeTypes}
-                  onChange={e => doSetSelectedNodeTypes(e.target.value)}
-                  input={<Input id="select-multiple-chip" />}
-                  renderValue={selected => (
-                    <div className={classes.chips}>
-                      {selected.map(value => (
-                        <Chip
-                          key={value}
-                          label={value}
-                          className={classes.chip}
-                          onDelete={() => this.handleRemoveNodeType(value)}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  // MenuProps={MenuProps}
-                >
-                  {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
-                    <MenuItem key={k} value={k}>
-                      {v}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="space-evenly"
+          alignItems="flex-end"
+          spacing={24}
+        >
+          <Grid item>
+            <FormControl>
+              <Button variant="contained" onClick={() => doLayout()}>
+                Layout
+              </Button>
+            </FormControl>
           </Grid>
-          <Graph />
-        </Paper>
+          <Grid item>
+            <FormControl>
+              <Button variant="contained" onClick={() => doAddNode()}>
+                Add Priority
+              </Button>
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl>
+              <InputLabel htmlFor="input-node-types">View</InputLabel>
+              <Select
+                multiple
+                value={selectedNodeTypes}
+                onChange={e => doSetSelectedNodeTypes(e.target.value)}
+                input={<Input id="select-multiple-chip" />}
+                renderValue={selected => (
+                  <div className={classes.chips}>
+                    {selected.map(value => (
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                        onDelete={() => this.handleRemoveNodeType(value)}
+                      />
+                    ))}
+                  </div>
+                )}
+                // MenuProps={MenuProps}
+              >
+                {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
+                  <MenuItem key={k} value={k}>
+                    {v}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Graph />
       </Template>
     )
   }

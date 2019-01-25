@@ -1,14 +1,23 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 
 import { Template } from 'components'
 import * as Sentry from '@sentry/browser'
+import { withStyles } from '@material-ui/core/styles'
 
-const Error = ({ location }) => (
+import pageStyles from '../pageStyles'
+
+const styles = theme => ({
+  ...pageStyles({ theme })
+})
+
+const Error = ({ location, classes }) => (
   <Template
     {...{
       title: '180 Decibels - Error',
-      location
+      location,
+      className: classes.root
     }}
   >
     <br />
@@ -26,4 +35,13 @@ const Error = ({ location }) => (
   </Template>
 )
 
-export default Error
+Error.propTypes = {
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
+  }).isRequired, // <-- Passed down from react router
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
+}
+
+export default withStyles(styles)(Error)
