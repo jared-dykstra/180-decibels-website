@@ -9,7 +9,7 @@ import pageStyles from '../pageStyles'
 import Sssh from './sssh-cropped.jpg'
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme }),
   sssh: {
     backgroundColor: `${theme.palette.primary.main} !important`,
     filter: 'sepia(20%) opacity(75%)'

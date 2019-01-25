@@ -12,7 +12,7 @@ const renderQuiz = props => (
 )
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme }),
   intro: {
     marginBottom: theme.spacing.unit * 7
   },

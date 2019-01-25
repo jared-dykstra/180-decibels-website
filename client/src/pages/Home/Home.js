@@ -23,14 +23,13 @@ import {
 } from 'pages/Video/SunVideo'
 
 import { get as configGet } from '../../config'
+import pageStyles from '../pageStyles'
 
 import bannerImage from './noisy-kid.jpg'
 import TeamIcon from './TeamIcon'
 
 const styles = theme => ({
-  main: {
-    paddingBottom: '2em'
-  },
+  ...pageStyles({ theme, pagePadding: false }),
   aboveTheFold: {
     minHeight: 'calc(100vh - 64px)', // AppBar is assumed to be 64px tall
     display: 'flex',
@@ -67,7 +66,7 @@ const styles = theme => ({
     fontWeight: theme.decibels.fontWeightMedium,
     fontSize: '2em',
     textShadow: '0 0 15px rgba(0,0,0,1)',
-    marginLeft: 'auto',
+    marginLeft: 'auto !important',
     marginRight: 'auto',
     marginTop: '1em',
     paddingLeft: '1em',
@@ -120,7 +119,7 @@ export class Home extends PureComponent {
           location
         }}
       >
-        <Paper className={classes.main} elevation={2}>
+        <Paper className={classes.paper} elevation={2}>
           <section id="main" className={classes.aboveTheFold}>
             <div className={classes.container}>
               <div className={classes.banner}>

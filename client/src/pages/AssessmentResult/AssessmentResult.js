@@ -38,7 +38,7 @@ import CompetencyDetail from './CompetencyDetail'
 import Podium from './PodiumIcon'
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme }),
   mainHeading: {
     marginTop: '0 !important'
   },

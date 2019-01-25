@@ -7,7 +7,7 @@ import { Template } from 'components'
 import pageStyles from '../pageStyles'
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme }),
   root: {
     [theme.breakpoints.up('md')]: {
       '& ul': {

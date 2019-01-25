@@ -19,20 +19,14 @@ const styles = theme => ({
         textDecoration: 'none',
         color: theme.palette.secondary.main
       },
-      '& h1, h2, h3, h4, h5, h6, h7': {
+      '& h1, h2, h3, h4, h5, h6': {
         color: theme.palette.secondary.main,
         fontWeight: theme.decibels.fontWeightLight
       }
     }
   },
   layout: {
-    width: 'auto',
-    minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
-    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
+    /* Required for global to work */
   }
 })
 
