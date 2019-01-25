@@ -16,7 +16,6 @@ import { SocialLinks } from 'components'
 
 const styles2 = theme => ({
   root: {
-    marginTop: '3em',
     padding: '1em',
     backgroundColor: theme.decibels.darkGrey,
     color: theme.decibels.softWhite,
