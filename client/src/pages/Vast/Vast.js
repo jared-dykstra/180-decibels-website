@@ -1,59 +1,49 @@
-import { without as _without } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  Chip,
-  Button,
-  Grid,
-  FormControl,
-  Input,
-  InputLabel,
-  Select,
-  MenuItem
-} from '@material-ui/core'
+import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import { Template } from 'components'
 
 import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
-import {
-  load,
-  layout,
-  addNode,
-  setSelectedNodeTypes
-} from 'reduxStore/vast/vastActions'
-import {
-  NODE_TYPE_ACCOUNTABILITY,
-  NODE_TYPE_PERSON,
-  NODE_TYPE_PRIORITY
-} from 'reduxStore/vast/vastConstants'
 
 import pageStyles from '../pageStyles'
-import Graph from './Graph'
+import GraphTab from './GraphTab'
 
-const NODE_TYPE_LABELS = {
-  [NODE_TYPE_ACCOUNTABILITY]: 'Accountability',
-  [NODE_TYPE_PERSON]: 'Person',
-  [NODE_TYPE_PRIORITY]: 'Priority'
+function TabContainer({ className, ...props }) {
+  return (
+    <Typography
+      component="div"
+      className={className}
+      style={{
+        padding: 8 * 3,
+        backgroundColor: 'green'
+      }}
+    >
+      {props.children}
+    </Typography>
+  )
+}
+
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
 const styles = theme => ({
   ...pageStyles({ theme, fullWidth: true, pagePadding: false }),
-  chips: {
+  root2: {
     display: 'flex',
-    flexWrap: 'wrap'
+    // Note: The following style is for IE only, which doesn't seem to respect backgroundColor: transparent
+    '@media all and (-ms-high-contrast: none), (-ms-high-contrast: active)': {
+      minHeight: 'calc(100vh - 70px)' // <== IE
+    },
+    flexDirection: 'column'
   },
-  chip: {
-    margin: theme.spacing.unit / 4
+  tab: {
+    flexGrow: '1'
   },
-  graphContainer: {
-    position: 'relative'
-  },
-  controls: {
-    position: 'absolute',
-    top: '0'
-  }
+  appBar: {}
 })
 
 class Vast extends PureComponent {
@@ -61,95 +51,71 @@ class Vast extends PureComponent {
     title: PropTypes.string.isRequired,
     selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
     doLoad: PropTypes.func.isRequired,
-    doAddNode: PropTypes.func.isRequired,
-    doSetSelectedNodeTypes: PropTypes.func.isRequired
+    classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
     super(props)
     const { doLoad } = this.props
     doLoad()
+    this.state = {
+      value: 0
+    }
   }
 
-  handleRemoveNodeType = value => {
-    const { selectedNodeTypes, doSetSelectedNodeTypes } = this.props
-    doSetSelectedNodeTypes(_without(selectedNodeTypes, value))
+  handleChange = (event, value) => {
+    this.setState({ value })
   }
 
   render() {
-    const {
-      title,
-      location,
-      selectedNodeTypes,
-      doAddNode,
-      doLayout,
-      doSetSelectedNodeTypes,
-      classes
-    } = this.props
+    const { title, location, classes } = this.props
+    const { value } = this.state
     return (
       <Template
         {...{
           title,
           location,
-          className: classes.root,
+          className: `${classes.root} ${classes.root2}`,
           elevation: 0
         }}
       >
-        <div className={classes.graphContainer}>
-          <Graph />
-          <Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="flex-end"
-            className={classes.controls}
+        {value === 0 && <GraphTab className={classes.tab} />}
+        {value === 1 && (
+          <TabContainer className={classes.tab}>Item Two</TabContainer>
+        )}
+        {value === 2 && (
+          <TabContainer className={classes.tab}>Item Three</TabContainer>
+        )}
+        {value === 3 && (
+          <TabContainer className={classes.tab}>Item Four</TabContainer>
+        )}
+        {value === 4 && (
+          <TabContainer className={classes.tab}>Item Five</TabContainer>
+        )}
+        {value === 5 && (
+          <TabContainer className={classes.tab}>Item Six</TabContainer>
+        )}
+        {value === 6 && (
+          <TabContainer className={classes.tab}>Item Seven</TabContainer>
+        )}
+        <AppBar position="static" color="default" className={classes.appBar}>
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="scrollable"
+            scrollButtons="auto"
           >
-            <Grid item>
-              <FormControl>
-                <Button variant="contained" onClick={() => doLayout()}>
-                  Layout
-                </Button>
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl>
-                <Button variant="contained" onClick={() => doAddNode()}>
-                  Add Priority
-                </Button>
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl>
-                <InputLabel htmlFor="input-node-types">View</InputLabel>
-                <Select
-                  multiple
-                  value={selectedNodeTypes}
-                  onChange={e => doSetSelectedNodeTypes(e.target.value)}
-                  input={<Input id="select-multiple-chip" />}
-                  renderValue={selected => (
-                    <div className={classes.chips}>
-                      {selected.map(value => (
-                        <Chip
-                          key={value}
-                          label={value}
-                          className={classes.chip}
-                          onDelete={() => this.handleRemoveNodeType(value)}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  // MenuProps={MenuProps}
-                >
-                  {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
-                    <MenuItem key={k} value={k}>
-                      {v}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </div>
+            <Tab label="Item One" />
+            <Tab label="Item Two" />
+            <Tab label="Item Three" />
+            <Tab label="Item Four" />
+            <Tab label="Item Five" />
+            <Tab label="Item Six" />
+            <Tab label="Item Seven" />
+          </Tabs>
+        </AppBar>
       </Template>
     )
   }
@@ -160,10 +126,6 @@ export default connect(
     selectedNodeTypes: selectedNodeTypesSelector(state)
   }),
   dispatch => ({
-    doLoad: () => dispatch(load()),
-    doLayout: () => dispatch(layout()),
-    doAddNode: () => dispatch(addNode()),
-    doSetSelectedNodeTypes: nodeTypes =>
-      dispatch(setSelectedNodeTypes(nodeTypes))
+    doLoad: () => {} // dispatch(load())
   })
-)(withStyles(styles, { withTheme: true })(Vast))
+)(withStyles(styles)(Vast))

@@ -17,6 +17,12 @@ const styles = theme => {
       '& .video-react, .video-react-poster': {
         backgroundColor: 'transparent !important'
       },
+      // Note: The following style is for IE only, which doesn't seem to respect backgroundColor: transparent
+      '@media all and (-ms-high-contrast: none), (-ms-high-contrast: active)': {
+        '& .video-react, .video-react-poster': {
+          backgroundColor: '#fff !important'
+        }
+      },
       '& .video-react .video-react-control-bar': {
         display: 'flex !important',
         fontFamily: theme.decibels.fontFamily,

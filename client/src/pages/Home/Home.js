@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Fab, Grid, Hidden, Paper, Typography } from '@material-ui/core'
+import { Fab, Grid, Hidden, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 // import NavigationIcon from '@material-ui/icons/Navigation'
@@ -31,7 +31,7 @@ import TeamIcon from './TeamIcon'
 const styles = theme => ({
   ...pageStyles({ theme, pagePadding: false }),
   aboveTheFold: {
-    minHeight: 'calc(100vh - 64px)', // AppBar is assumed to be 64px tall
+    minHeight: 'calc(100vh - 70px)', // AppBar is assumed to be 70px tall
     display: 'flex',
     flexDirection: 'column'
   },

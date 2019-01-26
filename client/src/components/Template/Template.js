@@ -8,7 +8,14 @@ import { Header, Footer } from 'components'
 
 const styles = theme => ({
   '@global': {
+    html: {
+      height: '100%'
+    },
+    '#root': {
+      height: '100%'
+    },
     body: {
+      height: '100%',
       fontFamily: theme.decibels.fontFamily,
       lineHeight: '1.75em',
       '& a': {
@@ -25,8 +32,13 @@ const styles = theme => ({
       }
     }
   },
+  flexContainer: {
+    minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   layout: {
-    /* Required for global to work */
+    flexGrow: '1'
   }
 })
 
@@ -64,12 +76,15 @@ const Template = ({
               */}
     </Helmet>,
     <CssBaseline key="baseline" />,
-    <Header key="header" />,
-    <main key="body" className={classes.layout}>
-      <Paper square {...{ className, elevation }}>
+    <div key="main" className={classes.flexContainer}>
+      <Header />
+      <Paper
+        square
+        {...{ className: `${classes.layout} ${className}`, elevation }}
+      >
         {children}
       </Paper>
-    </main>,
+    </div>,
     <Footer key="footer" />
   ]
 

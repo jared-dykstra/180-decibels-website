@@ -12,7 +12,12 @@ class Graph extends PureComponent {
       unmount: PropTypes.func.isRequired,
       resize: PropTypes.func.isRequired
     }).isRequired,
-    doLayout: PropTypes.func.isRequired
+    doLayout: PropTypes.func.isRequired,
+    className: PropTypes.string
+  }
+
+  static defaultProps = {
+    className: ''
   }
 
   constructor(props) {
@@ -45,12 +50,14 @@ class Graph extends PureComponent {
   }
 
   render() {
+    const { className } = this.props
     return (
       <div
         style={{
-          // TODO: How to avoid a fixed height?
-          height: '100vh'
+          height: '100%',
+          width: '100%'
         }}
+        className={className}
         ref={ref => {
           this.ref = ref
         }}
