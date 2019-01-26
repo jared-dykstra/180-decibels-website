@@ -11,7 +11,7 @@ import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
 
-function TabContainer({ className, ...props }) {
+function TabContainer({ className, children, ...props }) {
   return (
     <Typography
       component="div"
@@ -21,12 +21,13 @@ function TabContainer({ className, ...props }) {
         backgroundColor: 'green'
       }}
     >
-      {props.children}
+      {children}
     </Typography>
   )
 }
 
 TabContainer.propTypes = {
+  className: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
 }
 

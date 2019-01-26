@@ -24,24 +24,12 @@ export const graphLayoutSelector = createSelector(
   vast => vast.graphLayout
 )
 
-const getNodesSelector = createSelector(
-  vastSelector,
-  vast => vast.nodes
-)
+// export const getNodesSelector = createSelector(
+//   vastSelector,
+//   vast => vast.nodes
+// )
 
-export const getEdgesSelector = createSelector(
-  vastSelector,
-  vast => vast.edges
-)
-
-export const makeGetFilteredNodesSelector = () => {
-  console.log('JARED - makeGetFilteredNodesSelector')
-  return createSelector(
-    getNodesSelector,
-    prefsSelector,
-    (nodes, prefs) => {
-      console.log('JARED - getFilteredNodesSelector')
-      return nodes
-    }
-  )
-}
+// export const getEdgesSelector = createSelector(
+//   vastSelector,
+//   vast => vast.edges
+// )
