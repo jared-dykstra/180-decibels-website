@@ -7,7 +7,8 @@ import GraphControls from './GraphControls'
 
 const styles = theme => ({
   graphContainer: {
-    position: 'relative'
+    position: 'relative',
+    overdlow: 'hidden'
   },
   graph: {
     position: 'absolute',
