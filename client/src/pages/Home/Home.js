@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Fab, Grid, Hidden, Typography } from '@material-ui/core'
+import { IconButton, Fab, Grid, Hidden, Typography } from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { withStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 // import NavigationIcon from '@material-ui/icons/Navigation'
@@ -27,6 +28,8 @@ import pageStyles from '../pageStyles'
 
 import bannerImage from './noisy-kid.jpg'
 import TeamIcon from './TeamIcon'
+
+const introId = 'intro'
 
 const styles = theme => ({
   ...pageStyles({ theme, pagePadding: false }),
@@ -96,8 +99,8 @@ const styles = theme => ({
     paddingLeft: '1em',
     paddingRight: '1em'
   },
-  fab: {
-    marginBottom: '2em'
+  button: {
+    marginBottom: '1em'
   },
   quoteRight: {
     marginLeft: '1em'
@@ -165,7 +168,7 @@ export class Home extends PureComponent {
                 color="primary"
                 variant="extended"
                 size="large"
-                className={classes.fab}
+                className={classes.button}
                 component={Link}
                 to={ROUTE_HELP_MY_TEAM}
               >
@@ -173,10 +176,23 @@ export class Home extends PureComponent {
                 Assess Your Team
               </Fab>
             </Grid>
+            <Grid item>
+              <IconButton
+                className={classes.button}
+                onClick={() => {
+                  const el = document.getElementById(introId)
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }
+                }}
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </Grid>
           </Grid>
         </section>
 
-        <section id="intro">
+        <section id={introId}>
           <Grid container className={classes.videoRow}>
             <Hidden xsDown>
               <Grid item xs={12} sm={4}>
