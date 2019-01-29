@@ -18,6 +18,7 @@ import {
 import { withStyles } from '@material-ui/core/styles'
 import CreateIcon from '@material-ui/icons/NoteAdd'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import MenuIcon from '@material-ui/icons/Menu'
 
 import { Template } from 'components'
 
@@ -69,6 +70,7 @@ class Vast extends PureComponent {
     super(props)
     const { doCreateView } = this.props
     this.changeButtonAnchorEls = {}
+    this.allButtonAnchorEl = null
     this.newButtonAnchorEl = null
     const view = {
       id: uuid(),
@@ -82,6 +84,7 @@ class Vast extends PureComponent {
     doCreateView(view)
     this.state = {
       viewId: view.id,
+      menuAllOpen: false,
       menuNewOpen: false,
       menuChangeOpen: null,
       renaming: null
@@ -94,9 +97,11 @@ class Vast extends PureComponent {
   }
 
   handleMenuChangeToggle = (e, id) => {
-    const { menuChangeOpen } = this.state
-    const isOpen = menuChangeOpen !== null
-    this.setState(state => ({ menuChangeOpen: isOpen ? null : id }))
+    this.setState(state => {
+      const { menuChangeOpen } = state
+      const isOpen = menuChangeOpen !== null
+      return { menuChangeOpen: isOpen ? null : id }
+    })
   }
 
   handleMenuChangeClose = (event, id) => {
@@ -164,14 +169,36 @@ class Vast extends PureComponent {
       ]
     }
     doCreateView(view)
-    this.setState({ viewId: view.id, menuNewOpen: false })
+    this.setState((state, props) => ({ viewId: view.id, menuNewOpen: false }))
   }
   // End NewMenu handlers
 
+  // Begin AllMenu handlers
+  handleMenuAllToggle = () => {
+    this.setState(state => ({ menuAllOpen: !state.menuAllOpen }))
+  }
+
+  handleMenuAllClose = event => {
+    if (this.allButtonAnchorEl.contains(event.target)) {
+      return
+    }
+    this.setState({ menuAllOpen: false })
+  }
+
+  // End AllMenu handlers
+
   render() {
     const { title, location, views, classes } = this.props
-    const { viewId, menuNewOpen, menuChangeOpen, renaming } = this.state
+    const {
+      viewId,
+      menuAllOpen,
+      menuNewOpen,
+      menuChangeOpen,
+      renaming
+    } = this.state
     const menuElevation = 2
+    const newMenuId = 'new-menu-popover'
+    const allMenuId = 'all-menu-popover'
     return (
       <Template
         {...{
@@ -190,17 +217,18 @@ class Vast extends PureComponent {
           <Toolbar variant="dense" disableGutters>
             <IconButton
               color="secondary"
-              aria-label="NewMenu"
+              aria-label="New Tab"
               buttonRef={node => {
                 this.newButtonAnchorEl = node
               }}
-              aria-owns={menuNewOpen ? 'menu-list-grow' : undefined}
+              aria-owns={menuNewOpen ? newMenuId : undefined}
               aria-haspopup="true"
               onClick={this.handleMenuNewToggle}
             >
               <CreateIcon />
             </IconButton>
             <Popover
+              id={newMenuId}
               elevation={menuElevation}
               open={menuNewOpen}
               onClose={this.handleMenuNewClose}
@@ -236,6 +264,52 @@ class Vast extends PureComponent {
                 </MenuList>
               </nav>
             </Popover>
+
+            <IconButton
+              color="secondary"
+              aria-label="All Tabs"
+              buttonRef={node => {
+                this.allButtonAnchorEl = node
+              }}
+              aria-owns={menuAllOpen ? allMenuId : undefined}
+              aria-haspopup="true"
+              onClick={this.handleMenuAllToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Popover
+              id={allMenuId}
+              elevation={menuElevation}
+              open={menuAllOpen}
+              onClose={this.handleMenuAllClose}
+              anchorEl={this.allButtonAnchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+            >
+              <nav>
+                <MenuList>
+                  {Object.entries(views)
+                    .reverse()
+                    .map(([id, { name }]) => (
+                      <MenuItem
+                        onClick={e => {
+                          this.handleChangeTab(e, id)
+                          this.handleMenuAllClose(e)
+                        }}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                </MenuList>
+              </nav>
+            </Popover>
+
             <Tabs
               value={viewId}
               onChange={this.handleChangeTab}
@@ -243,7 +317,7 @@ class Vast extends PureComponent {
             >
               {Object.entries(views).map(([id, view]) => {
                 const { name } = view
-
+                const popoverId = `change-menu-${id}`
                 const Renaming = (
                   <TextField
                     type="text"
@@ -266,16 +340,19 @@ class Vast extends PureComponent {
                       buttonRef={node => {
                         this.changeButtonAnchorEls[id] = node
                       }}
-                      aria-owns={
-                        menuNewOpen ? `menu-list-grow-${id}` : undefined
-                      }
+                      aria-owns={menuNewOpen ? popoverId : undefined}
                       aria-haspopup="true"
-                      onClick={e => this.handleMenuChangeToggle(e, id)}
+                      onClick={e => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                        this.handleMenuChangeToggle(e, id)
+                      }}
                     >
                       <ExpandMoreIcon />
                     </Button>
 
                     <Popover
+                      id={popoverId}
                       elevation={menuElevation}
                       open={menuChangeOpen === id}
                       onClose={e => this.handleMenuChangeClose(e, id)}
