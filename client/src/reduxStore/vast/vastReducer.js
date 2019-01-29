@@ -8,7 +8,10 @@ import {
   SET_SELECTED_NODE_TYPES,
   CLASS_PERSON,
   CLASS_ACCOUNTABILITY,
-  CLASS_PRIORITY
+  CLASS_PRIORITY,
+  NODE_TYPE_PERSON,
+  NODE_TYPE_ACCOUNTABILITY,
+  NODE_TYPE_PRIORITY
 } from './vastConstants'
 
 const updateStyle = ({ graph, selectedNodeTypes }) => {
@@ -62,60 +65,29 @@ const updateLayout = state => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_VIEW: {
-      const { id, name, nodeTypes } = action.payload
-      const nodes = [
-        {
-          data: {
-            id: '1',
-            label: 'Person A'
-          },
-          classes: [CLASS_PERSON]
-        },
-        {
-          data: {
-            id: '2',
-            label: 'Person B'
-          },
-          classes: [CLASS_PERSON]
-        },
-        {
-          data: {
-            id: '3',
-            label: 'Accountability 1'
-          },
-          classes: [CLASS_ACCOUNTABILITY]
-        },
-        {
-          data: {
-            id: '4',
-            label: 'Accountability 2'
-          },
-          classes: [CLASS_ACCOUNTABILITY]
-        },
-        {
-          data: {
-            id: '5',
-            label: 'Accountability 3'
-          },
-          classes: [CLASS_ACCOUNTABILITY]
-        }
-      ]
-
-      const edges = [
-        { data: { id: 'e13', source: '1', target: '3' } },
-        { data: { id: 'e12', source: '1', target: '2' } },
-        { data: { id: 'e24', source: '2', target: '4' } },
-        { data: { id: 'e15', source: '1', target: '5' } },
-        { data: { id: 'e25', source: '2', target: '5' } }
-      ]
-
-      const { graph } = state
+      const { id: viewId, name, nodeTypes } = action.payload
+      const { nodes, edges, graph } = state
       graph.add([
-        ...nodes.map(n => ({ group: 'nodes', ...n })),
-        ...edges.map(e => ({ group: 'edges', ...e }))
+        ...nodes.map(({ id, label, type }) => {
+          const getClass = () => {
+            switch (type) {
+              case NODE_TYPE_PERSON:
+                return CLASS_PERSON
+              case NODE_TYPE_ACCOUNTABILITY:
+                return CLASS_ACCOUNTABILITY
+              case NODE_TYPE_PRIORITY:
+                return CLASS_PRIORITY
+              default:
+                throw new Error(`Unexpected node type: "${type}"`)
+            }
+          }
+          const className = getClass()
+          return { group: 'nodes', data: { id, label }, classes: [className] }
+        }),
+        ...edges.map(e => ({ group: 'edges', data: e }))
       ])
-
-      state.views[id] = { name }
+      // updateStyle({ graph, selectedNodeTypes: nodeTypes })
+      state.views[viewId] = { name }
       return state
     }
 
