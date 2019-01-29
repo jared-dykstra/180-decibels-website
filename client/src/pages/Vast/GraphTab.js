@@ -28,14 +28,15 @@ const styles = theme => ({
   }
 })
 
-const GraphTab = ({ className, classes }) => (
+const GraphTab = ({ viewId, className, classes }) => (
   <div className={`${className} ${classes.graphContainer}`}>
-    <Graph className={classes.graph} />
-    <GraphControls className={classes.controls} />
+    <Graph viewId={viewId} className={classes.graph} />
+    <GraphControls viewId={viewId} className={classes.controls} />
   </div>
 )
 
 GraphTab.propTypes = {
+  viewId: PropTypes.string.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   className: PropTypes.string
 }

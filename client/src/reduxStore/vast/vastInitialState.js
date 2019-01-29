@@ -57,6 +57,7 @@ const layout = {
 }
 
 export default {
+  views: {},
   graph: cytoscape({
     elements: {
       nodes: [],

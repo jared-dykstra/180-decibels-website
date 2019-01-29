@@ -7,6 +7,9 @@ import { layout } from 'reduxStore/vast/vastActions'
 
 class Graph extends PureComponent {
   static propTypes = {
+    // viewId is used in connect (below)
+    // eslint-disable-next-line react/no-unused-prop-types
+    viewId: PropTypes.string.isRequired,
     graph: PropTypes.shape({
       mount: PropTypes.func.isRequired,
       unmount: PropTypes.func.isRequired,
@@ -67,10 +70,10 @@ class Graph extends PureComponent {
 }
 
 export default connect(
-  state => ({
-    graph: graphSelector(state)
+  (state, props) => ({
+    graph: graphSelector(state, props)
   }),
-  dispatch => ({
-    doLayout: () => dispatch(layout())
+  (dispatch, props) => ({
+    doLayout: () => dispatch(layout(props))
   })
 )(Graph)

@@ -1,35 +1,36 @@
+import uuid from 'uuid/v4'
+import { without as _without } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
+import {
+  AppBar,
+  Button,
+  IconButton,
+  MenuItem,
+  MenuList,
+  Popover,
+  Tab,
+  Tabs,
+  TextField,
+  Toolbar
+} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import CreateIcon from '@material-ui/icons/NoteAdd'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { Template } from 'components'
 
-import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
+import {
+  NODE_TYPE_ACCOUNTABILITY,
+  NODE_TYPE_PERSON,
+  NODE_TYPE_PRIORITY
+} from 'reduxStore/vast/vastConstants'
+import { createView, deleteView } from 'reduxStore/vast/vastActions'
+import { viewsSelector } from 'reduxStore/vast/vastSelectors'
 
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
-
-function TabContainer({ className, children, ...props }) {
-  return (
-    <Typography
-      component="div"
-      className={className}
-      style={{
-        padding: 8 * 3,
-        backgroundColor: 'green'
-      }}
-    >
-      {children}
-    </Typography>
-  )
-}
-
-TabContainer.propTypes = {
-  className: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
-}
 
 const styles = theme => ({
   ...pageStyles({ theme, fullWidth: true, pagePadding: false }),
@@ -41,36 +42,136 @@ const styles = theme => ({
     },
     flexDirection: 'column'
   },
-  tab: {
+  graph: {
     flexGrow: '1'
   },
-  appBar: {}
+  appBar: {},
+  search: {
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2
+  }
 })
+
+const MENU_ITEM_RENAME = 'rename'
+const MENU_ITEM_DELETE = 'close'
+const MENU_ITEM_DUPLICATE = 'duplicate'
 
 class Vast extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-    doLoad: PropTypes.func.isRequired,
+    doCreateView: PropTypes.func.isRequired,
+    doDeleteView: PropTypes.func.isRequired,
+    views: PropTypes.object.isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
     super(props)
-    const { doLoad } = this.props
-    doLoad()
+    const { doCreateView } = this.props
+    this.changeButtonAnchorEls = {}
+    this.newButtonAnchorEl = null
+    const view = {
+      id: uuid(),
+      name: 'Everything',
+      nodeTypes: [
+        NODE_TYPE_ACCOUNTABILITY,
+        NODE_TYPE_PERSON,
+        NODE_TYPE_PRIORITY
+      ]
+    }
+    doCreateView(view)
     this.state = {
-      value: 0
+      viewId: view.id,
+      menuNewOpen: false,
+      menuChangeOpen: null,
+      renaming: null
     }
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value })
+  // Begin ChangeMenu handlers
+  handleChangeTab = (event, viewId) => {
+    this.setState(() => ({ viewId }))
   }
 
+  handleMenuChangeToggle = (e, id) => {
+    const { menuChangeOpen } = this.state
+    const isOpen = menuChangeOpen !== null
+    this.setState(state => ({ menuChangeOpen: isOpen ? null : id }))
+  }
+
+  handleMenuChangeClose = (event, id) => {
+    if (this.changeButtonAnchorEls[id].contains(event.target)) {
+      return
+    }
+    this.setState({ menuChangeOpen: null })
+  }
+
+  handleMenuChangeSelect = (e, payload) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { type, id } = payload
+    switch (type) {
+      case MENU_ITEM_RENAME:
+        this.setState(state => ({ renaming: id, menuChangeOpen: null }))
+        break
+      case MENU_ITEM_DELETE: {
+        const { doDeleteView } = this.props
+        this.setState((state, props) => {
+          const { viewId } = state
+          const { views } = props
+          let nextViewId = viewId
+          if (viewId === id) {
+            // Deleting the currently selected View
+            const allViews = Object.keys(views)
+            const allRemainingViews = _without(allViews, id)
+            nextViewId =
+              allRemainingViews.length > 0 ? allRemainingViews[0] : false
+          }
+          return { menuChangeOpen: null, viewId: nextViewId }
+        })
+        doDeleteView({ id })
+        break
+      }
+      case MENU_ITEM_DUPLICATE:
+      default:
+        throw new Error('Not Implemented')
+    }
+  }
+
+  // End ChangeMenu handlers
+
+  // Begin NewMenu handlers
+  handleMenuNewToggle = () => {
+    this.setState(state => ({ menuNewOpen: !state.menuNewOpen }))
+  }
+
+  handleMenuNewClose = event => {
+    if (this.newButtonAnchorEl.contains(event.target)) {
+      return
+    }
+    this.setState({ menuNewOpen: false })
+  }
+
+  handleMenuNewSelect = () => {
+    const { doCreateView } = this.props
+    const view = {
+      id: uuid(),
+      name: 'New View',
+      nodeTypes: [
+        NODE_TYPE_ACCOUNTABILITY,
+        NODE_TYPE_PERSON,
+        NODE_TYPE_PRIORITY
+      ]
+    }
+    doCreateView(view)
+    this.setState({ viewId: view.id, menuNewOpen: false })
+  }
+  // End NewMenu handlers
+
   render() {
-    const { title, location, classes } = this.props
-    const { value } = this.state
+    const { title, location, views, classes } = this.props
+    const { viewId, menuNewOpen, menuChangeOpen, renaming } = this.state
+    const menuElevation = 2
     return (
       <Template
         {...{
@@ -80,42 +181,164 @@ class Vast extends PureComponent {
           elevation: 0
         }}
       >
-        {value === 0 && <GraphTab className={classes.tab} />}
-        {value === 1 && (
-          <TabContainer className={classes.tab}>Item Two</TabContainer>
-        )}
-        {value === 2 && (
-          <TabContainer className={classes.tab}>Item Three</TabContainer>
-        )}
-        {value === 3 && (
-          <TabContainer className={classes.tab}>Item Four</TabContainer>
-        )}
-        {value === 4 && (
-          <TabContainer className={classes.tab}>Item Five</TabContainer>
-        )}
-        {value === 5 && (
-          <TabContainer className={classes.tab}>Item Six</TabContainer>
-        )}
-        {value === 6 && (
-          <TabContainer className={classes.tab}>Item Seven</TabContainer>
+        {viewId ? (
+          <GraphTab viewId={viewId} className={classes.graph} />
+        ) : (
+          <div className={classes.graph} />
         )}
         <AppBar position="static" color="default" className={classes.appBar}>
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-          >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
-            <Tab label="Item Four" />
-            <Tab label="Item Five" />
-            <Tab label="Item Six" />
-            <Tab label="Item Seven" />
-          </Tabs>
+          <Toolbar variant="dense" disableGutters>
+            <IconButton
+              color="secondary"
+              aria-label="NewMenu"
+              buttonRef={node => {
+                this.newButtonAnchorEl = node
+              }}
+              aria-owns={menuNewOpen ? 'menu-list-grow' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleMenuNewToggle}
+            >
+              <CreateIcon />
+            </IconButton>
+            <Popover
+              elevation={menuElevation}
+              open={menuNewOpen}
+              onClose={this.handleMenuNewClose}
+              anchorEl={this.newButtonAnchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+            >
+              <nav>
+                <MenuList>
+                  <MenuItem onClick={this.handleMenuNewSelect}>
+                    Everything
+                  </MenuItem>
+                  <MenuItem disabled onClick={this.handleMenuNewSelect}>
+                    People
+                  </MenuItem>
+                  <MenuItem disabled onClick={this.handleMenuNewSelect}>
+                    Accountabilities
+                  </MenuItem>
+                  <MenuItem disabled onClick={this.handleMenuNewSelect}>
+                    Priorities
+                  </MenuItem>
+                  <TextField
+                    label="Search"
+                    type="search"
+                    className={classes.search}
+                  />
+                </MenuList>
+              </nav>
+            </Popover>
+            <Tabs
+              value={viewId}
+              onChange={this.handleChangeTab}
+              variant="scrollable"
+            >
+              {Object.entries(views).map(([id, view]) => {
+                const { name } = view
+
+                const Renaming = (
+                  <TextField
+                    type="text"
+                    autoFocus
+                    required
+                    margin="none"
+                    placeholder={name}
+                    // variant="outlined"
+                  />
+                )
+
+                const Regular = (
+                  <div>
+                    {name}
+                    <Button
+                      color="secondary"
+                      disableRipple
+                      size="small"
+                      aria-label={`${name}Change Menu`}
+                      buttonRef={node => {
+                        this.changeButtonAnchorEls[id] = node
+                      }}
+                      aria-owns={
+                        menuNewOpen ? `menu-list-grow-${id}` : undefined
+                      }
+                      aria-haspopup="true"
+                      onClick={e => this.handleMenuChangeToggle(e, id)}
+                    >
+                      <ExpandMoreIcon />
+                    </Button>
+
+                    <Popover
+                      elevation={menuElevation}
+                      open={menuChangeOpen === id}
+                      onClose={e => this.handleMenuChangeClose(e, id)}
+                      anchorEl={this.changeButtonAnchorEls[id]}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                      }}
+                    >
+                      <nav>
+                        <MenuList>
+                          <MenuItem
+                            onClick={e =>
+                              this.handleMenuChangeSelect(e, {
+                                type: MENU_ITEM_DELETE,
+                                id
+                              })
+                            }
+                          >
+                            Delete
+                          </MenuItem>
+                          <MenuItem
+                            disabled
+                            onClick={e =>
+                              this.handleMenuChangeSelect(e, {
+                                type: MENU_ITEM_DUPLICATE,
+                                id
+                              })
+                            }
+                          >
+                            Duplicate
+                          </MenuItem>
+                          <MenuItem
+                            onClick={e =>
+                              this.handleMenuChangeSelect(e, {
+                                type: MENU_ITEM_RENAME,
+                                id
+                              })
+                            }
+                          >
+                            Rename...
+                          </MenuItem>
+                        </MenuList>
+                      </nav>
+                    </Popover>
+                  </div>
+                )
+
+                return (
+                  <Tab
+                    key={id}
+                    component="div"
+                    label={renaming === id ? Renaming : Regular}
+                    value={id}
+                  />
+                )
+              })}
+            </Tabs>
+          </Toolbar>
         </AppBar>
       </Template>
     )
@@ -124,9 +347,10 @@ class Vast extends PureComponent {
 
 export default connect(
   state => ({
-    selectedNodeTypes: selectedNodeTypesSelector(state)
+    views: viewsSelector(state)
   }),
   dispatch => ({
-    doLoad: () => {} // dispatch(load())
+    doCreateView: args => dispatch(createView(args)),
+    doDeleteView: args => dispatch(deleteView(args))
   })
 )(withStyles(styles)(Vast))

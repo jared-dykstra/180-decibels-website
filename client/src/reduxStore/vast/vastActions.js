@@ -1,7 +1,8 @@
 import {
+  CREATE_VIEW,
+  DELETE_VIEW,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
-  LOAD,
   LAYOUT
 } from './vastConstants'
 
@@ -11,12 +12,17 @@ export const setSelectedNodeTypes = nodeTypes => ({
   payload: { nodeTypes }
 })
 
-// Actions affecting contents of the graph
-export const load = () => ({
-  type: LOAD,
-  payload: {}
+export const createView = ({ id, name, nodeTypes }) => ({
+  type: CREATE_VIEW,
+  payload: { id, name, nodeTypes }
 })
 
+export const deleteView = ({ id }) => ({
+  type: DELETE_VIEW,
+  payload: { id }
+})
+
+// Actions affecting contents of the graph
 export const layout = () => ({
   type: LAYOUT,
   payload: {}

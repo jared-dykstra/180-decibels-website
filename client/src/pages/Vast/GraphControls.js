@@ -16,7 +16,6 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
 import {
-  load,
   layout,
   addNode,
   setSelectedNodeTypes
@@ -45,8 +44,10 @@ const styles = theme => ({
 
 class GraphTab extends PureComponent {
   static propTypes = {
+    // viewId is used in connect (below)
+    // eslint-disable-next-line react/no-unused-prop-types
+    viewId: PropTypes.string.isRequired,
     selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-    doLoad: PropTypes.func.isRequired,
     doAddNode: PropTypes.func.isRequired,
     doLayout: PropTypes.func.isRequired,
     doSetSelectedNodeTypes: PropTypes.func.isRequired,
@@ -56,12 +57,6 @@ class GraphTab extends PureComponent {
 
   static defaultProps = {
     className: ''
-  }
-
-  constructor(props) {
-    super(props)
-    const { doLoad } = this.props
-    doLoad()
   }
 
   handleRemoveNodeType = value => {
@@ -136,14 +131,13 @@ class GraphTab extends PureComponent {
 }
 
 export default connect(
-  state => ({
-    selectedNodeTypes: selectedNodeTypesSelector(state)
+  (state, props) => ({
+    selectedNodeTypes: selectedNodeTypesSelector(state, props)
   }),
-  dispatch => ({
-    doLoad: () => dispatch(load()),
-    doLayout: () => dispatch(layout()),
-    doAddNode: () => dispatch(addNode()),
+  (dispatch, props) => ({
+    doLayout: () => dispatch(layout(props.viewId)),
+    doAddNode: () => dispatch(addNode(props.viewId)),
     doSetSelectedNodeTypes: nodeTypes =>
-      dispatch(setSelectedNodeTypes(nodeTypes))
+      dispatch(setSelectedNodeTypes(nodeTypes, props.viewId))
   })
 )(withStyles(styles, { withTheme: true })(GraphTab))

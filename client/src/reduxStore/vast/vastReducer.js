@@ -1,7 +1,8 @@
 import { includes as _includes } from 'lodash'
 import initialState from './vastInitialState'
 import {
-  LOAD,
+  CREATE_VIEW,
+  DELETE_VIEW,
   LAYOUT,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
@@ -60,7 +61,8 @@ const updateLayout = state => {
 // See: http://visjs.org/docs/data/dataset.html?keywords=DataSet
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LOAD: {
+    case CREATE_VIEW: {
+      const { id, name, nodeTypes } = action.payload
       const nodes = [
         {
           data: {
@@ -113,6 +115,13 @@ export default (state = initialState, action) => {
         ...edges.map(e => ({ group: 'edges', ...e }))
       ])
 
+      state.views[id] = { name }
+      return state
+    }
+
+    case DELETE_VIEW: {
+      const { id } = action.payload
+      delete state.views[id]
       return state
     }
 
