@@ -7,7 +7,8 @@ import {
   NODE_TYPE_PERSON,
   CLASS_ACCOUNTABILITY,
   CLASS_PERSON,
-  CLASS_PRIORITY
+  CLASS_PRIORITY,
+  CLASS_HIDDEN
 } from './vastConstants'
 
 // TODO: Is there a better place for this?
@@ -50,6 +51,12 @@ export default {
         selector: `node.${CLASS_PRIORITY}`,
         style: {
           'background-color': '#0000FF'
+        }
+      },
+      {
+        selector: `.${CLASS_HIDDEN}`,
+        style: {
+          display: 'none'
         }
       },
       {

@@ -2,12 +2,16 @@ import { createSelector } from 'reselect'
 
 import { mountPoint } from '.'
 
-const vastSelector = (state, props) => state[mountPoint]
-const viewIdSelector = (state, props) => props.viewId
+const vastSelector = state => state[mountPoint]
 
 const viewsSelector = createSelector(
   vastSelector,
   vast => vast.views
+)
+
+export const activeViewIdSelector = createSelector(
+  vastSelector,
+  vast => vast.viewer.activeView
 )
 
 // Exposes a limited amount of data--enough to generate list of tabs
@@ -24,26 +28,26 @@ export const viewListSelector = createSelector(
 
 export const graphSelector = createSelector(
   vastSelector,
-  viewIdSelector,
+  activeViewIdSelector,
   (vast, viewId) =>
     // console.log(`graphSelector viewId=${viewId}`)
     vast.graphs[viewId]
 )
 
-const currentViewSelector = createSelector(
+const activeViewSelector = createSelector(
   vastSelector,
-  viewIdSelector,
+  activeViewIdSelector,
   (vast, viewId) =>
     // console.log(`currentViewSelector viewId=${viewId}`)
     vast.views[viewId]
 )
 
 export const selectedNodeTypesSelector = createSelector(
-  currentViewSelector,
-  view => view.selectedNodeTypes
+  activeViewSelector,
+  view => (view ? view.selectedNodeTypes : [])
 )
 
 export const graphLayoutSelector = createSelector(
-  currentViewSelector,
+  activeViewSelector,
   view => view.layout
 )

@@ -14,9 +14,9 @@ export const createView = ({ id, name, nodeTypes }) => ({
   payload: { viewId: id, name, nodeTypes }
 })
 
-export const deleteView = ({ id }) => ({
+export const deleteView = ({ viewId }) => ({
   type: DELETE_VIEW,
-  payload: { viewId: id }
+  payload: { viewId }
 })
 
 export const setActiveView = ({ viewId }) => ({

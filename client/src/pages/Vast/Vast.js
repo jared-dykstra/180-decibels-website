@@ -1,5 +1,4 @@
 import uuid from 'uuid/v4'
-import { filter as _filter } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -32,7 +31,10 @@ import {
   deleteView,
   setActiveView
 } from 'reduxStore/vast/vastActions'
-import { viewListSelector } from 'reduxStore/vast/vastSelectors'
+import {
+  viewListSelector,
+  activeViewIdSelector
+} from 'reduxStore/vast/vastSelectors'
 
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
@@ -64,6 +66,7 @@ const MENU_ITEM_DUPLICATE = 'duplicate'
 class Vast extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
+    viewId: PropTypes.string,
     doCreateView: PropTypes.func.isRequired,
     doDeleteView: PropTypes.func.isRequired,
     doSetActiveView: PropTypes.func.isRequired,
@@ -76,6 +79,10 @@ class Vast extends PureComponent {
     classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
+  static defaultProps = {
+    viewId: false
+  }
+
   constructor(props) {
     super(props)
     this.changeButtonAnchorEls = {}
@@ -83,7 +90,6 @@ class Vast extends PureComponent {
     this.newButtonAnchorEl = null
     this.counter = 0
     this.state = {
-      viewId: false, // <== No tab selected
       menuAllOpen: false,
       menuNewOpen: false,
       menuChangeOpen: null,
@@ -95,7 +101,6 @@ class Vast extends PureComponent {
   handleChangeTab = (event, viewId) => {
     const { doSetActiveView } = this.props
     doSetActiveView(viewId)
-    this.setState(() => ({ viewId }))
   }
 
   handleMenuChangeToggle = (e, id) => {
@@ -123,19 +128,7 @@ class Vast extends PureComponent {
         break
       case MENU_ITEM_DELETE: {
         const { doDeleteView } = this.props
-        this.setState((state, props) => {
-          const { viewId } = state
-          const { viewList } = props
-          let nextViewId = viewId
-          if (viewId === id) {
-            // Deleting the currently selected View
-            const allRemainingViews = _filter(viewList, v => v.id !== id)
-            nextViewId =
-              allRemainingViews.length > 0 ? allRemainingViews[0].id : false
-          }
-          return { menuChangeOpen: null, viewId: nextViewId }
-        })
-        doDeleteView({ id })
+        doDeleteView({ viewId: id })
         break
       }
       case MENU_ITEM_DUPLICATE:
@@ -170,7 +163,7 @@ class Vast extends PureComponent {
       ]
     }
     doCreateView(view)
-    this.setState((state, props) => ({ viewId: view.id, menuNewOpen: false }))
+    this.setState(() => ({ menuNewOpen: false }))
   }
   // End NewMenu handlers
 
@@ -189,14 +182,8 @@ class Vast extends PureComponent {
   // End AllMenu handlers
 
   render() {
-    const { title, location, viewList, classes } = this.props
-    const {
-      viewId,
-      menuAllOpen,
-      menuNewOpen,
-      menuChangeOpen,
-      renaming
-    } = this.state
+    const { title, location, viewId, viewList, classes } = this.props
+    const { menuAllOpen, menuNewOpen, menuChangeOpen, renaming } = this.state
     const menuElevation = 2
     const newMenuId = 'new-menu-popover'
     const allMenuId = 'all-menu-popover'
@@ -428,7 +415,8 @@ class Vast extends PureComponent {
 
 export default connect(
   (state, props) => ({
-    viewList: viewListSelector(state, props)
+    viewList: viewListSelector(state, props),
+    viewId: activeViewIdSelector(state, props)
   }),
   dispatch => ({
     doCreateView: args => dispatch(createView(args)),

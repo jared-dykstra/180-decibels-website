@@ -1,4 +1,4 @@
-import { includes as _includes } from 'lodash'
+import { includes as _includes, filter as _filter } from 'lodash'
 import cytoscape from 'cytoscape'
 
 import { mountPoint } from '.'
@@ -13,40 +13,20 @@ import {
   CLASS_PERSON,
   CLASS_ACCOUNTABILITY,
   CLASS_PRIORITY,
+  CLASS_HIDDEN,
   NODE_TYPE_PERSON,
   NODE_TYPE_ACCOUNTABILITY,
-  NODE_TYPE_PRIORITY
+  NODE_TYPE_PRIORITY,
+  NODE_TYPE_CLASS_MAP
 } from './vastConstants'
 
-import { graphSelector, graphLayoutSelector } from './vastSelectors'
-
-const getSelectorState = state => ({ [mountPoint]: state })
-
-const updateStyle = ({ graph, selectedNodeTypes }) => {
-  const styleJson = graph.style().json()
-  const newStyleJson = styleJson.map(s => {
-    const { selector, style } = s
-    const getNodeType = () => {
-      const retval = selector.match(/node\.([^.]+)/)
-      return retval ? retval[1] : undefined
-    }
-    const nodeType = getNodeType()
-    if (nodeType) {
-      style.display = !_includes(selectedNodeTypes, nodeType)
-        ? 'none'
-        : undefined
-    }
-
-    return { selector, style }
-  })
-
-  graph
-    .style()
-    .fromJson(newStyleJson)
-    .update()
-
-  return newStyleJson
-}
+import {
+  graphSelector,
+  graphLayoutSelector,
+  viewListSelector,
+  activeViewIdSelector
+  // selectedNodeTypesSelector
+} from './vastSelectors'
 
 // Animates zoom + pan for the viewport
 // const animateFit = ({ graph, duration = 500, padding = 20 }) => {
@@ -64,10 +44,19 @@ const updateStyle = ({ graph, selectedNodeTypes }) => {
 //   )
 // }
 
-// NOTE: action.payload must include `viewId` for this to work
-const runSelector = (selector, state, action) => {
-  const selectorState = getSelectorState(state)
-  return selector(selectorState, action.payload)
+// Get the results of any selector (avoids repeating logic in the reducer)
+const runSelector = (selector, state) => selector({ [mountPoint]: state })
+
+const setElementVisibility = ({ graph, selectedNodeTypes }) => {
+  // Apply or remove the Hidden class according to selectedNodeTypes
+  Object.entries(NODE_TYPE_CLASS_MAP).forEach(([nodeType, className]) => {
+    const elements = graph.$(`.${className}`)
+    if (!_includes(selectedNodeTypes, nodeType)) {
+      elements.addClass(CLASS_HIDDEN)
+    } else {
+      elements.removeClass(CLASS_HIDDEN)
+    }
+  })
 }
 
 // Note: Nodes and Edges use a *mutable* data structure
@@ -82,19 +71,7 @@ export default (state = initialState, action) => {
       const { style, layout } = defaults
 
       const cyNodes = nodes.map(({ id, label, type }) => {
-        const getClass = () => {
-          switch (type) {
-            case NODE_TYPE_PERSON:
-              return CLASS_PERSON
-            case NODE_TYPE_ACCOUNTABILITY:
-              return CLASS_ACCOUNTABILITY
-            case NODE_TYPE_PRIORITY:
-              return CLASS_PRIORITY
-            default:
-              throw new Error(`Unexpected node type: "${type}"`)
-          }
-        }
-        const className = getClass()
+        const className = NODE_TYPE_CLASS_MAP[type]
         return { group: 'nodes', data: { id, label }, classes: [className] }
       })
 
@@ -108,8 +85,8 @@ export default (state = initialState, action) => {
         style
       })
 
-      // Set the style according to selected node types
-      // updateStyle({ graph, selectedNodeTypes })
+      // Set visibility based on node types
+      setElementVisibility({ graph, selectedNodeTypes })
 
       // Perform an initial layout
       graph.makeLayout(layout).run()
@@ -121,8 +98,8 @@ export default (state = initialState, action) => {
           timestamp: new Date().getTime(),
           name,
           selectedNodeTypes,
-          layout,
-          style
+          layout
+          // style
         }),
         graphs: { ...graphs, [viewId]: graph },
         viewer: { ...state.viewer, activeView: viewId }
@@ -130,10 +107,21 @@ export default (state = initialState, action) => {
     }
 
     case DELETE_VIEW: {
-      const { id } = action.payload
+      const { viewId } = action.payload
+      const activeViewId = runSelector(activeViewIdSelector, state)
+      const viewList = runSelector(viewListSelector, state)
+      let nextViewId = activeViewId
+      if (viewId === activeViewId) {
+        // Deleting the currently selected View
+        const allRemainingViews = _filter(viewList, v => v.id !== viewId)
+        nextViewId =
+          allRemainingViews.length > 0 ? allRemainingViews[0].id : null
+      }
+
       return {
         ...state,
-        views: state.views.without(id)
+        views: state.views.without(viewId),
+        viewer: { ...state.viewer, activeView: nextViewId }
       }
     }
 
@@ -148,11 +136,16 @@ export default (state = initialState, action) => {
     // Show / Hide nodes based on their node type
     case SET_SELECTED_NODE_TYPES: {
       const { nodeTypes: selectedNodeTypes, viewId } = action.payload
-      const graph = runSelector(graphSelector, state, action)
-      const style = updateStyle({ graph, selectedNodeTypes })
+      const graph = runSelector(graphSelector, state)
+
+      setElementVisibility({ graph, selectedNodeTypes })
+
       return {
         ...state,
-        views: state.views.setIn([viewId, 'style'], style)
+        views: state.views.setIn(
+          [viewId, 'selectedNodeTypes'],
+          selectedNodeTypes
+        )
       }
     }
 
@@ -173,8 +166,8 @@ export default (state = initialState, action) => {
 
     // Update the layout
     case LAYOUT: {
-      const layout = runSelector(graphLayoutSelector, state, action)
-      const graph = runSelector(graphSelector, state, action)
+      const layout = runSelector(graphLayoutSelector, state)
+      const graph = runSelector(graphSelector, state)
       graph.makeLayout(layout).run()
 
       return state
