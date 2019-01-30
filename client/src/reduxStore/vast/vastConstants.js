@@ -4,6 +4,7 @@ export const SET_SELECTED_NODE_TYPES = 'vast/set-selected-node-types'
 // Actions affecting contents of the graph
 export const CREATE_VIEW = 'vast/create-view'
 export const DELETE_VIEW = 'vast/delete-view'
+export const SET_ACTIVE_VIEW = 'vast/set-active-view'
 export const LAYOUT = 'vast/layout'
 export const ADD_NODE = 'vast/add-node'
 

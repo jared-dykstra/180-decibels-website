@@ -6,6 +6,7 @@ import initialState from './vastInitialState'
 import {
   CREATE_VIEW,
   DELETE_VIEW,
+  SET_ACTIVE_VIEW,
   LAYOUT,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
@@ -113,6 +114,7 @@ export default (state = initialState, action) => {
       // Perform an initial layout
       graph.makeLayout(layout).run()
 
+      // Add the View, Add the Graph, and set the new View to be the active view
       return {
         ...state,
         views: state.views.setIn([viewId], {
@@ -122,7 +124,8 @@ export default (state = initialState, action) => {
           layout,
           style
         }),
-        graphs: { ...graphs, [viewId]: graph }
+        graphs: { ...graphs, [viewId]: graph },
+        viewer: { ...state.viewer, activeView: viewId }
       }
     }
 
@@ -131,6 +134,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         views: state.views.without(id)
+      }
+    }
+
+    case SET_ACTIVE_VIEW: {
+      const { viewId } = action.payload
+      return {
+        ...state,
+        viewer: { ...state.viewer, activeView: viewId }
       }
     }
 

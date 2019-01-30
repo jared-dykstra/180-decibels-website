@@ -27,7 +27,11 @@ import {
   NODE_TYPE_PERSON,
   NODE_TYPE_PRIORITY
 } from 'reduxStore/vast/vastConstants'
-import { createView, deleteView } from 'reduxStore/vast/vastActions'
+import {
+  createView,
+  deleteView,
+  setActiveView
+} from 'reduxStore/vast/vastActions'
 import { viewListSelector } from 'reduxStore/vast/vastSelectors'
 
 import pageStyles from '../pageStyles'
@@ -62,6 +66,7 @@ class Vast extends PureComponent {
     title: PropTypes.string.isRequired,
     doCreateView: PropTypes.func.isRequired,
     doDeleteView: PropTypes.func.isRequired,
+    doSetActiveView: PropTypes.func.isRequired,
     viewList: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -88,6 +93,8 @@ class Vast extends PureComponent {
 
   // Begin ChangeMenu handlers
   handleChangeTab = (event, viewId) => {
+    const { doSetActiveView } = this.props
+    doSetActiveView(viewId)
     this.setState(() => ({ viewId }))
   }
 
@@ -425,6 +432,7 @@ export default connect(
   }),
   dispatch => ({
     doCreateView: args => dispatch(createView(args)),
-    doDeleteView: args => dispatch(deleteView(args))
+    doDeleteView: args => dispatch(deleteView(args)),
+    doSetActiveView: viewId => dispatch(setActiveView({ viewId }))
   })
 )(withStyles(styles)(Vast))

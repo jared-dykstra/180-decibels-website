@@ -20,6 +20,9 @@ export default {
   views: Immutable.from({
     /* Immutable */
   }),
+  viewer: Immutable.from({
+    activeView: null
+  }),
   defaults: Immutable.from({
     style: [
       // the stylesheet for the graph

@@ -1,16 +1,13 @@
 import {
   CREATE_VIEW,
   DELETE_VIEW,
+  SET_ACTIVE_VIEW,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   LAYOUT
 } from './vastConstants'
 
 // Actions affecting ui state
-export const setSelectedNodeTypes = (nodeTypes, { viewId }) => ({
-  type: SET_SELECTED_NODE_TYPES,
-  payload: { nodeTypes, viewId }
-})
 
 export const createView = ({ id, name, nodeTypes }) => ({
   type: CREATE_VIEW,
@@ -20,6 +17,16 @@ export const createView = ({ id, name, nodeTypes }) => ({
 export const deleteView = ({ id }) => ({
   type: DELETE_VIEW,
   payload: { viewId: id }
+})
+
+export const setActiveView = ({ viewId }) => ({
+  type: SET_ACTIVE_VIEW,
+  payload: { viewId }
+})
+
+export const setSelectedNodeTypes = (nodeTypes, { viewId }) => ({
+  type: SET_SELECTED_NODE_TYPES,
+  payload: { nodeTypes, viewId }
 })
 
 export const layout = ({ viewId }) => ({
