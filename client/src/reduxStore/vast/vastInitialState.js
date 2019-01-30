@@ -1,6 +1,8 @@
 import Immutable from 'seamless-immutable'
 import cytoscape from 'cytoscape'
+
 import cola from 'cytoscape-cola'
+import ctxMenu from 'cytoscape-cxtmenu'
 
 import {
   NODE_TYPE_ACCOUNTABILITY,
@@ -13,6 +15,7 @@ import {
 
 // TODO: Is there a better place for this?
 cytoscape.use(cola)
+cytoscape.use(ctxMenu)
 
 export default {
   graphs: {
@@ -81,6 +84,26 @@ export default {
     layout: {
       name: 'cola',
       padding: '20'
+    },
+    ctxMenu: {
+      menuRadius: 100, // the radius of the circular menu in pixels
+      selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
+      // an array of commands to list in the menu or a function that returns the array
+      // function( ele ){ return [ /*...*/ ] }, // example function for commands
+      commands: [],
+      fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
+      activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
+      activePadding: 20, // additional size in pixels for the active command
+      indicatorSize: 24, // the size in pixels of the pointer to the active command
+      separatorWidth: 3, // the empty spacing in pixels between successive commands
+      spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
+      minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
+      maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight
+      openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+      itemColor: 'white', // the colour of text in the command's content
+      itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
+      zIndex: 9999, // the z-index of the ui div
+      atMouse: false // draw menu at mouse position
     }
   }),
   model: Immutable.from({

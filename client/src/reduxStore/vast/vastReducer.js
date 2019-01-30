@@ -115,9 +115,16 @@ export default (state = initialState, action) => {
           allRemainingViews.length > 0 ? allRemainingViews[0].id : null
       }
 
+      // Destroy the graph
+      const graphs = runSelector(graphsSelector, state)
+      const graph = graphs[viewId]
+      graph.destroy()
+
+      // Remove the view, remove the (destroyed) graph, and set the selected view
       return {
         ...state,
         views: state.views.without(viewId),
+        graphs: state.graphs.without(viewId),
         viewer: { ...state.viewer, activeView: nextViewId }
       }
     }

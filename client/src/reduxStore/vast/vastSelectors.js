@@ -26,6 +26,12 @@ export const viewListSelector = createSelector(
   }
 )
 
+// Exposes enough information for the context menu
+export const contextMenuDefaultsSelector = createSelector(
+  vastSelector,
+  vast => vast.defaults.ctxMenu
+)
+
 export const graphsSelector = createSelector(
   vastSelector,
   vast => vast.graphs
