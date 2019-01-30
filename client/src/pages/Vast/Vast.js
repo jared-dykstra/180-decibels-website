@@ -24,7 +24,8 @@ import { Template } from 'components'
 import {
   NODE_TYPE_ACCOUNTABILITY,
   NODE_TYPE_PERSON,
-  NODE_TYPE_PRIORITY
+  NODE_TYPE_PRIORITY,
+  NODE_TYPE_CLASS_MAP
 } from 'reduxStore/vast/vastConstants'
 import {
   createView,
@@ -56,6 +57,9 @@ const styles = theme => ({
   search: {
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2
+  },
+  indented: {
+    marginLeft: theme.spacing.unit * 2
   }
 })
 
@@ -151,16 +155,12 @@ class Vast extends PureComponent {
     this.setState({ menuNewOpen: false })
   }
 
-  handleMenuNewSelect = () => {
+  handleMenuNewSelect = (e, nodeTypes) => {
     const { doCreateView } = this.props
     const view = {
       id: uuid(),
       name: `View ${(this.counter += 1)}`,
-      nodeTypes: [
-        NODE_TYPE_ACCOUNTABILITY,
-        NODE_TYPE_PERSON,
-        NODE_TYPE_PRIORITY
-      ]
+      nodeTypes
     }
     doCreateView(view)
     this.setState(() => ({ menuNewOpen: false }))
@@ -237,20 +237,42 @@ class Vast extends PureComponent {
             >
               <nav>
                 <MenuList>
-                  <MenuItem onClick={this.handleMenuNewSelect}>
-                    Everything
+                  <MenuItem
+                    onClick={e =>
+                      this.handleMenuNewSelect(
+                        e,
+                        Object.keys(NODE_TYPE_CLASS_MAP)
+                      )
+                    }
+                  >
+                    All Types
                   </MenuItem>
-                  <MenuItem disabled onClick={this.handleMenuNewSelect}>
+                  <MenuItem
+                    className={classes.indented}
+                    onClick={e =>
+                      this.handleMenuNewSelect(e, [NODE_TYPE_PERSON])
+                    }
+                  >
                     People
                   </MenuItem>
-                  <MenuItem disabled onClick={this.handleMenuNewSelect}>
+                  <MenuItem
+                    className={classes.indented}
+                    onClick={e =>
+                      this.handleMenuNewSelect(e, [NODE_TYPE_ACCOUNTABILITY])
+                    }
+                  >
                     Accountabilities
                   </MenuItem>
-                  <MenuItem disabled onClick={this.handleMenuNewSelect}>
+                  <MenuItem
+                    className={classes.indented}
+                    onClick={e =>
+                      this.handleMenuNewSelect(e, [NODE_TYPE_PRIORITY])
+                    }
+                  >
                     Priorities
                   </MenuItem>
                   <TextField
-                    label="Search"
+                    label="Search For..."
                     type="search"
                     className={classes.search}
                   />
