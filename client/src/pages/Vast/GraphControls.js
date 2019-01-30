@@ -1,3 +1,4 @@
+import uuid from 'uuid/v4'
 import { without as _without } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
@@ -120,7 +121,16 @@ class GraphTab extends PureComponent {
         </Grid>
         <Grid item>
           <FormControl>
-            <Button variant="contained" onClick={() => doAddNode()}>
+            <Button
+              variant="contained"
+              onClick={() =>
+                doAddNode({
+                  id: uuid(),
+                  label: 'Jared',
+                  type: NODE_TYPE_PRIORITY
+                })
+              }
+            >
               Add Priority
             </Button>
           </FormControl>
@@ -136,7 +146,7 @@ export default connect(
   }),
   (dispatch, props) => ({
     doLayout: () => dispatch(layout(props)),
-    doAddNode: () => dispatch(addNode(props)),
+    doAddNode: args => dispatch(addNode(args)),
     doSetSelectedNodeTypes: nodeTypes =>
       dispatch(setSelectedNodeTypes(nodeTypes, props))
   })

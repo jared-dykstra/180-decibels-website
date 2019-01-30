@@ -26,6 +26,11 @@ export const viewListSelector = createSelector(
   }
 )
 
+export const graphsSelector = createSelector(
+  vastSelector,
+  vast => vast.graphs
+)
+
 export const graphSelector = createSelector(
   vastSelector,
   activeViewIdSelector,

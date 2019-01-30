@@ -35,7 +35,7 @@ export const layout = ({ viewId }) => ({
 })
 
 // Actions affecting contents of the graph
-export const addNode = () => ({
+export const addNode = ({ id, label, type }) => ({
   type: ADD_NODE,
-  payload: {}
+  payload: { id, label, type }
 })

@@ -10,13 +10,7 @@ import {
   LAYOUT,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
-  CLASS_PERSON,
-  CLASS_ACCOUNTABILITY,
-  CLASS_PRIORITY,
   CLASS_HIDDEN,
-  NODE_TYPE_PERSON,
-  NODE_TYPE_ACCOUNTABILITY,
-  NODE_TYPE_PRIORITY,
   NODE_TYPE_CLASS_MAP
 } from './vastConstants'
 
@@ -24,7 +18,8 @@ import {
   graphSelector,
   graphLayoutSelector,
   viewListSelector,
-  activeViewIdSelector
+  activeViewIdSelector,
+  graphsSelector
   // selectedNodeTypesSelector
 } from './vastSelectors'
 
@@ -70,12 +65,15 @@ export default (state = initialState, action) => {
       const { nodes, edges } = model
       const { style, layout } = defaults
 
-      const cyNodes = nodes.map(({ id, label, type }) => {
+      const cyNodes = Object.entries(nodes).map(([id, { label, type }]) => {
         const className = NODE_TYPE_CLASS_MAP[type]
         return { group: 'nodes', data: { id, label }, classes: [className] }
       })
 
-      const cyEdges = edges.map(e => ({ group: 'edges', data: e }))
+      const cyEdges = Object.entries(edges).map(([id, e]) => ({
+        group: 'edges',
+        data: { id, ...e }
+      }))
 
       const graph = cytoscape({
         elements: {
@@ -99,7 +97,6 @@ export default (state = initialState, action) => {
           name,
           selectedNodeTypes,
           layout
-          // style
         }),
         graphs: { ...graphs, [viewId]: graph },
         viewer: { ...state.viewer, activeView: viewId }
@@ -137,9 +134,7 @@ export default (state = initialState, action) => {
     case SET_SELECTED_NODE_TYPES: {
       const { nodeTypes: selectedNodeTypes, viewId } = action.payload
       const graph = runSelector(graphSelector, state)
-
       setElementVisibility({ graph, selectedNodeTypes })
-
       return {
         ...state,
         views: state.views.setIn(
@@ -151,17 +146,21 @@ export default (state = initialState, action) => {
 
     // Create a new node
     case ADD_NODE: {
-      // const { graph } = state
-      // graph.add([
-      //   {
-      //     data: {
-      //       id: '10',
-      //       label: 'Priority 1'
-      //     },
-      //     classes: [CLASS_PRIORITY]
-      //   }
-      // ])
-      return state
+      const { id, label, type } = action.payload
+      const className = NODE_TYPE_CLASS_MAP[type]
+      const rawNode = { label, type }
+
+      // Add to every graph
+      const cyNode = { data: rawNode, classes: [className] }
+      const graphs = runSelector(graphsSelector, state)
+      Object.values(graphs).forEach(graph => graph.add([cyNode]))
+
+      // Add to the underlying data model
+      const nextModel = state.model.setIn(['nodes', id], rawNode)
+      return {
+        ...state,
+        model: nextModel
+      }
     }
 
     // Update the layout
