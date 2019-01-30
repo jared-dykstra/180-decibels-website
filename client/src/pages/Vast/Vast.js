@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import { without as _without } from 'lodash'
+import { filter as _filter } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -28,7 +28,7 @@ import {
   NODE_TYPE_PRIORITY
 } from 'reduxStore/vast/vastConstants'
 import { createView, deleteView } from 'reduxStore/vast/vastActions'
-import { viewsSelector } from 'reduxStore/vast/vastSelectors'
+import { viewListSelector } from 'reduxStore/vast/vastSelectors'
 
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
@@ -62,28 +62,23 @@ class Vast extends PureComponent {
     title: PropTypes.string.isRequired,
     doCreateView: PropTypes.func.isRequired,
     doDeleteView: PropTypes.func.isRequired,
-    views: PropTypes.object.isRequired,
+    viewList: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+      })
+    ).isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
   constructor(props) {
     super(props)
-    const { doCreateView } = this.props
     this.changeButtonAnchorEls = {}
     this.allButtonAnchorEl = null
     this.newButtonAnchorEl = null
-    const view = {
-      id: uuid(),
-      name: 'Everything',
-      nodeTypes: [
-        NODE_TYPE_ACCOUNTABILITY,
-        NODE_TYPE_PERSON,
-        NODE_TYPE_PRIORITY
-      ]
-    }
-    doCreateView(view)
+    this.counter = 0
     this.state = {
-      viewId: view.id,
+      viewId: false, // <== No tab selected
       menuAllOpen: false,
       menuNewOpen: false,
       menuChangeOpen: null,
@@ -123,14 +118,13 @@ class Vast extends PureComponent {
         const { doDeleteView } = this.props
         this.setState((state, props) => {
           const { viewId } = state
-          const { views } = props
+          const { viewList } = props
           let nextViewId = viewId
           if (viewId === id) {
             // Deleting the currently selected View
-            const allViews = Object.keys(views)
-            const allRemainingViews = _without(allViews, id)
+            const allRemainingViews = _filter(viewList, v => v.id !== id)
             nextViewId =
-              allRemainingViews.length > 0 ? allRemainingViews[0] : false
+              allRemainingViews.length > 0 ? allRemainingViews[0].id : false
           }
           return { menuChangeOpen: null, viewId: nextViewId }
         })
@@ -161,7 +155,7 @@ class Vast extends PureComponent {
     const { doCreateView } = this.props
     const view = {
       id: uuid(),
-      name: 'New View',
+      name: `View ${(this.counter += 1)}`,
       nodeTypes: [
         NODE_TYPE_ACCOUNTABILITY,
         NODE_TYPE_PERSON,
@@ -188,7 +182,7 @@ class Vast extends PureComponent {
   // End AllMenu handlers
 
   render() {
-    const { title, location, views, classes } = this.props
+    const { title, location, viewList, classes } = this.props
     const {
       viewId,
       menuAllOpen,
@@ -199,6 +193,7 @@ class Vast extends PureComponent {
     const menuElevation = 2
     const newMenuId = 'new-menu-popover'
     const allMenuId = 'all-menu-popover'
+
     return (
       <Template
         {...{
@@ -209,9 +204,13 @@ class Vast extends PureComponent {
         }}
       >
         {viewId ? (
-          <GraphTab viewId={viewId} className={classes.graph} />
+          // Note: `key` is important, as it will cause GrapTab to be unmounted/mounted whenever viewId changes
+          <GraphTab key={viewId} viewId={viewId} className={classes.graph} />
         ) : (
-          <div className={classes.graph} />
+          <div className={classes.graph}>
+            Create a new view, yada, yada. The public/prototype should come up
+            with a couple of pre-made views
+          </div>
         )}
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar variant="dense" disableGutters>
@@ -294,18 +293,17 @@ class Vast extends PureComponent {
             >
               <nav>
                 <MenuList>
-                  {Object.entries(views)
-                    .reverse()
-                    .map(([id, { name }]) => (
-                      <MenuItem
-                        onClick={e => {
-                          this.handleChangeTab(e, id)
-                          this.handleMenuAllClose(e)
-                        }}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))}
+                  {viewList.map(({ id, name }) => (
+                    <MenuItem
+                      key={id}
+                      onClick={e => {
+                        this.handleChangeTab(e, id)
+                        this.handleMenuAllClose(e)
+                      }}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
                 </MenuList>
               </nav>
             </Popover>
@@ -313,10 +311,9 @@ class Vast extends PureComponent {
             <Tabs
               value={viewId}
               onChange={this.handleChangeTab}
-              variant="scrollable"
+              // variant="scrollable"
             >
-              {Object.entries(views).map(([id, view]) => {
-                const { name } = view
+              {viewList.map(({ id, name }) => {
                 const popoverId = `change-menu-${id}`
                 const Renaming = (
                   <TextField
@@ -423,8 +420,8 @@ class Vast extends PureComponent {
 }
 
 export default connect(
-  state => ({
-    views: viewsSelector(state)
+  (state, props) => ({
+    viewList: viewListSelector(state, props)
   }),
   dispatch => ({
     doCreateView: args => dispatch(createView(args)),

@@ -135,9 +135,9 @@ export default connect(
     selectedNodeTypes: selectedNodeTypesSelector(state, props)
   }),
   (dispatch, props) => ({
-    doLayout: () => dispatch(layout(props.viewId)),
-    doAddNode: () => dispatch(addNode(props.viewId)),
+    doLayout: () => dispatch(layout(props)),
+    doAddNode: () => dispatch(addNode(props)),
     doSetSelectedNodeTypes: nodeTypes =>
-      dispatch(setSelectedNodeTypes(nodeTypes, props.viewId))
+      dispatch(setSelectedNodeTypes(nodeTypes, props))
   })
 )(withStyles(styles, { withTheme: true })(GraphTab))

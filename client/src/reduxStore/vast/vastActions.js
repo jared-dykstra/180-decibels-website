@@ -7,27 +7,27 @@ import {
 } from './vastConstants'
 
 // Actions affecting ui state
-export const setSelectedNodeTypes = nodeTypes => ({
+export const setSelectedNodeTypes = (nodeTypes, { viewId }) => ({
   type: SET_SELECTED_NODE_TYPES,
-  payload: { nodeTypes }
+  payload: { nodeTypes, viewId }
 })
 
 export const createView = ({ id, name, nodeTypes }) => ({
   type: CREATE_VIEW,
-  payload: { id, name, nodeTypes }
+  payload: { viewId: id, name, nodeTypes }
 })
 
 export const deleteView = ({ id }) => ({
   type: DELETE_VIEW,
-  payload: { id }
+  payload: { viewId: id }
+})
+
+export const layout = ({ viewId }) => ({
+  type: LAYOUT,
+  payload: { viewId }
 })
 
 // Actions affecting contents of the graph
-export const layout = () => ({
-  type: LAYOUT,
-  payload: {}
-})
-
 export const addNode = () => ({
   type: ADD_NODE,
   payload: {}

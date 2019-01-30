@@ -2,39 +2,48 @@ import { createSelector } from 'reselect'
 
 import { mountPoint } from '.'
 
-const vastSelector = state => state[mountPoint]
+const vastSelector = (state, props) => state[mountPoint]
+const viewIdSelector = (state, props) => props.viewId
 
-export const viewsSelector = createSelector(
+const viewsSelector = createSelector(
   vastSelector,
   vast => vast.views
 )
 
-export const graphSelector = createSelector(
-  vastSelector,
-  vast => vast.graph
+// Exposes a limited amount of data--enough to generate list of tabs
+export const viewListSelector = createSelector(
+  viewsSelector,
+  views => {
+    const list = Object.entries(views).map(([id, view]) => ({
+      id,
+      name: view.name
+    }))
+    return list
+  }
 )
 
-export const prefsSelector = createSelector(
+export const graphSelector = createSelector(
   vastSelector,
-  vast => vast.prefs
+  viewIdSelector,
+  (vast, viewId) =>
+    // console.log(`graphSelector viewId=${viewId}`)
+    vast.graphs[viewId]
+)
+
+const currentViewSelector = createSelector(
+  vastSelector,
+  viewIdSelector,
+  (vast, viewId) =>
+    // console.log(`currentViewSelector viewId=${viewId}`)
+    vast.views[viewId]
 )
 
 export const selectedNodeTypesSelector = createSelector(
-  prefsSelector,
-  prefs => prefs.selectedNodeTypes
+  currentViewSelector,
+  view => view.selectedNodeTypes
 )
 
 export const graphLayoutSelector = createSelector(
-  vastSelector,
-  vast => vast.graphLayout
+  currentViewSelector,
+  view => view.layout
 )
-
-// export const getNodesSelector = createSelector(
-//   vastSelector,
-//   vast => vast.nodes
-// )
-
-// export const getEdgesSelector = createSelector(
-//   vastSelector,
-//   vast => vast.edges
-// )
