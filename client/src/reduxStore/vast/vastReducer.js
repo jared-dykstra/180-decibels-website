@@ -7,6 +7,7 @@ import {
   CREATE_VIEW,
   DELETE_VIEW,
   SET_ACTIVE_VIEW,
+  SHOW_CONNECTIONS,
   LAYOUT,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
@@ -120,11 +121,14 @@ export default (state = initialState, action) => {
       const graph = graphs[viewId]
       graph.destroy()
 
+      // Remove the graph from the (mutable) list of graphs
+      delete graphs[viewId]
+
       // Remove the view, remove the (destroyed) graph, and set the selected view
       return {
         ...state,
         views: state.views.without(viewId),
-        graphs: state.graphs.without(viewId),
+        graphs,
         viewer: { ...state.viewer, activeView: nextViewId }
       }
     }
@@ -168,6 +172,20 @@ export default (state = initialState, action) => {
         ...state,
         model: nextModel
       }
+    }
+
+    case SHOW_CONNECTIONS: {
+      const { viewId, nodeId } = action.payload
+      console.log(`ShowConnections: viewId=${viewId}, nodeId=${nodeId}`)
+      const graphs = runSelector(graphsSelector, state)
+      const graph = graphs[viewId]
+      const node = graph.$(`#${nodeId}`)
+      node
+        .neighborhood()
+        .nodes()
+        .removeClass(CLASS_HIDDEN)
+
+      return state
     }
 
     // Update the layout

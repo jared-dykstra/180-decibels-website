@@ -6,7 +6,7 @@ import {
   graphSelector,
   contextMenuDefaultsSelector
 } from 'reduxStore/vast/vastSelectors'
-import { layout } from 'reduxStore/vast/vastActions'
+import { layout, showConnections } from 'reduxStore/vast/vastActions'
 
 class Graph extends PureComponent {
   static propTypes = {
@@ -19,6 +19,7 @@ class Graph extends PureComponent {
       resize: PropTypes.func.isRequired
     }).isRequired,
     contextMenuDefaults: PropTypes.object.isRequired,
+    doShowConnections: PropTypes.func.isRequired,
     doLayout: PropTypes.func.isRequired,
     className: PropTypes.string
   }
@@ -31,6 +32,7 @@ class Graph extends PureComponent {
     super(props)
     // console.log(`Graph Constructor ${props.viewId}`)
     this.ref = null
+    this.menu = null
   }
 
   // Mount the graph (previously running headless)
@@ -70,38 +72,41 @@ class Graph extends PureComponent {
     }
   }
 
-  contextCommands = (/* element */) => [
-    {
-      // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-      content: 'Neighbors', // html/text content to be displayed in the menu
-      contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-      select(ele) {
-        // a function to execute when the command is selected
-        console.log(`Neighbors: ${ele.id()}`) // `ele` holds the reference to the active element
+  contextCommands = (/* element */) => {
+    const { doShowConnections } = this.props
+    return [
+      {
+        // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
+        content: 'Metrics', // html/text content to be displayed in the menu
+        contentStyle: {}, // css key:value pairs to set the command's css in js if you want
+        select(ele) {
+          // a function to execute when the command is selected
+          console.log(`Metrics: ${ele.id()}`) // `ele` holds the reference to the active element
+        },
+        enabled: true // whether the command is selectable
       },
-      enabled: true // whether the command is selectable
-    },
-    {
-      // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-      content: 'Metrics', // html/text content to be displayed in the menu
-      contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-      select(ele) {
-        // a function to execute when the command is selected
-        console.log(`Metrics: ${ele.id()}`) // `ele` holds the reference to the active element
+      {
+        // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
+        content: 'Connections', // html/text content to be displayed in the menu
+        contentStyle: {}, // css key:value pairs to set the command's css in js if you want
+        select(ele) {
+          console.log(`Connections: ${ele.id()}`) // `ele` holds the reference to the active element
+          doShowConnections(ele.id())
+        },
+        enabled: true // whether the command is selectable
       },
-      enabled: true // whether the command is selectable
-    },
-    {
-      // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-      content: 'Other', // html/text content to be displayed in the menu
-      contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-      select(ele) {
-        // a function to execute when the command is selected
-        console.log(`Metrics: ${ele.id()}`) // `ele` holds the reference to the active element
-      },
-      enabled: true // whether the command is selectable
-    }
-  ]
+      {
+        // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
+        content: 'Other', // html/text content to be displayed in the menu
+        contentStyle: {}, // css key:value pairs to set the command's css in js if you want
+        select(ele) {
+          // a function to execute when the command is selected
+          console.log(`Other: ${ele.id()}`) // `ele` holds the reference to the active element
+        },
+        enabled: true // whether the command is selectable
+      }
+    ]
+  }
 
   handleResize = () => {
     // console.log(`Graph handleResize ${this.props.viewId}`)
@@ -136,6 +141,9 @@ export default connect(
     contextMenuDefaults: contextMenuDefaultsSelector(state, props)
   }),
   (dispatch, props) => ({
-    doLayout: () => dispatch(layout(props))
+    doLayout: () => dispatch(layout(props)),
+    doShowConnections: nodeId => {
+      dispatch(showConnections(nodeId, props))
+    }
   })
 )(Graph)

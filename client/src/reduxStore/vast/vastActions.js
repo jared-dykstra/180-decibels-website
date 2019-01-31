@@ -2,6 +2,7 @@ import {
   CREATE_VIEW,
   DELETE_VIEW,
   SET_ACTIVE_VIEW,
+  SHOW_CONNECTIONS,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   LAYOUT
@@ -22,6 +23,11 @@ export const deleteView = ({ viewId }) => ({
 export const setActiveView = ({ viewId }) => ({
   type: SET_ACTIVE_VIEW,
   payload: { viewId }
+})
+
+export const showConnections = (nodeId, { viewId }) => ({
+  type: SHOW_CONNECTIONS,
+  payload: { viewId, nodeId }
 })
 
 export const setSelectedNodeTypes = (nodeTypes, { viewId }) => ({
