@@ -126,7 +126,7 @@ class GraphTab extends PureComponent {
               onClick={() =>
                 doAddNode({
                   nodeId: uuid(),
-                  label: 'Jared',
+                  label: 'New Priority',
                   type: NODE_TYPE_PRIORITY
                 })
               }

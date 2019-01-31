@@ -209,7 +209,6 @@ export default (state = initialState, action) => {
 
     case SHOW_CONNECTIONS: {
       const { viewId, nodeId } = action.payload
-      console.log(`ShowConnections: viewId=${viewId}, nodeId=${nodeId}`)
       const graphs = runSelector(graphsSelector, state)
       const graph = graphs[viewId]
       const node = graph.$(`#${nodeId}`)

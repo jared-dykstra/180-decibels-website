@@ -78,6 +78,8 @@ export default {
       {
         selector: 'edge',
         style: {
+          label: 'data(label)',
+          'text-rotation': 'autorotate',
           'curve-style': 'bezier',
           // width: 6,
           'target-arrow-shape': 'triangle',
@@ -262,7 +264,8 @@ export default {
       '9a66d59d-65a3-4c78-8e97-a81c207942aa': {
         // 'A1'
         source: 'fae3763d-2cb9-4d54-9132-e34bc14f45f2',
-        target: 'f00da641-6da9-4688-8763-9c4dac9d37eb'
+        target: 'f00da641-6da9-4688-8763-9c4dac9d37eb',
+        label: 'responsible'
       },
       'a47148ed-4ca9-49ed-81c0-5b913ba529ed': {
         // 'AB'
