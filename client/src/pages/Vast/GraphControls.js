@@ -125,7 +125,7 @@ class GraphTab extends PureComponent {
               variant="contained"
               onClick={() =>
                 doAddNode({
-                  id: uuid(),
+                  nodeId: uuid(),
                   label: 'Jared',
                   type: NODE_TYPE_PRIORITY
                 })
@@ -146,7 +146,7 @@ export default connect(
   }),
   (dispatch, props) => ({
     doLayout: () => dispatch(layout(props)),
-    doAddNode: args => dispatch(addNode(args)),
+    doAddNode: args => dispatch(addNode(args, props)),
     doSetSelectedNodeTypes: nodeTypes =>
       dispatch(setSelectedNodeTypes(nodeTypes, props))
   })

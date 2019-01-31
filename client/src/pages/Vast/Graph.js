@@ -4,9 +4,14 @@ import { connect } from 'react-redux'
 
 import {
   graphSelector,
-  contextMenuDefaultsSelector
+  contextMenuDefaultsSelector,
+  edgeHandlesDefaultsSelector
 } from 'reduxStore/vast/vastSelectors'
-import { layout, showConnections } from 'reduxStore/vast/vastActions'
+import {
+  layout,
+  showConnections,
+  addConnection
+} from 'reduxStore/vast/vastActions'
 
 class Graph extends PureComponent {
   static propTypes = {
@@ -18,8 +23,12 @@ class Graph extends PureComponent {
       unmount: PropTypes.func.isRequired,
       resize: PropTypes.func.isRequired
     }).isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
     contextMenuDefaults: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    edgeHandlesDefaults: PropTypes.object.isRequired,
     doShowConnections: PropTypes.func.isRequired,
+    doAddConnection: PropTypes.func.isRequired,
     doLayout: PropTypes.func.isRequired,
     className: PropTypes.string
   }
@@ -33,19 +42,38 @@ class Graph extends PureComponent {
     // console.log(`Graph Constructor ${props.viewId}`)
     this.ref = null
     this.menu = null
+    this.edgeHandles = null
   }
 
   // Mount the graph (previously running headless)
   componentDidMount() {
     // console.log(`Graph componentDidMount ${this.props.viewId}`)
     if (this.ref) {
-      const { graph, contextMenuDefaults } = this.props
+      const {
+        graph,
+        contextMenuDefaults,
+        edgeHandlesDefaults,
+        doAddConnection
+      } = this.props
       if (graph) {
         graph.mount(this.ref)
 
         this.menu = graph.cxtmenu({
           ...contextMenuDefaults,
           commands: this.contextCommands()
+        })
+
+        this.edgeHandles = graph.edgehandles({
+          ...edgeHandlesDefaults,
+          complete(sourceNode, targetNode, addedElements) {
+            // fired when edgehandles is done and elements are added
+            // A new GUID was already generated as ID of the new element.  To customize, override `edgeParams()`
+            doAddConnection({
+              sourceNodeId: sourceNode.id(),
+              targetNodeId: targetNode.id(),
+              addedEdgeId: addedElements[0].id()
+            })
+          }
         })
 
         graph.resize()
@@ -66,6 +94,9 @@ class Graph extends PureComponent {
     const { graph } = this.props
     if (this.menu) {
       this.menu.destroy()
+    }
+    if (this.edgeHandles) {
+      this.edgeHandles.destroy()
     }
     if (graph) {
       graph.unmount()
@@ -109,7 +140,6 @@ class Graph extends PureComponent {
   }
 
   handleResize = () => {
-    // console.log(`Graph handleResize ${this.props.viewId}`)
     const { graph, doLayout } = this.props
     if (graph) {
       graph.resize()
@@ -138,12 +168,17 @@ class Graph extends PureComponent {
 export default connect(
   (state, props) => ({
     graph: graphSelector(state, props),
-    contextMenuDefaults: contextMenuDefaultsSelector(state, props)
+    contextMenuDefaults: contextMenuDefaultsSelector(state, props),
+    edgeHandlesDefaults: edgeHandlesDefaultsSelector(state, props)
   }),
   (dispatch, props) => ({
     doLayout: () => dispatch(layout(props)),
     doShowConnections: nodeId => {
       dispatch(showConnections(nodeId, props))
-    }
+    },
+    doAddConnection: ({ sourceNodeId, targetNodeId, addedEdgeId }) =>
+      dispatch(
+        addConnection({ sourceNodeId, targetNodeId, addedEdgeId }, props)
+      )
   })
 )(Graph)

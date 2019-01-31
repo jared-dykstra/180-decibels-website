@@ -3,6 +3,7 @@ import cytoscape from 'cytoscape'
 
 import cola from 'cytoscape-cola'
 import ctxMenu from 'cytoscape-cxtmenu'
+import edgeHandles from 'cytoscape-edgehandles'
 
 import {
   NODE_TYPE_ACCOUNTABILITY,
@@ -16,6 +17,7 @@ import {
 // TODO: Is there a better place for this?
 cytoscape.use(cola)
 cytoscape.use(ctxMenu)
+cytoscape.use(edgeHandles)
 
 // See: https://stackoverflow.com/a/21825207/5373104
 const isIE11 = !!window.MSInputMethodContext && !!document.documentMode
@@ -82,6 +84,55 @@ export default {
           'line-color': '#ffaaaa',
           'target-arrow-color': '#ffaaaa'
         }
+      },
+
+      // some style for the edgeHandles extension
+      {
+        selector: '.eh-handle',
+        style: {
+          'background-color': 'red',
+          width: 12,
+          height: 12,
+          shape: 'ellipse',
+          'overlay-opacity': 0,
+          'border-width': 12, // makes the handle easier to hit
+          'border-opacity': 0
+        }
+      },
+      {
+        selector: '.eh-hover',
+        style: {
+          'background-color': 'red'
+        }
+      },
+      {
+        selector: '.eh-source',
+        style: {
+          'border-width': 2,
+          'border-color': 'red'
+        }
+      },
+      {
+        selector: '.eh-target',
+        style: {
+          'border-width': 2,
+          'border-color': 'red'
+        }
+      },
+      {
+        selector: '.eh-preview, .eh-ghost-edge',
+        style: {
+          'background-color': 'red',
+          'line-color': 'red',
+          'target-arrow-color': 'red',
+          'source-arrow-color': 'red'
+        }
+      },
+      {
+        selector: '.eh-ghost-edge.eh-preview-active',
+        style: {
+          opacity: 0
+        }
       }
     ],
     layout: {
@@ -106,6 +157,82 @@ export default {
       itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
       zIndex: 9999, // the z-index of the ui div
       atMouse: false // draw menu at mouse position
+    },
+    edgeHandles: {
+      preview: true, // whether to show added edges preview before releasing selection
+      hoverDelay: 150, // time spent hovering over a target node before it is considered selected
+      handleNodes: 'node', // selector/filter function for whether edges can be made from a given node
+      snap: false, // when enabled, the edge can be drawn by just moving close to a target node (can be confusing on compound graphs)
+      snapThreshold: 50, // the target node must be less than or equal to this many pixels away from the cursor/finger
+      snapFrequency: 15, // the number of times per second (Hz) that snap checks done (lower is less expensive)
+      noEdgeEventsInDraw: false, // set events:no to edges during draws, prevents mouseouts on compounds
+      disableBrowserGestures: true, // during an edge drawing gesture, disable browser gestures such as two-finger trackpad swipe and pinch-to-zoom
+      handlePosition(node) {
+        return 'middle top' // sets the position of the handle in the format of "X-AXIS Y-AXIS" such as "left top", "middle top"
+      },
+      handleInDrawMode: false, // whether to show the handle in draw mode
+      edgeType(sourceNode, targetNode) {
+        // can return 'flat' for flat edges between nodes or 'node' for intermediate node between them
+        // returning null/undefined means an edge can't be added between the two nodes
+        return 'flat'
+      },
+      loopAllowed(node) {
+        // for the specified node, return whether edges from itself to itself are allowed
+        return false
+      },
+      nodeLoopOffset: -50, // offset for edgeType: 'node' loops
+      nodeParams(sourceNode, targetNode) {
+        // for edges between the specified source and target
+        // return element object to be passed to cy.add() for intermediary node
+        return {}
+      },
+      edgeParams(sourceNode, targetNode, i) {
+        // for edges between the specified source and target
+        // return element object to be passed to cy.add() for edge
+        // NB: i indicates edge index in case of edgeType: 'node'
+        return {}
+      },
+      ghostEdgeParams() {
+        // return element object to be passed to cy.add() for the ghost edge
+        // (default classes are always added for you)
+        return {}
+      },
+      show(sourceNode) {
+        // fired when handle is shown
+      },
+      hide(sourceNode) {
+        // fired when the handle is hidden
+      },
+      start(sourceNode) {
+        // fired when edgehandles interaction starts (drag on handle)
+      },
+      complete(sourceNode, targetNode, addedEles) {
+        // fired when edgehandles is done and elements are added
+      },
+      stop(sourceNode) {
+        // fired when edgehandles interaction is stopped (either complete with added edges or incomplete)
+      },
+      cancel(sourceNode, cancelledTargets) {
+        // fired when edgehandles are cancelled (incomplete gesture)
+      },
+      hoverover(sourceNode, targetNode) {
+        // fired when a target is hovered
+      },
+      hoverout(sourceNode, targetNode) {
+        // fired when a target isn't hovered anymore
+      },
+      previewon(sourceNode, targetNode, previewEles) {
+        // fired when preview is shown
+      },
+      previewoff(sourceNode, targetNode, previewEles) {
+        // fired when preview is hidden
+      },
+      drawon() {
+        // fired when draw mode enabled
+      },
+      drawoff() {
+        // fired when draw mode disabled
+      }
     }
   }),
   model: Immutable.from({

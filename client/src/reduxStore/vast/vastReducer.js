@@ -12,7 +12,8 @@ import {
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   CLASS_HIDDEN,
-  NODE_TYPE_CLASS_MAP
+  NODE_TYPE_CLASS_MAP,
+  ADD_CONNECTION
 } from './vastConstants'
 
 import {
@@ -20,7 +21,8 @@ import {
   graphLayoutSelector,
   viewListSelector,
   activeViewIdSelector,
-  graphsSelector
+  graphsSelector,
+  viewsSelector
   // selectedNodeTypesSelector
 } from './vastSelectors'
 
@@ -157,21 +159,52 @@ export default (state = initialState, action) => {
 
     // Create a new node
     case ADD_NODE: {
-      const { id, label, type } = action.payload
+      const { viewId, nodeId, label, type } = action.payload
       const className = NODE_TYPE_CLASS_MAP[type]
       const rawNode = { label, type }
 
       // Add to every graph
-      const cyNode = { data: rawNode, classes: [className] }
+      const cyNode = { data: { id: nodeId, ...rawNode }, classes: [className] }
       const graphs = runSelector(graphsSelector, state)
-      Object.values(graphs).forEach(graph => graph.add([cyNode]))
+      const views = runSelector(viewsSelector, state)
+      Object.entries(graphs).forEach(([graphId, graph]) => {
+        graph.add([cyNode])
+
+        // Always display the node in the current view, but don't necessarily display it in the others
+        if (graphId !== viewId) {
+          // Apply the Hidden class (or not) depending on currently selected node types for the corresponding view
+          const view = views[graphId]
+          const { selectedNodeTypes } = view
+          setElementVisibility({ graph, selectedNodeTypes })
+        }
+      })
 
       // Add to the underlying data model
-      const nextModel = state.model.setIn(['nodes', id], rawNode)
+      const nextModel = state.model.setIn(['nodes', nodeId], rawNode)
       return {
         ...state,
         model: nextModel
       }
+    }
+
+    // Create a new edge
+    case ADD_CONNECTION: {
+      const { viewId, sourceNodeId, targetNodeId, addedEdgeId } = action.payload
+
+      // Add the new edge to the model
+      const rawEdge = { source: sourceNodeId, target: targetNodeId }
+      const nextModel = state.model.setIn(['edges', addedEdgeId], rawEdge)
+
+      // The edge has already been added in the current view.  Add the edge to all other graphs (other than the current)
+      const graphs = runSelector(graphsSelector, state)
+      Object.entries(graphs).forEach(([graphId, graph]) => {
+        if (graphId !== viewId) {
+          const cyEdge = { data: { id: addedEdgeId, ...rawEdge } }
+          graph.add([cyEdge])
+        }
+      })
+
+      return { ...state, model: nextModel }
     }
 
     case SHOW_CONNECTIONS: {

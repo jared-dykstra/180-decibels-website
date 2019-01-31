@@ -3,6 +3,7 @@ import {
   DELETE_VIEW,
   SET_ACTIVE_VIEW,
   SHOW_CONNECTIONS,
+  ADD_CONNECTION,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   LAYOUT
@@ -30,6 +31,14 @@ export const showConnections = (nodeId, { viewId }) => ({
   payload: { viewId, nodeId }
 })
 
+export const addConnection = (
+  { sourceNodeId, targetNodeId, addedEdgeId },
+  { viewId }
+) => ({
+  type: ADD_CONNECTION,
+  payload: { viewId, sourceNodeId, targetNodeId, addedEdgeId }
+})
+
 export const setSelectedNodeTypes = (nodeTypes, { viewId }) => ({
   type: SET_SELECTED_NODE_TYPES,
   payload: { nodeTypes, viewId }
@@ -41,7 +50,7 @@ export const layout = ({ viewId }) => ({
 })
 
 // Actions affecting contents of the graph
-export const addNode = ({ id, label, type }) => ({
+export const addNode = ({ nodeId, label, type }, { viewId }) => ({
   type: ADD_NODE,
-  payload: { id, label, type }
+  payload: { viewId, nodeId, label, type }
 })

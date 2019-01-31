@@ -4,7 +4,7 @@ import { mountPoint } from '.'
 
 const vastSelector = state => state[mountPoint]
 
-const viewsSelector = createSelector(
+export const viewsSelector = createSelector(
   vastSelector,
   vast => vast.views
 )
@@ -30,6 +30,12 @@ export const viewListSelector = createSelector(
 export const contextMenuDefaultsSelector = createSelector(
   vastSelector,
   vast => vast.defaults.ctxMenu
+)
+
+// Exposes enough information for the edgeHandles extension
+export const edgeHandlesDefaultsSelector = createSelector(
+  vastSelector,
+  vast => vast.defaults.edgeHandles
 )
 
 export const graphsSelector = createSelector(
