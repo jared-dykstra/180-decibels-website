@@ -14,6 +14,9 @@ import {
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns'
+
 import {
   validateGetStarted,
   GET_STARTED_FORM_DATE_TIME_KEY,
@@ -155,84 +158,86 @@ class GetStarted extends PureComponent {
     const isResetDisabled = (pristine && !anyTouched) || submitting
     const addTwoWeeks = addWeeks(2)
     return (
-      <form onSubmit={this.handleFormSubmit}>
-        <Stepper
-          activeStep={activeStep}
-          orientation="vertical"
-          classes={classes}
-        >
-          <Step key={0} completed={calendarSectionComplete}>
-            <StepLabel error={calendarSectionHasError}>
-              <Button
-                variant="text"
-                disableRipple
-                onClick={() => this.setStep(0)}
-              >
-                What time is Best?
-              </Button>
-            </StepLabel>
-            <StepContent>
-              <Typography variant="body2" paragraph>
-                Book a day that works for you within the next two weeks. If you
-                prefer to get started right away, call{' '}
-                <a href="tel:+18883214531" className="text-nowrap">
-                  1-888-321-4531
-                </a>{' '}
-                or email{' '}
-                <a href="mailto:info@180decibels.com" className="text-nowrap">
-                  info@180decibels.com
-                </a>
-              </Typography>
-              <Field
-                label="Date and Time"
-                id={GET_STARTED_FORM_DATE_TIME_KEY}
-                name={GET_STARTED_FORM_DATE_TIME_KEY}
-                type={FIELD_TYPE_DATE_TIME}
-                component={renderField}
-                disablePast
-                maxDate={addTwoWeeks(new Date())}
-                fullWidth
-              />
-            </StepContent>
-          </Step>
-          <AboutStep
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <form onSubmit={this.handleFormSubmit}>
+          <Stepper
+            activeStep={activeStep}
+            orientation="vertical"
+            classes={classes}
+          >
+            <Step key={0} completed={calendarSectionComplete}>
+              <StepLabel error={calendarSectionHasError}>
+                <Button
+                  variant="text"
+                  disableRipple
+                  onClick={() => this.setStep(0)}
+                >
+                  What time is Best?
+                </Button>
+              </StepLabel>
+              <StepContent>
+                <Typography variant="body2" paragraph>
+                  Book a day that works for you within the next two weeks. If
+                  you prefer to get started right away, call{' '}
+                  <a href="tel:+18883214531" className="text-nowrap">
+                    1-888-321-4531
+                  </a>{' '}
+                  or email{' '}
+                  <a href="mailto:info@180decibels.com" className="text-nowrap">
+                    info@180decibels.com
+                  </a>
+                </Typography>
+                <Field
+                  label="Date and Time"
+                  id={GET_STARTED_FORM_DATE_TIME_KEY}
+                  name={GET_STARTED_FORM_DATE_TIME_KEY}
+                  type={FIELD_TYPE_DATE_TIME}
+                  component={renderField}
+                  disablePast
+                  maxDate={addTwoWeeks(new Date())}
+                  fullWidth
+                />
+              </StepContent>
+            </Step>
+            <AboutStep
+              {...{
+                stepKey: 1,
+                setStep: this.setStep,
+                isComplete: aboutSectionComplete,
+                hasError: aboutSectionHasError,
+                firstNameKey: GET_STARTED_FORM_FIRST_NAME_KEY,
+                lastNameKey: GET_STARTED_FORM_LAST_NAME_KEY,
+                companyKey: GET_STARTED_FORM_COMPANY_KEY
+              }}
+            />
+            <ContactStep
+              {...{
+                stepKey: 2,
+                setStep: this.setStep,
+                isComplete: contactSectionComplete,
+                hasError: contactSectionHasError,
+                emailKey: GET_STARTED_FORM_EMAIL_KEY,
+                phoneKey: GET_STARTED_FORM_PHONE_KEY
+              }}
+            />
+          </Stepper>
+          <DialogFormButtons
             {...{
-              stepKey: 1,
-              setStep: this.setStep,
-              isComplete: aboutSectionComplete,
-              hasError: aboutSectionHasError,
-              firstNameKey: GET_STARTED_FORM_FIRST_NAME_KEY,
-              lastNameKey: GET_STARTED_FORM_LAST_NAME_KEY,
-              companyKey: GET_STARTED_FORM_COMPANY_KEY
+              isSubmitDisabled,
+              isResetDisabled,
+              reset: () => {
+                this.setStep(0)
+                reset()
+              },
+              submitLabel:
+                activeStep === formSections.length - 1 ? 'Get Started' : 'Next',
+              cancelLabel: 'Cancel',
+              resetLabel: 'Reset',
+              doCloseDialog
             }}
           />
-          <ContactStep
-            {...{
-              stepKey: 2,
-              setStep: this.setStep,
-              isComplete: contactSectionComplete,
-              hasError: contactSectionHasError,
-              emailKey: GET_STARTED_FORM_EMAIL_KEY,
-              phoneKey: GET_STARTED_FORM_PHONE_KEY
-            }}
-          />
-        </Stepper>
-        <DialogFormButtons
-          {...{
-            isSubmitDisabled,
-            isResetDisabled,
-            reset: () => {
-              this.setStep(0)
-              reset()
-            },
-            submitLabel:
-              activeStep === formSections.length - 1 ? 'Get Started' : 'Next',
-            cancelLabel: 'Cancel',
-            resetLabel: 'Reset',
-            doCloseDialog
-          }}
-        />
-      </form>
+        </form>
+      </MuiPickersUtilsProvider>
     )
   }
 }

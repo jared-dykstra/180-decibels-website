@@ -13,7 +13,7 @@
   "private": true,
   "dependencies": {
     "180-decibels-shared": "^0.1.0",
-    "@date-io/date-fns": "^0.0.2",
+    "@date-io/date-fns": "^1.0.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-brands-svg-icons": "^5.5.0",
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
@@ -39,7 +39,7 @@
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
-    "material-ui-pickers": "^2.0.4",
+    "material-ui-pickers": "^2.1.2",
     "node-sass": "^4.10.0",
     "popper.js": "^1.14.5",
     "prop-types": "^15.6.2",
