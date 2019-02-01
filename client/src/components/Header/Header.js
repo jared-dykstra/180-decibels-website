@@ -24,7 +24,8 @@ import {
   ROUTE_HOME,
   ROUTE_OUR_TEAM,
   ROUTE_HOW_WE_WORK,
-  ROUTE_WHAT_WE_DO
+  ROUTE_WHAT_WE_DO,
+  ROUTE_VAST
 } from 'reduxStore/routes/routesConstants'
 
 const styles = theme => ({
@@ -136,6 +137,11 @@ class Header extends PureComponent {
                           <Link to={ROUTE_HOW_WE_WORK}>
                             <MenuItem onClick={this.handleClose}>
                               How We Work
+                            </MenuItem>
+                          </Link>
+                          <Link to={ROUTE_VAST}>
+                            <MenuItem onClick={this.handleClose}>
+                              Operational Intelligence
                             </MenuItem>
                           </Link>
                           <Link to={ROUTE_OUR_TEAM}>
