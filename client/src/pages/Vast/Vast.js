@@ -39,6 +39,7 @@ import {
 
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
+import Intro from './Intro'
 
 const styles = theme => ({
   ...pageStyles({ theme, fullWidth: true, pagePadding: false }),
@@ -50,7 +51,7 @@ const styles = theme => ({
     },
     flexDirection: 'column'
   },
-  graph: {
+  grow: {
     flexGrow: '1'
   },
   appBar: {},
@@ -188,6 +189,23 @@ class Vast extends PureComponent {
     const newMenuId = 'new-menu-popover'
     const allMenuId = 'all-menu-popover'
 
+    const createButton = (setRef = false) => (
+      <IconButton
+        color="secondary"
+        aria-label="New Tab"
+        buttonRef={node => {
+          if (setRef) {
+            this.newButtonAnchorEl = node
+          }
+        }}
+        aria-owns={menuNewOpen ? newMenuId : undefined}
+        aria-haspopup="true"
+        onClick={this.handleMenuNewToggle}
+      >
+        <CreateIcon />
+      </IconButton>
+    )
+
     return (
       <Template
         {...{
@@ -199,27 +217,13 @@ class Vast extends PureComponent {
       >
         {viewId ? (
           // Note: `key` is important, as it will cause GrapTab to be unmounted/mounted whenever viewId changes
-          <GraphTab key={viewId} viewId={viewId} className={classes.graph} />
+          <GraphTab key={viewId} viewId={viewId} className={classes.grow} />
         ) : (
-          <div className={classes.graph}>
-            Create a new view, yada, yada. The public/prototype should come up
-            with a couple of pre-made views
-          </div>
+          <Intro className={classes.grow} button={createButton()} />
         )}
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar variant="dense" disableGutters>
-            <IconButton
-              color="secondary"
-              aria-label="New Tab"
-              buttonRef={node => {
-                this.newButtonAnchorEl = node
-              }}
-              aria-owns={menuNewOpen ? newMenuId : undefined}
-              aria-haspopup="true"
-              onClick={this.handleMenuNewToggle}
-            >
-              <CreateIcon />
-            </IconButton>
+            {createButton(true)}
             <Popover
               id={newMenuId}
               elevation={menuElevation}
