@@ -1,7 +1,11 @@
 import React from 'react'
 import { addDays, format, isValid, isWeekend } from 'date-fns'
-
 import { InlineDateTimePicker } from 'material-ui-pickers'
+import LeftArrowIcon from '@material-ui/icons/ChevronLeft'
+import RightArrowIcon from '@material-ui/icons/ChevronRight'
+import DateRangeIcon from '@material-ui/icons/DateRange'
+import TimeIcon from '@material-ui/icons/AccessTime'
+import KeyboardIcon from '@material-ui/icons/CalendarToday'
 
 import FormComponent from './FormComponent'
 
@@ -49,6 +53,11 @@ export default class DateTimeField extends FormComponent {
             }
             return date
           },
+          leftArrowIcon: <LeftArrowIcon />,
+          rightArrowIcon: <RightArrowIcon />,
+          dateRangeIcon: <DateRangeIcon />,
+          timeIcon: <TimeIcon />,
+          keyboardIcon: <KeyboardIcon />,
           id,
           label,
           error: hasError,
