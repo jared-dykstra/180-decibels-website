@@ -1,9 +1,17 @@
-// TODO: react-scripts v2 has babel-macros.  See if it can be used for transform-export-extensions, as per https://github.com/tc39/proposal-export-ns-from
-import * as actions from './selfAssessmentActions'
-import * as selectors from './selfAssessmentSelectors'
+import myReducer from './selfAssessmentReducer'
+import mySaga from './selfAssessmentSaga'
 
-export { default as reducer } from './selfAssessmentReducer'
-export { default as saga } from './selfAssessmentSaga'
-export { actions }
-export { selectors }
 export const mountPoint = 'selfAssessment'
+
+// For redux-dynamic-modules
+export const module = () => ({
+  id: mountPoint,
+  reducerMap: {
+    [mountPoint]: myReducer
+  },
+  // This module uses redux-saga middleware. This property will be be used by the SagaExtension
+  sagas: [mySaga]
+  // Actions to fire when this module is added/removed
+  // initialActions: [],
+  // finalActions: [],
+})

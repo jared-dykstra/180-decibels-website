@@ -2,8 +2,8 @@ import React, { Suspense } from 'react'
 
 import { Template } from 'components'
 
-const Vast = React.lazy(async () =>
-  import(/* webpackChunkName: 'Vast' */ './Vast')
+const VastDynamic = React.lazy(async () =>
+  import(/* webpackChunkName: 'Vast' */ './VastDynamic')
 )
 
 const VastLazy = ({
@@ -25,9 +25,9 @@ const VastLazy = ({
       </Template>
     }
   >
-    <Vast location={location} title={title} {...props}>
+    <VastDynamic location={location} title={title} {...props}>
       {children}
-    </Vast>
+    </VastDynamic>
   </Suspense>
 )
 

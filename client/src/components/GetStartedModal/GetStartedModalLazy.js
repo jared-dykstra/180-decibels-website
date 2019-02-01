@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react'
 
-const GetStartedModal = React.lazy(async () =>
-  import(/* webpackChunkName: 'GetStartedModal' */ './GetStartedModal')
+const GetStartedModalDynamic = React.lazy(async () =>
+  import(/* webpackChunkName: 'GetStartedModal' */ './GetStartedModalDynamic')
 )
 
 const GetStartedModalLazy = ({ children, ...props }) => (
   // Fallback isn't going to be visible.  If the user clicks the button to open the modal, redux state updates and the modal will open as soon as it loads
   <Suspense fallback={null}>
-    <GetStartedModal {...props}>{children}</GetStartedModal>
+    <GetStartedModalDynamic {...props}>{children}</GetStartedModalDynamic>
   </Suspense>
 )
 

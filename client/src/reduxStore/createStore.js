@@ -1,37 +1,25 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { createStore } from 'redux-dynamic-modules'
+import { getSagaExtension } from 'redux-dynamic-modules-saga'
 
-import { reducer as formReducer } from 'redux-form/immutable'
-import createSagaMiddleware from 'redux-saga'
-
-import { reducers, rootSaga } from '.'
-
-const sagaMiddleware = createSagaMiddleware()
-
-let composeEnhancers = compose
-
-if (process.env.NODE_ENV === 'development') {
-  const composeWithDevToolsExtension =
-    // eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  if (typeof composeWithDevToolsExtension === 'function') {
-    composeEnhancers = composeWithDevToolsExtension
-  }
-}
+import { module as authModule } from './auth'
+import { module as formModule } from './form'
+import { module as routesModule } from './routes'
 
 export default history => {
-  const createReducer = myReducers =>
-    combineReducers({
-      router: connectRouter(history),
-      form: formReducer,
-      ...myReducers
-    })
   const store = createStore(
-    createReducer(reducers),
-    composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
+    /* initial state */
+    {},
+    /* Enhancers */
+    [
+      /* sagaMiddleware, routerMiddleware(history) */
+    ],
+    /* Extensions */
+    [getSagaExtension(/* saga context object */)],
+    /* ...any additional modules */
+    [authModule(), routesModule(history), formModule()]
   )
-  let sagaTask = sagaMiddleware.run(rootSaga)
 
+  /* TODO: HMR
   if (process.env.NODE_ENV !== 'production') {
     if (module.hot) {
       module.hot.accept('.', () => {
@@ -54,6 +42,7 @@ export default history => {
       })
     }
   }
+  */
 
   return store
 }

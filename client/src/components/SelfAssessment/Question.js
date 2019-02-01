@@ -6,7 +6,7 @@ import Rating from 'react-rating'
 import Swipeable from 'react-swipeable'
 import { Button, Grid, withWidth } from '@material-ui/core'
 
-import { actions } from 'reduxStore/selfAssessment'
+import { setVolume } from 'reduxStore/selfAssessment/selfAssessmentActions'
 import {
   makeHasBeenRespondedToSelector,
   makeVolumeSelector,
@@ -24,7 +24,7 @@ class Question extends PureComponent {
     assessmentName: PropTypes.string.isRequired,
     questionId: PropTypes.string.isRequired,
     questionText: PropTypes.string.isRequired,
-    setVolume: PropTypes.func.isRequired,
+    doSetVolume: PropTypes.func.isRequired,
     minVolume: PropTypes.number.isRequired,
     maxVolume: PropTypes.number.isRequired,
     volumeStep: PropTypes.number.isRequired,
@@ -75,9 +75,9 @@ class Question extends PureComponent {
     }
   }
 
-  doSetVolume = value => {
-    const { assessmentName, questionId, setVolume, tracker } = this.props
-    setVolume({ assessmentName, volume: value, questionId })
+  doSetVolumeAndTrack = value => {
+    const { assessmentName, questionId, doSetVolume, tracker } = this.props
+    doSetVolume({ assessmentName, volume: value, questionId })
     // This is important enough to warrant tracking
     tracker.event({
       category: 'SelfAssessment',
@@ -194,7 +194,7 @@ class Question extends PureComponent {
                   step={volumeStep}
                   initialRating={getRating() + volumeStep}
                   onChange={value => {
-                    this.doSetVolume(value - volumeStep)
+                    this.doSetVolumeAndTrack(value - volumeStep)
                     if (!hasResponse && autoAdvanceTimeMs > 0) {
                       // Auto-advance if this is the first answer
                       window.setTimeout(next, autoAdvanceTimeMs)
@@ -208,7 +208,7 @@ class Question extends PureComponent {
               <Grid item xs={6}>
                 <Button
                   color="secondary"
-                  onClick={() => this.doSetVolume(minVolume)}
+                  onClick={() => this.doSetVolumeAndTrack(minVolume)}
                   onMouseEnter={() => this.doSetTemporaryVolume(minVolume)}
                   onMouseLeave={() => this.doSetTemporaryVolume(undefined)}
                 >
@@ -224,7 +224,7 @@ class Question extends PureComponent {
               >
                 <Button
                   color="secondary"
-                  onClick={() => this.doSetVolume(maxVolume)}
+                  onClick={() => this.doSetVolumeAndTrack(maxVolume)}
                   onMouseEnter={() => this.doSetTemporaryVolume(maxVolume)}
                   onMouseLeave={() => this.doSetTemporaryVolume(undefined)}
                 >
@@ -273,7 +273,7 @@ export default connect(
     }
   },
   dispatch => ({
-    setVolume: ({ assessmentName, questionId, volume }) =>
-      dispatch(actions.setVolume({ assessmentName, questionId, volume }))
+    doSetVolume: ({ assessmentName, questionId, volume }) =>
+      dispatch(setVolume({ assessmentName, questionId, volume }))
   })
 )(withWidth()(Question))
