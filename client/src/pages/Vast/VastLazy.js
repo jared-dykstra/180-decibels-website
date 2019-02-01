@@ -2,7 +2,9 @@ import React, { Suspense } from 'react'
 
 import { Template } from 'components'
 
-const Vast = React.lazy(async () => import('./Vast'))
+const Vast = React.lazy(async () =>
+  import(/* webpackChunkName: 'Vast' */ './Vast')
+)
 
 const VastLazy = ({
   children,
