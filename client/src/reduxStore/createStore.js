@@ -15,7 +15,7 @@ export default history => {
     ],
     /* Extensions */
     [getSagaExtension(/* saga context object */)],
-    /* ...any additional modules */
+    /* ...any default modules.  Auth is used everywhere for page & event tracking. */
     [authModule(), routesModule(history), formModule()]
   )
 
