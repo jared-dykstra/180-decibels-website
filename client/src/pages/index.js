@@ -1,6 +1,6 @@
 export {
   default as AssessmentResult
-} from './AssessmentResult/AssessmentResult'
+} from './AssessmentResult/AssessmentResultLazy'
 export { default as Confidentiality } from './Confidentiality/Confidentiality'
 export { default as Error } from './Error/Error'
 export { default as Home } from './Home/Home'

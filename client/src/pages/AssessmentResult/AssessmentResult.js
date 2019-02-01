@@ -100,12 +100,9 @@ class AssessmentResult extends PureComponent {
 
     const TakeTestAction = () => (
       <i>
-        Would you like to take or re-take the assessment for{' '}
-        <Link to={{ pathname: ROUTE_HELP_ME, hash: 'quiz' }}>yourself</Link> or{' '}
-        <Link to={{ pathname: ROUTE_HELP_MY_TEAM, hash: 'quiz' }}>
-          your team
+        <Link to={{ pathname: ROUTE_HELP_ME }}>
+          Would you like to take or re-take the assessment?
         </Link>
-        ?
       </i>
     )
 
