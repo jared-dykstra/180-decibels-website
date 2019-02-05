@@ -13,6 +13,8 @@ import {
   addConnection
 } from 'reduxStore/vast/vastActions'
 
+import DetailPane from './DetailPane'
+
 class Graph extends PureComponent {
   static propTypes = {
     // viewId is used in connect (below)
@@ -43,6 +45,10 @@ class Graph extends PureComponent {
     this.ref = null
     this.menu = null
     this.edgeHandles = null
+
+    this.state = {
+      detailsNode: null
+    }
   }
 
   // Mount the graph (previously running headless)
@@ -103,16 +109,29 @@ class Graph extends PureComponent {
     }
   }
 
+  handleClickDetails = node => {
+    this.setState(state => ({
+      detailsNode: node
+    }))
+  }
+
+  handleHideDetails = () => {
+    this.setState({
+      detailsNode: null
+    })
+  }
+
   contextCommands = (/* element */) => {
     const { doShowConnections } = this.props
+    const self = this
     return [
       {
         // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-        content: 'Metrics', // html/text content to be displayed in the menu
+        content: 'Details', // html/text content to be displayed in the menu
         contentStyle: {}, // css key:value pairs to set the command's css in js if you want
         select(ele) {
           // a function to execute when the command is selected
-          console.log(`Metrics: ${ele.id()}`) // `ele` holds the reference to the active element
+          self.handleClickDetails(ele)
         },
         enabled: true // whether the command is selectable
       },
@@ -149,9 +168,11 @@ class Graph extends PureComponent {
   }
 
   render() {
-    const { className } = this.props
-    return (
+    const { className, graph } = this.props
+    const { detailsNode } = this.state
+    return [
       <div
+        key="graph"
         style={{
           height: '100%',
           width: '100%'
@@ -160,16 +181,26 @@ class Graph extends PureComponent {
         ref={ref => {
           this.ref = ref
         }}
-      />
-    )
+      />,
+      detailsNode && (
+        <DetailPane
+          key="detail"
+          graph={graph}
+          detailsNode={detailsNode}
+          onClose={this.handleHideDetails}
+        >
+          TODO: Add Details
+        </DetailPane>
+      )
+    ]
   }
 }
 
 export default connect(
-  (state, props) => ({
-    graph: graphSelector(state, props),
-    contextMenuDefaults: contextMenuDefaultsSelector(state, props),
-    edgeHandlesDefaults: edgeHandlesDefaultsSelector(state, props)
+  state => ({
+    graph: graphSelector(state),
+    contextMenuDefaults: contextMenuDefaultsSelector(state),
+    edgeHandlesDefaults: edgeHandlesDefaultsSelector(state)
   }),
   (dispatch, props) => ({
     doLayout: () => dispatch(layout(props)),
