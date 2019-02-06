@@ -1,19 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Hidden } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 
 import { Template, Video } from 'components'
 
-const VideoPage = props => {
-  const { title, location, className } = props
+import pageStyles from '../pageStyles'
+
+const styles = theme => ({
+  ...pageStyles({ theme })
+})
+
+const VideoPage = ({ classes, ...rest }) => {
+  const { title, location } = rest
   return (
-    <Template {...{ title, location, className }}>
-      <Hidden mdDown>
-        {/* Add some whitespace to offset the video on large displays */}
-        <br />
-        <br />
-      </Hidden>
-      <Video {...props} />
+    <Template {...{ title, location, className: classes.root, elevation: 0 }}>
+      <Video {...rest} />
     </Template>
   )
 }
@@ -30,11 +31,7 @@ VideoPage.propTypes = {
   tracker: PropTypes.shape({
     event: PropTypes.func.isRequired
   }).isRequired,
-  className: PropTypes.string
+  classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
-VideoPage.defaultProps = {
-  className: ''
-}
-
-export default VideoPage
+export default withStyles(styles)(VideoPage)

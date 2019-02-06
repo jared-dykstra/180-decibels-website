@@ -24,7 +24,8 @@ import {
   ROUTE_HOME,
   ROUTE_OUR_TEAM,
   ROUTE_HOW_WE_WORK,
-  ROUTE_WHAT_WE_DO
+  ROUTE_WHAT_WE_DO,
+  ROUTE_VAST
 } from 'reduxStore/routes/routesConstants'
 
 const styles = theme => ({
@@ -119,34 +120,43 @@ class Header extends PureComponent {
                 >
                   <Paper>
                     <ClickAwayListener onClickAway={this.handleClose}>
-                      <MenuList>
-                        {
-                          <Link to={ROUTE_HOME}>
-                            <MenuItem onClick={this.handleClose}>Home</MenuItem>
+                      <nav>
+                        <MenuList>
+                          {
+                            <Link to={ROUTE_HOME}>
+                              <MenuItem onClick={this.handleClose}>
+                                Home
+                              </MenuItem>
+                            </Link>
+                          }
+                          <Link to={ROUTE_WHAT_WE_DO}>
+                            <MenuItem onClick={this.handleClose}>
+                              What We Do
+                            </MenuItem>
                           </Link>
-                        }
-                        <Link to={ROUTE_WHAT_WE_DO}>
-                          <MenuItem onClick={this.handleClose}>
-                            What We Do
-                          </MenuItem>
-                        </Link>
-                        <Link to={ROUTE_HOW_WE_WORK}>
-                          <MenuItem onClick={this.handleClose}>
-                            How We Work
-                          </MenuItem>
-                        </Link>
-                        <Link to={ROUTE_OUR_TEAM}>
-                          <MenuItem onClick={this.handleClose}>
-                            Our Team
-                          </MenuItem>
-                        </Link>
-                        <GetStartedButton
-                          component={MenuItem}
-                          onClick={this.handleClose}
-                        >
-                          Contact
-                        </GetStartedButton>
-                      </MenuList>
+                          <Link to={ROUTE_HOW_WE_WORK}>
+                            <MenuItem onClick={this.handleClose}>
+                              How We Work
+                            </MenuItem>
+                          </Link>
+                          <Link to={ROUTE_VAST}>
+                            <MenuItem onClick={this.handleClose}>
+                              Operational Intelligence
+                            </MenuItem>
+                          </Link>
+                          <Link to={ROUTE_OUR_TEAM}>
+                            <MenuItem onClick={this.handleClose}>
+                              Our Team
+                            </MenuItem>
+                          </Link>
+                          <GetStartedButton
+                            component={MenuItem}
+                            onClick={this.handleClose}
+                          >
+                            Contact
+                          </GetStartedButton>
+                        </MenuList>
+                      </nav>
                     </ClickAwayListener>
                   </Paper>
                 </Grow>

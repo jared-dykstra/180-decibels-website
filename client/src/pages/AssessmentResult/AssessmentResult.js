@@ -8,7 +8,6 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   Grid,
-  Paper,
   Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
@@ -18,11 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { Template } from 'components'
 
-import {
-  ROUTE_HELP_MY_TEAM,
-  ROUTE_HELP_ME,
-  ROUTE_HOME
-} from 'reduxStore/routes/routesConstants'
+import { ROUTE_HELP_ME, ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 import { loadResults } from 'reduxStore/selfAssessment/selfAssessmentActions'
 import {
   displayNameSelector,
@@ -38,7 +33,7 @@ import CompetencyDetail from './CompetencyDetail'
 import Podium from './PodiumIcon'
 
 const styles = theme => ({
-  ...pageStyles(theme),
+  ...pageStyles({ theme }),
   mainHeading: {
     marginTop: '0 !important'
   },
@@ -101,12 +96,9 @@ class AssessmentResult extends PureComponent {
 
     const TakeTestAction = () => (
       <i>
-        Would you like to take or re-take the assessment for{' '}
-        <Link to={{ pathname: ROUTE_HELP_ME, hash: 'quiz' }}>yourself</Link> or{' '}
-        <Link to={{ pathname: ROUTE_HELP_MY_TEAM, hash: 'quiz' }}>
-          your team
+        <Link to={{ pathname: ROUTE_HELP_ME }}>
+          Would you like to take or re-take the assessment?
         </Link>
-        ?
       </i>
     )
 
@@ -206,35 +198,34 @@ class AssessmentResult extends PureComponent {
       <Template
         {...{
           title: '180 Decibels - Assessment Results',
-          location
+          location,
+          className: classes.root
         }}
       >
-        <Paper className={classes.paper}>
-          {hasError === undefined && <h5>Loading...</h5>}
-          {hasError === true && (
-            <div>
-              <h2>Not Found</h2>
-              <Typography variant="body1" paragraph>
-                We&apos;re sorry, but the the requested assessment was not found
-                or is no longer available
-              </Typography>
-              <Typography variant="body1" paragraph>
-                <TakeTestAction />
-              </Typography>
-              <br />
-              <Button
-                color="primary"
-                variant="contained"
-                size="large"
-                component={Link}
-                to={ROUTE_HOME}
-              >
-                Go to Home Page
-              </Button>
-            </div>
-          )}
-          {hasError === false && <Report />}
-        </Paper>
+        {hasError === undefined && <h5>Loading...</h5>}
+        {hasError === true && (
+          <div>
+            <h2>Not Found</h2>
+            <Typography variant="body1" paragraph>
+              We&apos;re sorry, but the the requested assessment was not found
+              or is no longer available
+            </Typography>
+            <Typography variant="body1" paragraph>
+              <TakeTestAction />
+            </Typography>
+            <br />
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              component={Link}
+              to={ROUTE_HOME}
+            >
+              Go to Home Page
+            </Button>
+          </div>
+        )}
+        {hasError === false && <Report />}
       </Template>
     )
   }

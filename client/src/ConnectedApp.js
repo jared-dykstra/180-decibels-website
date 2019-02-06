@@ -18,6 +18,7 @@ import {
   Confidentiality,
   Error,
   HelpMyTeam,
+  HelpMyTeamQuiz,
   Home,
   HowWeWork,
   // NotFound,
@@ -26,7 +27,8 @@ import {
   WhatWeDo,
   IntroVideo,
   SunVideo,
-  IntroVideoKerri
+  IntroVideoKerri,
+  Vast
 } from 'pages'
 import { GetStartedModal, ScrollToTop } from 'components'
 import {
@@ -43,6 +45,7 @@ import {
   ROUTE_HOW_WE_WORK,
   ROUTE_WHAT_WE_DO,
   ROUTE_SERVICES,
+  ROUTE_VAST,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_INTRO_KERRI,
   ROUTE_VIDEO_SUN
@@ -93,6 +96,10 @@ class App extends PureComponent {
   }
 
   componentDidCatch = (error, info) => {
+    if (process.env.NODE_ENV === 'development') {
+      return
+    }
+
     this.setState({ error })
     Sentry.withScope(scope => {
       Object.keys(info).forEach(key => {
@@ -104,6 +111,10 @@ class App extends PureComponent {
   }
 
   initializeTracker = () => {
+    if (process.env.NODE_ENV !== 'production') {
+      return
+    }
+
     const { userId } = this.props
     const isInit = 'decibels_is_initialized'
     if (!window[isInit] && userId) {
@@ -135,7 +146,9 @@ class App extends PureComponent {
     doLogPageView({ uri })
 
     // Send event to Google Analytics
-    ReactGA.pageview(uri)
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(uri)
+    }
   }
 
   logModalView = ({ modalName }) => {
@@ -145,7 +158,9 @@ class App extends PureComponent {
     doLogModalView({ modalName })
 
     // Send event to Google Analytics
-    ReactGA.modalview(modalName)
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.modalview(modalName)
+    }
   }
 
   // See: https://github.com/react-ga/react-ga#reactgaeventargs
@@ -156,7 +171,9 @@ class App extends PureComponent {
     // console.log(`Tracker - LogEvent ${userId}, ${category}, ${action}`)
     doLogEvent(event)
 
-    ReactGA.event(event)
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event(event)
+    }
   }
 
   logError = ({ error, info, fatal = true }) => {
@@ -175,7 +192,9 @@ class App extends PureComponent {
     })
 
     // Send event to Google Analytics
-    ReactGA.exception({ description, fatal })
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.exception({ description, fatal })
+    }
   }
 
   render() {
@@ -188,15 +207,16 @@ class App extends PureComponent {
     const routes = {
       [ROUTE_HOME]: Home,
       [ROUTE_HELP_ME]: HelpMyTeam, // <== Deprecated; remove in next version
-      [ROUTE_HELP_ME_QUIZ]: HelpMyTeam, // <== Deprecated; remove in next version
+      [ROUTE_HELP_ME_QUIZ]: HelpMyTeamQuiz, // <== Deprecated; remove in next version
       [ROUTE_HELP_MY_TEAM]: HelpMyTeam,
-      [ROUTE_HELP_MY_TEAM_QUIZ]: HelpMyTeam,
+      [ROUTE_HELP_MY_TEAM_QUIZ]: HelpMyTeamQuiz,
       [ROUTE_HOW_WE_WORK]: HowWeWork,
       [ROUTE_OUR_TEAM]: OurTeam,
       [ROUTE_CONFIDENTIALITY]: Confidentiality,
       [ROUTE_PRIVACY]: Privacy,
       [ROUTE_SERVICES]: WhatWeDo, // <== Deprecated; remove in next version
       [ROUTE_WHAT_WE_DO]: WhatWeDo,
+      [ROUTE_VAST]: Vast,
       [ROUTE_VIDEO_INTRO]: IntroVideo,
       [ROUTE_VIDEO_SUN]: SunVideo,
       [ROUTE_VIDEO_INTRO_KERRI]: IntroVideoKerri

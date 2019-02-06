@@ -4,8 +4,8 @@ import { Paper } from '@material-ui/core'
 import Intro from './Intro'
 import styles from './SelfAssessment.module.scss'
 
-const SelfAssessment = React.lazy(async () =>
-  import(/* webpackChunkName: 'SelfAssessment' */ './SelfAssessment')
+const SelfAssessmentDynamic = React.lazy(async () =>
+  import(/* webpackChunkName: 'SelfAssessment' */ './SelfAssessmentDynamic')
 )
 
 const SelfAssessmentLazy = ({ children, assessmentName, ...props }) => (
@@ -22,7 +22,7 @@ const SelfAssessmentLazy = ({ children, assessmentName, ...props }) => (
         </div>
       }
     >
-      <SelfAssessment {...{ assessmentName, ...props }} />
+      <SelfAssessmentDynamic {...{ assessmentName, ...props }} />
     </Suspense>
   </Paper>
 )

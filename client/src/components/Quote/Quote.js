@@ -68,7 +68,7 @@ Quote.defaultProps = {
   cite: null,
   right: false,
   elevation: 0,
-  className: '' // Intended to be Bootstrap's .h1, .h2, .h3, etc. to set font size
+  className: ''
 }
 
 export default withStyles(styles)(Quote)

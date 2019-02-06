@@ -8,8 +8,6 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { createMuiTheme } from '@material-ui/core/styles'
 import createPalette from '@material-ui/core/styles/createPalette'
 import createTypography from '@material-ui/core/styles/createTypography'
-import { MuiPickersUtilsProvider } from 'material-ui-pickers'
-import DateFnsUtils from '@date-io/date-fns'
 
 import App from './ConnectedApp'
 
@@ -103,11 +101,9 @@ class Router extends PureComponent {
     return (
       <MuiThemeProvider theme={THEME}>
         <Provider store={store}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <ConnectedRouter history={history}>
-              <App />
-            </ConnectedRouter>
-          </MuiPickersUtilsProvider>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
         </Provider>
       </MuiThemeProvider>
     )

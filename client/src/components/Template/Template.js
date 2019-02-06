@@ -1,14 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline, Paper } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import { Header, Footer } from 'components'
 
 const styles = theme => ({
   '@global': {
+    html: {
+      height: '100%'
+    },
+    '#root': {
+      height: '100%'
+    },
     body: {
+      height: '100%',
       fontFamily: theme.decibels.fontFamily,
       lineHeight: '1.75em',
       '& a': {
@@ -19,20 +26,19 @@ const styles = theme => ({
         textDecoration: 'none',
         color: theme.palette.secondary.main
       },
-      '& h1, h2, h3, h4, h5, h6, h7': {
+      '& h1, h2, h3, h4, h5, h6': {
         color: theme.palette.secondary.main,
         fontWeight: theme.decibels.fontWeightLight
       }
     }
   },
+  flexContainer: {
+    minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   layout: {
-    width: 'auto',
-    minHeight: '100vh', // <== Ensures the footer is never on screen unless the user scrolls down
-    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
+    flexGrow: '1'
   }
 })
 
@@ -44,6 +50,7 @@ const Template = ({
   // type,
   // twitterCardType,
   // twitterCreator,
+  elevation,
   className,
   children,
   classes
@@ -69,9 +76,14 @@ const Template = ({
               */}
     </Helmet>,
     <CssBaseline key="baseline" />,
-    <Header key="header" />,
-    <div key="body" className={`${classes.layout} ${className}`}>
-      {children}
+    <div key="main" className={classes.flexContainer}>
+      <Header />
+      <Paper
+        square
+        {...{ className: `${classes.layout} ${className}`, elevation }}
+      >
+        {children}
+      </Paper>
     </div>,
     <Footer key="footer" />
   ]
@@ -93,6 +105,7 @@ Template.propTypes = {
   //   'player'
   // ]),
   // twitterCreator: PropTypes.string,
+  elevation: PropTypes.number,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -109,6 +122,7 @@ Template.defaultProps = {
   // type: 'website',
   // twitterCardType: 'summary_large_image',
   // twitterCreator: '1Decibels',
+  elevation: 2,
   className: ''
 }
 

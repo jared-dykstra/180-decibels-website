@@ -1,7 +1,6 @@
-import myReducer from './authReducer'
-import mySaga from './authSaga'
+import { reducer as myReducer } from 'redux-form/immutable'
 
-export const mountPoint = 'auth'
+export const mountPoint = 'form'
 
 // For redux-dynamic-modules
 export const module = () => ({
@@ -10,8 +9,7 @@ export const module = () => ({
     [mountPoint]: myReducer
   },
   // This module uses redux-saga middleware. This property will be be used by the SagaExtension
-  sagas: [mySaga],
-  // Actions to fire when this module is added/removed
+  sagas: [],
   initialActions: [],
   finalActions: []
 })

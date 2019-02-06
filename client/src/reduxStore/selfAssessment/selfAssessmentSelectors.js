@@ -12,7 +12,7 @@ import { get as configGet } from '../../config'
 
 const selfAssessmentSelector = (state, props) => {
   const { assessmentName } = props
-  return state[mountPoint][assessmentName]
+  return state[mountPoint] ? state[mountPoint][assessmentName] : null
 }
 
 const currentQuestionIdSelector = (state, props) => {
@@ -53,7 +53,7 @@ const currentResponseSelector = createSelector(
 
 export const initializedSelector = createSelector(
   selfAssessmentSelector,
-  selfAssessment => selfAssessment.ui.initialized
+  selfAssessment => (selfAssessment ? selfAssessment.ui.initialized : false)
 )
 
 export const currentSlideSelector = createSelector(

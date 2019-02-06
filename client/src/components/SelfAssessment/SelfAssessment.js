@@ -45,7 +45,12 @@ class SelfAssessment extends PureComponent {
     doNextSlide: PropTypes.func.isRequired,
     tracker: PropTypes.shape({
       event: PropTypes.func.isRequired
-    }).isRequired
+    }).isRequired,
+    className: PropTypes.string
+  }
+
+  static defaultProps = {
+    className: ''
   }
 
   constructor(props) {
@@ -89,7 +94,7 @@ class SelfAssessment extends PureComponent {
 
   render() {
     const {
-      id,
+      className,
       assessmentName,
       isInitialized,
       questions,
@@ -186,7 +191,7 @@ class SelfAssessment extends PureComponent {
       isInitialized && (isFirstSlide || currentQuestionHasBeenRespondedTo)
 
     return (
-      <div id={id}>
+      <div className={className}>
         <Swipeable
           onSwipingLeft={() => (canAdvanceSlide ? this.next() : undefined)}
           onSwipingRight={() => (!isFirstSlide ? this.previous() : undefined)}

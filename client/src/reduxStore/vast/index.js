@@ -1,7 +1,6 @@
-import myReducer from './selfAssessmentReducer'
-import mySaga from './selfAssessmentSaga'
+import myReducer from './vastReducer'
 
-export const mountPoint = 'selfAssessment'
+export const mountPoint = 'vast'
 
 // For redux-dynamic-modules
 export const module = () => ({
@@ -10,8 +9,8 @@ export const module = () => ({
     [mountPoint]: myReducer
   },
   // This module uses redux-saga middleware. This property will be be used by the SagaExtension
-  sagas: [mySaga]
+  // sagas: [],
   // Actions to fire when this module is added/removed
-  // initialActions: [],
+  initialActions: []
   // finalActions: [],
 })

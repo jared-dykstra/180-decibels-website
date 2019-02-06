@@ -11,7 +11,7 @@ import {
   SIGNIN_FORM_PASSWORD_KEY
 } from '180-decibels-shared/signIn'
 
-import { actions } from 'reduxStore/auth'
+import { signIn, closeDialog } from 'reduxStore/auth/authActions'
 import { SIGNIN_FORM_KEY } from 'reduxStore/auth/authConstants'
 import { DialogFormButtons } from 'components'
 import { renderField, FIELD_TYPE_TEXT, FIELD_TYPE_PASSWORD } from 'formUtils'
@@ -103,8 +103,8 @@ class SignIn extends PureComponent {
 const ConnectedSignIn = connect(
   null,
   dispatch => ({
-    doSignIn: values => dispatch(actions.signIn(values)),
-    doCloseDialog: () => dispatch(actions.closeDialog())
+    doSignIn: values => dispatch(signIn(values)),
+    doCloseDialog: () => dispatch(closeDialog())
   })
 )(SignIn)
 
