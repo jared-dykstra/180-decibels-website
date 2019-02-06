@@ -140,7 +140,7 @@ class Graph extends PureComponent {
         content: 'Connections', // html/text content to be displayed in the menu
         contentStyle: {}, // css key:value pairs to set the command's css in js if you want
         select(ele) {
-          console.log(`Connections: ${ele.id()}`) // `ele` holds the reference to the active element
+          // console.log(`Connections: ${ele.id()}`) // `ele` holds the reference to the active element
           doShowConnections(ele.id())
         },
         enabled: true // whether the command is selectable
@@ -151,7 +151,7 @@ class Graph extends PureComponent {
         contentStyle: {}, // css key:value pairs to set the command's css in js if you want
         select(ele) {
           // a function to execute when the command is selected
-          console.log(`Other: ${ele.id()}`) // `ele` holds the reference to the active element
+          // console.log(`Other: ${ele.id()}`) // `ele` holds the reference to the active element
         },
         enabled: true // whether the command is selectable
       }
