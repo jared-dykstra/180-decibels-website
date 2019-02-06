@@ -66,6 +66,7 @@ const Intro = ({ className, button }) => (
 )
 
 Intro.propTypes = {
+  button: PropTypes.node.isRequired,
   className: PropTypes.string
 }
 
