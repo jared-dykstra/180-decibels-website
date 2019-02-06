@@ -1,16 +1,12 @@
 {
   "nodes": {
     "1": {
-      "type": "accountability",
-      "label": "SalesAndMarketing"
+      "type": "orgUnit",
+      "label": "Sales And Marketing"
     },
     "3": {
-      "type": "accountability",
+      "type": "orgUnit",
       "label": "Operations"
-    },
-    "4": {
-      "type": "accountability",
-      "label": "Marketing"
     },
     "5": {
       "type": "accountability",
@@ -18,19 +14,15 @@
     },
     "6": {
       "type": "accountability",
-      "label": "CustomerCare"
+      "label": "Customer Care"
     },
     "7": {
       "type": "accountability",
-      "label": "ProjectManagement"
-    },
-    "8": {
-      "type": "accountabilityMain",
-      "label": "Functions"
+      "label": "Project Management"
     },
     "9": {
       "type": "accountability",
-      "label": "AccountManagement"
+      "label": "Account Management"
     },
     "10": {
       "type": "accountability",
@@ -61,31 +53,34 @@
       "label": "ProductMarketFit"
     },
     "18": {
-      "type": "WeeklyMetric",
-      "label": "ReoccuringMonthyRevenue"
+      "type": "metric",
+      "label": "Recurring Monthly Revenue",
+      "attributes": {
+        "category": "Sales Metric"
+      }
     },
     "22": {
       "type": "Scorecard",
       "label": "Scorecard"
     },
     "24": {
-      "type": "CoreValue",
+      "type": "coreValue",
       "label": "Supportive"
     },
     "27": {
-      "type": "CoreValue",
+      "type": "coreValue",
       "label": "Genuine"
     },
     "28": {
-      "type": "CoreValue",
+      "type": "coreValue",
       "label": "Accountable"
     },
     "29": {
-      "type": "CoreValue",
+      "type": "coreValue",
       "label": "Enthusiastic"
     },
     "30": {
-      "type": "CoreValue",
+      "type": "coreValue",
       "label": "Passionate"
     },
     "32": {
@@ -101,32 +96,44 @@
       "label": "TrustworthyIntegrity"
     },
     "37": {
-      "type": "accountability",
-      "label": "ProductManagement"
+      "type": "orgUnit",
+      "label": "Product Management"
     },
     "38": {
-      "type": "WeeklyMetric",
-      "label": "NumberOfProspectCalls"
+      "type": "metric",
+      "label": "Number Of Prospect Calls",
+      "attributes": {
+        "category": "Sales Metric"
+      }
     },
     "39": {
       "type": "priority",
-      "label": "WorkingPrototype"
+      "label": "Working Prototype"
     },
     "42": {
-      "type": "WeeklyMetric",
-      "label": "NewClientContracts"
+      "type": "metric",
+      "label": "New Client Contracts",
+      "attributes": {
+        "category": "Sales Metric"
+      }
     },
     "43": {
-      "type": "WeeklyMetric",
-      "label": "WeeklyBlogPost"
+      "type": "metric",
+      "label": "Weekly Blog Post",
+      "attributes": {
+        "category": "Sales Metric"
+      }
     },
     "45": {
       "type": "priority",
-      "label": "WebsiteV2"
+      "label": "Website v2"
     },
     "46": {
-      "type": "WeeklyMetric",
-      "label": "AccountsPayableAge"
+      "type": "metric",
+      "label": "Accounts Payable Age",
+      "attributes": {
+        "category": "Operations Metric"
+      }
     },
     "47": {
       "type": "person",
@@ -144,95 +151,104 @@
     },
     "50": {
       "type": "priority",
-      "label": "Generate20Referrals"
+      "label": "Generate 20 Referrals"
     },
     "52": {
       "type": "priority",
-      "label": "ReoccuringPaymentsToCorp"
+      "label": "Recurring Payments To Corp"
     },
     "53": {
-      "type": "WeeklyMetric",
-      "label": "CustomerComplaints"
+      "type": "metric",
+      "label": "Customer Complaints",
+      "attributes": {
+        "category": "Product Metric"
+      }
     },
     "55": {
       "type": "priority",
-      "label": "NewPitchDeck"
+      "label": "New Pitch Deck"
     },
     "56": {
       "type": "priority",
-      "label": "VideoDemoBI"
+      "label": "Create Demo Video"
     },
     "57": {
       "type": "priority",
-      "label": "BuyLogoWear"
-    },
-    "58": {
-      "type": "WeeklyMetric",
-      "label": "SalesWeeklyMetrics"
-    },
-    "59": {
-      "type": "WeeklyMetric",
-      "label": "ProductWeeklyMetrics"
-    },
-    "60": {
-      "type": "WeeklyMetrics",
-      "label": "OperationsWeeklyMetrics"
+      "label": "Buy Logo Wear"
     },
     "61": {
-      "type": "WeeklyMetric",
-      "label": "CloseRatio"
+      "type": "metric",
+      "label": "Close Ratio",
+      "attributes": {
+        "category": "Sales Metric"
+      }
     },
     "62": {
-      "type": "WeeklyMetric",
-      "label": "CustomerRating"
+      "type": "metric",
+      "label": "Customer Rating",
+      "attributes": {
+        "category": "Product Metric"
+      }
     },
     "63": {
-      "type": "WeeklyMetric",
-      "label": "Errors"
+      "type": "metric",
+      "label": "Errors",
+      "attributes": {
+        "category": "Product Metric"
+      }
     },
     "64": {
-      "type": "WeeklyMetric",
-      "label": "Cancellations"
+      "type": "metric",
+      "label": "Cancellations",
+      "attributes": {
+        "category": "Product Metric"
+      }
     },
     "65": {
-      "type": "WeeklyMetric",
-      "label": "Payroll"
+      "type": "metric",
+      "label": "Payroll",
+      "attributes": {
+        "category": "Operations Metric"
+      }
     },
     "66": {
-      "type": "WeeklyMetric",
-      "label": "EmployeeSickDays"
+      "type": "metric",
+      "label": "Employee Sick Days",
+      "attributes": {
+        "category": "Operations Metric"
+      }
     },
     "67": {
-      "type": "WeeklyMetric",
-      "label": "OpenPositions"
+      "type": "metric",
+      "label": "Open Positions",
+      "attributes": {
+        "category": "Operations Metric"
+      }
     },
     "68": {
-      "type": "Accountability",
+      "type": "accountability",
       "label": "Programming"
     },
     "69": {
-      "type": "Accountability",
-      "label": "ServerManagement"
+      "type": "accountability",
+      "label": "Server Management"
     },
     "70": {
-      "type": "Accountability",
-      "label": "ArchitectureAndTechnology"
+      "type": "accountability",
+      "label": "Architecture and Technology"
     },
     "71": {
       "type": "ToBeSolved",
       "label": "CloseFunding"
     },
-    "72": {
-      "type": "accountability",
-      "label": "ProductAndService"
-    },
     "73": {
-      "type": "accountability",
-      "label": "SoftwareDevelopment"
+      "type": "orgUnit",
+      "label": "Software Development"
     },
     "75": {
       "type": "person",
-      "label": "Hank"
+      "label": "Hank",
+      "role": "Sales"
     },
     "76": {
       "type": "person",
@@ -272,27 +288,22 @@
     },
     "84": {
       "type": "priority",
-      "label": "NewLeadsForSales"
+      "label": "New Leads For Sales"
     },
     "85": {
       "type": "priority",
-      "label": "20kBackChannelSales"
+      "label": "20k Backchannel Sales"
     },
     "86": {
       "type": "priority",
-      "label": "Hire2Programmers"
+      "label": "Hire 2 Programmers"
     },
     "87": {
       "type": "priority",
-      "label": "20kNewRevenue"
+      "label": "20k New Revenue"
     }
   },
   "edges": {
-    "b2d7c909-e037-4036-b2df-5cde82b78b00": {
-      "source": "1",
-      "target": "4",
-      "label": ""
-    },
     "25d3c823-7ff5-448c-89d2-62097240bdc8": {
       "source": "1",
       "target": "5",
@@ -398,86 +409,6 @@
       "target": "16",
       "label": "TBS"
     },
-    "6a8b13f4-a2dd-4451-aae1-3290f3a92e63": {
-      "source": "22",
-      "target": "58",
-      "label": "OPS_METRIC"
-    },
-    "575865c8-68be-42d2-b759-4ae74e827cf5": {
-      "source": "22",
-      "target": "59",
-      "label": "OPS_METRIC"
-    },
-    "4cdaec5c-ca85-47c7-89d5-1239bf304c02": {
-      "source": "22",
-      "target": "60",
-      "label": "OPS_METRIC"
-    },
-    "20fe2d0e-bf14-4869-b4ad-5f98e4333f36": {
-      "source": "60",
-      "target": "46",
-      "label": "OPS_METRIC"
-    },
-    "b8759b44-dabc-4a58-9b18-a510e66450a6": {
-      "source": "58",
-      "target": "38",
-      "label": "OPS_METRIC"
-    },
-    "f4203431-7a71-4677-8eb1-fc433b4fb3f2": {
-      "source": "58",
-      "target": "43",
-      "label": "OPS_METRIC"
-    },
-    "d1a2a088-8b9c-40af-83f6-ddf3b75bbe7f": {
-      "source": "58",
-      "target": "42",
-      "label": "OPS_METRIC"
-    },
-    "e3a2d566-5d8f-4c2f-b9a4-fe7fcf759c0f": {
-      "source": "58",
-      "target": "18",
-      "label": "OPS_METRIC"
-    },
-    "98ea6de6-2807-4869-a31b-e95a1efe0e5b": {
-      "source": "59",
-      "target": "53",
-      "label": "OPS_METRIC"
-    },
-    "310ce9a9-0066-4901-aee7-8345cdca9a65": {
-      "source": "58",
-      "target": "61",
-      "label": "OPS_METRIC"
-    },
-    "996f5881-2052-4728-9ccd-f6d477c57c19": {
-      "source": "59",
-      "target": "62",
-      "label": "OPS_METRIC"
-    },
-    "a27df475-681f-4b89-b019-952add606a24": {
-      "source": "59",
-      "target": "63",
-      "label": "OPS_METRIC"
-    },
-    "1ba244b5-2248-4acd-b45e-e5d840f2d8da": {
-      "source": "59",
-      "target": "64",
-      "label": "OPS_METRIC"
-    },
-    "874d3b56-5cbc-4df7-a671-28ca8d91580c": {
-      "source": "60",
-      "target": "65",
-      "label": "OPS_METRIC"
-    },
-    "f381d691-70a7-4ffe-a3da-5818a6641197": {
-      "source": "60",
-      "target": "66",
-      "label": "OPS_METRIC"
-    },
-    "9203e260-68cc-4946-a5b7-4570f238ea8d": {
-      "source": "60",
-      "target": "67",
-      "label": "OPS_METRIC"
-    },
     "1b60f171-328c-41a6-901f-458edef34a52": {
       "source": "37",
       "target": "6",
@@ -506,12 +437,12 @@
     "4217812b-c172-4199-860b-6d361d901012": {
       "source": "48",
       "target": "63",
-      "label": "IS_ACCT_FOR"
+      "label": "accountable"
     },
     "a35376c7-e604-44b9-91af-cae20aa69778": {
       "source": "47",
       "target": "64",
-      "label": "IS_ACCT_FOR"
+      "label": "accountable"
     },
     "867f4b9a-cfcb-4c3d-8e98-bf2e2f6fc770": {
       "source": "0",
@@ -553,26 +484,6 @@
       "target": "22",
       "label": "WEEKLY_SCORECARD"
     },
-    "7fc81282-632b-4569-b0da-7c92ff1f4b5c": {
-      "source": "0",
-      "target": "8",
-      "label": "FUNCTION"
-    },
-    "91d69ef5-d839-453d-9c1c-006395460d66": {
-      "source": "8",
-      "target": "3",
-      "label": "FUNCTION"
-    },
-    "46063f63-350d-4691-9c10-a92dbf5b1406": {
-      "source": "8",
-      "target": "72",
-      "label": "FUNCTION"
-    },
-    "afc19e69-e725-4ae6-84f2-ef53afaeb655": {
-      "source": "72",
-      "target": "37",
-      "label": ""
-    },
     "75fb74fb-c547-4370-b3bd-cb7bb3f8ff16": {
       "source": "73",
       "target": "68",
@@ -591,11 +502,6 @@
     "d77d9798-c7ce-454b-84f2-46d83a0fe7c8": {
       "source": "73",
       "target": "10",
-      "label": ""
-    },
-    "3843ae24-999e-4f83-9a42-a62d16f325e5": {
-      "source": "72",
-      "target": "73",
       "label": ""
     },
     "1ff3041e-853f-49f3-8d4d-0f3f7f7a6bb3": {
@@ -670,7 +576,7 @@
     },
     "26cbe399-47a2-4d03-85ac-e0d11ec5178d": {
       "source": "49",
-      "target": "4",
+      "target": "1",
       "label": "accountable"
     },
     "9e2894ac-3fd2-4a9d-a8c8-5f5920977145": {
@@ -761,42 +667,42 @@
     "b651e7bb-5465-41a1-8370-669ed3522fb6": {
       "source": "79",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "d70844de-a84e-486a-84b6-85f993efb2e7": {
       "source": "79",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "2357f26f-fb27-477b-a45c-54a2ebb8753e": {
       "source": "79",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "be22b975-44d8-4cac-b59a-0f4e065e169e": {
       "source": "79",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "e228662d-12d1-494f-bbb8-657e7720b7e7": {
       "source": "79",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "5a900cb4-e247-4833-aaf8-7b7235ed6cfa": {
       "source": "79",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "9ef59a39-57d3-437d-b321-eeac2ca8ce2f": {
       "source": "79",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "b83c3d95-aca0-4687-809f-2d186daeb629": {
       "source": "79",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "8a33a07f-c6de-4dd9-aa02-c2b4cbe282eb": {
       "source": "79",
@@ -816,42 +722,42 @@
     "48b77dcc-dd6f-4c6c-b49b-bc5653787af1": {
       "source": "77",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "e31705e0-0962-4a89-8f0b-53206e564b7a": {
       "source": "77",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "db8c6360-bced-48fc-9fd5-fe000ff84053": {
       "source": "77",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "046371cc-fd3d-41b0-b2a9-fe76b955278e": {
       "source": "77",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "9f6f7912-1390-4a12-b161-129ddb2e38a3": {
       "source": "77",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "512d803b-ebfb-43a9-b689-67b07d952220": {
       "source": "77",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "31fb7e85-2d55-4ada-ba30-0937c8aa3eea": {
       "source": "77",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "7fedefe7-fe90-441f-9697-f6c1ad8120e9": {
       "source": "77",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "c2f5ee21-f83f-446e-a868-9cfae8729609": {
       "source": "77",
@@ -871,42 +777,42 @@
     "71543dab-e943-4ac9-87f3-3ae111d85225": {
       "source": "78",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "20326fc0-5c77-44cc-b0de-f27ef8896e0c": {
       "source": "78",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "6e91e2ce-327e-424d-a4ed-a971ba029e4c": {
       "source": "78",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "a442ce47-3796-4905-962f-305720d068db": {
       "source": "78",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "4b19afc1-d45f-42c0-b819-2cc1d617e0fb": {
       "source": "78",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "37f67ff3-d3f9-4e00-80b4-b2b3009c055b": {
       "source": "78",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "37edb647-63cf-455b-aaab-ec1a37ea4f40": {
       "source": "78",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "8edc77bf-78aa-49ba-a8d0-75eda145e15c": {
       "source": "78",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "677bc0b6-8608-449d-a18f-7e83ae551a47": {
       "source": "78",
@@ -926,42 +832,42 @@
     "2d59c118-7d0c-43a5-9cc6-c22400de46e1": {
       "source": "76",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "c8d56d86-297f-49c1-9e27-757d15d1b750": {
       "source": "76",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "2b7d04a0-0289-4587-81a6-822ab4feeeb9": {
       "source": "76",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "58eaaa8b-8569-41a1-ac5f-2a05fb60fb8d": {
       "source": "76",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "c8103b2b-4fe3-4d10-9127-92acb9b5b1dc": {
       "source": "76",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "7548a8a8-b6f6-400c-b424-def33e095041": {
       "source": "76",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "4924158a-9d9b-4407-b1c0-a38f0e9154ea": {
       "source": "76",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "af81520a-c4a2-4adf-b401-80fb07a5ac5b": {
       "source": "76",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "cc1dafad-799f-4511-abc5-206692c894c7": {
       "source": "76",
@@ -981,42 +887,42 @@
     "6d423748-c87a-45ba-89b9-7a8a08e0d607": {
       "source": "75",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "4b1acb26-13b4-4068-aa21-6a662060dddf": {
       "source": "75",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "77bf8a87-46c2-471b-b658-398f0779bfd4": {
       "source": "75",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "5edf5dbb-92d1-4295-bfa8-458d6d839ec3": {
       "source": "75",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "74d38f15-4622-41f1-9a4f-649ad4e2ecab": {
       "source": "75",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "bf49746f-30e8-48cd-a4f5-f2d08db09a3c": {
       "source": "75",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "393d93eb-410e-461a-a9d2-8458d6bf3815": {
       "source": "75",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "acbf51aa-a0c5-4988-a6f9-1a2eaad122c2": {
       "source": "75",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "8e3cdc34-8d52-4150-ae3b-de7528aee8fc": {
       "source": "75",
@@ -1036,42 +942,42 @@
     "5ccb1d1f-d5df-4ca5-83f3-cc31347fcfd1": {
       "source": "49",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "89aef82b-ce51-4054-9fc9-8d89c230b140": {
       "source": "49",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "32b8da5c-a745-48fb-becd-783120eed903": {
       "source": "49",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "ca6a1638-6d72-4b3c-bead-3750c267dbc3": {
       "source": "49",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "7b3bf1b4-c9f1-42a4-8d3c-aba1e3374446": {
       "source": "49",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "7d895157-ba21-41e0-af2c-349ef542d26c": {
       "source": "49",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "9d9d8804-fe1b-4d9e-ab6d-bce8590943b4": {
       "source": "49",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "1d307db0-13cc-4b27-87f7-88738cb214c6": {
       "source": "49",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "9f82df33-3786-4b0a-93d4-3ccc545a6681": {
       "source": "49",
@@ -1091,72 +997,72 @@
     "c58732d6-b417-4b86-9fec-8e5fd04b3c8c": {
       "source": "47",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "d5221657-7e62-4c01-9e3e-01515dc77639": {
       "source": "47",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "2724e35a-1027-4544-bc33-c9cbe79f9646": {
       "source": "47",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "8e0b84a9-dcfa-416c-a910-f5161232b71f": {
       "source": "47",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "cc7313d1-5e4d-47ef-bbb5-e996d2fe5d8f": {
       "source": "47",
       "target": "27",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "641864b9-3160-4426-a426-ec845b031bf9": {
       "source": "47",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "4a8499c7-eb7b-4310-95da-a4de615ff14f": {
       "source": "47",
       "target": "30",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "ed16aaf6-1e47-4902-a0d5-e458dd82fc7e": {
       "source": "47",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "77ed8ebc-533d-4720-b08d-89d8ff541457": {
       "source": "48",
       "target": "33",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "d4ab0a0c-f37d-4d30-b883-4b2e8733b781": {
       "source": "48",
       "target": "32",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "db792017-52b1-4a10-b876-81a7028b40e4": {
       "source": "48",
       "target": "34",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "beddbd68-fcb2-444d-86b1-1aa00e8641bf": {
       "source": "48",
       "target": "24",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "4776b6b9-3b20-4723-9a34-7e427368573d": {
       "source": "48",
       "target": "28",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "65dc92ad-17d1-44ba-ad13-e99f56549572": {
       "source": "48",
       "target": "29",
-      "label": "DEMONSTRATES_CULTURAL_FIT"
+      "label": ""
     },
     "7befc44e-bf8c-41ef-b8a4-7909839849dc": {
       "source": "48",
@@ -1215,7 +1121,7 @@
     },
     "0c635637-3d37-492f-b771-6b039c453a09": {
       "source": "16",
-      "target": "4",
+      "target": "1",
       "label": ""
     },
     "0e015385-018d-4679-ab5d-d17bebe9f7ef": {
@@ -1241,11 +1147,6 @@
     "a35bc368-cc83-4522-92c9-7c646c0c3751": {
       "source": "61",
       "target": "78",
-      "label": ""
-    },
-    "192078d0-a185-4bd5-a8bb-638a93cf6457": {
-      "source": "58",
-      "target": "71",
       "label": ""
     },
     "00a5d587-bcc4-479a-bbb9-7a290a465c81": {
@@ -1287,6 +1188,11 @@
       "source": "62",
       "target": "47",
       "label": ""
+    },
+    "c7976a53-7bb1-43df-9ee8-395c300f5c86": {
+      "source": "48",
+      "target": "86",
+      "label": "informed"
     }
   }
 }

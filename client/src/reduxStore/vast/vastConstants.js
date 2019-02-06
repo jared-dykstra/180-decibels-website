@@ -12,17 +12,44 @@ export const ADD_NODE = 'vast/add-node'
 
 // Node Types
 export const NODE_TYPE_PERSON = 'person'
+export const NODE_TYPE_ORG_UNIT = 'orgUnit'
 export const NODE_TYPE_ACCOUNTABILITY = 'accountability'
 export const NODE_TYPE_PRIORITY = 'priority'
+export const NODE_TYPE_CORE_VALUES = 'coreValue'
+export const NODE_TYPE_METRIC = 'metric'
 
 // Classes
 export const CLASS_PERSON = `cls_${NODE_TYPE_PERSON}`
 export const CLASS_ACCOUNTABILITY = `cls_${NODE_TYPE_ACCOUNTABILITY}`
 export const CLASS_PRIORITY = `cls_${NODE_TYPE_PRIORITY}`
 export const CLASS_HIDDEN = 'cls_hidden'
+export const CLASS_CORE_VALUE = 'cls_coreValue'
+export const CLASS_METRIC = 'cls_metric'
+export const CLASS_ORG_UNIT = 'cls_orgUnit'
 
 export const NODE_TYPE_CLASS_MAP = {
-  [NODE_TYPE_PERSON]: CLASS_PERSON,
-  [NODE_TYPE_ACCOUNTABILITY]: CLASS_ACCOUNTABILITY,
-  [NODE_TYPE_PRIORITY]: CLASS_PRIORITY
+  [NODE_TYPE_PERSON]: {
+    className: CLASS_PERSON,
+    secondaryDimension: []
+  },
+  [NODE_TYPE_ORG_UNIT]: {
+    className: CLASS_ORG_UNIT,
+    secondaryDimension: [NODE_TYPE_ACCOUNTABILITY]
+  },
+  [NODE_TYPE_ACCOUNTABILITY]: {
+    className: CLASS_ACCOUNTABILITY,
+    secondaryDimension: [NODE_TYPE_PERSON]
+  },
+  [NODE_TYPE_PRIORITY]: {
+    className: CLASS_PRIORITY,
+    secondaryDimension: [NODE_TYPE_PERSON]
+  },
+  [NODE_TYPE_CORE_VALUES]: {
+    className: CLASS_CORE_VALUE,
+    secondaryDimension: [NODE_TYPE_PERSON]
+  },
+  [NODE_TYPE_METRIC]: {
+    className: CLASS_METRIC,
+    secondaryDimension: [NODE_TYPE_PERSON]
+  }
 }

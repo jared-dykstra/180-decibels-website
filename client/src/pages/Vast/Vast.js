@@ -251,30 +251,23 @@ class Vast extends PureComponent {
                   >
                     All Types
                   </MenuItem>
-                  <MenuItem
-                    className={classes.indented}
-                    onClick={e =>
-                      this.handleMenuNewSelect(e, [NODE_TYPE_PERSON])
-                    }
-                  >
-                    People
-                  </MenuItem>
-                  <MenuItem
-                    className={classes.indented}
-                    onClick={e =>
-                      this.handleMenuNewSelect(e, [NODE_TYPE_ACCOUNTABILITY])
-                    }
-                  >
-                    Accountabilities
-                  </MenuItem>
-                  <MenuItem
-                    className={classes.indented}
-                    onClick={e =>
-                      this.handleMenuNewSelect(e, [NODE_TYPE_PRIORITY])
-                    }
-                  >
-                    Priorities
-                  </MenuItem>
+
+                  {Object.entries(NODE_TYPE_CLASS_MAP).map(
+                    ([nodeType, details]) => (
+                      <MenuItem
+                        className={classes.indented}
+                        onClick={e =>
+                          this.handleMenuNewSelect(e, [
+                            nodeType,
+                            ...details.secondaryDimension
+                          ])
+                        }
+                      >
+                        {nodeType}
+                      </MenuItem>
+                    )
+                  )}
+
                   <TextField
                     label="Search For..."
                     type="search"

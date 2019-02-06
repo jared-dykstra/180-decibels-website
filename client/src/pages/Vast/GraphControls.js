@@ -22,16 +22,9 @@ import {
   setSelectedNodeTypes
 } from 'reduxStore/vast/vastActions'
 import {
-  NODE_TYPE_ACCOUNTABILITY,
-  NODE_TYPE_PERSON,
-  NODE_TYPE_PRIORITY
+  NODE_TYPE_PRIORITY,
+  NODE_TYPE_CLASS_MAP
 } from 'reduxStore/vast/vastConstants'
-
-const NODE_TYPE_LABELS = {
-  [NODE_TYPE_ACCOUNTABILITY]: 'Accountability',
-  [NODE_TYPE_PERSON]: 'Person',
-  [NODE_TYPE_PRIORITY]: 'Priority'
-}
 
 const styles = theme => ({
   chips: {
@@ -104,9 +97,9 @@ class GraphTab extends PureComponent {
               )}
               // MenuProps={MenuProps}
             >
-              {Object.entries(NODE_TYPE_LABELS).map(([k, v]) => (
+              {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
                 <MenuItem key={k} value={k}>
-                  {v}
+                  {k}
                 </MenuItem>
               ))}
             </Select>

@@ -47,7 +47,8 @@ const runSelector = (selector, state) => selector({ [mountPoint]: state })
 
 const setElementVisibility = ({ graph, selectedNodeTypes }) => {
   // Apply or remove the Hidden class according to selectedNodeTypes
-  Object.entries(NODE_TYPE_CLASS_MAP).forEach(([nodeType, className]) => {
+  Object.entries(NODE_TYPE_CLASS_MAP).forEach(([nodeType, details]) => {
+    const { className } = details
     const elements = graph.$(`.${className}`)
     if (!_includes(selectedNodeTypes, nodeType)) {
       elements.addClass(CLASS_HIDDEN)
@@ -69,7 +70,7 @@ export default (state = initialState, action) => {
       const { style, layout } = defaults
 
       const cyNodes = Object.entries(nodes).map(([id, { label, type }]) => {
-        const className = NODE_TYPE_CLASS_MAP[type]
+        const { className } = NODE_TYPE_CLASS_MAP[type]
         return { group: 'nodes', data: { id, label }, classes: [className] }
       })
 
@@ -160,7 +161,7 @@ export default (state = initialState, action) => {
     // Create a new node
     case ADD_NODE: {
       const { viewId, nodeId, label, type } = action.payload
-      const className = NODE_TYPE_CLASS_MAP[type]
+      const { className } = NODE_TYPE_CLASS_MAP[type]
       const rawNode = { label, type }
 
       // Add to every graph

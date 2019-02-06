@@ -12,14 +12,19 @@ import {
   CLASS_ACCOUNTABILITY,
   CLASS_PERSON,
   CLASS_PRIORITY,
-  CLASS_HIDDEN
+  CLASS_HIDDEN,
+  CLASS_CORE_VALUE,
+  CLASS_METRIC,
+  CLASS_ORG_UNIT
 } from './vastConstants'
 
 import sampleData from './sampleGraph.json'
 
 // Register plugins with Cytoscape
 cytoscape.use(cola)
-cytoscape.use(ctxMenu)
+if (!cytoscape.cxtmenu) {
+  cytoscape.use(ctxMenu)
+}
 cytoscape.use(edgeHandles)
 
 // See: https://stackoverflow.com/a/21825207/5373104
@@ -94,6 +99,24 @@ export default {
         selector: `node.${CLASS_PRIORITY}`,
         style: {
           'background-color': '#0000FF'
+        }
+      },
+      {
+        selector: `node.${CLASS_CORE_VALUE}`,
+        style: {
+          'background-color': '#00FFFF'
+        }
+      },
+      {
+        selector: `node.${CLASS_METRIC}`,
+        style: {
+          'background-color': '#FFFF00'
+        }
+      },
+      {
+        selector: `node.${CLASS_ORG_UNIT}`,
+        style: {
+          'background-color': '#FF00FF'
         }
       },
       {
