@@ -10,8 +10,8 @@ const Intro = ({ className, button }) => (
     alignItems="center"
     className={className}
   >
-    <Grid item style={{ width: '50%' }}>
-      <Typography paragraph variant="h3" align="center" color="secondary">
+    <Grid item style={{}}>
+      <Typography paragraph variant="h4" align="center" color="secondary">
         Operational Intelligence
       </Typography>
       <Typography
@@ -26,8 +26,8 @@ const Intro = ({ className, button }) => (
       <ul>
         <li>
           <Typography paragraph>
-            A view of &quot;Everyting&quot; shows how complex the organization
-            is.
+            An unfiltered &quot;All Types&quot; view shows how complex an
+            organization can be.
           </Typography>
         </li>
         <li>
@@ -54,7 +54,7 @@ const Intro = ({ className, button }) => (
     </Grid>
     <Grid item style={{ width: '80%' }}>
       <Typography variant="h5" align="center" color="primary">
-        Click or Tap the {button} button to create a view.
+        Click or Tap the {button} button to begin.
       </Typography>
       <Typography variant="h4" style={{ fontSize: '15rem' }}>
         <SvgIcon color="disabled" fontSize="inherit">
