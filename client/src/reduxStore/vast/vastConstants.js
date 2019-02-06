@@ -29,26 +29,32 @@ export const CLASS_ORG_UNIT = 'cls_orgUnit'
 
 export const NODE_TYPE_CLASS_MAP = {
   [NODE_TYPE_PERSON]: {
+    color: '#777777',
     className: CLASS_PERSON,
     secondaryDimension: []
   },
   [NODE_TYPE_ORG_UNIT]: {
+    color: '#00FF00',
     className: CLASS_ORG_UNIT,
     secondaryDimension: [NODE_TYPE_ACCOUNTABILITY]
   },
   [NODE_TYPE_ACCOUNTABILITY]: {
+    color: '#0000FF',
     className: CLASS_ACCOUNTABILITY,
     secondaryDimension: [NODE_TYPE_PERSON]
   },
   [NODE_TYPE_PRIORITY]: {
+    color: '#FFFF00',
     className: CLASS_PRIORITY,
     secondaryDimension: [NODE_TYPE_PERSON]
   },
   [NODE_TYPE_CORE_VALUES]: {
+    color: '#FF00FF',
     className: CLASS_CORE_VALUE,
     secondaryDimension: [NODE_TYPE_PERSON]
   },
   [NODE_TYPE_METRIC]: {
+    color: '#00FFFF',
     className: CLASS_METRIC,
     secondaryDimension: [NODE_TYPE_PERSON]
   }

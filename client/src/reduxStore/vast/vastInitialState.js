@@ -89,36 +89,15 @@ export default {
             : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgNS45YzEuMTYgMCAyLjEuOTQgMi4xIDIuMXMtLjk0IDIuMS0yLjEgMi4xUzkuOSA5LjE2IDkuOSA4cy45NC0yLjEgMi4xLTIuMW0wIDljMi45NyAwIDYuMSAxLjQ2IDYuMSAyLjF2MS4xSDUuOVYxN2MwLS42NCAzLjEzLTIuMSA2LjEtMi4xTTEyIDRDOS43OSA0IDggNS43OSA4IDhzMS43OSA0IDQgNCA0LTEuNzkgNC00LTEuNzktNC00LTR6bTAgOWMtMi42NyAwLTggMS4zNC04IDR2M2gxNnYtM2MwLTIuNjYtNS4zMy00LTgtNHoiLz48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+'
         }
       },
-      {
-        selector: `node.${CLASS_ACCOUNTABILITY}`,
+
+      // Classes for each node type
+      ...Object.entries(NODE_TYPE_CLASS_MAP).map(([nodeType, details]) => ({
+        selector: `node.${details.className}`,
         style: {
-          'background-color': '#00FF00'
+          'background-color': details.color
         }
-      },
-      {
-        selector: `node.${CLASS_PRIORITY}`,
-        style: {
-          'background-color': '#0000FF'
-        }
-      },
-      {
-        selector: `node.${CLASS_CORE_VALUE}`,
-        style: {
-          'background-color': '#00FFFF'
-        }
-      },
-      {
-        selector: `node.${CLASS_METRIC}`,
-        style: {
-          'background-color': '#FFFF00'
-        }
-      },
-      {
-        selector: `node.${CLASS_ORG_UNIT}`,
-        style: {
-          'background-color': '#FF00FF'
-        }
-      },
+      })),
+
       {
         selector: `.${CLASS_HIDDEN}`,
         style: {

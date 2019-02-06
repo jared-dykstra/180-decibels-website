@@ -91,6 +91,7 @@ class GraphTab extends PureComponent {
                       label={value}
                       className={classes.chip}
                       onDelete={() => this.handleRemoveNodeType(value)}
+                      style={{ color: NODE_TYPE_CLASS_MAP[value].color }}
                     />
                   ))}
                 </div>
@@ -98,7 +99,7 @@ class GraphTab extends PureComponent {
               // MenuProps={MenuProps}
             >
               {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
-                <MenuItem key={k} value={k}>
+                <MenuItem key={k} value={k} style={{ color: v.color }}>
                   {k}
                 </MenuItem>
               ))}
