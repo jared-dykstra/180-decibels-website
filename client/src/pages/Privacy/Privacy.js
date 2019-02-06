@@ -282,12 +282,6 @@ const PrivacyPolicy = ({ location, classes }) => (
           info@180decibels.com
         </a>
       </li>
-      <li>
-        By phone:&nbsp;
-        <a href="tel:+18883214531" className="text-nowrap">
-          1-888-321-4531
-        </a>
-      </li>
     </ul>
   </Template>
 )
