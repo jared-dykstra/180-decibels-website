@@ -111,6 +111,10 @@ class App extends PureComponent {
   }
 
   initializeTracker = () => {
+    if (process.env.NODE_ENV !== 'production') {
+      return
+    }
+
     const { userId } = this.props
     const isInit = 'decibels_is_initialized'
     if (!window[isInit] && userId) {
@@ -142,7 +146,9 @@ class App extends PureComponent {
     doLogPageView({ uri })
 
     // Send event to Google Analytics
-    ReactGA.pageview(uri)
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(uri)
+    }
   }
 
   logModalView = ({ modalName }) => {
@@ -152,7 +158,9 @@ class App extends PureComponent {
     doLogModalView({ modalName })
 
     // Send event to Google Analytics
-    ReactGA.modalview(modalName)
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.modalview(modalName)
+    }
   }
 
   // See: https://github.com/react-ga/react-ga#reactgaeventargs
@@ -163,7 +171,9 @@ class App extends PureComponent {
     // console.log(`Tracker - LogEvent ${userId}, ${category}, ${action}`)
     doLogEvent(event)
 
-    ReactGA.event(event)
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event(event)
+    }
   }
 
   logError = ({ error, info, fatal = true }) => {
@@ -182,7 +192,9 @@ class App extends PureComponent {
     })
 
     // Send event to Google Analytics
-    ReactGA.exception({ description, fatal })
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.exception({ description, fatal })
+    }
   }
 
   render() {

@@ -56,7 +56,7 @@ const Intro = ({ className, button }) => (
       <Typography variant="h5" align="center" color="primary">
         Click or Tap the {button} button to create a view.
       </Typography>
-      <Typography variant="display1" style={{ fontSize: '15rem' }}>
+      <Typography variant="h4" style={{ fontSize: '15rem' }}>
         <SvgIcon color="disabled" fontSize="inherit">
           <path d="M15.5,5.69L18.31,8.5L11.94,14.89H16.89V18.31H5.69V7.11H9.12V12.06L15.5,5.69Z" />
         </SvgIcon>

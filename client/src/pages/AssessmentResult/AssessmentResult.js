@@ -17,11 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { Template } from 'components'
 
-import {
-  ROUTE_HELP_MY_TEAM,
-  ROUTE_HELP_ME,
-  ROUTE_HOME
-} from 'reduxStore/routes/routesConstants'
+import { ROUTE_HELP_ME, ROUTE_HOME } from 'reduxStore/routes/routesConstants'
 import { loadResults } from 'reduxStore/selfAssessment/selfAssessmentActions'
 import {
   displayNameSelector,
