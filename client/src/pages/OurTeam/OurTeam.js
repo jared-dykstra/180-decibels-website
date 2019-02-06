@@ -163,13 +163,6 @@ const OurTeam = ({ location, classes }) => (
           T2R 1J5
         </a>
       </Typography>
-      <h3>Phone</h3>
-      <Typography variant="body1" paragraph className={classes.address}>
-        <a href="tel:+18883214531" className="text-nowrap">
-          1-888-321-4531
-        </a>{' '}
-        or <a href="tel:+14039845457">(403) 984-5457</a>
-      </Typography>
       <h3>Email</h3>
       <Typography variant="body1" paragraph className={classes.address}>
         <a href="mailto:info@180decibels.com" className="text-nowrap">

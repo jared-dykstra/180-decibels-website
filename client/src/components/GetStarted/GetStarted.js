@@ -178,11 +178,7 @@ class GetStarted extends PureComponent {
               <StepContent>
                 <Typography variant="body2" paragraph>
                   Book a day that works for you within the next two weeks. If
-                  you prefer to get started right away, call{' '}
-                  <a href="tel:+18883214531" className="text-nowrap">
-                    1-888-321-4531
-                  </a>{' '}
-                  or email{' '}
+                  you prefer to get started right away, email{' '}
                   <a href="mailto:info@180decibels.com" className="text-nowrap">
                     info@180decibels.com
                   </a>

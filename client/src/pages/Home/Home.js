@@ -145,7 +145,7 @@ export class Home extends PureComponent {
               <Typography variant="body1" paragraph className={classes.intro}>
                 <span className={classes.highlight}>
                   Do you want to unlock latent productivity in your team and
-                  out-perform competitors?
+                  outperform competitors?
                 </span>
               </Typography>
               <Typography variant="body1" paragraph className={classes.intro}>

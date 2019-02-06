@@ -101,11 +101,6 @@ const footer = ({ classes }) => (
         <Grid item className={classes.social}>
           <SocialLinks />
         </Grid>
-        <Grid item>
-          <a href="tel:+18883214531" className="text-nowrap">
-            1-888-321-4531
-          </a>
-        </Grid>
       </Grid>
     </Grid>
   </footer>
