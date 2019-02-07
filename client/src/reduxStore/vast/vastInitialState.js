@@ -162,7 +162,7 @@ export default {
         }
       },
       {
-        selector: 'node.selected',
+        selector: 'node:selected',
         style: {
           width: '40',
           height: '40',

@@ -1,3 +1,4 @@
+import { debounce as _debounce } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -77,6 +78,7 @@ class Graph extends PureComponent {
           commands: this.contextCommands()
         })
 
+        /*
         this.edgeHandles = graph.edgehandles({
           ...edgeHandlesDefaults,
           complete(sourceNode, targetNode, addedElements) {
@@ -89,8 +91,24 @@ class Graph extends PureComponent {
             })
           }
         })
+        */
 
-        // TODO: Don't run the layout because it would be invoked when switching tabs
+        graph.on(
+          'select unselect',
+          'node',
+          _debounce(e => {
+            const node = graph.$('node:selected')
+
+            if (node.nonempty()) {
+              Promise.resolve().then(() => this.highlight(node))
+            } else {
+              // hideNodeInfo()
+              // this.clear()
+            }
+          }, 100)
+        )
+
+        // Perform an initial layout.  Layout requires a bounding box, which is derived from the component to which the graph is mounted
         const { doLayout } = this.props
         doLayout()
       }
@@ -117,7 +135,7 @@ class Graph extends PureComponent {
     }
   }
 
-  handleClickDetails = node => {
+  handleClickEdit = node => {
     this.setState(state => ({
       detailsNode: node
     }))
@@ -239,11 +257,11 @@ class Graph extends PureComponent {
     return [
       {
         // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-        content: 'Details', // html/text content to be displayed in the menu
+        content: 'Edit', // html/text content to be displayed in the menu
         contentStyle: {}, // css key:value pairs to set the command's css in js if you want
         select(ele) {
           // a function to execute when the command is selected
-          self.handleClickDetails(ele)
+          self.handleClickEdit(ele)
         },
         enabled: true // whether the command is selectable
       },

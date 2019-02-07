@@ -27,6 +27,7 @@ export const CLASS_CORE_VALUE = 'cls_coreValue'
 export const CLASS_METRIC = 'cls_metric'
 export const CLASS_ORG_UNIT = 'cls_orgUnit'
 
+// Colors come from here: https://coolors.co/617881-77c0b7-e9c46a-f4a261-e76f51
 export const NODE_TYPE_CLASS_MAP = {
   [NODE_TYPE_PERSON]: {
     color: '#777777',
@@ -34,27 +35,27 @@ export const NODE_TYPE_CLASS_MAP = {
     secondaryDimension: []
   },
   [NODE_TYPE_ORG_UNIT]: {
-    color: '#00FF00',
+    color: '#617881',
     className: CLASS_ORG_UNIT,
     secondaryDimension: [NODE_TYPE_ACCOUNTABILITY]
   },
   [NODE_TYPE_ACCOUNTABILITY]: {
-    color: '#0000FF',
+    color: '#77C0B7',
     className: CLASS_ACCOUNTABILITY,
     secondaryDimension: [NODE_TYPE_PERSON]
   },
   [NODE_TYPE_PRIORITY]: {
-    color: '#FFFF00',
+    color: '#E9C46A',
     className: CLASS_PRIORITY,
     secondaryDimension: [NODE_TYPE_PERSON]
   },
   [NODE_TYPE_CORE_VALUES]: {
-    color: '#FF00FF',
+    color: '#F4A261',
     className: CLASS_CORE_VALUE,
     secondaryDimension: [NODE_TYPE_PERSON]
   },
   [NODE_TYPE_METRIC]: {
-    color: '#00FFFF',
+    color: '#E76F51',
     className: CLASS_METRIC,
     secondaryDimension: [NODE_TYPE_PERSON]
   }
