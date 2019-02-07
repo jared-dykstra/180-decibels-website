@@ -67,7 +67,13 @@ export default {
         selector: 'node',
         style: {
           // so we can see the ids
-          label: 'data(label)',
+          // label: 'data(label)',
+          content: 'data(label)',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'text-outline-width': '2',
+          'text-outline-color': '#fff',
+          'text-outline-opacity': '1',
           // height: 40,
           // width: 40,
           'background-fit': 'cover',
@@ -76,7 +82,10 @@ export default {
           // 'border-opacity': 0.5
           width: '40',
           height: '40',
-          'font-size': '10'
+          'font-size': '10',
+          'font-weight': 'bold'
+          // width: mapData(Quality, 70, 100, 20, 50);
+          // height: mapData(Quality, 70, 100, 20, 50);
         }
       },
       {
@@ -93,7 +102,8 @@ export default {
       ...Object.entries(NODE_TYPE_CLASS_MAP).map(([nodeType, details]) => ({
         selector: `node.${details.className}`,
         style: {
-          'background-color': details.color
+          'background-color': details.color,
+          'text-outline-color': details.color
         }
       })),
 
@@ -112,7 +122,7 @@ export default {
           'target-arrow-shape': 'triangle',
           'line-color': '#ffaaaa',
           'target-arrow-color': '#ffaaaa',
-          'x-index': '0',
+          'z-index': '0',
           width: '2'
         }
       },

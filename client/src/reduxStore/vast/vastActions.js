@@ -44,9 +44,9 @@ export const setSelectedNodeTypes = (nodeTypes, { viewId }) => ({
   payload: { nodeTypes, viewId }
 })
 
-export const layout = ({ viewId }) => ({
+export const layout = ({ viewId, forceUpdate = false }) => ({
   type: LAYOUT,
-  payload: { viewId }
+  payload: { viewId, forceUpdate }
 })
 
 // Actions affecting contents of the graph

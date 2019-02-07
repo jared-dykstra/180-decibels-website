@@ -67,7 +67,7 @@ export default (state = initialState, action) => {
       const { viewId, name, nodeTypes: selectedNodeTypes } = action.payload
       const { model, defaults, graphs } = state
       const { nodes, edges } = model
-      const { style, layout } = defaults
+      const { style } = defaults
 
       const cyNodes = Object.entries(nodes).map(([id, { label, type }]) => {
         const { className } = NODE_TYPE_CLASS_MAP[type]
@@ -99,7 +99,7 @@ export default (state = initialState, action) => {
           timestamp: new Date().getTime(),
           name,
           selectedNodeTypes,
-          layout
+          layout: null
         }),
         graphs: { ...graphs, [viewId]: graph },
         viewer: { ...state.viewer, activeView: viewId }
@@ -222,17 +222,44 @@ export default (state = initialState, action) => {
 
     // Update the layout
     case LAYOUT: {
-      const layout = runSelector(graphLayoutSelector, state)
+      const { viewId, forceUpdate } = action.payload
+      const views = runSelector(viewsSelector, state)
+      const view = views[viewId]
+      const { layout } = view
       const graph = runSelector(graphSelector, state)
-      graph.makeLayout(layout).run()
 
-      const allNodes = graph.nodes()
-      allNodes.forEach(n => {
-        const position = n.position()
-        n.data('orgPos', position)
-      })
+      console.log(
+        `layout viewId={${viewId}} layout=${JSON.stringify(
+          layout
+        )} forceUpdate=${forceUpdate}`
+      )
 
-      return state
+      let nextState = state
+
+      if (!layout || forceUpdate) {
+        // Has never had a layout before: Apply the default layout and save original positions
+        const { defaults } = state
+        const { layout: defaultLayout } = defaults
+        graph.makeLayout(layout || defaultLayout).run()
+
+        const allNodes = graph.nodes()
+        allNodes.forEach(n => {
+          const position = n.position()
+          n.data('orgPos', position)
+        })
+
+        if (!layout) {
+          nextState = {
+            ...state,
+            views: state.views.setIn([viewId, 'layout'], defaultLayout)
+          }
+        }
+      }
+
+      // Refresh the existing layout
+      // const layout = runSelector(graphLayoutSelector, state)
+      // graph.makeLayout(layout).run()
+      return nextState
     }
 
     default:

@@ -91,8 +91,8 @@ class Graph extends PureComponent {
         })
 
         // TODO: Don't run the layout because it would be invoked when switching tabs
-        graph.makeLayout({ name: 'circle' }).run()
-        // const nodes = graph.nodes()
+        const { doLayout } = this.props
+        doLayout()
       }
     }
     window.addEventListener('resize', this.handleResize)
@@ -273,8 +273,6 @@ class Graph extends PureComponent {
   handleResize = () => {
     const { graph, doLayout } = this.props
     if (graph) {
-      // graph.resize()
-      // graph.fit()
       doLayout()
     }
   }

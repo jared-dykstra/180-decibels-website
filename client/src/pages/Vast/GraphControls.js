@@ -77,7 +77,7 @@ class GraphTab extends PureComponent {
       >
         <Grid item>
           <FormControl>
-            <InputLabel htmlFor="input-node-types">View</InputLabel>
+            <InputLabel htmlFor="input-node-types">Filter</InputLabel>
             <Select
               multiple
               value={selectedNodeTypes}
@@ -135,11 +135,12 @@ class GraphTab extends PureComponent {
 }
 
 export default connect(
-  (state, props) => ({
-    selectedNodeTypes: selectedNodeTypesSelector(state, props)
+  state => ({
+    selectedNodeTypes: selectedNodeTypesSelector(state)
   }),
   (dispatch, props) => ({
-    doLayout: () => dispatch(layout(props)),
+    doLayout: () =>
+      dispatch(layout({ viewId: props.viewId, forceUpdate: true })),
     doAddNode: args => dispatch(addNode(args, props)),
     doSetSelectedNodeTypes: nodeTypes =>
       dispatch(setSelectedNodeTypes(nodeTypes, props))
