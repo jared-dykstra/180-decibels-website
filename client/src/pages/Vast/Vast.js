@@ -21,12 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 
 import { Template } from 'components'
 
-import {
-  NODE_TYPE_ACCOUNTABILITY,
-  NODE_TYPE_PERSON,
-  NODE_TYPE_PRIORITY,
-  NODE_TYPE_CLASS_MAP
-} from 'reduxStore/vast/vastConstants'
+import { NODE_TYPE_CLASS_MAP } from 'reduxStore/vast/vastConstants'
 import {
   createView,
   deleteView,
@@ -255,6 +250,7 @@ class Vast extends PureComponent {
                   {Object.entries(NODE_TYPE_CLASS_MAP).map(
                     ([nodeType, details]) => (
                       <MenuItem
+                        key={nodeType}
                         className={classes.indented}
                         onClick={e =>
                           this.handleMenuNewSelect(e, [

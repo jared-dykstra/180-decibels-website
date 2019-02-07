@@ -7,25 +7,21 @@ import edgeHandles from 'cytoscape-edgehandles'
 
 import {
   NODE_TYPE_CLASS_MAP,
-  // NODE_TYPE_ACCOUNTABILITY,
-  // NODE_TYPE_PERSON,
-  CLASS_ACCOUNTABILITY,
   CLASS_PERSON,
-  CLASS_PRIORITY,
-  CLASS_HIDDEN,
-  CLASS_CORE_VALUE,
-  CLASS_METRIC,
-  CLASS_ORG_UNIT
+  CLASS_HIDDEN
 } from './vastConstants'
 
 import sampleData from './sampleGraph.json'
 
+// TODO: Is there a better way to do this?
 // Register plugins with Cytoscape
-cytoscape.use(cola)
-if (!cytoscape.cxtmenu) {
+if (!window.cytoscapeIsRegistered) {
+  cytoscape.use(cola)
   cytoscape.use(ctxMenu)
+  cytoscape.use(edgeHandles)
+  // Global variable is being used during development mode due to HMR
+  window.cytoscapeIsRegistered = true
 }
-cytoscape.use(edgeHandles)
 
 // See: https://stackoverflow.com/a/21825207/5373104
 const isIE11 = !!window.MSInputMethodContext && !!document.documentMode
@@ -74,10 +70,13 @@ export default {
           label: 'data(label)',
           // height: 40,
           // width: 40,
-          'background-fit': 'cover'
+          'background-fit': 'cover',
           // 'border-color': '#000'
           // 'border-width': 3,
           // 'border-opacity': 0.5
+          width: '40',
+          height: '40',
+          'font-size': '10'
         }
       },
       {
@@ -110,10 +109,62 @@ export default {
           label: 'data(label)',
           'text-rotation': 'autorotate',
           'curve-style': 'bezier',
-          // width: 6,
           'target-arrow-shape': 'triangle',
           'line-color': '#ffaaaa',
-          'target-arrow-color': '#ffaaaa'
+          'target-arrow-color': '#ffaaaa',
+          'x-index': '0',
+          width: '2'
+        }
+      },
+
+      // Cheese Demo
+      {
+        selector: 'node.highlighted',
+        style: {
+          'min-zoomed-font-size': '0',
+          'z-index': '9999'
+        }
+      },
+      {
+        selector: 'edge.highlighted',
+        style: {
+          opacity: '0.8',
+          width: '4',
+          'z-index': '9999'
+        }
+      },
+      {
+        selector: '.faded',
+        style: {
+          events: 'no'
+        }
+      },
+      {
+        selector: 'node.faded',
+        style: {
+          opacity: '0.08'
+        }
+      },
+      {
+        selector: 'edge.faded',
+        style: {
+          opacity: '0.06'
+        }
+      },
+      {
+        selector: 'node.selected',
+        style: {
+          width: '40',
+          height: '40',
+          'border-color': 'rgb(187, 219, 247)',
+          'border-opacity': '0.5',
+          'border-width': '10'
+        }
+      },
+      {
+        selector: '.filtered',
+        style: {
+          display: 'none'
         }
       },
 
@@ -167,7 +218,7 @@ export default {
       }
     ],
     layout: {
-      name: 'cola'
+      name: 'circle'
     },
     ctxMenu: {
       // menuRadius: 100, // the radius of the circular menu in pixels

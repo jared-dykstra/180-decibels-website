@@ -87,11 +87,10 @@ export default (state = initialState, action) => {
         style
       })
 
+      graph.maxZoom(2)
+
       // Set visibility based on node types
       setElementVisibility({ graph, selectedNodeTypes })
-
-      // Perform an initial layout
-      graph.makeLayout(layout).run()
 
       // Add the View, Add the Graph, and set the new View to be the active view
       return {
@@ -226,6 +225,12 @@ export default (state = initialState, action) => {
       const layout = runSelector(graphLayoutSelector, state)
       const graph = runSelector(graphSelector, state)
       graph.makeLayout(layout).run()
+
+      const allNodes = graph.nodes()
+      allNodes.forEach(n => {
+        const position = n.position()
+        n.data('orgPos', position)
+      })
 
       return state
     }

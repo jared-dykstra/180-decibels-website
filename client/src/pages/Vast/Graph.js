@@ -15,6 +15,8 @@ import {
 
 import DetailPane from './DetailPane'
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 class Graph extends PureComponent {
   static propTypes = {
     // viewId is used in connect (below)
@@ -46,8 +48,14 @@ class Graph extends PureComponent {
     this.menu = null
     this.edgeHandles = null
 
+    this.lastHighlighted = null
+    this.lastUnhighlighted = null
+
     this.state = {
-      detailsNode: null
+      detailsNode: null,
+      layoutPadding: 50,
+      aniDur: 500,
+      easing: 'linear'
     }
   }
 
@@ -82,9 +90,9 @@ class Graph extends PureComponent {
           }
         })
 
-        graph.resize()
-        graph.fit()
-        // Don't run the layout because it would be invoked when switching tabs
+        // TODO: Don't run the layout because it would be invoked when switching tabs
+        graph.makeLayout({ name: 'circle' }).run()
+        // const nodes = graph.nodes()
       }
     }
     window.addEventListener('resize', this.handleResize)
@@ -121,6 +129,110 @@ class Graph extends PureComponent {
     })
   }
 
+  isDirty = () => this.lastHighlighted != null
+
+  // See: https://github.com/cytoscape/wineandcheesemap/blob/gh-pages/demo.js
+  highlight = node => {
+    const { graph } = this.props
+    const { aniDur, layoutPadding, easing } = this.state
+
+    const allNodes = graph.nodes()
+    const allEles = graph.elements()
+
+    const oldNhood = this.lastHighlighted
+
+    const nhood = (this.lastHighlighted = node.closedNeighborhood())
+    const others = (this.lastUnhighlighted = graph.elements().not(nhood))
+
+    const reset = () => {
+      graph.batch(() => {
+        others.addClass('hidden')
+        nhood.removeClass('hidden')
+
+        allEles.removeClass('faded highlighted')
+
+        nhood.addClass('highlighted')
+
+        others.nodes().forEach(n => {
+          const p = n.data('orgPos')
+
+          n.position({ x: p.x, y: p.y })
+        })
+      })
+
+      return Promise.resolve()
+        .then(() => {
+          if (this.isDirty()) {
+            return fit()
+          }
+          return Promise.resolve()
+        })
+        .then(() => sleep(aniDur)) // Promise.delay(aniDur))
+    }
+
+    const runLayout = () => {
+      const p = node.data('orgPos')
+
+      const l = nhood.filter(':visible').makeLayout({
+        name: 'concentric',
+        fit: false,
+        animate: true,
+        animationDuration: aniDur,
+        animationEasing: easing,
+        boundingBox: {
+          x1: p.x - 1,
+          x2: p.x + 1,
+          y1: p.y - 1,
+          y2: p.y + 1
+        },
+        avoidOverlap: true,
+        concentric(ele) {
+          if (ele.same(node)) {
+            return 2
+          }
+          return 1
+        },
+        levelWidth() {
+          return 1
+        },
+        padding: layoutPadding
+      })
+
+      const promise = graph.promiseOn('layoutstop')
+
+      l.run()
+
+      return promise
+    }
+
+    const fit = () =>
+      graph
+        .animation({
+          fit: {
+            eles: nhood.filter(':visible'),
+            padding: layoutPadding
+          },
+          easing,
+          duration: aniDur
+        })
+        .play()
+        .promise()
+
+    const showOthersFaded = () =>
+      // Promise.delay(250).then(() => {
+      sleep(250).then(() => {
+        graph.batch(() => {
+          others.removeClass('hidden').addClass('faded')
+        })
+      })
+
+    return Promise.resolve()
+      .then(reset)
+      .then(runLayout)
+      .then(fit)
+      .then(showOthersFaded)
+  }
+
   contextCommands = (/* element */) => {
     const { doShowConnections } = this.props
     const self = this
@@ -147,11 +259,11 @@ class Graph extends PureComponent {
       },
       {
         // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-        content: 'Other', // html/text content to be displayed in the menu
+        content: 'Select', // html/text content to be displayed in the menu
         contentStyle: {}, // css key:value pairs to set the command's css in js if you want
         select(ele) {
           // a function to execute when the command is selected
-          // console.log(`Other: ${ele.id()}`) // `ele` holds the reference to the active element
+          self.highlight(ele)
         },
         enabled: true // whether the command is selectable
       }
@@ -161,8 +273,8 @@ class Graph extends PureComponent {
   handleResize = () => {
     const { graph, doLayout } = this.props
     if (graph) {
-      graph.resize()
-      graph.fit()
+      // graph.resize()
+      // graph.fit()
       doLayout()
     }
   }
