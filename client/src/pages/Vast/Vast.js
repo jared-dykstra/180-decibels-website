@@ -24,7 +24,8 @@ import {
   Tab,
   Tabs,
   TextField,
-  Toolbar
+  Toolbar,
+  Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import CreateIcon from '@material-ui/icons/NoteAdd'
@@ -98,6 +99,12 @@ const styles = theme => ({
   },
   timeline: {
     backgroundColor: '#eee'
+  },
+  drawerHeading: {
+    paddingLeft: '1em'
+  },
+  drawerSubHeading: {
+    paddingLeft: '3em'
   }
 })
 
@@ -505,6 +512,13 @@ class Vast extends PureComponent {
             </IconButton>
           </div>
           <Divider />
+          <Typography
+            variant="h6"
+            color="secondary"
+            className={classes.drawerHeading}
+          >
+            Files
+          </Typography>
           <List>
             <ListItem button selected>
               <ListItemIcon>
@@ -521,6 +535,16 @@ class Vast extends PureComponent {
           </List>
           <Divider />
           <div className={classes.timeline}>
+            <Typography
+              variant="h6"
+              color="secondary"
+              className={classes.drawerHeading}
+            >
+              Revision History
+            </Typography>
+            <Typography className={classes.drawerSubHeading}>
+              Sample Software Company
+            </Typography>
             <VerticalTimeline layout="1-column">
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
@@ -528,7 +552,7 @@ class Vast extends PureComponent {
                 icon={<SaveIcon />}
               >
                 <h3 className="vertical-timeline-element-title">
-                  Click to Save Changes
+                  Click to Save
                 </h3>
                 <h4 className="vertical-timeline-element-subtitle">
                   Create a new revision
