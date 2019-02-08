@@ -13,6 +13,15 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core'
+
+import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
+import SpeedDialIcon from '@material-ui/icons/Loop'
+import GridIcon from '@material-ui/icons/DragIndicator'
+import CircularIcon from '@material-ui/icons/BlurCircular'
+import ConcentricIcon from '@material-ui/icons/GpsFixed'
+import ShareIcon from '@material-ui/icons/Share'
+import TreeIcon from '@material-ui/icons/DeviceHub'
+
 import { withStyles } from '@material-ui/core/styles'
 
 import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
@@ -33,6 +42,11 @@ const styles = theme => ({
   },
   chip: {
     margin: theme.spacing.unit / 4
+  },
+  speedDial: {
+    // position: 'absolute',
+    top: theme.spacing.unit * 2,
+    left: theme.spacing.unit * 3
   }
 })
 
@@ -53,20 +67,91 @@ class GraphTab extends PureComponent {
     className: ''
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      layoutOpen: false
+    }
+  }
+
   handleRemoveNodeType = value => {
     const { selectedNodeTypes, doSetSelectedNodeTypes } = this.props
     doSetSelectedNodeTypes(_without(selectedNodeTypes, value))
+  }
+
+  handleLayoutClick = (e, opts) => {
+    const { doLayout } = this.props
+    if (layout) {
+      doLayout({ forceUpdate: true, opts })
+    }
+    this.setState(state => ({
+      layoutOpen: !state.layoutOpen
+    }))
+  }
+
+  handleLayoutClose = () => {
+    this.setState({ layoutOpen: false })
+  }
+
+  handleLayoutOpen = () => {
+    this.setState({ layoutOpen: true })
   }
 
   render() {
     const {
       selectedNodeTypes,
       doAddNode,
-      doLayout,
       doSetSelectedNodeTypes,
       className,
       classes
     } = this.props
+    const { layoutOpen } = this.state
+    const layoutActions = [
+      {
+        icon: <ShareIcon />,
+        name: 'Graph',
+        layout: {
+          name: 'cola'
+        }
+      },
+      {
+        icon: <CircularIcon />,
+        name: 'Circular',
+        layout: {
+          name: 'circle',
+          nodeDimensionsIncludeLabels: true,
+          animate: true
+        }
+      },
+      {
+        icon: <ConcentricIcon />,
+        name: 'Concentric',
+        layout: {
+          name: 'concentric',
+          nodeDimensionsIncludeLabels: true,
+          animate: true
+        }
+      },
+      {
+        icon: <GridIcon />,
+        name: 'Grid',
+        layout: {
+          name: 'grid',
+          nodeDimensionsIncludeLabels: true,
+          animate: true
+        }
+      },
+      {
+        icon: <TreeIcon />,
+        name: 'Tree',
+        layout: {
+          name: 'breadthfirst',
+          nodeDimensionsIncludeLabels: true,
+          animate: true
+        }
+      }
+    ]
+
     return (
       <Grid
         container
@@ -107,11 +192,29 @@ class GraphTab extends PureComponent {
           </FormControl>
         </Grid>
         <Grid item>
-          <FormControl>
-            <Button variant="contained" onClick={() => doLayout()}>
-              Layout
-            </Button>
-          </FormControl>
+          <SpeedDial
+            ariaLabel="Layout Options"
+            className={classes.speedDial}
+            icon={<SpeedDialIcon />}
+            onBlur={this.handleLayoutClose}
+            onClick={this.handleLayoutClick}
+            onClose={this.handleLayoutClose}
+            onFocus={this.handleLayoutOpen}
+            onMouseEnter={this.handleLayoutOpen}
+            onMouseLeave={this.handleLayoutClose}
+            open={layoutOpen}
+            direction="right"
+            ButtonProps={{ color: 'secondary' }}
+          >
+            {layoutActions.map(action => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={e => this.handleLayoutClick(e, action.layout)}
+              />
+            ))}
+          </SpeedDial>
         </Grid>
         <Grid item>
           <FormControl>
@@ -139,8 +242,7 @@ export default connect(
     selectedNodeTypes: selectedNodeTypesSelector(state)
   }),
   (dispatch, props) => ({
-    doLayout: () =>
-      dispatch(layout({ viewId: props.viewId, forceUpdate: true })),
+    doLayout: args => dispatch(layout({ viewId: props.viewId, ...args })),
     doAddNode: args => dispatch(addNode(args, props)),
     doSetSelectedNodeTypes: nodeTypes =>
       dispatch(setSelectedNodeTypes(nodeTypes, props))

@@ -222,7 +222,7 @@ export default (state = initialState, action) => {
 
     // Update the layout
     case LAYOUT: {
-      const { viewId, forceUpdate } = action.payload
+      const { viewId, forceUpdate, opts } = action.payload
       const views = runSelector(viewsSelector, state)
       const view = views[viewId]
       const { layout } = view
@@ -240,7 +240,7 @@ export default (state = initialState, action) => {
         // Has never had a layout before: Apply the default layout and save original positions
         const { defaults } = state
         const { layout: defaultLayout } = defaults
-        graph.makeLayout(layout || defaultLayout).run()
+        graph.makeLayout(opts || layout || defaultLayout).run()
 
         const allNodes = graph.nodes()
         allNodes.forEach(n => {
