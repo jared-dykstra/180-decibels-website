@@ -3,9 +3,21 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+  VerticalTimeline,
+  VerticalTimelineElement
+} from 'react-vertical-timeline-component'
+import 'react-vertical-timeline-component/style.min.css'
+
+import {
   AppBar,
   Button,
+  Divider,
+  Drawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   MenuList,
   Popover,
@@ -18,6 +30,13 @@ import { withStyles } from '@material-ui/core/styles'
 import CreateIcon from '@material-ui/icons/NoteAdd'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MenuIcon from '@material-ui/icons/Menu'
+import CheckIcon from '@material-ui/icons/CheckBox'
+import CheckEmptyIcon from '@material-ui/icons/CheckBoxOutlineBlank'
+import HistoryIcon from '@material-ui/icons/History'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import WorkIcon from '@material-ui/icons/Work'
+import SaveIcon from '@material-ui/icons/SaveAlt'
+import StarIcon from '@material-ui/icons/Star'
 
 import { Template } from 'components'
 
@@ -35,6 +54,8 @@ import {
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
 import Intro from './Intro'
+
+const drawerWidth = 640
 
 const styles = theme => ({
   ...pageStyles({ theme, fullWidth: true, pagePadding: false }),
@@ -56,6 +77,27 @@ const styles = theme => ({
   },
   indented: {
     marginLeft: theme.spacing.unit * 2
+  },
+  drawerButton: {
+    marginLeft: 12,
+    marginRight: 20
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start'
+  },
+  timeline: {
+    backgroundColor: '#eee'
   }
 })
 
@@ -93,8 +135,17 @@ class Vast extends PureComponent {
       menuAllOpen: false,
       menuNewOpen: false,
       menuChangeOpen: null,
-      renaming: null
+      renaming: null,
+      open: false
     }
+  }
+
+  handleDrawerToggle = () => {
+    this.setState(state => ({ open: !state.open }))
+  }
+
+  handleDrawerClose = () => {
+    this.setState(() => ({ open: false }))
   }
 
   // Begin ChangeMenu handlers
@@ -179,7 +230,13 @@ class Vast extends PureComponent {
 
   render() {
     const { title, location, viewId, viewList, classes } = this.props
-    const { menuAllOpen, menuNewOpen, menuChangeOpen, renaming } = this.state
+    const {
+      menuAllOpen,
+      menuNewOpen,
+      menuChangeOpen,
+      renaming,
+      open
+    } = this.state
     const menuElevation = 2
     const newMenuId = 'new-menu-popover'
     const allMenuId = 'all-menu-popover'
@@ -272,6 +329,15 @@ class Vast extends PureComponent {
                 </MenuList>
               </nav>
             </Popover>
+
+            <IconButton
+              color="secondary"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerToggle}
+              className={classes.drawerButton}
+            >
+              <HistoryIcon />
+            </IconButton>
 
             <IconButton
               color="secondary"
@@ -423,6 +489,128 @@ class Vast extends PureComponent {
             </Tabs>
           </Toolbar>
         </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="temporary"
+          anchor="right"
+          open={open}
+          ModalProps={{ onBackdropClick: this.handleDrawerClose }}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={this.handleDrawerClose}>
+              <ChevronRightIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem button selected>
+              <ListItemIcon>
+                <CheckIcon />
+              </ListItemIcon>
+              <ListItemText>Sample Software Company</ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <CheckEmptyIcon />
+              </ListItemIcon>
+              <ListItemText>Sample Marketing Company</ListItemText>
+            </ListItem>
+          </List>
+          <Divider />
+          <div className={classes.timeline}>
+            <VerticalTimeline layout="1-column">
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
+                icon={<SaveIcon />}
+              >
+                <h3 className="vertical-timeline-element-title">
+                  Click to Save Changes
+                </h3>
+                <h4 className="vertical-timeline-element-subtitle">
+                  Create a new revision
+                </h4>
+                <p>
+                  Add a description of the revision: What changes were made and
+                  why
+                </p>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="Feb 6, 2019"
+                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                icon={<WorkIcon />}
+              >
+                <h3 className="vertical-timeline-element-title">Hired Oscar</h3>
+                <p>
+                  Planning changes when Oscar joins. Oscar will manage
+                  outsourced IT and Software processes. Oscar to be informed
+                  regarding the 90 day rock to hire new programmers
+                </p>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="Feb 4, 2019"
+                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                icon={<WorkIcon />}
+              >
+                <h3 className="vertical-timeline-element-title">
+                  Weekly Meeting Update
+                </h3>
+                <p>
+                  Expanded Wanda&apos;s role: Assigned 90 day rocks - User
+                  Experience, Visual Design
+                </p>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="Jan 28, 2019"
+                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                icon={<WorkIcon />}
+              >
+                <h3 className="vertical-timeline-element-title">
+                  Weekly Meeting Update
+                </h3>
+                <p>
+                  Added 90 day rock (AKA &quot;priority&quot;) to hire 2
+                  programmers. Assigned to Brent
+                </p>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="Jan 21, 2019"
+                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                icon={<WorkIcon />}
+              >
+                <h3 className="vertical-timeline-element-title">
+                  Weekly Meeting Update
+                </h3>
+                <p>No significant change; on track</p>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="Jan 7, 2019"
+                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                icon={<WorkIcon />}
+              >
+                <h3 className="vertical-timeline-element-title">
+                  Weekly Meeting Update
+                </h3>
+                <p>
+                  Resetting 90 day rocks (AKA &quot;priority&quot;) after the
+                  holidays
+                </p>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
+                icon={<StarIcon />}
+              />
+            </VerticalTimeline>
+          </div>
+        </Drawer>
       </Template>
     )
   }
