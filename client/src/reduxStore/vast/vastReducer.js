@@ -213,7 +213,7 @@ export default (state = initialState, action) => {
       const graph = graphs[viewId]
       const node = graph.$(`#${nodeId}`)
       node
-        .neighborhood()
+        .closedNeighborhood()
         .nodes()
         .removeClass(CLASS_HIDDEN)
 
@@ -228,11 +228,11 @@ export default (state = initialState, action) => {
       const { layout } = view
       const graph = runSelector(graphSelector, state)
 
-      console.log(
-        `layout viewId={${viewId}} layout=${JSON.stringify(
-          layout
-        )} forceUpdate=${forceUpdate}`
-      )
+      // console.log(
+      //   `layout viewId={${viewId}} layout=${JSON.stringify(
+      //     layout
+      //   )} forceUpdate=${forceUpdate}`
+      // )
 
       let nextState = state
 
@@ -256,9 +256,6 @@ export default (state = initialState, action) => {
         }
       }
 
-      // Refresh the existing layout
-      // const layout = runSelector(graphLayoutSelector, state)
-      // graph.makeLayout(layout).run()
       return nextState
     }
 

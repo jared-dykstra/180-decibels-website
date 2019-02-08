@@ -3,6 +3,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { CLASS_HIDDEN } from 'reduxStore/vast/vastConstants'
+
 import {
   graphSelector,
   contextMenuDefaultsSelector,
@@ -20,7 +22,18 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 class Graph extends PureComponent {
   static propTypes = {
-    // viewId is used in connect (below)
+    layoutPadding: PropTypes.number,
+    layoutOpts: PropTypes.shape({
+      edgeLength: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      fit: PropTypes.bool.isRequired,
+      animate: PropTypes.bool.isRequired,
+      avoidOverlap: PropTypes.bool.isRequired
+    }),
+    easing: PropTypes.string,
+    animationDurationMs: PropTypes.number,
+    animationDelayMs: PropTypes.number,
+    hideWhileTraversing: PropTypes.bool,
     // eslint-disable-next-line react/no-unused-prop-types
     viewId: PropTypes.string.isRequired,
     graph: PropTypes.shape({
@@ -39,24 +52,34 @@ class Graph extends PureComponent {
   }
 
   static defaultProps = {
+    layoutPadding: 50,
+    layoutOpts: {
+      name: 'concentric',
+      fit: false,
+      animate: true,
+      avoidOverlap: true,
+      nodeDimensionsIncludeLabels: true
+    },
+    easing: 'linear',
+    animationDurationMs: 500,
+    animationDelayMs: 125,
+    hideWhileTraversing: false,
     className: ''
   }
 
   constructor(props) {
     super(props)
-    // console.log(`Graph Constructor ${props.viewId}`)
+
     this.ref = null
     this.menu = null
     this.edgeHandles = null
 
+    // Used for highlight logic
     this.lastHighlighted = null
     this.lastUnhighlighted = null
 
     this.state = {
-      detailsNode: null,
-      layoutPadding: 50,
-      aniDur: 500,
-      easing: 'linear'
+      detailsNode: null
     }
   }
 
@@ -102,8 +125,7 @@ class Graph extends PureComponent {
             if (node.nonempty()) {
               Promise.resolve().then(() => this.highlight(node))
             } else {
-              // hideNodeInfo()
-              // this.clear()
+              this.clear()
             }
           }, 100)
         )
@@ -136,38 +158,49 @@ class Graph extends PureComponent {
   }
 
   handleClickEdit = node => {
-    this.setState(state => ({
+    this.setState(() => ({
       detailsNode: node
     }))
   }
 
   handleHideDetails = () => {
-    this.setState({
+    this.setState(() => ({
       detailsNode: null
-    })
+    }))
   }
 
   isDirty = () => this.lastHighlighted != null
 
+  classHidden = () => {
+    const { hideWhileTraversing } = this.props
+    return hideWhileTraversing ? CLASS_HIDDEN : `xxx-${CLASS_HIDDEN}`
+  }
+
   // See: https://github.com/cytoscape/wineandcheesemap/blob/gh-pages/demo.js
   highlight = node => {
-    const { graph } = this.props
-    const { aniDur, layoutPadding, easing } = this.state
+    const {
+      graph,
+      layoutPadding,
+      layoutOpts,
+      easing,
+      animationDurationMs,
+      animationDelayMs
+    } = this.props
 
-    const allNodes = graph.nodes()
-    const allEles = graph.elements()
+    // const oldNhood = this.lastHighlighted
+    this.lastHighlighted = node.closedNeighborhood()
+    this.lastUnhighlighted = graph.elements().not(this.lastHighlighted)
 
-    const oldNhood = this.lastHighlighted
-
-    const nhood = (this.lastHighlighted = node.closedNeighborhood())
-    const others = (this.lastUnhighlighted = graph.elements().not(nhood))
+    const nhood = this.lastHighlighted
+    const others = this.lastUnhighlighted
+    const classHidden = this.classHidden()
 
     const reset = () => {
       graph.batch(() => {
-        others.addClass('hidden')
-        nhood.removeClass('hidden')
+        others.addClass(classHidden)
+        nhood.removeClass(classHidden)
 
-        allEles.removeClass('faded highlighted')
+        graph.elements().removeClass('faded highlighted')
 
         nhood.addClass('highlighted')
 
@@ -185,17 +218,15 @@ class Graph extends PureComponent {
           }
           return Promise.resolve()
         })
-        .then(() => sleep(aniDur)) // Promise.delay(aniDur))
+        .then(() => sleep(animationDurationMs))
     }
 
     const runLayout = () => {
       const p = node.data('orgPos')
 
-      const l = nhood.filter(':visible').makeLayout({
-        name: 'concentric',
-        fit: false,
-        animate: true,
-        animationDuration: aniDur,
+      const opts = {
+        ...layoutOpts,
+        animationDuration: animationDurationMs,
         animationEasing: easing,
         boundingBox: {
           x1: p.x - 1,
@@ -203,7 +234,7 @@ class Graph extends PureComponent {
           y1: p.y - 1,
           y2: p.y + 1
         },
-        avoidOverlap: true,
+        padding: layoutPadding * 4,
         concentric(ele) {
           if (ele.same(node)) {
             return 2
@@ -212,12 +243,11 @@ class Graph extends PureComponent {
         },
         levelWidth() {
           return 1
-        },
-        padding: layoutPadding
-      })
+        }
+      }
 
+      const l = nhood.filter(':visible').makeLayout(opts)
       const promise = graph.promiseOn('layoutstop')
-
       l.run()
 
       return promise
@@ -231,16 +261,15 @@ class Graph extends PureComponent {
             padding: layoutPadding
           },
           easing,
-          duration: aniDur
+          duration: animationDurationMs
         })
         .play()
         .promise()
 
     const showOthersFaded = () =>
-      // Promise.delay(250).then(() => {
-      sleep(250).then(() => {
+      sleep(animationDelayMs * 2).then(() => {
         graph.batch(() => {
-          others.removeClass('hidden').addClass('faded')
+          others.removeClass(classHidden).addClass('faded')
         })
       })
 
@@ -249,6 +278,78 @@ class Graph extends PureComponent {
       .then(runLayout)
       .then(fit)
       .then(showOthersFaded)
+  }
+
+  clear = () => {
+    if (!this.isDirty()) {
+      return Promise.resolve()
+    }
+
+    const { graph, animationDurationMs, animationDelayMs, easing } = this.props
+    const classHidden = this.classHidden()
+    const allNodes = graph.nodes()
+
+    graph.stop()
+    allNodes.stop()
+
+    const nhood = this.lastHighlighted
+    const others = this.lastUnhighlighted
+
+    this.lastHighlighted = null
+    this.lastUnhighlighted = null
+
+    const hideOthers = () =>
+      sleep(250).then(() => {
+        others.addClass(classHidden)
+
+        return sleep(animationDelayMs)
+      })
+
+    const showOthers = () => {
+      graph.batch(() => {
+        graph
+          .elements()
+          .removeClass(classHidden)
+          .removeClass('faded')
+      })
+
+      return sleep(animationDurationMs)
+    }
+
+    const restorePositions = () => {
+      graph.batch(() => {
+        others.nodes().forEach(n => {
+          const p = n.data('orgPos')
+
+          n.position({ x: p.x, y: p.y })
+        })
+      })
+
+      return Promise.all(
+        nhood.nodes().map(ele => {
+          const p = ele.data('orgPos')
+
+          return ele
+            .animation({
+              position: { x: p.x, y: p.y },
+              duration: animationDurationMs,
+              easing
+            })
+            .play()
+            .promise()
+        })
+      )
+    }
+
+    const resetHighlight = () => {
+      nhood.removeClass('highlighted')
+    }
+
+    return Promise.resolve()
+      .then(resetHighlight)
+      .then(hideOthers)
+      .then(restorePositions)
+      .then(showOthers)
   }
 
   contextCommands = (/* element */) => {
@@ -317,7 +418,7 @@ class Graph extends PureComponent {
           detailsNode={detailsNode}
           onClose={this.handleHideDetails}
         >
-          TODO: Add Details
+          TODO: Add UI to edit attributes of this node
         </DetailPane>
       )
     ]

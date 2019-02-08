@@ -228,7 +228,10 @@ export default {
       }
     ],
     layout: {
-      name: 'circle'
+      name: 'cola',
+      animate: true,
+      nodeDimensionsIncludeLabels: true,
+      edgeLength: 150
     },
     ctxMenu: {
       // menuRadius: 100, // the radius of the circular menu in pixels
