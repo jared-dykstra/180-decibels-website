@@ -119,7 +119,6 @@ class GraphTab extends PureComponent {
         name: 'Circular',
         layout: {
           name: 'circle',
-          nodeDimensionsIncludeLabels: true,
           animate: true
         }
       },
