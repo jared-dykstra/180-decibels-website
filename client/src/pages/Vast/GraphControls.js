@@ -159,7 +159,7 @@ class GraphTab extends PureComponent {
         name: 'Grid',
         layout: {
           name: 'grid',
-          nodeDimensionsIncludeLabels: true,
+          // nodeDimensionsIncludeLabels: true,
           animate: true
         }
       },

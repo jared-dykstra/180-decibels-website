@@ -2,6 +2,7 @@ import { debounce as _debounce } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Typography } from '@material-ui/core'
 
 import { CLASS_HIDDEN } from 'reduxStore/vast/vastConstants'
 
@@ -418,7 +419,10 @@ class Graph extends PureComponent {
           detailsNode={detailsNode}
           onClose={this.handleHideDetails}
         >
-          TODO: Add UI to edit attributes of this node
+          <Typography variant="h6" color="secondary">
+            {detailsNode[0].data().label}
+          </Typography>
+          <Typography>TODO: Add UI to edit attributes of this node</Typography>
         </DetailPane>
       )
     ]
