@@ -4,13 +4,18 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+  Checkbox,
   Chip,
-  Button,
+  ClickAwayListener,
+  Fab,
   Grid,
   FormControl,
   Input,
   InputLabel,
+  ListItemText,
   Select,
+  Tooltip,
+  Menu,
   MenuItem
 } from '@material-ui/core'
 
@@ -21,6 +26,7 @@ import CircularIcon from '@material-ui/icons/BlurCircular'
 import ConcentricIcon from '@material-ui/icons/GpsFixed'
 import ShareIcon from '@material-ui/icons/Share'
 import TreeIcon from '@material-ui/icons/DeviceHub'
+import AddIcon from '@material-ui/icons/Add'
 
 import { withStyles } from '@material-ui/core/styles'
 
@@ -30,10 +36,7 @@ import {
   addNode,
   setSelectedNodeTypes
 } from 'reduxStore/vast/vastActions'
-import {
-  NODE_TYPE_PRIORITY,
-  NODE_TYPE_CLASS_MAP
-} from 'reduxStore/vast/vastConstants'
+import { NODE_TYPE_CLASS_MAP } from 'reduxStore/vast/vastConstants'
 
 const styles = theme => ({
   chips: {
@@ -70,7 +73,8 @@ class GraphTab extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      layoutOpen: false
+      layoutOpen: false,
+      anchorElAdd: null
     }
   }
 
@@ -81,9 +85,7 @@ class GraphTab extends PureComponent {
 
   handleLayoutClick = (e, opts) => {
     const { doLayout } = this.props
-    if (layout) {
-      doLayout({ forceUpdate: true, opts })
-    }
+    doLayout({ forceUpdate: true, opts })
     this.setState(state => ({
       layoutOpen: !state.layoutOpen
     }))
@@ -97,6 +99,25 @@ class GraphTab extends PureComponent {
     this.setState({ layoutOpen: true })
   }
 
+  handleClickAdd = event => {
+    this.setState({ anchorElAdd: event.currentTarget })
+  }
+
+  handleCloseAdd = () => {
+    this.setState({ anchorElAdd: null })
+  }
+
+  handleAddNode = (e, nodeType) => {
+    const { doAddNode } = this.props
+    doAddNode({
+      nodeId: uuid(),
+      label: `New ${nodeType}`,
+      type: nodeType
+    })
+
+    this.setState({ anchorElAdd: null })
+  }
+
   render() {
     const {
       selectedNodeTypes,
@@ -105,13 +126,15 @@ class GraphTab extends PureComponent {
       className,
       classes
     } = this.props
-    const { layoutOpen } = this.state
+    const { layoutOpen, anchorElAdd } = this.state
     const layoutActions = [
       {
         icon: <ShareIcon />,
         name: 'Graph',
         layout: {
-          name: 'cola'
+          name: 'cola',
+          nodeDimensionsIncludeLabels: true
+          // infinite: true
         }
       },
       {
@@ -160,76 +183,107 @@ class GraphTab extends PureComponent {
         className={className}
       >
         <Grid item>
-          <FormControl>
-            <InputLabel htmlFor="input-node-types">Filter</InputLabel>
-            <Select
-              multiple
-              value={selectedNodeTypes}
-              onChange={e => doSetSelectedNodeTypes(e.target.value)}
-              input={<Input id="select-multiple-chip" />}
-              renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map(value => (
-                    <Chip
-                      key={value}
-                      label={value}
-                      className={classes.chip}
-                      onDelete={() => this.handleRemoveNodeType(value)}
-                      style={{ color: NODE_TYPE_CLASS_MAP[value].color }}
-                    />
-                  ))}
-                </div>
-              )}
-              // MenuProps={MenuProps}
+          {/* <Tooltip title="Filter" aria-label="Filter" placement="bottom-start"> */}
+          <Select
+            multiple
+            value={selectedNodeTypes}
+            onChange={e => doSetSelectedNodeTypes(e.target.value)}
+            input={<Input id="select-multiple-chip" />}
+            renderValue={selected => (
+              <div className={classes.chips}>
+                {selected.map(value => (
+                  <Chip
+                    key={value}
+                    label={value}
+                    className={classes.chip}
+                    onDelete={() => this.handleRemoveNodeType(value)}
+                    style={{ color: NODE_TYPE_CLASS_MAP[value].color }}
+                  />
+                ))}
+              </div>
+            )}
+            MenuProps={{ disableAutoFocusItem: true }}
+          >
+            {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
+              <MenuItem key={k} value={k} style={{ color: v.color }}>
+                <Checkbox
+                  color="inherit"
+                  style={{ color: v.color }}
+                  checked={selectedNodeTypes.indexOf(k) > -1}
+                />
+                <ListItemText
+                  primary={<span style={{ color: v.color }}>{k}</span>}
+                />
+              </MenuItem>
+            ))}
+          </Select>
+          {/* </Tooltip> */}
+        </Grid>
+        <Grid item>
+          <Tooltip
+            title="Refresh Layout"
+            aria-label="Refresh Layout"
+            placement="bottom-start"
+          >
+            <SpeedDial
+              ariaLabel="Layout Options"
+              className={classes.speedDial}
+              icon={<SpeedDialIcon />}
+              onBlur={this.handleLayoutClose}
+              onClick={this.handleLayoutClick}
+              onClose={this.handleLayoutClose}
+              onFocus={this.handleLayoutOpen}
+              onMouseEnter={this.handleLayoutOpen}
+              onMouseLeave={this.handleLayoutClose}
+              open={layoutOpen}
+              direction="right"
+              ButtonProps={{ color: 'default' }}
+            >
+              {layoutActions.map(action => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  onClick={e => this.handleLayoutClick(e, action.layout)}
+                />
+              ))}
+            </SpeedDial>
+          </Tooltip>
+        </Grid>
+        <Grid item>
+          <ClickAwayListener onClickAway={this.handleCloseAdd}>
+            <Tooltip
+              title="Add Node"
+              aria-label="Add Node"
+              placement="bottom-start"
+            >
+              <Fab
+                color="default"
+                aria-label="Add"
+                aria-owns={anchorElAdd ? 'simple-menu' : undefined}
+                aria-haspopup="true"
+                onClick={this.handleClickAdd}
+              >
+                <AddIcon />
+              </Fab>
+            </Tooltip>
+            <Menu
+              id="add-menu"
+              anchorEl={anchorElAdd}
+              open={Boolean(anchorElAdd)}
+              onClose={this.handleCloseAdd}
+              disableAutoFocusItem
             >
               {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
-                <MenuItem key={k} value={k} style={{ color: v.color }}>
+                <MenuItem
+                  style={{ color: v.color }}
+                  onClick={e => this.handleAddNode(e, k)}
+                >
                   {k}
                 </MenuItem>
               ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item>
-          <SpeedDial
-            ariaLabel="Layout Options"
-            className={classes.speedDial}
-            icon={<SpeedDialIcon />}
-            onBlur={this.handleLayoutClose}
-            onClick={this.handleLayoutClick}
-            onClose={this.handleLayoutClose}
-            onFocus={this.handleLayoutOpen}
-            onMouseEnter={this.handleLayoutOpen}
-            onMouseLeave={this.handleLayoutClose}
-            open={layoutOpen}
-            direction="right"
-            ButtonProps={{ color: 'secondary' }}
-          >
-            {layoutActions.map(action => (
-              <SpeedDialAction
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-                onClick={e => this.handleLayoutClick(e, action.layout)}
-              />
-            ))}
-          </SpeedDial>
-        </Grid>
-        <Grid item>
-          <FormControl>
-            <Button
-              variant="contained"
-              onClick={() =>
-                doAddNode({
-                  nodeId: uuid(),
-                  label: 'New Priority',
-                  type: NODE_TYPE_PRIORITY
-                })
-              }
-            >
-              Add Priority
-            </Button>
-          </FormControl>
+            </Menu>
+          </ClickAwayListener>
         </Grid>
       </Grid>
     )

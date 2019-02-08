@@ -8,7 +8,8 @@ import edgeHandles from 'cytoscape-edgehandles'
 import {
   NODE_TYPE_CLASS_MAP,
   CLASS_PERSON,
-  CLASS_HIDDEN
+  CLASS_HIDDEN,
+  CLASS_NEW
 } from './vastConstants'
 
 import sampleData from './sampleGraph.json'
@@ -172,6 +173,14 @@ export default {
         }
       },
       {
+        selector: `.${CLASS_NEW}`,
+        style: {
+          'border-color': '#FF0000',
+          'border-opacity': '0.5',
+          'border-width': '15'
+        }
+      },
+      {
         selector: '.filtered',
         style: {
           display: 'none'
@@ -229,6 +238,8 @@ export default {
     ],
     layout: {
       name: 'cola',
+      // Start with random positions (instead of all at the origin) so it converges more quickly
+      randomize: true,
       animate: true,
       nodeDimensionsIncludeLabels: true,
       edgeLength: 150

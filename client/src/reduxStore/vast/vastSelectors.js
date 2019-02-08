@@ -63,8 +63,3 @@ export const selectedNodeTypesSelector = createSelector(
   activeViewSelector,
   view => (view ? view.selectedNodeTypes : [])
 )
-
-export const graphLayoutSelector = createSelector(
-  activeViewSelector,
-  view => view.layout
-)

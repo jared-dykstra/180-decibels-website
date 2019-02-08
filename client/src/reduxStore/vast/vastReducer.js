@@ -12,35 +12,19 @@ import {
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   CLASS_HIDDEN,
+  CLASS_NEW,
   NODE_TYPE_CLASS_MAP,
   ADD_CONNECTION
 } from './vastConstants'
 
 import {
   graphSelector,
-  graphLayoutSelector,
   viewListSelector,
   activeViewIdSelector,
   graphsSelector,
   viewsSelector
   // selectedNodeTypesSelector
 } from './vastSelectors'
-
-// Animates zoom + pan for the viewport
-// const animateFit = ({ graph, duration = 500, padding = 20 }) => {
-//   const allElements = graph.$('node')
-//   graph.animate(
-//     {
-//       fit: {
-//         eles: allElements,
-//         padding
-//       }
-//     },
-//     {
-//       duration
-//     }
-//   )
-// }
 
 // Get the results of any selector (avoids repeating logic in the reducer)
 const runSelector = (selector, state) => selector({ [mountPoint]: state })
@@ -164,7 +148,10 @@ export default (state = initialState, action) => {
       const rawNode = { label, type }
 
       // Add to every graph
-      const cyNode = { data: { id: nodeId, ...rawNode }, classes: [className] }
+      const cyNode = {
+        data: { id: nodeId, ...rawNode },
+        classes: [className, CLASS_NEW]
+      }
       const graphs = runSelector(graphsSelector, state)
       const views = runSelector(viewsSelector, state)
       Object.entries(graphs).forEach(([graphId, graph]) => {
@@ -177,6 +164,10 @@ export default (state = initialState, action) => {
           const { selectedNodeTypes } = view
           setElementVisibility({ graph, selectedNodeTypes })
         }
+
+        // Reapply the current layout
+        const currentLayout = views[viewId].layout
+        applyLayout({ graph, layout: currentLayout })
       })
 
       // Add to the underlying data model
@@ -195,9 +186,9 @@ export default (state = initialState, action) => {
       const rawEdge = { source: sourceNodeId, target: targetNodeId }
       const nextModel = state.model.setIn(['edges', addedEdgeId], rawEdge)
 
-      // The edge has already been added in the current view.  Add the edge to all other graphs (other than the current)
       const graphs = runSelector(graphsSelector, state)
       Object.entries(graphs).forEach(([graphId, graph]) => {
+        // The edge has already been added in the current view.  Add the edge to all other graphs (other than the current)
         if (graphId !== viewId) {
           const cyEdge = { data: { id: addedEdgeId, ...rawEdge } }
           graph.add([cyEdge])
@@ -228,31 +219,19 @@ export default (state = initialState, action) => {
       const { layout } = view
       const graph = runSelector(graphSelector, state)
 
-      // console.log(
-      //   `layout viewId={${viewId}} layout=${JSON.stringify(
-      //     layout
-      //   )} forceUpdate=${forceUpdate}`
-      // )
-
       let nextState = state
 
       if (!layout || forceUpdate) {
         // Has never had a layout before: Apply the default layout and save original positions
         const { defaults } = state
         const { layout: defaultLayout } = defaults
-        graph.makeLayout(opts || layout || defaultLayout).run()
+        const nextLayout = opts || layout || defaultLayout
 
-        const allNodes = graph.nodes()
-        allNodes.forEach(n => {
-          const position = n.position()
-          n.data('orgPos', position)
-        })
+        applyLayout({ graph, layout: nextLayout, stable: !!layout })
 
-        if (!layout) {
-          nextState = {
-            ...state,
-            views: state.views.setIn([viewId, 'layout'], defaultLayout)
-          }
+        nextState = {
+          ...state,
+          views: state.views.setIn([viewId, 'layout'], nextLayout)
         }
       }
 
@@ -262,4 +241,14 @@ export default (state = initialState, action) => {
     default:
       return state
   }
+}
+
+const applyLayout = ({ graph, layout, stable = true }) => {
+  graph.makeLayout(stable ? { ...layout, randomize: false } : layout).run()
+
+  const allNodes = graph.nodes()
+  allNodes.forEach(n => {
+    const position = n.position()
+    n.data('orgPos', position)
+  })
 }

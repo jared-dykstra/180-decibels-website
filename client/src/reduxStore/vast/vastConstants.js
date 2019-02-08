@@ -26,6 +26,7 @@ export const CLASS_HIDDEN = 'cls_hidden'
 export const CLASS_CORE_VALUE = 'cls_coreValue'
 export const CLASS_METRIC = 'cls_metric'
 export const CLASS_ORG_UNIT = 'cls_orgUnit'
+export const CLASS_NEW = 'cls_new'
 
 // Colors come from here: https://coolors.co/617881-77c0b7-e9c46a-f4a261-e76f51
 export const NODE_TYPE_CLASS_MAP = {
