@@ -71,6 +71,16 @@ const styles = theme => ({
   grow: {
     flexGrow: '1'
   },
+  introContainer: {
+    flexGrow: '1',
+    position: 'relative'
+  },
+  intro: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    overflowY: 'auto'
+  },
   appBar: {},
   search: {
     marginLeft: theme.spacing.unit * 2,
@@ -278,7 +288,11 @@ class Vast extends PureComponent {
           // Note: `key` is important, as it will cause GrapTab to be unmounted/mounted whenever viewId changes
           <GraphTab key={viewId} viewId={viewId} className={classes.grow} />
         ) : (
-          <Intro className={classes.grow} button={createButton()} />
+          <div className={classes.introContainer}>
+            <div className={classes.intro}>
+              <Intro button={createButton()} />
+            </div>
+          </div>
         )}
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar variant="dense" disableGutters>

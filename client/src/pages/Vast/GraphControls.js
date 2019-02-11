@@ -244,6 +244,7 @@ class GraphTab extends PureComponent {
                   key={action.name}
                   icon={action.icon}
                   tooltipTitle={action.name}
+                  tooltipPlacement="top"
                   onClick={e => this.handleLayoutClick(e, action.layout)}
                 />
               ))}

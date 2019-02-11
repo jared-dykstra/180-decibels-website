@@ -32,13 +32,6 @@ const Intro = ({ className, button }) => (
         </li>
         <li>
           <Typography paragraph>
-            Understand connections: Try starting with &quot;People&quot; and use
-            a node&apos;s &quot;Connection&quot; action in the context menu to
-            follow paths
-          </Typography>
-        </li>
-        <li>
-          <Typography paragraph>
             Understand change: As the business changes over time, add/remove
             people, accountabilities and connections
           </Typography>
