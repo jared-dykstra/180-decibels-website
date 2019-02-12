@@ -13,11 +13,14 @@ import {
 } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
 
+// TODO: Fork react-vertical-timeline and make styles easier to override
 const styles = (/* theme */) => ({
   '@global': {
     '.vertical-timeline-element-icon': {
       borderRadius: 'initial',
       boxShadow: 'initial',
+      width: '48px!important',
+      height: '48px!important',
       color: '#fff',
 
       // Undo everything applied by ".vertical-timeline-element-icon svg"
@@ -66,46 +69,79 @@ const timeline = [
   }
 ]
 
-const Timeline = ({ classes }) => (
-  <VerticalTimeline layout="1-column">
+const Timeline = () => {
+  const segment = ({ key, icon, color, date, heading, description }) => (
     <VerticalTimelineElement
+      key={key}
+      date={date}
       icon={
-        <Fab size="medium" color="primary">
-          <SaveIcon />
+        <Fab
+          size="medium"
+          color={color}
+          component="span"
+          onMouseEnter={() => {
+            // console.log('focus')
+          }}
+          onMouseLeave={() => {
+            // console.log('blur')
+          }}
+        >
+          {icon}
         </Fab>
       }
     >
-      <h3>Click to Save a new revision</h3>
-      <p>Add a description of the revision: What changes were made and why</p>
+      <div>
+        {heading && <h3>{heading}</h3>}
+        {description && <p>{description}</p>}
+      </div>
     </VerticalTimelineElement>
+  )
 
-    {timeline.map(t => (
-      <VerticalTimelineElement
-        key={t.date}
-        date={t.date}
-        icon={
-          <Fab size="medium" color="secondary">
-            <WorkIcon />
-          </Fab>
-        }
-      >
-        <h3>{t.heading}</h3>
-        <p>{t.description}</p>
-      </VerticalTimelineElement>
-    ))}
+  segment.propTypes = {
+    key: PropTypes.string.isRequired,
+    icon: PropTypes.node.isRequired,
+    color: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    heading: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+  }
 
-    <VerticalTimelineElement
-      icon={
-        <Fab size="medium" color="default">
-          <StarIcon />
-        </Fab>
-      }
-    />
-  </VerticalTimeline>
-)
+  return (
+    <VerticalTimeline layout="1-column">
+      {segment({
+        key: 'save',
+        icon: <SaveIcon />,
+        color: 'primary',
+        heading: 'Click to Save a new revision',
+        description:
+          'Add a description of the revision: What changes were made and why'
+      })}
+
+      {timeline.map(t =>
+        segment({
+          icon: (
+            <Fab size="medium" color="secondary">
+              <WorkIcon />
+            </Fab>
+          ),
+          key: t.date,
+          ...t
+        })
+      )}
+
+      {segment({
+        key: 'start',
+        icon: <StarIcon />,
+        color: 'default',
+        heading: 'Created',
+        date: 'Nov 1, 2018'
+      })}
+    </VerticalTimeline>
+  )
+}
 
 Timeline.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.string).isRequired
+  // classes: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 export default withStyles(styles)(Timeline)

@@ -9,9 +9,7 @@ import {
   ClickAwayListener,
   Fab,
   Grid,
-  FormControl,
   Input,
-  InputLabel,
   ListItemText,
   Select,
   Tooltip,
@@ -121,7 +119,6 @@ class GraphTab extends PureComponent {
   render() {
     const {
       selectedNodeTypes,
-      doAddNode,
       doSetSelectedNodeTypes,
       className,
       classes
