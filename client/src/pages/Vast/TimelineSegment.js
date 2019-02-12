@@ -30,6 +30,7 @@ const styles = (/* theme */) => ({
 
 class TimelineSegment extends PureComponent {
   static propTypes = {
+    active: PropTypes.bool,
     icon: PropTypes.node.isRequired,
     color: PropTypes.string.isRequired,
     date: PropTypes.string,
@@ -39,6 +40,7 @@ class TimelineSegment extends PureComponent {
   }
 
   static defaultProps = {
+    active: false,
     children: null,
     date: undefined,
     onClick: () => {}
@@ -52,17 +54,18 @@ class TimelineSegment extends PureComponent {
   }
 
   render() {
-    const { classes, icon, color, date, onClick, children } = this.props
+    const { active, classes, icon, color, date, onClick, children } = this.props
     const { isHovering } = this.state
+    const highlighted = active || isHovering
     return (
       <VerticalTimelineElement
-        className={isHovering ? classes.panelHover : undefined}
+        className={highlighted ? classes.panelHover : undefined}
         date={date}
         icon={
           <Fab
             classes={{
-              primary: isHovering ? classes.fabPrimaryHover : undefined,
-              secondary: isHovering ? classes.fabSecondaryHover : undefined
+              primary: highlighted ? classes.fabPrimaryHover : undefined,
+              secondary: highlighted ? classes.fabSecondaryHover : undefined
             }}
             size="medium"
             color={color}
