@@ -355,19 +355,23 @@ class Vast extends PureComponent {
               <HistoryIcon />
             </IconButton>
 
-            <IconButton
-              color="secondary"
-              aria-label="All Tabs"
-              buttonRef={node => {
-                this.allButtonAnchorEl = node
-              }}
-              aria-owns={menuAllOpen ? allMenuId : undefined}
-              aria-haspopup="true"
-              onClick={this.handleMenuAllToggle}
-            >
-              <MenuIcon />
-            </IconButton>
+            {viewList.length > 1 && (
+              <IconButton
+                key="tab-list-menu-icon"
+                color="secondary"
+                aria-label="All Tabs"
+                buttonRef={node => {
+                  this.allButtonAnchorEl = node
+                }}
+                aria-owns={menuAllOpen ? allMenuId : undefined}
+                aria-haspopup="true"
+                onClick={this.handleMenuAllToggle}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             <Popover
+              key="tab-list-menu"
               id={allMenuId}
               elevation={menuElevation}
               open={menuAllOpen}
