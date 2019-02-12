@@ -2,11 +2,6 @@ import uuid from 'uuid/v4'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  VerticalTimeline,
-  VerticalTimelineElement
-} from 'react-vertical-timeline-component'
-import 'react-vertical-timeline-component/style.min.css'
 
 import {
   AppBar,
@@ -35,9 +30,6 @@ import CheckIcon from '@material-ui/icons/CheckBox'
 import CheckEmptyIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import HistoryIcon from '@material-ui/icons/History'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import WorkIcon from '@material-ui/icons/Work'
-import SaveIcon from '@material-ui/icons/SaveAlt'
-import StarIcon from '@material-ui/icons/Star'
 
 import { Template } from 'components'
 
@@ -55,6 +47,7 @@ import {
 import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
 import Intro from './Intro'
+import Timeline from './Timeline'
 
 const drawerWidth = 400
 
@@ -560,94 +553,7 @@ class Vast extends PureComponent {
             <Typography className={classes.drawerSubHeading}>
               Sample Software Company
             </Typography>
-            <VerticalTimeline layout="1-column">
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
-                icon={<SaveIcon />}
-              >
-                <h3 className="vertical-timeline-element-title">
-                  Click to Save
-                </h3>
-                <h4 className="vertical-timeline-element-subtitle">
-                  Create a new revision
-                </h4>
-                <p>
-                  Add a description of the revision: What changes were made and
-                  why
-                </p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Feb 6, 2019"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={<WorkIcon />}
-              >
-                <h3 className="vertical-timeline-element-title">Hired Oscar</h3>
-                <p>
-                  Planning changes when Oscar joins. Oscar will manage
-                  outsourced IT and Software processes. Oscar to be informed
-                  regarding the 90 day rock to hire new programmers
-                </p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Feb 4, 2019"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={<WorkIcon />}
-              >
-                <h3 className="vertical-timeline-element-title">
-                  Weekly Meeting Update
-                </h3>
-                <p>
-                  Expanded Wanda&apos;s role: Assigned 90 day rocks - User
-                  Experience, Visual Design
-                </p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Jan 28, 2019"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={<WorkIcon />}
-              >
-                <h3 className="vertical-timeline-element-title">
-                  Weekly Meeting Update
-                </h3>
-                <p>
-                  Added 90 day rock (AKA &quot;priority&quot;) to hire 2
-                  programmers. Assigned to Brent
-                </p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Jan 21, 2019"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={<WorkIcon />}
-              >
-                <h3 className="vertical-timeline-element-title">
-                  Weekly Meeting Update
-                </h3>
-                <p>No significant change; on track</p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                date="Jan 7, 2019"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={<WorkIcon />}
-              >
-                <h3 className="vertical-timeline-element-title">
-                  Weekly Meeting Update
-                </h3>
-                <p>
-                  Resetting 90 day rocks (AKA &quot;priority&quot;) after the
-                  holidays
-                </p>
-              </VerticalTimelineElement>
-              <VerticalTimelineElement
-                iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
-                icon={<StarIcon />}
-              />
-            </VerticalTimeline>
+            <Timeline />
           </div>
         </Drawer>
       </Template>
