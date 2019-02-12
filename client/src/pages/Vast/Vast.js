@@ -324,6 +324,7 @@ class Vast extends PureComponent {
                       <MenuItem
                         key={nodeType}
                         className={classes.indented}
+                        style={{ color: details.color }}
                         onClick={e =>
                           this.handleMenuNewSelect(e, [
                             nodeType,
