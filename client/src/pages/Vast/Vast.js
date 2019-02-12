@@ -56,7 +56,7 @@ import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
 import Intro from './Intro'
 
-const drawerWidth = 640
+const drawerWidth = 400
 
 const styles = theme => ({
   ...pageStyles({ theme, fullWidth: true, pagePadding: false }),
@@ -94,11 +94,12 @@ const styles = theme => ({
     marginRight: 20
   },
   drawer: {
-    width: drawerWidth,
+    // width: drawerWidth,
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    maxWidth: '80vw'
   },
   drawerHeader: {
     display: 'flex',
