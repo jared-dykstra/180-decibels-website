@@ -1,17 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { Fab } from '@material-ui/core'
 import WorkIcon from '@material-ui/icons/Work'
 import SaveIcon from '@material-ui/icons/SaveAlt'
 import StarIcon from '@material-ui/icons/Star'
 import { withStyles } from '@material-ui/core/styles'
 
-import {
-  VerticalTimeline,
-  VerticalTimelineElement
-} from 'react-vertical-timeline-component'
+import { VerticalTimeline } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
+
+import TimelineSegment from './TimelineSegment'
 
 // TODO: Fork react-vertical-timeline and make styles easier to override
 const styles = (/* theme */) => ({
@@ -69,76 +66,48 @@ const timeline = [
   }
 ]
 
-const Timeline = () => {
-  const segment = ({ key, icon, color, date, heading, description }) => (
-    <VerticalTimelineElement
-      key={key}
-      date={date}
-      icon={
-        <Fab
-          size="medium"
-          color={color}
-          component="span"
-          onMouseEnter={() => {
-            // console.log('focus')
-          }}
-          onMouseLeave={() => {
-            // console.log('blur')
-          }}
-        >
-          {icon}
-        </Fab>
-      }
-    >
-      <div>
-        {heading && <h3>{heading}</h3>}
-        {description && <p>{description}</p>}
-      </div>
-    </VerticalTimelineElement>
-  )
-
-  segment.propTypes = {
-    key: PropTypes.string.isRequired,
-    icon: PropTypes.node.isRequired,
-    color: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    heading: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired
-  }
-
-  return (
-    <VerticalTimeline layout="1-column">
-      {segment({
+const Timeline = () => (
+  <VerticalTimeline layout="1-column">
+    <TimelineSegment
+      {...{
         key: 'save',
         icon: <SaveIcon />,
-        color: 'primary',
-        heading: 'Click to Save a new revision',
-        description:
-          'Add a description of the revision: What changes were made and why'
-      })}
+        color: 'primary'
+      }}
+    >
+      <h3>Click to Save a new revision</h3>
+      <p>Include a description: What changes were made and why</p>
+    </TimelineSegment>
 
-      {timeline.map(t =>
-        segment({
-          icon: (
-            <Fab size="medium" color="secondary">
-              <WorkIcon />
-            </Fab>
-          ),
-          key: t.date,
-          ...t
-        })
-      )}
+    {timeline.map(({ date, heading, description }) => (
+      <TimelineSegment
+        {...{
+          key: date,
+          icon: <WorkIcon />,
+          color: 'secondary',
+          onClick: () => {
+            console.log('TODO - Go to revision')
+          },
+          date
+        }}
+      >
+        <h3>{heading}</h3>
+        <p>{description}</p>
+      </TimelineSegment>
+    ))}
 
-      {segment({
+    <TimelineSegment
+      {...{
         key: 'start',
         icon: <StarIcon />,
         color: 'default',
-        heading: 'Created',
         date: 'Nov 1, 2018'
-      })}
-    </VerticalTimeline>
-  )
-}
+      }}
+    >
+      <h3>Created</h3>
+    </TimelineSegment>
+  </VerticalTimeline>
+)
 
 Timeline.propTypes = {
   // classes: PropTypes.objectOf(PropTypes.string).isRequired
