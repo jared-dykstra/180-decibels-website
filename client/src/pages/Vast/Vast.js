@@ -1,4 +1,3 @@
-import uuid from 'uuid/v4'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -23,7 +22,6 @@ import {
   Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import CreateIcon from '@material-ui/icons/NoteAdd'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MenuIcon from '@material-ui/icons/Menu'
 import CheckIcon from '@material-ui/icons/CheckBox'
@@ -33,12 +31,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 import { Template } from 'components'
 
-import { NODE_TYPE_CLASS_MAP } from 'reduxStore/vast/vastConstants'
-import {
-  createView,
-  deleteView,
-  setActiveView
-} from 'reduxStore/vast/vastActions'
+import { deleteView, setActiveView } from 'reduxStore/vast/vastActions'
 import {
   viewListSelector,
   activeViewIdSelector
@@ -48,6 +41,7 @@ import pageStyles from '../pageStyles'
 import GraphTab from './GraphTab'
 import Intro from './Intro'
 import Timeline from './Timeline'
+import AddNewView, { addNewViewButton } from './AddNewView'
 
 const drawerWidth = 400
 
@@ -75,13 +69,6 @@ const styles = theme => ({
     overflowY: 'auto'
   },
   appBar: {},
-  search: {
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2
-  },
-  indented: {
-    marginLeft: theme.spacing.unit * 2
-  },
   drawerButton: {
     marginLeft: 12,
     marginRight: 20
@@ -120,7 +107,6 @@ class Vast extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
     viewId: PropTypes.string,
-    doCreateView: PropTypes.func.isRequired,
     doDeleteView: PropTypes.func.isRequired,
     doSetActiveView: PropTypes.func.isRequired,
     viewList: PropTypes.arrayOf(
@@ -142,9 +128,9 @@ class Vast extends PureComponent {
     this.allButtonAnchorEl = null
     this.newButtonAnchorEl = null
     this.counter = 0
+    this.addNewRef = null // React.createRef()
     this.state = {
       menuAllOpen: false,
-      menuNewOpen: false,
       menuChangeOpen: null,
       renaming: null,
       open: false
@@ -201,30 +187,6 @@ class Vast extends PureComponent {
 
   // End ChangeMenu handlers
 
-  // Begin NewMenu handlers
-  handleMenuNewToggle = () => {
-    this.setState(state => ({ menuNewOpen: !state.menuNewOpen }))
-  }
-
-  handleMenuNewClose = event => {
-    if (this.newButtonAnchorEl.contains(event.target)) {
-      return
-    }
-    this.setState({ menuNewOpen: false })
-  }
-
-  handleMenuNewSelect = (e, nodeTypes) => {
-    const { doCreateView } = this.props
-    const view = {
-      id: uuid(),
-      name: `View ${(this.counter += 1)}`,
-      nodeTypes
-    }
-    doCreateView(view)
-    this.setState(() => ({ menuNewOpen: false }))
-  }
-  // End NewMenu handlers
-
   // Begin AllMenu handlers
   handleMenuAllToggle = () => {
     this.setState(state => ({ menuAllOpen: !state.menuAllOpen }))
@@ -249,25 +211,9 @@ class Vast extends PureComponent {
       open
     } = this.state
     const menuElevation = 2
-    const newMenuId = 'new-menu-popover'
     const allMenuId = 'all-menu-popover'
 
-    const createButton = (setRef = false) => (
-      <IconButton
-        color="secondary"
-        aria-label="New Tab"
-        buttonRef={node => {
-          if (setRef) {
-            this.newButtonAnchorEl = node
-          }
-        }}
-        aria-owns={menuNewOpen ? newMenuId : undefined}
-        aria-haspopup="true"
-        onClick={this.handleMenuNewToggle}
-      >
-        <CreateIcon />
-      </IconButton>
-    )
+    const self = this
 
     return (
       <Template
@@ -284,67 +230,25 @@ class Vast extends PureComponent {
         ) : (
           <div className={classes.introContainer}>
             <div className={classes.intro}>
-              <Intro button={createButton()} />
+              <Intro
+                button={addNewViewButton({
+                  onClick: e => {
+                    self.addNewRef.handleMenuNewToggle(e)
+                  }
+                })}
+              />
             </div>
           </div>
         )}
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar variant="dense" disableGutters>
-            {createButton(true)}
-            <Popover
-              id={newMenuId}
+            <AddNewView
+              // withStyles() exposes innerRef.  yay!
+              innerRef={ref => {
+                self.addNewRef = ref
+              }}
               elevation={menuElevation}
-              open={menuNewOpen}
-              onClose={this.handleMenuNewClose}
-              anchorEl={this.newButtonAnchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left'
-              }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
-              }}
-            >
-              <nav>
-                <MenuList>
-                  <MenuItem
-                    onClick={e =>
-                      this.handleMenuNewSelect(
-                        e,
-                        Object.keys(NODE_TYPE_CLASS_MAP)
-                      )
-                    }
-                  >
-                    All Types
-                  </MenuItem>
-
-                  {Object.entries(NODE_TYPE_CLASS_MAP).map(
-                    ([nodeType, details]) => (
-                      <MenuItem
-                        key={nodeType}
-                        className={classes.indented}
-                        style={{ color: details.color }}
-                        onClick={e =>
-                          this.handleMenuNewSelect(e, [
-                            nodeType,
-                            ...details.secondaryDimension
-                          ])
-                        }
-                      >
-                        {nodeType}
-                      </MenuItem>
-                    )
-                  )}
-
-                  <TextField
-                    label="Search For..."
-                    type="search"
-                    className={classes.search}
-                  />
-                </MenuList>
-              </nav>
-            </Popover>
+            />
 
             <IconButton
               color="secondary"
@@ -572,7 +476,6 @@ export default connect(
     viewId: activeViewIdSelector(state, props)
   }),
   dispatch => ({
-    doCreateView: args => dispatch(createView(args)),
     doDeleteView: args => dispatch(deleteView(args)),
     doSetActiveView: viewId => dispatch(setActiveView({ viewId }))
   })
