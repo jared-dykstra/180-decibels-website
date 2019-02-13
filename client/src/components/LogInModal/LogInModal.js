@@ -82,7 +82,12 @@ class LogInModal extends PureComponent {
     const signInText = 'Sign In'
     const isFullScreen = width === 'xs' || width === 'sm'
     return [
-      <Button key="button" color="primary" outline onClick={this.toggleModal}>
+      <Button
+        key="button"
+        color="primary"
+        variant="outlined"
+        onClick={this.toggleModal}
+      >
         <FontAwesomeIcon icon={faUser} />
         &nbsp;
         {signInText}
