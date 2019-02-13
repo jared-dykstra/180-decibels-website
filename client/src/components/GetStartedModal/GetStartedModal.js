@@ -54,7 +54,7 @@ class GetStartedModal extends PureComponent {
               id="getStarted-dialog-title"
               style={{ flexGrow: 1 }}
             >
-              Book a Free Clarity Session
+              Book a Free Consultation
             </Typography>
             <IconButton
               aria-label="Close"

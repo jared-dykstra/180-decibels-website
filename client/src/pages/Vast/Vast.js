@@ -413,7 +413,7 @@ class Vast extends PureComponent {
         </AppBar>
         <Drawer
           className={classes.drawer}
-          variant="temporary"
+          variant="permanent"
           anchor="right"
           open={open}
           ModalProps={{ onBackdropClick: this.handleDrawerClose }}

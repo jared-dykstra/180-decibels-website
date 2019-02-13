@@ -7,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles'
 import {
   ROUTE_CONFIDENTIALITY,
   ROUTE_HELP_MY_TEAM,
-  ROUTE_OUR_TEAM,
   ROUTE_PRIVACY,
   ROUTE_HOW_WE_WORK,
   ROUTE_WHAT_WE_DO
@@ -71,9 +70,6 @@ const footer = ({ classes }) => (
         </Grid>
         <Grid item className={classes.siteMap}>
           <ul>
-            <li>
-              <Link to={ROUTE_OUR_TEAM}>Our Team</Link>
-            </li>
             <li>
               <Link to={ROUTE_CONFIDENTIALITY}>Confidentiality</Link>
             </li>

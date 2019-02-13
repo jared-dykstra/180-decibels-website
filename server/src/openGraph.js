@@ -16,7 +16,8 @@ import {
   ROUTE_PRIVACY,
   ROUTE_VIDEO_INTRO,
   ROUTE_VIDEO_SUN,
-  ROUTE_VIDEO_INTRO_KERRI
+  ROUTE_VIDEO_INTRO_KERRI,
+  ROUTE_VAST
 } from '../../client/src/reduxStore/routes/routesConstants'
 
 const CDN = 'https://dm88nuc3kw2st.cloudfront.net/'
@@ -95,6 +96,13 @@ export const getOgValuesForRoute = req => {
         [OG_URL]: `${rootUrl}${ROUTE_HELP_MY_TEAM_QUIZ}`,
         [OG_IMAGE]: `${rootUrl}/quiz-image.jpg`,
         [OG_DESCRIPTION]: `We generate real ROI and substantially grow confidence team's ability to execute`
+      }
+    case ROUTE_VAST:
+      return {
+        [OG_TITLE]: '180 Decibels - Vast Intelligence',
+        [OG_URL]: `${rootUrl}${ROUTE_VAST}`,
+        [OG_IMAGE]: `${rootUrl}/vast-image.jpg`,
+        [OG_DESCRIPTION]: `Business Intelligence for Operations.  Visualize relationships between people, organizational units, accountabilities, core values, metrics--and see changes over time.  Quickly identify outliers such as overloaded people, and unassigned accountabilities`
       }
     case ROUTE_VIDEO_INTRO:
       return {

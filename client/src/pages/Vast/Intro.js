@@ -12,7 +12,7 @@ const Intro = ({ className, button }) => (
   >
     <Grid item style={{}}>
       <Typography paragraph variant="h4" align="center" color="secondary">
-        Operational Intelligence
+        Vast Intelligence
       </Typography>
       <Typography
         paragraph
@@ -20,14 +20,15 @@ const Intro = ({ className, button }) => (
         align="center"
         style={{ marginBottom: '1em' }}
       >
-        Visualize your Operation
+        Business Intelligence for Operations
       </Typography>
 
       <ul>
         <li>
           <Typography paragraph>
-            An unfiltered &quot;All Types&quot; view shows how complex an
-            organization can be.
+            Visualize relationships between people, organizational units,
+            accountabilities, core values, metrics. Quickly identify outliers
+            such as overloaded people, and unassigned accountabilities.
           </Typography>
         </li>
         <li>
@@ -38,9 +39,9 @@ const Intro = ({ className, button }) => (
         </li>
         <li>
           <Typography paragraph>
-            Streamline your business: Quickly identify outliers, overloaded
-            people, and accountabilities associated with nobody or associated
-            with multiple people
+            An unfiltered &quot;All Types&quot; view shows how complex an
+            organization can be. Create additional views and drill down into any
+            area.
           </Typography>
         </li>
       </ul>

@@ -21,7 +21,6 @@ import { RocketIcon, GetStartedButton, LogInModal } from 'components'
 import { isHomePageSelector } from 'reduxStore/routes/routesSelectors'
 import {
   ROUTE_HOME,
-  ROUTE_OUR_TEAM,
   ROUTE_HOW_WE_WORK,
   ROUTE_WHAT_WE_DO,
   ROUTE_VAST
@@ -121,13 +120,14 @@ class Header extends PureComponent {
                     <ClickAwayListener onClickAway={this.handleClose}>
                       <nav>
                         <MenuList>
-                          {
-                            <Link to={ROUTE_HOME}>
-                              <MenuItem onClick={this.handleClose}>
-                                Home
-                              </MenuItem>
-                            </Link>
-                          }
+                          <Link to={ROUTE_HOME}>
+                            <MenuItem onClick={this.handleClose}>Home</MenuItem>
+                          </Link>
+                          <Link to={ROUTE_VAST}>
+                            <MenuItem onClick={this.handleClose}>
+                              Vast Intelligence
+                            </MenuItem>
+                          </Link>
                           <Link to={ROUTE_WHAT_WE_DO}>
                             <MenuItem onClick={this.handleClose}>
                               What We Do
@@ -136,16 +136,6 @@ class Header extends PureComponent {
                           <Link to={ROUTE_HOW_WE_WORK}>
                             <MenuItem onClick={this.handleClose}>
                               How We Work
-                            </MenuItem>
-                          </Link>
-                          <Link to={ROUTE_VAST}>
-                            <MenuItem onClick={this.handleClose}>
-                              Operational Intelligence
-                            </MenuItem>
-                          </Link>
-                          <Link to={ROUTE_OUR_TEAM}>
-                            <MenuItem onClick={this.handleClose}>
-                              Our Team
                             </MenuItem>
                           </Link>
                           <GetStartedButton

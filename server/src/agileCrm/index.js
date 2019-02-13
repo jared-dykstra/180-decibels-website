@@ -7,7 +7,7 @@ import {
 } from './agileCrm'
 
 const TAG_WEBSITE_LEAD = 'Website Lead'
-const TAG_GET_STARTED = 'Clarity Session'
+const TAG_GET_STARTED = 'Consultation'
 const TAG_ASSESSMENT = 'Assessment'
 // const TAG_REGISTER = 'Website Register'
 
