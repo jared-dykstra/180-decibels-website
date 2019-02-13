@@ -23,6 +23,7 @@ import {
   ROUTE_HOME,
   ROUTE_HOW_WE_WORK,
   ROUTE_WHAT_WE_DO,
+  ROUTE_HELP_MY_TEAM,
   ROUTE_VAST
 } from 'reduxStore/routes/routesConstants'
 
@@ -126,6 +127,11 @@ class Header extends PureComponent {
                           <Link to={ROUTE_VAST}>
                             <MenuItem onClick={this.handleClose}>
                               Vast Intelligence
+                            </MenuItem>
+                          </Link>
+                          <Link to={ROUTE_HELP_MY_TEAM}>
+                            <MenuItem onClick={this.handleClose}>
+                              Self Assessment
                             </MenuItem>
                           </Link>
                           <Link to={ROUTE_WHAT_WE_DO}>

@@ -9,7 +9,8 @@ import {
   ROUTE_HELP_MY_TEAM,
   ROUTE_PRIVACY,
   ROUTE_HOW_WE_WORK,
-  ROUTE_WHAT_WE_DO
+  ROUTE_WHAT_WE_DO,
+  ROUTE_VAST
 } from 'reduxStore/routes/routesConstants'
 import { SocialLinks } from 'components'
 
@@ -58,18 +59,21 @@ const footer = ({ classes }) => (
         <Grid item className={classes.siteMap}>
           <ul>
             <li>
+              <Link to={ROUTE_VAST}>Vast Intelligence</Link>
+            </li>
+            <li>
               <Link to={ROUTE_WHAT_WE_DO}>What We Do</Link>
             </li>
             <li>
               <Link to={ROUTE_HOW_WE_WORK}>How We Work</Link>
             </li>
-            <li>
-              <Link to={ROUTE_HELP_MY_TEAM}>Self Assessment</Link>
-            </li>
           </ul>
         </Grid>
         <Grid item className={classes.siteMap}>
           <ul>
+            <li>
+              <Link to={ROUTE_HELP_MY_TEAM}>Self Assessment</Link>
+            </li>
             <li>
               <Link to={ROUTE_CONFIDENTIALITY}>Confidentiality</Link>
             </li>
