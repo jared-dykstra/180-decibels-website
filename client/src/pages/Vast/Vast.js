@@ -126,9 +126,7 @@ class Vast extends PureComponent {
     super(props)
     this.changeButtonAnchorEls = {}
     this.allButtonAnchorEl = null
-    this.newButtonAnchorEl = null
-    this.counter = 0
-    this.addNewRef = null // React.createRef()
+    this.addNewRef = null
     this.state = {
       menuAllOpen: false,
       menuChangeOpen: null,
@@ -255,7 +253,6 @@ class Vast extends PureComponent {
               aria-label="Open drawer"
               onClick={this.handleDrawerToggle}
               className={classes.drawerButton}
-              disabled
             >
               <HistoryIcon />
             </IconButton>

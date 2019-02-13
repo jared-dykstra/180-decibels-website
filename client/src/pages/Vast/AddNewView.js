@@ -42,6 +42,7 @@ class AddNewView extends PureComponent {
 
   constructor(props) {
     super(props)
+    this.counter = 0
     this.state = {
       menuNewOpen: false
     }
@@ -85,7 +86,6 @@ class AddNewView extends PureComponent {
         aria-owns={menuNewOpen ? newMenuId : undefined}
         aria-haspopup="true"
         onClick={this.handleMenuNewToggle}
-        disabled
       >
         <CreateIcon />
       </IconButton>,
@@ -149,7 +149,6 @@ export const addNewViewButton = ({ onClick }) => (
     aria-label="New Tab"
     aria-haspopup="true"
     onClick={onClick}
-    disabled
   >
     <CreateIcon />
   </IconButton>
