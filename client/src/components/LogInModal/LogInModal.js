@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // NOTE: Have to import bootstrap theme to get this to work.  TODO: Completely remove reactstrap
 // import 'styles/theme.scss'
 import {
-  Button,
+  // Button,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -12,7 +12,7 @@ import {
 } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
-import { Dialog, withWidth } from '@material-ui/core'
+import { Button, Dialog, withWidth } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import {

@@ -255,6 +255,7 @@ class Vast extends PureComponent {
               aria-label="Open drawer"
               onClick={this.handleDrawerToggle}
               className={classes.drawerButton}
+              disabled
             >
               <HistoryIcon />
             </IconButton>

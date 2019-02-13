@@ -12,13 +12,12 @@ import {
   MenuList,
   MenuItem,
   Toolbar,
-  IconButton,
-  Hidden
+  IconButton
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 
-import { RocketIcon, GetStartedButton /* , LogInModal */ } from 'components'
+import { RocketIcon, GetStartedButton, LogInModal } from 'components'
 import { isHomePageSelector } from 'reduxStore/routes/routesSelectors'
 import {
   ROUTE_HOME,
@@ -174,7 +173,7 @@ class Header extends PureComponent {
               180 Decibels
             </Button>
           </div>
-          <Hidden xsDown>
+          {/* <Hidden xsDown>
             <Button
               color="primary"
               variant="contained"
@@ -190,8 +189,8 @@ class Header extends PureComponent {
             >
               Contact Us
             </GetStartedButton>
-          </Hidden>
-          {/* <LogInModal className={classes.actionButton} /> */}
+          </Hidden> */}
+          <LogInModal className={classes.actionButton} />
         </Toolbar>
       </AppBar>
     )
