@@ -226,10 +226,7 @@ export default (state = initialState, action) => {
       const graphs = runSelector(graphsSelector, state)
       const graph = graphs[viewId]
       const node = graph.$(`#${nodeId}`)
-      node
-        .closedNeighborhood()
-        .nodes()
-        .removeClass(CLASS_HIDDEN)
+      node.closedNeighborhood().removeClass(CLASS_HIDDEN)
 
       return state
     }

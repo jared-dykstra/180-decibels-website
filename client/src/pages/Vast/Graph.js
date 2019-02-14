@@ -353,7 +353,7 @@ class Graph extends PureComponent {
   }
 
   contextCommands = (/* element */) => {
-    const { doShowConnections } = this.props
+    const { doShowConnections, doLayout } = this.props
     const self = this
     return [
       {
