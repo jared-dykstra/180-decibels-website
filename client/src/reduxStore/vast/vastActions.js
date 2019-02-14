@@ -11,9 +11,9 @@ import {
 
 // Actions affecting ui state
 
-export const createView = ({ id, name, nodeTypes }) => ({
+export const createView = ({ id, name, nodes, nodeTypes }) => ({
   type: CREATE_VIEW,
-  payload: { viewId: id, name, nodeTypes }
+  payload: { viewId: id, name, nodes, nodeTypes }
 })
 
 export const deleteView = ({ viewId }) => ({

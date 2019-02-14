@@ -210,6 +210,7 @@ class AddNewView extends PureComponent {
     const view = {
       id: uuid(),
       name: `View ${(this.counter += 1)}`,
+      nodes: [suggestion.id],
       nodeTypes: [suggestion.title]
     }
     doCreateView(view)

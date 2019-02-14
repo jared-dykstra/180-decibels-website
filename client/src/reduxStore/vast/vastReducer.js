@@ -1,4 +1,4 @@
-import { includes as _includes, filter as _filter } from 'lodash'
+import { filter as _filter } from 'lodash'
 import cytoscape from 'cytoscape'
 
 import { mountPoint } from '.'
@@ -29,15 +29,33 @@ import {
 // Get the results of any selector (avoids repeating logic in the reducer)
 const runSelector = (selector, state) => selector({ [mountPoint]: state })
 
-const setElementVisibility = ({ graph, selectedNodeTypes }) => {
-  // Apply or remove the Hidden class according to selectedNodeTypes
-  Object.entries(NODE_TYPE_CLASS_MAP).forEach(([nodeType, details]) => {
-    const { className } = details
-    const elements = graph.$(`.${className}`)
-    if (!_includes(selectedNodeTypes, nodeType)) {
-      elements.addClass(CLASS_HIDDEN)
-    } else {
-      elements.removeClass(CLASS_HIDDEN)
+/**
+ * Apply or remove the Hidden class according to selectedNodeTypes or selectedNodes
+ *
+ * If selectedNodes is specified, it takes priority and selectedNodeTypes is not used
+ */
+const setElementVisibility = ({ graph, selectedNodeTypes, selectedNodes }) => {
+  graph.batch(() => {
+    const specificNodes = selectedNodes && selectedNodes.length > 0
+    const getSelector = () =>
+      specificNodes
+        ? selectedNodes.map(id => `#${id}`).join(',')
+        : selectedNodeTypes
+            .map(type => `.${NODE_TYPE_CLASS_MAP[type].className}`)
+            .join(',')
+
+    const selector = getSelector()
+    const nodes = graph.$(selector)
+    const others = graph.elements().not(nodes)
+    others.addClass(CLASS_HIDDEN)
+    nodes.removeClass(CLASS_HIDDEN)
+    nodes.connectedEdges().removeClass(CLASS_HIDDEN)
+
+    // If specific nodes were requested, include their first order connections
+    if (specificNodes) {
+      const nhood = nodes.closedNeighborhood()
+      nhood.removeClass(CLASS_HIDDEN)
+      nhood.connectedEdges().removeClass(CLASS_HIDDEN)
     }
   })
 }
@@ -48,7 +66,12 @@ const setElementVisibility = ({ graph, selectedNodeTypes }) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_VIEW: {
-      const { viewId, name, nodeTypes: selectedNodeTypes } = action.payload
+      const {
+        viewId,
+        name,
+        nodeTypes: selectedNodeTypes,
+        nodes: selectedNodes
+      } = action.payload
       const { model, defaults, graphs } = state
       const { nodes, edges } = model
       const { style } = defaults
@@ -74,7 +97,7 @@ export default (state = initialState, action) => {
       graph.maxZoom(2)
 
       // Set visibility based on node types
-      setElementVisibility({ graph, selectedNodeTypes })
+      setElementVisibility({ graph, selectedNodeTypes, selectedNodes })
 
       // Add the View, Add the Graph, and set the new View to be the active view
       return {
