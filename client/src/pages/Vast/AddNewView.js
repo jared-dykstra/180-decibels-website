@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import { deburr as _deburr } from 'lodash'
+import { deburr as _deburr, groupBy as _groupBy } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -88,27 +88,37 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
   )
 }
 
+const renderSectionTitle = section => {
+  const { color } = NODE_TYPE_CLASS_MAP[section.title]
+  return <small style={{ color }}>{section.title}</small>
+}
+
 const getSuggestions = ({ allOptions, value }) => {
-  const inputValue = _deburr(value.trim()).toLowerCase()
-  const inputLength = inputValue.length
+  if (value.length < 1) {
+    return []
+  }
+
   let count = 0
+  const suggestions = allOptions.filter(suggestion => {
+    const matches = match(suggestion.label, value)
+    const keep = count < 5 && matches.length > 0
 
-  return inputLength === 0
-    ? []
-    : allOptions.filter(suggestion => {
-        const keep =
-          count < 5 &&
-          suggestion.label.slice(0, inputLength).toLowerCase() === inputValue
+    if (keep) {
+      count += 1
+    }
 
-        if (keep) {
-          count += 1
-        }
+    return keep
+  })
 
-        return keep
-      })
+  const grouped = Object.entries(_groupBy(suggestions, 'title')).map(
+    ([k, v]) => ({ title: k, elements: v })
+  )
+  return grouped
 }
 
 const getSuggestionValue = suggestion => suggestion.id
+
+const getSectionSuggestions = section => section.elements
 
 const styles = theme => ({
   search: {
@@ -199,7 +209,8 @@ class AddNewView extends PureComponent {
     // Use a tuple of {id, label} for every node (no edge selection--not yet anyway)
     this.setState((state, props) => {
       const { nodes } = props.model
-      const allOptions = Object.entries(nodes).map(([id, { label }]) => ({
+      const allOptions = Object.entries(nodes).map(([id, { label, type }]) => ({
+        title: type,
         label,
         id
       }))
@@ -300,6 +311,9 @@ class AddNewView extends PureComponent {
 
             <Autosuggest
               {...{
+                multiSection: true,
+                renderSectionTitle,
+                getSectionSuggestions,
                 renderInputComponent,
                 suggestions,
                 onSuggestionsFetchRequested: this
