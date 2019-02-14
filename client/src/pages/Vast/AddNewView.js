@@ -176,7 +176,15 @@ class AddNewView extends PureComponent {
     if (this.newButtonAnchorEl.contains(event.target)) {
       return
     }
-    this.setState({ menuNewOpen: false })
+    this.setState(() => ({
+      menuNewOpen: false
+    }))
+  }
+
+  handleMenuNewExited = () => {
+    this.setState(() => ({
+      searchValue: ''
+    }))
   }
 
   handleMenuNewSelect = (e, nodeTypes) => {
@@ -268,6 +276,7 @@ class AddNewView extends PureComponent {
         elevation={elevation}
         open={menuNewOpen}
         onClose={this.handleMenuNewClose}
+        onExited={this.handleMenuNewExited}
         anchorEl={this.newButtonAnchorEl}
         anchorOrigin={{
           vertical: 'top',
