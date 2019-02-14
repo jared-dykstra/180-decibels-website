@@ -248,22 +248,22 @@ class GraphTab extends PureComponent {
           </Tooltip>
         </Grid>
         <Grid item>
-          <ClickAwayListener onClickAway={this.handleCloseAdd}>
-            <Tooltip
-              title="Add Node"
-              aria-label="Add Node"
-              placement="bottom-start"
+          <Tooltip
+            title="Add Node"
+            aria-label="Add Node"
+            placement="bottom-start"
+          >
+            <Fab
+              color="default"
+              aria-label="Add"
+              aria-owns={anchorElAdd ? 'simple-menu' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleClickAdd}
             >
-              <Fab
-                color="default"
-                aria-label="Add"
-                aria-owns={anchorElAdd ? 'simple-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleClickAdd}
-              >
-                <AddIcon />
-              </Fab>
-            </Tooltip>
+              <AddIcon />
+            </Fab>
+          </Tooltip>
+          <ClickAwayListener onClickAway={this.handleCloseAdd}>
             <Menu
               id="add-menu"
               anchorEl={anchorElAdd}
@@ -273,6 +273,7 @@ class GraphTab extends PureComponent {
             >
               {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
                 <MenuItem
+                  key={k}
                   style={{ color: v.color }}
                   onClick={e => this.handleAddNode(e, k)}
                 >

@@ -11,13 +11,11 @@ const Intro = ({ className, button }) => (
     className={className}
   >
     <Grid item style={{}}>
-      <Typography paragraph variant="h4" align="center" color="secondary">
-        Vast Intelligence
-      </Typography>
       <Typography
         paragraph
-        variant="h5"
+        variant="h4"
         align="center"
+        color="secondary"
         style={{ marginBottom: '1em' }}
       >
         Business Intelligence for Operations

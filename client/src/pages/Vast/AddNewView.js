@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import { deburr as _deburr, groupBy as _groupBy } from 'lodash'
+import { groupBy as _groupBy } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -205,6 +205,19 @@ class AddNewView extends PureComponent {
   }
   // End NewMenu handlers
 
+  handleItemSelect = (e, { suggestion }) => {
+    const { doCreateView } = this.props
+    const view = {
+      id: uuid(),
+      name: `View ${(this.counter += 1)}`,
+      nodeTypes: [suggestion.title]
+    }
+    doCreateView(view)
+    this.setState(() => ({
+      menuNewOpen: false
+    }))
+  }
+
   handleSuggestionsFetchRequested = ({ value }) => {
     // Use a tuple of {id, label} for every node (no edge selection--not yet anyway)
     this.setState((state, props) => {
@@ -311,6 +324,7 @@ class AddNewView extends PureComponent {
 
             <Autosuggest
               {...{
+                onSuggestionSelected: this.handleItemSelect,
                 multiSection: true,
                 renderSectionTitle,
                 getSectionSuggestions,
@@ -326,7 +340,7 @@ class AddNewView extends PureComponent {
                   isEmpty: searchValue === '',
                   classes,
                   className: classes.search,
-                  helperText: searchValue !== '' && 'Search by Node Name...',
+                  // helperText: searchValue !== '' && 'Search by Node Name...',
                   placeholder: 'Name',
                   value: searchValue,
                   onChange: this.handleChange,

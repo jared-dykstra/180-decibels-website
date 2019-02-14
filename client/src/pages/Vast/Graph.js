@@ -25,7 +25,6 @@ class Graph extends PureComponent {
   static propTypes = {
     layoutPadding: PropTypes.number,
     layoutOpts: PropTypes.shape({
-      edgeLength: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       fit: PropTypes.bool.isRequired,
       animate: PropTypes.bool.isRequired,
