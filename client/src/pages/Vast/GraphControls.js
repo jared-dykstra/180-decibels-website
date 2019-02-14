@@ -204,7 +204,6 @@ class GraphTab extends PureComponent {
             {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
               <MenuItem key={k} value={k} style={{ color: v.color }}>
                 <Checkbox
-                  color="inherit"
                   style={{ color: v.color }}
                   checked={selectedNodeTypes.indexOf(k) > -1}
                 />

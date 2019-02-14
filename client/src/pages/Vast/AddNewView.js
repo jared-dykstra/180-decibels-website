@@ -307,7 +307,7 @@ class AddNewView extends PureComponent {
                   isEmpty: searchValue === '',
                   classes,
                   className: classes.search,
-                  helperText: searchValue !== '' && 'Search For...',
+                  helperText: searchValue !== '' && 'Search by Node Name...',
                   placeholder: 'Name',
                   value: searchValue,
                   onChange: this.handleChange,
