@@ -25,45 +25,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import CloseIcon from '@material-ui/icons/Close'
 
 import { createView } from 'reduxStore/vast/vastActions'
+import { modelSelector } from 'reduxStore/vast/vastSelectors'
 
 const newMenuId = 'new-menu-popover'
-
-const allSuggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' }
-]
 
 const renderInputComponent = inputProps => {
   const {
@@ -113,7 +77,7 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
       <div>
         {parts.map((part, index) =>
           part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
+            <span key={String(index)} style={{ fontWeight: 800 }}>
               {part.text}
             </span>
           ) : (
@@ -127,14 +91,14 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
   )
 }
 
-const getSuggestions = value => {
+const getSuggestions = ({ allOptions, value }) => {
   const inputValue = _deburr(value.trim()).toLowerCase()
   const inputLength = inputValue.length
   let count = 0
 
   return inputLength === 0
     ? []
-    : allSuggestions.filter(suggestion => {
+    : allOptions.filter(suggestion => {
         const keep =
           count < 5 &&
           suggestion.label.slice(0, inputLength).toLowerCase() === inputValue
@@ -147,7 +111,7 @@ const getSuggestions = value => {
       })
 }
 
-const getSuggestionValue = suggestion => suggestion.label
+const getSuggestionValue = suggestion => suggestion.id
 
 const styles = theme => ({
   search: {
@@ -184,6 +148,7 @@ class AddNewView extends PureComponent {
   static propTypes = {
     elevation: PropTypes.number,
     doCreateView: PropTypes.func.isRequired,
+    model: PropTypes.shape({ nodes: PropTypes.object.isRequired }).isRequired,
     classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
 
@@ -226,8 +191,16 @@ class AddNewView extends PureComponent {
   // End NewMenu handlers
 
   handleSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
+    // Use a tuple of {id, label} for every node (no edge selection--not yet anyway)
+    this.setState((state, props) => {
+      const { nodes } = props.model
+      const allOptions = Object.entries(nodes).map(([id, { label }]) => ({
+        label,
+        id
+      }))
+      return {
+        suggestions: getSuggestions({ allOptions, value })
+      }
     })
   }
 
@@ -375,7 +348,9 @@ addNewViewButton.propTypes = {
 }
 
 export default connect(
-  () => ({}),
+  state => ({
+    model: modelSelector(state)
+  }),
   dispatch => ({
     doCreateView: args => dispatch(createView(args))
   })

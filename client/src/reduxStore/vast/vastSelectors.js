@@ -4,6 +4,11 @@ import { mountPoint } from '.'
 
 const vastSelector = state => state[mountPoint]
 
+export const modelSelector = createSelector(
+  vastSelector,
+  vast => vast.model
+)
+
 export const viewsSelector = createSelector(
   vastSelector,
   vast => vast.views
