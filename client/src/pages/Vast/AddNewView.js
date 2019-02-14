@@ -12,6 +12,7 @@ import { NODE_TYPE_CLASS_MAP } from 'reduxStore/vast/vastConstants'
 
 import {
   Divider,
+  Fade,
   IconButton,
   InputAdornment,
   MenuItem,
@@ -317,12 +318,12 @@ class AddNewView extends PureComponent {
                   suggestionsContainerOpen: classes.suggestionsContainerOpen,
                   suggestionsList: classes.suggestionsList,
                   suggestion: classes.suggestion
-                }
-                // renderSuggestionsContainer: options => (
-                //   <Paper {...options.containerProps} square>
-                //     {options.children}
-                //   </Paper>
-                // )
+                },
+                renderSuggestionsContainer: options => (
+                  <Fade {...options.containerProps} in={searchValue !== ''}>
+                    <div>{options.children}</div>
+                  </Fade>
+                )
               }}
             />
           </MenuList>
