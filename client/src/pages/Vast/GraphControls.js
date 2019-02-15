@@ -4,20 +4,21 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
+  Button,
   Checkbox,
   Chip,
   ClickAwayListener,
-  Fab,
   Grid,
   Input,
   ListItemText,
   Select,
   Tooltip,
   Menu,
+  Paper,
   MenuItem
 } from '@material-ui/core'
 
-import { SpeedDial, SpeedDialAction } from '@material-ui/lab'
+import { SpeedDial, SpeedDialAction, ToggleButton } from '@material-ui/lab'
 import SpeedDialIcon from '@material-ui/icons/Loop'
 import GridIcon from '@material-ui/icons/DragIndicator'
 import CircularIcon from '@material-ui/icons/BlurCircular'
@@ -25,18 +26,27 @@ import ConcentricIcon from '@material-ui/icons/GpsFixed'
 import ShareIcon from '@material-ui/icons/Share'
 import TreeIcon from '@material-ui/icons/DeviceHub'
 import AddIcon from '@material-ui/icons/Add'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
+import ConnectionsIcon from '@material-ui/icons/CompareArrows'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import { selectedNodeTypesSelector } from 'reduxStore/vast/vastSelectors'
+import {
+  selectedNodeTypesSelector,
+  editModeSelector
+} from 'reduxStore/vast/vastSelectors'
 import {
   layout,
   addNode,
-  setSelectedNodeTypes
+  setSelectedNodeTypes,
+  toggleEditMode
 } from 'reduxStore/vast/vastActions'
 import { NODE_TYPE_CLASS_MAP } from 'reduxStore/vast/vastConstants'
 
 const styles = theme => ({
+  chipContainer: {
+    background: theme.palette.background.default
+  },
   chips: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -48,6 +58,21 @@ const styles = theme => ({
     // position: 'absolute',
     top: theme.spacing.unit * 2,
     left: theme.spacing.unit * 3
+  },
+  speedDialFab: {
+    background: theme.palette.background.default
+  },
+  toggleContainer: {
+    height: 56,
+    // padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    display: 'flex',
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    // margin: `${theme.spacing.unit}px 0`,
+    background: theme.palette.background.default
+  },
+  editButton: {
+    height: '100%'
   }
 })
 
@@ -57,9 +82,11 @@ class GraphTab extends PureComponent {
     // eslint-disable-next-line react/no-unused-prop-types
     viewId: PropTypes.string.isRequired,
     selectedNodeTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    editMode: PropTypes.bool.isRequired,
     doAddNode: PropTypes.func.isRequired,
     doLayout: PropTypes.func.isRequired,
     doSetSelectedNodeTypes: PropTypes.func.isRequired,
+    doToggleEditMode: PropTypes.func.isRequired,
     className: PropTypes.string,
     classes: PropTypes.objectOf(PropTypes.string).isRequired
   }
@@ -116,12 +143,19 @@ class GraphTab extends PureComponent {
     this.setState({ anchorElAdd: null })
   }
 
+  handleEditMode = () => {
+    const { doToggleEditMode } = this.props
+    doToggleEditMode()
+  }
+
   render() {
+    const elevation = 4
     const {
       selectedNodeTypes,
       doSetSelectedNodeTypes,
       className,
-      classes
+      classes,
+      editMode
     } = this.props
     const { layoutOpen, anchorElAdd } = this.state
     const layoutActions = [
@@ -181,39 +215,41 @@ class GraphTab extends PureComponent {
       >
         <Grid item>
           {/* <Tooltip title="Filter" aria-label="Filter" placement="bottom-start"> */}
-          <Select
-            multiple
-            value={selectedNodeTypes}
-            onChange={e => doSetSelectedNodeTypes(e.target.value)}
-            input={<Input id="select-multiple-chip" />}
-            renderValue={selected => (
-              <div className={classes.chips}>
-                {selected.map(value => (
-                  <Chip
-                    key={value}
-                    label={value}
-                    className={classes.chip}
-                    onDelete={() => this.handleRemoveNodeType(value)}
-                    style={{ color: NODE_TYPE_CLASS_MAP[value].color }}
+          <Paper elevation={elevation} className={classes.chipContainer}>
+            <Select
+              multiple
+              value={selectedNodeTypes}
+              onChange={e => doSetSelectedNodeTypes(e.target.value)}
+              input={<Input id="select-multiple-chip" />}
+              renderValue={selected => (
+                <div className={classes.chips}>
+                  {selected.map(value => (
+                    <Chip
+                      key={value}
+                      label={value}
+                      className={classes.chip}
+                      onDelete={() => this.handleRemoveNodeType(value)}
+                      style={{ color: NODE_TYPE_CLASS_MAP[value].color }}
+                    />
+                  ))}
+                </div>
+              )}
+              MenuProps={{ disableAutoFocusItem: true }}
+            >
+              {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
+                <MenuItem key={k} value={k} style={{ color: v.color }}>
+                  <Checkbox
+                    style={{ color: v.color }}
+                    checked={selectedNodeTypes.indexOf(k) > -1}
                   />
-                ))}
-              </div>
-            )}
-            MenuProps={{ disableAutoFocusItem: true }}
-          >
-            {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
-              <MenuItem key={k} value={k} style={{ color: v.color }}>
-                <Checkbox
-                  style={{ color: v.color }}
-                  checked={selectedNodeTypes.indexOf(k) > -1}
-                />
-                <ListItemText
-                  primary={<span style={{ color: v.color }}>{k}</span>}
-                />
-              </MenuItem>
-            ))}
-          </Select>
-          {/* </Tooltip> */}
+                  <ListItemText
+                    primary={<span style={{ color: v.color }}>{k}</span>}
+                  />
+                </MenuItem>
+              ))}
+            </Select>
+            {/* </Tooltip> */}
+          </Paper>
         </Grid>
         <Grid item>
           <Tooltip
@@ -223,7 +259,7 @@ class GraphTab extends PureComponent {
           >
             <SpeedDial
               ariaLabel="Layout Options"
-              className={classes.speedDial}
+              classes={{ root: classes.speedDial, fab: classes.speedDialFab }}
               icon={<SpeedDialIcon />}
               onBlur={this.handleLayoutClose}
               onClick={this.handleLayoutClick}
@@ -248,40 +284,58 @@ class GraphTab extends PureComponent {
           </Tooltip>
         </Grid>
         <Grid item>
-          <Tooltip
-            title="Add Node"
-            aria-label="Add Node"
-            placement="bottom-start"
-          >
-            <Fab
-              color="default"
-              aria-label="Add"
-              aria-owns={anchorElAdd ? 'simple-menu' : undefined}
-              aria-haspopup="true"
-              onClick={this.handleClickAdd}
+          <Paper className={classes.toggleContainer} elevation={elevation}>
+            <Tooltip
+              title="Edit Connections"
+              aria-label="Edit Connections"
+              placement="bottom-start"
             >
-              <AddIcon />
-            </Fab>
-          </Tooltip>
-          <ClickAwayListener onClickAway={this.handleCloseAdd}>
-            <Menu
-              id="add-menu"
-              anchorEl={anchorElAdd}
-              open={Boolean(anchorElAdd)}
-              onClose={this.handleCloseAdd}
-              disableAutoFocusItem
+              <ToggleButton
+                className={classes.editButton}
+                selected={editMode}
+                onChange={this.handleEditMode}
+                value="editMode"
+              >
+                <ConnectionsIcon />
+              </ToggleButton>
+            </Tooltip>
+            <Tooltip
+              title="Add Node"
+              aria-label="Add Node"
+              placement="bottom-start"
             >
-              {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
-                <MenuItem
-                  key={k}
-                  style={{ color: v.color }}
-                  onClick={e => this.handleAddNode(e, k)}
-                >
-                  {k}
-                </MenuItem>
-              ))}
-            </Menu>
-          </ClickAwayListener>
+              <Button
+                className={classes.editButton}
+                color="default"
+                aria-label="Add"
+                aria-owns={anchorElAdd ? 'simple-menu' : undefined}
+                aria-haspopup="true"
+                onClick={this.handleClickAdd}
+              >
+                <AddIcon />
+                <ArrowDropDownIcon />
+              </Button>
+            </Tooltip>
+            <ClickAwayListener onClickAway={this.handleCloseAdd}>
+              <Menu
+                id="add-menu"
+                anchorEl={anchorElAdd}
+                open={Boolean(anchorElAdd)}
+                onClose={this.handleCloseAdd}
+                disableAutoFocusItem
+              >
+                {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
+                  <MenuItem
+                    key={k}
+                    style={{ color: v.color }}
+                    onClick={e => this.handleAddNode(e, k)}
+                  >
+                    {k}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </ClickAwayListener>
+          </Paper>
         </Grid>
       </Grid>
     )
@@ -290,12 +344,14 @@ class GraphTab extends PureComponent {
 
 export default connect(
   state => ({
-    selectedNodeTypes: selectedNodeTypesSelector(state)
+    selectedNodeTypes: selectedNodeTypesSelector(state),
+    editMode: editModeSelector(state)
   }),
   (dispatch, props) => ({
     doLayout: args => dispatch(layout({ viewId: props.viewId, ...args })),
     doAddNode: args => dispatch(addNode(args, props)),
     doSetSelectedNodeTypes: nodeTypes =>
-      dispatch(setSelectedNodeTypes(nodeTypes, props))
+      dispatch(setSelectedNodeTypes(nodeTypes, props)),
+    doToggleEditMode: () => dispatch(toggleEditMode({ viewId: props.viewId }))
   })
 )(withStyles(styles, { withTheme: true })(GraphTab))

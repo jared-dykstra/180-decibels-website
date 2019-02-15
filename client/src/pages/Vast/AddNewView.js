@@ -90,7 +90,16 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
 
 const renderSectionTitle = section => {
   const { color } = NODE_TYPE_CLASS_MAP[section.title]
-  return <small style={{ color }}>{section.title}</small>
+  return (
+    <small
+      style={{
+        color,
+        paddingLeft: 10
+      }}
+    >
+      {section.title}
+    </small>
+  )
 }
 
 const getSuggestions = ({ allOptions, value }) => {

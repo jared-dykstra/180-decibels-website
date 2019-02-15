@@ -68,3 +68,8 @@ export const selectedNodeTypesSelector = createSelector(
   activeViewSelector,
   view => (view ? view.selectedNodeTypes : [])
 )
+
+export const editModeSelector = createSelector(
+  activeViewSelector,
+  view => (view ? view.editMode : false)
+)

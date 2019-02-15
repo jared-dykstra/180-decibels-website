@@ -6,7 +6,8 @@ import {
   ADD_CONNECTION,
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
-  LAYOUT
+  LAYOUT,
+  TOGGLE_EDIT_MODE
 } from './vastConstants'
 
 // Actions affecting ui state
@@ -29,6 +30,11 @@ export const setActiveView = ({ viewId }) => ({
 export const showConnections = (nodeId, { viewId }) => ({
   type: SHOW_CONNECTIONS,
   payload: { viewId, nodeId }
+})
+
+export const toggleEditMode = ({ viewId }) => ({
+  type: TOGGLE_EDIT_MODE,
+  payload: { viewId }
 })
 
 export const addConnection = (

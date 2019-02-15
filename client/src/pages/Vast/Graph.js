@@ -9,7 +9,8 @@ import { CLASS_HIDDEN } from 'reduxStore/vast/vastConstants'
 import {
   graphSelector,
   contextMenuDefaultsSelector,
-  edgeHandlesDefaultsSelector
+  edgeHandlesDefaultsSelector,
+  editModeSelector
 } from 'reduxStore/vast/vastSelectors'
 import {
   layout,
@@ -23,6 +24,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 class Graph extends PureComponent {
   static propTypes = {
+    editMode: PropTypes.bool.isRequired,
     layoutPadding: PropTypes.number,
     layoutOpts: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -87,12 +89,7 @@ class Graph extends PureComponent {
   componentDidMount() {
     // console.log(`Graph componentDidMount ${this.props.viewId}`)
     if (this.ref) {
-      const {
-        graph,
-        contextMenuDefaults,
-        edgeHandlesDefaults,
-        doAddConnection
-      } = this.props
+      const { graph, contextMenuDefaults } = this.props
       if (graph) {
         graph.mount(this.ref)
 
@@ -100,21 +97,6 @@ class Graph extends PureComponent {
           ...contextMenuDefaults,
           commands: this.contextCommands()
         })
-
-        /*
-        this.edgeHandles = graph.edgehandles({
-          ...edgeHandlesDefaults,
-          complete(sourceNode, targetNode, addedElements) {
-            // fired when edgehandles is done and elements are added
-            // A new GUID was already generated as ID of the new element.  To customize, override `edgeParams()`
-            doAddConnection({
-              sourceNodeId: sourceNode.id(),
-              targetNodeId: targetNode.id(),
-              addedEdgeId: addedElements[0].id()
-            })
-          }
-        })
-        */
 
         graph.on(
           'select unselect',
@@ -138,8 +120,32 @@ class Graph extends PureComponent {
     window.addEventListener('resize', this.handleResize)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     // console.log(`Graph componentDidUpdate ${this.props.viewId}`)
+
+    const { graph, editMode, edgeHandlesDefaults, doAddConnection } = this.props
+
+    if (editMode && !prevProps.editMode) {
+      this.edgeHandles = graph.edgehandles({
+        ...edgeHandlesDefaults,
+        complete(sourceNode, targetNode, addedElements) {
+          // fired when edgehandles is done and elements are added
+          // A new GUID was already generated as ID of the new element.  To customize, override `edgeParams()`
+          doAddConnection({
+            sourceNodeId: sourceNode.id(),
+            targetNodeId: targetNode.id(),
+            addedEdgeId: addedElements[0].id()
+          })
+        }
+      })
+    }
+
+    if (!editMode && prevProps.editMode) {
+      if (this.edgeHandles) {
+        this.edgeHandles.destroy()
+      }
+      this.edgeHandles = null
+    }
   }
 
   componentWillUnmount() {
@@ -432,7 +438,8 @@ export default connect(
   state => ({
     graph: graphSelector(state),
     contextMenuDefaults: contextMenuDefaultsSelector(state),
-    edgeHandlesDefaults: edgeHandlesDefaultsSelector(state)
+    edgeHandlesDefaults: edgeHandlesDefaultsSelector(state),
+    editMode: editModeSelector(state)
   }),
   (dispatch, props) => ({
     doLayout: () => dispatch(layout(props)),

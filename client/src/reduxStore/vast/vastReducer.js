@@ -14,7 +14,8 @@ import {
   CLASS_HIDDEN,
   CLASS_NEW,
   NODE_TYPE_CLASS_MAP,
-  ADD_CONNECTION
+  ADD_CONNECTION,
+  TOGGLE_EDIT_MODE
 } from './vastConstants'
 
 import {
@@ -22,7 +23,8 @@ import {
   viewListSelector,
   activeViewIdSelector,
   graphsSelector,
-  viewsSelector
+  viewsSelector,
+  editModeSelector
   // selectedNodeTypesSelector
 } from './vastSelectors'
 
@@ -106,7 +108,8 @@ export default (state = initialState, action) => {
           timestamp: new Date().getTime(),
           name,
           selectedNodeTypes,
-          layout: null
+          layout: null,
+          editMode: false
         }),
         graphs: { ...graphs, [viewId]: graph },
         viewer: { ...state.viewer, activeView: viewId }
@@ -161,6 +164,15 @@ export default (state = initialState, action) => {
           [viewId, 'selectedNodeTypes'],
           selectedNodeTypes
         )
+      }
+    }
+
+    case TOGGLE_EDIT_MODE: {
+      const { viewId } = action.payload
+      const editMode = runSelector(editModeSelector, state)
+      return {
+        ...state,
+        views: state.views.setIn([viewId, 'editMode'], !editMode)
       }
     }
 
