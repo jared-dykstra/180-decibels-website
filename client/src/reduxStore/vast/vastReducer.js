@@ -305,7 +305,7 @@ const applyLayout = ({ graph, layout, stable = true }) => {
 
   // Record the positions on both events -- This is to handle the case where a user may click to select a nde
   // before the layout has finished
-  const l = graph.makeLayout({
+  const l = graph.filter(':visible').makeLayout({
     ...opts,
     ready: (...args) => {
       recordPositions()
