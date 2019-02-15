@@ -82,7 +82,11 @@ export default (state = initialState, action) => {
 
       const cyNodes = Object.entries(nodes).map(([id, { label, type }]) => {
         const { className } = NODE_TYPE_CLASS_MAP[type]
-        return { group: 'nodes', data: { id, label }, classes: [className] }
+        return {
+          group: 'nodes',
+          data: { id, label, type },
+          classes: [className]
+        }
       })
 
       const cyEdges = Object.entries(edges).map(([id, e]) => ({
@@ -195,7 +199,7 @@ export default (state = initialState, action) => {
 
       // Add to every graph
       const cyNode = {
-        data: { id: nodeId, ...rawNode },
+        data: { id: nodeId, type, ...rawNode },
         classes: [className, CLASS_NEW]
       }
       const graphs = runSelector(graphsSelector, state)

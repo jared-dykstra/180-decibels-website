@@ -40,31 +40,37 @@ export const NODE_TYPE_CLASS_MAP = {
   [NODE_TYPE_PERSON]: {
     color: '#777777',
     className: CLASS_PERSON,
-    secondaryDimension: []
+    secondaryDimension: [],
+    rank: 4
   },
   [NODE_TYPE_ORG_UNIT]: {
     color: '#617881',
     className: CLASS_ORG_UNIT,
-    secondaryDimension: [NODE_TYPE_ACCOUNTABILITY]
+    secondaryDimension: [NODE_TYPE_ACCOUNTABILITY],
+    rank: 2
   },
   [NODE_TYPE_ACCOUNTABILITY]: {
     color: '#77C0B7',
     className: CLASS_ACCOUNTABILITY,
-    secondaryDimension: [NODE_TYPE_PERSON]
+    secondaryDimension: [NODE_TYPE_PERSON],
+    rank: 3
   },
   [NODE_TYPE_PRIORITY]: {
     color: '#E9C46A',
     className: CLASS_PRIORITY,
-    secondaryDimension: [NODE_TYPE_PERSON]
+    secondaryDimension: [NODE_TYPE_PERSON],
+    rank: 2
   },
   [NODE_TYPE_CORE_VALUES]: {
     color: '#F4A261',
     className: CLASS_CORE_VALUE,
-    secondaryDimension: [NODE_TYPE_PERSON]
+    secondaryDimension: [NODE_TYPE_PERSON],
+    rank: 5
   },
   [NODE_TYPE_METRIC]: {
     color: '#E76F51',
     className: CLASS_METRIC,
-    secondaryDimension: [NODE_TYPE_PERSON]
+    secondaryDimension: [NODE_TYPE_PERSON],
+    rank: 1
   }
 }

@@ -182,7 +182,15 @@ class GraphTab extends PureComponent {
         layout: {
           name: 'concentric',
           nodeDimensionsIncludeLabels: true,
-          animate: true
+          animate: true,
+          concentric: ele => {
+            const type = ele.data('type')
+            if (type) {
+              return NODE_TYPE_CLASS_MAP[type].rank
+            }
+            return 1
+          },
+          levelWidth: () => 1
         }
       },
       {
