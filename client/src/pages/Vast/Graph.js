@@ -3,16 +3,18 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Typography } from '@material-ui/core'
 
-import { CLASS_HIDDEN } from 'reduxStore/vast/vastConstants'
+import { CLASS_HIDDEN, NODE_DATA_ORG_POS } from 'reduxStore/vast/vastConstants'
 
 import {
   graphSelector,
   contextMenuDefaultsSelector,
   edgeHandlesDefaultsSelector,
-  editModeSelector
+  editModeSelector,
+  selectedNodeSelector
 } from 'reduxStore/vast/vastSelectors'
 import {
   layout,
+  selectNode,
   showConnections,
   addConnection
 } from 'reduxStore/vast/vastActions'
@@ -23,6 +25,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 class Graph extends PureComponent {
   static propTypes = {
+    selectedNode: PropTypes.string,
     editMode: PropTypes.bool.isRequired,
     layoutPadding: PropTypes.number,
     layoutOpts: PropTypes.shape({
@@ -46,6 +49,7 @@ class Graph extends PureComponent {
     contextMenuDefaults: PropTypes.object.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     edgeHandlesDefaults: PropTypes.object.isRequired,
+    doSelectNode: PropTypes.func.isRequired,
     doShowConnections: PropTypes.func.isRequired,
     doAddConnection: PropTypes.func.isRequired,
     doLayout: PropTypes.func.isRequired,
@@ -53,6 +57,7 @@ class Graph extends PureComponent {
   }
 
   static defaultProps = {
+    selectedNode: null,
     layoutPadding: 50,
     layoutOpts: {
       name: 'concentric',
@@ -123,7 +128,7 @@ class Graph extends PureComponent {
         }
 
         // Initialize the selection/highlight logic
-        graph.on('select unselect', 'node', () => this.handleSelectNode())
+        graph.on('select unselect', () => this.handleSelectNode())
 
         // Perform an initial layout.  Layout requires a bounding box, which is derived from the component to which the graph is mounted
         const { doLayout } = this.props
@@ -136,12 +141,19 @@ class Graph extends PureComponent {
   componentDidUpdate(prevProps) {
     // console.log(`Graph componentDidUpdate ${this.props.viewId}`)
 
+    // Edge Detection - Did editMode change?
     const { editMode } = this.props
     if (editMode && !prevProps.editMode) {
       this.applyEditMode(true)
     }
     if (!editMode && prevProps.editMode) {
       this.applyEditMode(false)
+    }
+
+    // Edge Detection - Did the selectedNode change?
+    const { selectedNode } = this.props
+    if (selectedNode !== prevProps.selectedNode) {
+      this.applySelectedNode()
     }
   }
 
@@ -172,17 +184,25 @@ class Graph extends PureComponent {
   }
 
   handleSelectNode = selectedNode => {
-    const { graph, editMode } = this.props
-    if (editMode) {
-      // Disable node selection when editing
-      return
+    const { graph, editMode, doSelectNode } = this.props
+    // Disable node selection when editing
+    if (!editMode) {
+      const node = selectedNode || graph.$('node:selected')
+      doSelectNode(node.id())
     }
+  }
 
-    const node = selectedNode || graph.$('node:selected')
-    if (node.nonempty()) {
-      Promise.resolve().then(() => this.highlight(node))
-    } else {
+  applySelectedNode = () => {
+    const { graph, selectedNode } = this.props
+    if (!selectedNode) {
       this.clear()
+    } else {
+      const node = graph.$(`#${selectedNode}`)
+      if (node.nonempty()) {
+        Promise.resolve().then(() => this.highlight(node))
+      } else {
+        this.clear()
+      }
     }
   }
 
@@ -198,11 +218,24 @@ class Graph extends PureComponent {
     }))
   }
 
-  isDirty = () => this.lastHighlighted != null
-
   classHidden = () => {
     const { hideWhileTraversing } = this.props
     return hideWhileTraversing ? CLASS_HIDDEN : `xxx-${CLASS_HIDDEN}`
+  }
+
+  animateFit = elements => {
+    const { graph, layoutPadding, easing, animationDurationMs } = this.props
+    return graph
+      .animation({
+        fit: {
+          eles: elements,
+          padding: layoutPadding
+        },
+        easing,
+        duration: animationDurationMs
+      })
+      .play()
+      .promise()
   }
 
   // See: https://github.com/cytoscape/wineandcheesemap/blob/gh-pages/demo.js
@@ -228,30 +261,16 @@ class Graph extends PureComponent {
       graph.batch(() => {
         others.addClass(classHidden)
         nhood.removeClass(classHidden)
-
-        graph.elements().removeClass('faded highlighted')
-
         nhood.addClass('highlighted')
-
-        others.nodes().forEach(n => {
-          const p = n.data('orgPos')
-
-          n.position({ x: p.x, y: p.y })
-        })
       })
 
       return Promise.resolve()
-        .then(() => {
-          if (this.isDirty()) {
-            return fit()
-          }
-          return Promise.resolve()
-        })
+        .then(() => this.animateFit(nhood.filter(':visible')))
         .then(() => sleep(animationDurationMs))
     }
 
     const runLayout = () => {
-      const p = node.data('orgPos')
+      const p = node.data(NODE_DATA_ORG_POS)
 
       const opts = {
         ...layoutOpts,
@@ -282,19 +301,6 @@ class Graph extends PureComponent {
       return promise
     }
 
-    const fit = () =>
-      graph
-        .animation({
-          fit: {
-            eles: nhood.filter(':visible'),
-            padding: layoutPadding
-          },
-          easing,
-          duration: animationDurationMs
-        })
-        .play()
-        .promise()
-
     const showOthersFaded = () =>
       sleep(animationDelayMs * 2).then(() => {
         graph.batch(() => {
@@ -305,16 +311,13 @@ class Graph extends PureComponent {
     return Promise.resolve()
       .then(reset)
       .then(runLayout)
-      .then(fit)
+      .then(this.animateFit(nhood.filter(':visible')))
       .then(showOthersFaded)
   }
 
   clear = () => {
-    if (!this.isDirty()) {
-      return Promise.resolve()
-    }
-
-    const { graph, animationDurationMs, animationDelayMs, easing } = this.props
+    console.log('Clear()')
+    const { graph, animationDurationMs, layoutPadding, easing } = this.props
     const classHidden = this.classHidden()
     const allNodes = graph.nodes()
 
@@ -327,47 +330,33 @@ class Graph extends PureComponent {
     this.lastHighlighted = null
     this.lastUnhighlighted = null
 
-    const hideOthers = () =>
-      sleep(250).then(() => {
-        others.addClass(classHidden)
-
-        return sleep(animationDelayMs)
-      })
-
     const showOthers = () => {
       graph.batch(() => {
-        graph
-          .elements()
-          .removeClass(classHidden)
-          .removeClass('faded')
+        others.removeClass(classHidden)
+        others.removeClass('faded')
       })
 
       return sleep(animationDurationMs)
     }
 
     const restorePositions = () => {
-      graph.batch(() => {
-        others.nodes().forEach(n => {
-          const p = n.data('orgPos')
+      const opts = {
+        name: 'preset',
+        positions: n => {
+          const originalPosition = n.data(NODE_DATA_ORG_POS)
+          return originalPosition
+        },
+        animate: true,
+        animationDuration: animationDurationMs,
+        animationEasing: easing,
+        padding: layoutPadding * 4
+      }
 
-          n.position({ x: p.x, y: p.y })
-        })
-      })
+      const l = nhood.filter(':visible').makeLayout(opts)
+      const promise = graph.promiseOn('layoutstop')
+      l.run()
 
-      return Promise.all(
-        nhood.nodes().map(ele => {
-          const p = ele.data('orgPos')
-
-          return ele
-            .animation({
-              position: { x: p.x, y: p.y },
-              duration: animationDurationMs,
-              easing
-            })
-            .play()
-            .promise()
-        })
-      )
+      return promise
     }
 
     const resetHighlight = () => {
@@ -376,9 +365,9 @@ class Graph extends PureComponent {
 
     return Promise.resolve()
       .then(resetHighlight)
-      .then(hideOthers)
       .then(restorePositions)
       .then(showOthers)
+      .then(this.animateFit(graph.elements().filter(':visible')))
   }
 
   contextCommands = (/* element */) => {
@@ -462,6 +451,7 @@ export default connect(
     graph: graphSelector(state),
     contextMenuDefaults: contextMenuDefaultsSelector(state),
     edgeHandlesDefaults: edgeHandlesDefaultsSelector(state),
+    selectedNode: selectedNodeSelector(state),
     editMode: editModeSelector(state)
   }),
   (dispatch, props) => ({
@@ -472,6 +462,7 @@ export default connect(
     doAddConnection: ({ sourceNodeId, targetNodeId, addedEdgeId }) =>
       dispatch(
         addConnection({ sourceNodeId, targetNodeId, addedEdgeId }, props)
-      )
+      ),
+    doSelectNode: nodeId => dispatch(selectNode(nodeId, props))
   })
 )(Graph)

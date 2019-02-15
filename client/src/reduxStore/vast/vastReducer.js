@@ -15,7 +15,9 @@ import {
   CLASS_NEW,
   NODE_TYPE_CLASS_MAP,
   ADD_CONNECTION,
-  TOGGLE_EDIT_MODE
+  TOGGLE_EDIT_MODE,
+  SELECT_NODE,
+  NODE_DATA_ORG_POS
 } from './vastConstants'
 
 import {
@@ -109,7 +111,8 @@ export default (state = initialState, action) => {
           name,
           selectedNodeTypes,
           layout: null,
-          editMode: false
+          editMode: false,
+          selectedNode: null
         }),
         graphs: { ...graphs, [viewId]: graph },
         viewer: { ...state.viewer, activeView: viewId }
@@ -164,6 +167,14 @@ export default (state = initialState, action) => {
           [viewId, 'selectedNodeTypes'],
           selectedNodeTypes
         )
+      }
+    }
+
+    case SELECT_NODE: {
+      const { viewId, nodeId } = action.payload
+      return {
+        ...state,
+        views: state.views.setIn([viewId, 'selectedNode'], nodeId)
       }
     }
 
@@ -276,11 +287,16 @@ export default (state = initialState, action) => {
 }
 
 const applyLayout = ({ graph, layout, stable = true }) => {
-  graph.makeLayout(stable ? { ...layout, randomize: false } : layout).run()
-
-  const allNodes = graph.nodes()
-  allNodes.forEach(n => {
-    const position = n.position()
-    n.data('orgPos', position)
+  const l = graph.makeLayout(stable ? { ...layout, randomize: false } : layout)
+  // After the layout finishes, record the position of each node
+  const promise = graph.promiseOn('layoutstop')
+  promise.then(() => {
+    const allNodes = graph.nodes()
+    allNodes.forEach(n => {
+      const position = n.position()
+      // Note: Create a shallow copy of the position via spread operator
+      n.data(NODE_DATA_ORG_POS, { ...position })
+    })
   })
+  l.run()
 }

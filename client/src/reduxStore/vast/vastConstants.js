@@ -6,6 +6,7 @@ export const CREATE_VIEW = 'vast/create-view'
 export const DELETE_VIEW = 'vast/delete-view'
 export const SET_ACTIVE_VIEW = 'vast/set-active-view'
 export const LAYOUT = 'vast/layout'
+export const SELECT_NODE = 'vast/select-node'
 export const SHOW_CONNECTIONS = 'vast/show-connections'
 export const TOGGLE_EDIT_MODE = 'vast/toggle-edit-mode'
 export const ADD_CONNECTION = 'vast/add-connection'
@@ -18,6 +19,9 @@ export const NODE_TYPE_ACCOUNTABILITY = 'accountability'
 export const NODE_TYPE_PRIORITY = 'priority'
 export const NODE_TYPE_CORE_VALUES = 'coreValue'
 export const NODE_TYPE_METRIC = 'metric'
+
+// Node Data
+export const NODE_DATA_ORG_POS = 'orgPos'
 
 // Classes
 export const CLASS_PERSON = `cls_${NODE_TYPE_PERSON}`

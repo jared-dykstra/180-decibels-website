@@ -7,7 +7,8 @@ import {
   ADD_NODE,
   SET_SELECTED_NODE_TYPES,
   LAYOUT,
-  TOGGLE_EDIT_MODE
+  TOGGLE_EDIT_MODE,
+  SELECT_NODE
 } from './vastConstants'
 
 // Actions affecting ui state
@@ -25,6 +26,11 @@ export const deleteView = ({ viewId }) => ({
 export const setActiveView = ({ viewId }) => ({
   type: SET_ACTIVE_VIEW,
   payload: { viewId }
+})
+
+export const selectNode = (nodeId, { viewId }) => ({
+  type: SELECT_NODE,
+  payload: { viewId, nodeId }
 })
 
 export const showConnections = (nodeId, { viewId }) => ({
