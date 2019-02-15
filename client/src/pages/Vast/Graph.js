@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Typography } from '@material-ui/core'
 
-import { CLASS_HIDDEN, NODE_DATA_ORG_POS } from 'reduxStore/vast/vastConstants'
+import {
+  CLASS_HIDDEN,
+  NODE_DATA_ORG_POS,
+  CLASS_FADED,
+  CLASS_HIGHLIGHTED
+} from 'reduxStore/vast/vastConstants'
 
 import {
   graphSelector,
@@ -265,7 +270,7 @@ class Graph extends PureComponent {
       graph.batch(() => {
         others.addClass(classHidden)
         nhood.removeClass(classHidden)
-        nhood.addClass('highlighted')
+        nhood.addClass(CLASS_HIGHLIGHTED)
       })
 
       return Promise.resolve()
@@ -308,7 +313,7 @@ class Graph extends PureComponent {
     const showOthersFaded = () =>
       sleep(animationDelayMs * 2).then(() => {
         graph.batch(() => {
-          others.removeClass(classHidden).addClass('faded')
+          others.removeClass(classHidden).addClass(CLASS_FADED)
         })
       })
 
@@ -342,7 +347,7 @@ class Graph extends PureComponent {
     const showOthers = () => {
       graph.batch(() => {
         others.removeClass(classHidden)
-        others.removeClass('faded')
+        others.removeClass(CLASS_FADED)
       })
 
       return sleep(animationDurationMs)
@@ -369,7 +374,7 @@ class Graph extends PureComponent {
     }
 
     const resetHighlight = () => {
-      nhood.removeClass('highlighted')
+      nhood.removeClass(CLASS_HIGHLIGHTED)
     }
 
     return Promise.resolve()

@@ -9,7 +9,9 @@ import {
   NODE_TYPE_CLASS_MAP,
   CLASS_PERSON,
   CLASS_HIDDEN,
-  CLASS_NEW
+  CLASS_NEW,
+  CLASS_FADED,
+  CLASS_HIGHLIGHTED
 } from './vastConstants'
 
 import sampleData from './sampleGraph.json'
@@ -130,14 +132,14 @@ export default {
 
       // Cheese Demo
       {
-        selector: 'node.highlighted',
+        selector: `node.${CLASS_HIGHLIGHTED}`,
         style: {
           'min-zoomed-font-size': '0',
           'z-index': '9999'
         }
       },
       {
-        selector: 'edge.highlighted',
+        selector: `edge.${CLASS_HIGHLIGHTED}`,
         style: {
           opacity: '0.8',
           width: '4',
@@ -145,19 +147,19 @@ export default {
         }
       },
       {
-        selector: '.faded',
+        selector: `.${CLASS_FADED}`,
         style: {
           events: 'no'
         }
       },
       {
-        selector: 'node.faded',
+        selector: `node.${CLASS_FADED}`,
         style: {
           opacity: '0.08'
         }
       },
       {
-        selector: 'edge.faded',
+        selector: `edge.${CLASS_FADED}`,
         style: {
           opacity: '0.06'
         }

@@ -27,11 +27,13 @@ export const NODE_DATA_ORG_POS = 'orgPos'
 export const CLASS_PERSON = `cls_${NODE_TYPE_PERSON}`
 export const CLASS_ACCOUNTABILITY = `cls_${NODE_TYPE_ACCOUNTABILITY}`
 export const CLASS_PRIORITY = `cls_${NODE_TYPE_PRIORITY}`
-export const CLASS_HIDDEN = 'cls_hidden'
-export const CLASS_CORE_VALUE = 'cls_coreValue'
-export const CLASS_METRIC = 'cls_metric'
-export const CLASS_ORG_UNIT = 'cls_orgUnit'
+export const CLASS_CORE_VALUE = `cls_${NODE_TYPE_CORE_VALUES}`
+export const CLASS_METRIC = `cls_${NODE_TYPE_METRIC}`
+export const CLASS_ORG_UNIT = `cls_${NODE_TYPE_ORG_UNIT}`
 export const CLASS_NEW = 'cls_new'
+export const CLASS_HIDDEN = 'cls_hidden'
+export const CLASS_HIGHLIGHTED = 'highlighted'
+export const CLASS_FADED = 'faded'
 
 // Colors come from here: https://coolors.co/617881-77c0b7-e9c46a-f4a261-e76f51
 export const NODE_TYPE_CLASS_MAP = {
