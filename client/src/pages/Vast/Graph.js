@@ -292,15 +292,13 @@ class Graph extends PureComponent {
           y2: p.y + 1
         },
         padding: layoutPadding * 4,
-        concentric(ele) {
+        concentric: ele => {
           if (ele.same(node)) {
             return 2
           }
           return 1
         },
-        levelWidth() {
-          return 1
-        }
+        levelWidth: () => 1
       }
 
       const l = nhood.filter(':visible').makeLayout(opts)
