@@ -287,16 +287,35 @@ export default (state = initialState, action) => {
 }
 
 const applyLayout = ({ graph, layout, stable = true }) => {
-  const l = graph.makeLayout(stable ? { ...layout, randomize: false } : layout)
+  const opts = stable ? { ...layout, randomize: false } : layout
+
   // After the layout finishes, record the position of each node
-  const promise = graph.promiseOn('layoutstop')
-  promise.then(() => {
+  const recordPositions = () => {
     const allNodes = graph.nodes()
     allNodes.forEach(n => {
       const position = n.position()
       // Note: Create a shallow copy of the position via spread operator
       n.data(NODE_DATA_ORG_POS, { ...position })
     })
+  }
+
+  // Record the positions on both events -- This is to handle the case where a user may click to select a nde
+  // before the layout has finished
+  const l = graph.makeLayout({
+    ...opts,
+    ready: (...args) => {
+      recordPositions()
+      if (opts.ready) {
+        opts.ready(args)
+      }
+    },
+    stop: (...args) => {
+      recordPositions()
+      if (opts.stop) {
+        opts.stop(args)
+      }
+    }
   })
+
   l.run()
 }

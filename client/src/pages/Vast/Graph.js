@@ -185,6 +185,10 @@ class Graph extends PureComponent {
 
   handleSelectNode = selectedNode => {
     const { graph, editMode, doSelectNode } = this.props
+
+    // Stop any animations
+    this.stopAnimations()
+
     // Disable node selection when editing
     if (!editMode) {
       const node = selectedNode || graph.$('node:selected')
@@ -315,14 +319,19 @@ class Graph extends PureComponent {
       .then(showOthersFaded)
   }
 
+  // Stop any animations
+  stopAnimations = () => {
+    const { graph } = this.props
+    graph.stop()
+    const allNodes = graph.nodes()
+    allNodes.stop()
+  }
+
   clear = () => {
-    console.log('Clear()')
     const { graph, animationDurationMs, layoutPadding, easing } = this.props
     const classHidden = this.classHidden()
-    const allNodes = graph.nodes()
 
-    graph.stop()
-    allNodes.stop()
+    this.stopAnimations()
 
     const nhood = this.lastHighlighted
     const others = this.lastUnhighlighted
