@@ -15,10 +15,12 @@ import {
   contextMenuDefaultsSelector,
   edgeHandlesDefaultsSelector,
   editModeSelector,
-  selectedNodeSelector
+  selectedNodeSelector,
+  editingNodeSelector
 } from 'reduxStore/vast/vastSelectors'
 import {
   layout,
+  editNode,
   selectNode,
   showConnections,
   addConnection
@@ -31,6 +33,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 class Graph extends PureComponent {
   static propTypes = {
     selectedNode: PropTypes.string,
+    editingNode: PropTypes.string,
     editMode: PropTypes.bool.isRequired,
     layoutPadding: PropTypes.number,
     layoutOpts: PropTypes.shape({
@@ -55,6 +58,7 @@ class Graph extends PureComponent {
     // eslint-disable-next-line react/forbid-prop-types
     edgeHandlesDefaults: PropTypes.object.isRequired,
     doSelectNode: PropTypes.func.isRequired,
+    doEditNode: PropTypes.func.isRequired,
     doShowConnections: PropTypes.func.isRequired,
     doAddConnection: PropTypes.func.isRequired,
     doLayout: PropTypes.func.isRequired,
@@ -63,6 +67,7 @@ class Graph extends PureComponent {
 
   static defaultProps = {
     selectedNode: null,
+    editingNode: null,
     layoutPadding: 50,
     layoutOpts: {
       name: 'concentric',
@@ -88,10 +93,6 @@ class Graph extends PureComponent {
     // Used for highlight logic
     this.lastHighlighted = null
     this.lastUnhighlighted = null
-
-    this.state = {
-      detailsNode: null
-    }
   }
 
   // Mount the graph (previously running headless)
@@ -216,15 +217,13 @@ class Graph extends PureComponent {
   }
 
   handleClickEdit = node => {
-    this.setState(() => ({
-      detailsNode: node
-    }))
+    const { doEditNode } = this.props
+    doEditNode(node.id())
   }
 
   handleHideDetails = () => {
-    this.setState(() => ({
-      detailsNode: null
-    }))
+    const { doEditNode } = this.props
+    doEditNode(null)
   }
 
   classHidden = () => {
@@ -431,8 +430,9 @@ class Graph extends PureComponent {
   }
 
   render() {
-    const { className, graph } = this.props
-    const { detailsNode } = this.state
+    const { className, graph, editingNode } = this.props
+    // Resolve the node from the id, if editing
+    const detailsNode = editingNode ? graph.$(`#${editingNode}`) : null
     return [
       <div
         key="graph"
@@ -468,7 +468,8 @@ export default connect(
     contextMenuDefaults: contextMenuDefaultsSelector(state),
     edgeHandlesDefaults: edgeHandlesDefaultsSelector(state),
     selectedNode: selectedNodeSelector(state),
-    editMode: editModeSelector(state)
+    editMode: editModeSelector(state),
+    editingNode: editingNodeSelector(state)
   }),
   (dispatch, props) => ({
     doLayout: () => dispatch(layout(props)),
@@ -479,6 +480,7 @@ export default connect(
       dispatch(
         addConnection({ sourceNodeId, targetNodeId, addedEdgeId }, props)
       ),
-    doSelectNode: nodeId => dispatch(selectNode(nodeId, props))
+    doSelectNode: nodeId => dispatch(selectNode(nodeId, props)),
+    doEditNode: nodeId => dispatch(editNode(nodeId, props))
   })
 )(Graph)

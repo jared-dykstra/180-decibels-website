@@ -17,7 +17,8 @@ import {
   ADD_CONNECTION,
   TOGGLE_EDIT_MODE,
   SELECT_NODE,
-  NODE_DATA_ORG_POS
+  NODE_DATA_ORG_POS,
+  EDIT_NODE
 } from './vastConstants'
 
 import {
@@ -116,7 +117,8 @@ export default (state = initialState, action) => {
           selectedNodeTypes,
           layout: null,
           editMode: false,
-          selectedNode: null
+          selectedNode: null,
+          editingNode: null
         }),
         graphs: { ...graphs, [viewId]: graph },
         viewer: { ...state.viewer, activeView: viewId }
@@ -167,9 +169,7 @@ export default (state = initialState, action) => {
       setElementVisibility({ graph, selectedNodeTypes })
 
       // Reapply the current layout
-      const views = runSelector(viewsSelector, state)
-      const currentLayout = views[viewId].layout
-      applyLayout({ graph, layout: currentLayout })
+      applyCurrentLayout(graph, state, viewId)
 
       return {
         ...state,
@@ -185,6 +185,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         views: state.views.setIn([viewId, 'selectedNode'], nodeId)
+      }
+    }
+
+    case EDIT_NODE: {
+      const { viewId, nodeId } = action.payload
+      return {
+        ...state,
+        views: state.views.setIn([viewId, 'editingNode'], nodeId)
       }
     }
 
@@ -222,8 +230,7 @@ export default (state = initialState, action) => {
         }
 
         // Reapply the current layout
-        const currentLayout = views[viewId].layout
-        applyLayout({ graph, layout: currentLayout })
+        applyCurrentLayout(graph, state, viewId)
       })
 
       // Add to the underlying data model
@@ -294,6 +301,13 @@ export default (state = initialState, action) => {
     default:
       return state
   }
+}
+
+const applyCurrentLayout = ({ graph, state, viewId }) => {
+  // Reapply the current layout
+  const views = runSelector(viewsSelector, state)
+  const currentLayout = views[viewId].layout
+  applyLayout({ graph, layout: currentLayout })
 }
 
 const applyLayout = ({ graph, layout, stable = true }) => {
