@@ -158,7 +158,7 @@ class Graph extends PureComponent {
     // Edge Detection - Did the selectedNode change?
     const { selectedNode } = this.props
     if (selectedNode !== prevProps.selectedNode) {
-      this.applySelectedNode()
+      Promise.resolve().then(() => this.applySelectedNode())
     }
   }
 
@@ -201,16 +201,16 @@ class Graph extends PureComponent {
     }
   }
 
-  applySelectedNode = () => {
+  applySelectedNode = async () => {
     const { graph, selectedNode } = this.props
     if (!selectedNode) {
-      this.clear()
+      await this.clear()
     } else {
       const node = graph.$(`#${selectedNode}`)
       if (node.nonempty()) {
-        Promise.resolve().then(() => this.highlight(node))
+        await this.highlight(node)
       } else {
-        this.clear()
+        await this.clear()
       }
     }
   }
@@ -232,9 +232,9 @@ class Graph extends PureComponent {
     return hideWhileTraversing ? CLASS_HIDDEN : `xxx-${CLASS_HIDDEN}`
   }
 
-  animateFit = elements => {
+  animateFit = async elements => {
     const { graph, layoutPadding, easing, animationDurationMs } = this.props
-    return graph
+    await graph
       .animation({
         fit: {
           eles: elements,
@@ -248,7 +248,7 @@ class Graph extends PureComponent {
   }
 
   // See: https://github.com/cytoscape/wineandcheesemap/blob/gh-pages/demo.js
-  highlight = node => {
+  highlight = async node => {
     const {
       graph,
       layoutPadding,
@@ -266,19 +266,19 @@ class Graph extends PureComponent {
     const others = this.lastUnhighlighted
     const classHidden = this.classHidden()
 
-    const reset = () => {
+    const reset = async () => {
       graph.batch(() => {
         others.addClass(classHidden)
         nhood.removeClass(classHidden)
+        nhood.removeClass(CLASS_FADED)
         nhood.addClass(CLASS_HIGHLIGHTED)
       })
 
-      return Promise.resolve()
-        .then(() => this.animateFit(nhood.filter(':visible')))
-        .then(() => sleep(animationDurationMs))
+      await this.animateFit(nhood.filter(':visible'))
+      await sleep(animationDurationMs)
     }
 
-    const runLayout = () => {
+    const runLayout = async () => {
       const p = node.data(NODE_DATA_ORG_POS)
 
       const opts = {
@@ -307,21 +307,20 @@ class Graph extends PureComponent {
       const promise = graph.promiseOn('layoutstop')
       l.run()
 
-      return promise
+      await promise
     }
 
-    const showOthersFaded = () =>
-      sleep(animationDelayMs * 2).then(() => {
-        graph.batch(() => {
-          others.removeClass(classHidden).addClass(CLASS_FADED)
-        })
+    const showOthersFaded = async () => {
+      await sleep(animationDelayMs * 2)
+      graph.batch(() => {
+        others.removeClass(classHidden).addClass(CLASS_FADED)
       })
+    }
 
-    return Promise.resolve()
-      .then(reset)
-      .then(runLayout)
-      .then(this.animateFit(nhood.filter(':visible')))
-      .then(showOthersFaded)
+    await reset()
+    await runLayout()
+    await this.animateFit(nhood.filter(':visible'))
+    await showOthersFaded()
   }
 
   // Stop any animations
@@ -332,7 +331,7 @@ class Graph extends PureComponent {
     allNodes.stop()
   }
 
-  clear = () => {
+  clear = async () => {
     const { graph, animationDurationMs, layoutPadding, easing } = this.props
     const classHidden = this.classHidden()
 
@@ -344,16 +343,16 @@ class Graph extends PureComponent {
     this.lastHighlighted = null
     this.lastUnhighlighted = null
 
-    const showOthers = () => {
+    const showOthers = async () => {
       graph.batch(() => {
         others.removeClass(classHidden)
         others.removeClass(CLASS_FADED)
       })
 
-      return sleep(animationDurationMs)
+      await sleep(animationDurationMs)
     }
 
-    const restorePositions = () => {
+    const restorePositions = async () => {
       const opts = {
         name: 'preset',
         positions: n => {
@@ -366,22 +365,20 @@ class Graph extends PureComponent {
         padding: layoutPadding * 4
       }
 
-      const l = nhood.filter(':visible').makeLayout(opts)
+      const l = graph
+        .nodes()
+        .filter(':visible')
+        .makeLayout(opts)
       const promise = graph.promiseOn('layoutstop')
       l.run()
 
-      return promise
+      await promise
     }
 
-    const resetHighlight = () => {
-      nhood.removeClass(CLASS_HIGHLIGHTED)
-    }
-
-    return Promise.resolve()
-      .then(resetHighlight)
-      .then(restorePositions)
-      .then(showOthers)
-      .then(this.animateFit(graph.elements().filter(':visible')))
+    nhood.removeClass(CLASS_HIGHLIGHTED)
+    await restorePositions()
+    await showOthers()
+    await this.animateFit(graph.elements().filter(':visible'))
   }
 
   contextCommands = (/* element */) => {
