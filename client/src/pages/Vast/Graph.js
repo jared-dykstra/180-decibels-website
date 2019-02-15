@@ -332,7 +332,13 @@ class Graph extends PureComponent {
   }
 
   clear = async () => {
-    const { graph, animationDurationMs, layoutPadding, easing } = this.props
+    const {
+      graph,
+      animationDurationMs,
+      animationDelayMs,
+      layoutPadding,
+      easing
+    } = this.props
     const classHidden = this.classHidden()
 
     this.stopAnimations()
@@ -377,6 +383,7 @@ class Graph extends PureComponent {
 
     nhood.removeClass(CLASS_HIGHLIGHTED)
     await restorePositions()
+    await sleep(animationDelayMs * 2)
     await showOthers()
     await this.animateFit(graph.elements().filter(':visible'))
   }
