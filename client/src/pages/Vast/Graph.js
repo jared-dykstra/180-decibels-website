@@ -1,4 +1,3 @@
-import { debounce as _debounce } from 'lodash'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -89,28 +88,42 @@ class Graph extends PureComponent {
   componentDidMount() {
     // console.log(`Graph componentDidMount ${this.props.viewId}`)
     if (this.ref) {
-      const { graph, contextMenuDefaults } = this.props
+      const { graph } = this.props
       if (graph) {
+        // Mount the graph to the DOM
         graph.mount(this.ref)
 
-        this.menu = graph.cxtmenu({
-          ...contextMenuDefaults,
-          commands: this.contextCommands()
-        })
+        // Initialize the contextMenu extension
+        {
+          const { contextMenuDefaults } = this.props
+          this.menu = graph.cxtmenu({
+            ...contextMenuDefaults,
+            commands: this.contextCommands()
+          })
+        }
 
-        graph.on(
-          'select unselect',
-          'node',
-          _debounce(e => {
-            const node = graph.$('node:selected')
+        // Initialize the edgeHandles extension
+        {
+          const { edgeHandlesDefaults, doAddConnection, editMode } = this.props
 
-            if (node.nonempty()) {
-              Promise.resolve().then(() => this.highlight(node))
-            } else {
-              this.clear()
+          this.edgeHandles = graph.edgehandles({
+            ...edgeHandlesDefaults,
+            complete(sourceNode, targetNode, addedElements) {
+              // fired when edgehandles is done and elements are added
+              // A new GUID was already generated as ID of the new element.  To customize, override `edgeParams()`
+              doAddConnection({
+                sourceNodeId: sourceNode.id(),
+                targetNodeId: targetNode.id(),
+                addedEdgeId: addedElements[0].id()
+              })
             }
-          }, 100)
-        )
+          })
+
+          this.applyEditMode(editMode)
+        }
+
+        // Initialize the selection/highlight logic
+        graph.on('select unselect', 'node', () => this.handleSelectNode())
 
         // Perform an initial layout.  Layout requires a bounding box, which is derived from the component to which the graph is mounted
         const { doLayout } = this.props
@@ -123,28 +136,12 @@ class Graph extends PureComponent {
   componentDidUpdate(prevProps) {
     // console.log(`Graph componentDidUpdate ${this.props.viewId}`)
 
-    const { graph, editMode, edgeHandlesDefaults, doAddConnection } = this.props
-
+    const { editMode } = this.props
     if (editMode && !prevProps.editMode) {
-      this.edgeHandles = graph.edgehandles({
-        ...edgeHandlesDefaults,
-        complete(sourceNode, targetNode, addedElements) {
-          // fired when edgehandles is done and elements are added
-          // A new GUID was already generated as ID of the new element.  To customize, override `edgeParams()`
-          doAddConnection({
-            sourceNodeId: sourceNode.id(),
-            targetNodeId: targetNode.id(),
-            addedEdgeId: addedElements[0].id()
-          })
-        }
-      })
+      this.applyEditMode(true)
     }
-
     if (!editMode && prevProps.editMode) {
-      if (this.edgeHandles) {
-        this.edgeHandles.destroy()
-      }
-      this.edgeHandles = null
+      this.applyEditMode(false)
     }
   }
 
@@ -160,6 +157,32 @@ class Graph extends PureComponent {
     }
     if (graph) {
       graph.unmount()
+    }
+  }
+
+  applyEditMode = enabled => {
+    if (enabled) {
+      this.edgeHandles.enableDrawMode()
+      this.edgeHandles.enable()
+    } else {
+      this.edgeHandles.hide()
+      this.edgeHandles.disableDrawMode()
+      this.edgeHandles.disable()
+    }
+  }
+
+  handleSelectNode = selectedNode => {
+    const { graph, editMode } = this.props
+    if (editMode) {
+      // Disable node selection when editing
+      return
+    }
+
+    const node = selectedNode || graph.$('node:selected')
+    if (node.nonempty()) {
+      Promise.resolve().then(() => this.highlight(node))
+    } else {
+      this.clear()
     }
   }
 
@@ -359,7 +382,7 @@ class Graph extends PureComponent {
   }
 
   contextCommands = (/* element */) => {
-    const { doShowConnections, doLayout } = this.props
+    const { doShowConnections } = this.props
     const self = this
     return [
       {
@@ -388,7 +411,7 @@ class Graph extends PureComponent {
         contentStyle: {}, // css key:value pairs to set the command's css in js if you want
         select(ele) {
           // a function to execute when the command is selected
-          self.highlight(ele)
+          self.handleSelectNode(ele)
         },
         enabled: true // whether the command is selectable
       }

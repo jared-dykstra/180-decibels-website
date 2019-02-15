@@ -277,6 +277,7 @@ export default {
       //   return 'middle top' // sets the position of the handle in the format of "X-AXIS Y-AXIS" such as "left top", "middle top"
       // },
       // handleInDrawMode: false, // whether to show the handle in draw mode
+      handleInDrawMode: true
       // edgeType(sourceNode, targetNode) {
       //   // can return 'flat' for flat edges between nodes or 'node' for intermediate node between them
       //   // returning null/undefined means an edge can't be added between the two nodes
