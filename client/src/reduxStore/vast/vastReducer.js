@@ -165,6 +165,12 @@ export default (state = initialState, action) => {
       const { nodeTypes: selectedNodeTypes, viewId } = action.payload
       const graph = runSelector(graphSelector, state)
       setElementVisibility({ graph, selectedNodeTypes })
+
+      // Reapply the current layout
+      const views = runSelector(viewsSelector, state)
+      const currentLayout = views[viewId].layout
+      applyLayout({ graph, layout: currentLayout })
+
       return {
         ...state,
         views: state.views.setIn(
