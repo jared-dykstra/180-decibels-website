@@ -306,8 +306,8 @@ class GraphTab extends PureComponent {
         </Grid>
         <Grid item>
           <Tooltip
-            title="Refresh Layout"
-            aria-label="Refresh Layout"
+            title="Update or Change Layout"
+            aria-label="Update or Change Layout"
             placement="bottom-start"
           >
             <SpeedDial
