@@ -12,8 +12,6 @@ import {
 
 import {
   graphSelector,
-  contextMenuDefaultsSelector,
-  edgeHandlesDefaultsSelector,
   editModeSelector,
   selectedNodeSelector,
   editingNodeSelector
@@ -54,9 +52,9 @@ class Graph extends PureComponent {
       resize: PropTypes.func.isRequired
     }).isRequired,
     // eslint-disable-next-line react/forbid-prop-types
-    contextMenuDefaults: PropTypes.object.isRequired,
+    contextMenuDefaults: PropTypes.object,
     // eslint-disable-next-line react/forbid-prop-types
-    edgeHandlesDefaults: PropTypes.object.isRequired,
+    edgeHandlesDefaults: PropTypes.object,
     doSelectNode: PropTypes.func.isRequired,
     doEditNode: PropTypes.func.isRequired,
     doShowConnections: PropTypes.func.isRequired,
@@ -80,7 +78,104 @@ class Graph extends PureComponent {
     animationDurationMs: 500,
     animationDelayMs: 125,
     hideWhileTraversing: false,
-    className: ''
+    className: '',
+    contextMenuDefaults: {
+      // menuRadius: 100, // the radius of the circular menu in pixels
+      // selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
+      // // an array of commands to list in the menu or a function that returns the array
+      // // function( ele ){ return [ /*...*/ ] }, // example function for commands
+      // commands: [],
+      // fillColor: 'rgba(0, 0, 0, 0.75)', // the background colour of the menu
+      // activeFillColor: 'rgba(1, 105, 217, 0.75)', // the colour used to indicate the selected command
+      // activePadding: 20, // additional size in pixels for the active command
+      // indicatorSize: 24, // the size in pixels of the pointer to the active command
+      // separatorWidth: 3, // the empty spacing in pixels between successive commands
+      // spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
+      // minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
+      // maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight
+      // openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+      // itemColor: 'white', // the colour of text in the command's content
+      // itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
+      // zIndex: 9999, // the z-index of the ui div
+      // atMouse: false // draw menu at mouse position
+    },
+    edgeHandlesDefaults: {
+      // preview: true, // whether to show added edges preview before releasing selection
+      // hoverDelay: 150, // time spent hovering over a target node before it is considered selected
+      // handleNodes: 'node', // selector/filter function for whether edges can be made from a given node
+      // snap: false, // when enabled, the edge can be drawn by just moving close to a target node (can be confusing on compound graphs)
+      // snapThreshold: 50, // the target node must be less than or equal to this many pixels away from the cursor/finger
+      // snapFrequency: 15, // the number of times per second (Hz) that snap checks done (lower is less expensive)
+      // noEdgeEventsInDraw: false, // set events:no to edges during draws, prevents mouseouts on compounds
+      // disableBrowserGestures: true, // during an edge drawing gesture, disable browser gestures such as two-finger trackpad swipe and pinch-to-zoom
+      // handlePosition(node) {
+      //   return 'middle top' // sets the position of the handle in the format of "X-AXIS Y-AXIS" such as "left top", "middle top"
+      // },
+      // handleInDrawMode: false, // whether to show the handle in draw mode
+      handleInDrawMode: true
+      // edgeType(sourceNode, targetNode) {
+      //   // can return 'flat' for flat edges between nodes or 'node' for intermediate node between them
+      //   // returning null/undefined means an edge can't be added between the two nodes
+      //   return 'flat'
+      // },
+      // loopAllowed(node) {
+      //   // for the specified node, return whether edges from itself to itself are allowed
+      //   return false
+      // },
+      // nodeLoopOffset: -50, // offset for edgeType: 'node' loops
+      // nodeParams(sourceNode, targetNode) {
+      //   // for edges between the specified source and target
+      //   // return element object to be passed to cy.add() for intermediary node
+      //   return {}
+      // },
+      // edgeParams(sourceNode, targetNode, i) {
+      //   // for edges between the specified source and target
+      //   // return element object to be passed to cy.add() for edge
+      //   // NB: i indicates edge index in case of edgeType: 'node'
+      //   return {}
+      // },
+      // ghostEdgeParams() {
+      //   // return element object to be passed to cy.add() for the ghost edge
+      //   // (default classes are always added for you)
+      //   return {}
+      // },
+      // show(sourceNode) {
+      //   // fired when handle is shown
+      // },
+      // hide(sourceNode) {
+      //   // fired when the handle is hidden
+      // },
+      // start(sourceNode) {
+      //   // fired when edgehandles interaction starts (drag on handle)
+      // },
+      // complete(sourceNode, targetNode, addedEles) {
+      //   // fired when edgehandles is done and elements are added
+      // },
+      // stop(sourceNode) {
+      //   // fired when edgehandles interaction is stopped (either complete with added edges or incomplete)
+      // },
+      // cancel(sourceNode, cancelledTargets) {
+      //   // fired when edgehandles are cancelled (incomplete gesture)
+      // },
+      // hoverover(sourceNode, targetNode) {
+      //   // fired when a target is hovered
+      // },
+      // hoverout(sourceNode, targetNode) {
+      //   // fired when a target isn't hovered anymore
+      // },
+      // previewon(sourceNode, targetNode, previewEles) {
+      //   // fired when preview is shown
+      // },
+      // previewoff(sourceNode, targetNode, previewEles) {
+      //   // fired when preview is hidden
+      // },
+      // drawon() {
+      //   // fired when draw mode enabled
+      // },
+      // drawoff() {
+      //   // fired when draw mode disabled
+      // }
+    }
   }
 
   constructor(props) {
@@ -473,8 +568,6 @@ class Graph extends PureComponent {
 export default connect(
   state => ({
     graph: graphSelector(state),
-    contextMenuDefaults: contextMenuDefaultsSelector(state),
-    edgeHandlesDefaults: edgeHandlesDefaultsSelector(state),
     selectedNode: selectedNodeSelector(state),
     editMode: editModeSelector(state),
     editingNode: editingNodeSelector(state)

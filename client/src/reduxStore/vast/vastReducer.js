@@ -108,6 +108,8 @@ export default (state = initialState, action) => {
       // Set visibility based on node types
       setElementVisibility({ graph, selectedNodeTypes, selectedNodes })
 
+      setMetadata(graph)
+
       // Add the View, Add the Graph, and set the new View to be the active view
       return {
         ...state,
@@ -168,6 +170,9 @@ export default (state = initialState, action) => {
       const graph = runSelector(graphSelector, state)
       setElementVisibility({ graph, selectedNodeTypes })
 
+      // Recalculate proportional node sizes
+      setMetadata(graph)
+
       // Reapply the current layout
       applyCurrentLayout({ state, viewId })
 
@@ -225,6 +230,9 @@ export default (state = initialState, action) => {
       Object.entries(graphs).forEach(([graphId, graph]) => {
         graph.add([cyNode])
 
+        // Recalculate proportional node sizes
+        setMetadata(graph)
+
         // Always display the node in the current view, but don't necessarily display it in the others
         if (graphId !== viewId) {
           // Apply the Hidden class (or not) depending on currently selected node types for the corresponding view
@@ -262,6 +270,9 @@ export default (state = initialState, action) => {
           const cyEdge = { data: { id: addedEdgeId, ...rawEdge } }
           graph.add([cyEdge])
         }
+
+        // Recalculate proportional node sizes
+        setMetadata(graph)
       })
 
       return { ...state, model: nextModel }
@@ -307,6 +318,28 @@ export default (state = initialState, action) => {
     default:
       return state
   }
+}
+
+const setMetadata = graph => {
+  const visibleNodes = graph.nodes().filter(n => !n.hasClass(CLASS_HIDDEN))
+  const visibleEdges = visibleNodes.connectedEdges().filter(e => {
+    // All edges that have neither node with CLASS_HIDDEN
+    const nodes = e.connectedNodes()
+    return nodes.filter(n => !n.hasClass(CLASS_HIDDEN)).length === 2
+  })
+  const visibleElements = visibleNodes.union(visibleEdges)
+
+  // Calculate weight of each node based on percentage of min/max connectedness
+  const { degree } = visibleElements.degreeCentralityNormalized()
+  const degreeMax = visibleNodes.reduce((acc, n) => {
+    const value = degree(n)
+    return value > acc ? value : acc
+  }, 0)
+  graph.batch(() => {
+    visibleNodes.forEach(n => {
+      n.data('weight', (degree(n) / degreeMax) * 100)
+    })
+  })
 }
 
 const applyCurrentLayout = ({ state, viewId }) => {
