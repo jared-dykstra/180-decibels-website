@@ -136,6 +136,17 @@ class Graph extends PureComponent {
         // Initialize the selection/highlight logic
         graph.on('select unselect', () => this.handleSelectNode())
 
+        // If a node is manually positioned, record that position so that if a neighboring node is selected and unselected the
+        // manually positioned node's location is restored correctly
+        graph.on('tapdragout', e => {
+          const { target } = e
+          if (target.isNode && target.isNode()) {
+            const position = target.position()
+            // Note: Create a shallow copy of the position via spread operator
+            target.data(NODE_DATA_ORG_POS, { ...position })
+          }
+        })
+
         // Perform an initial layout.  Layout requires a bounding box, which is derived from the component to which the graph is mounted
         const { doLayout } = this.props
         doLayout()
