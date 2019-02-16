@@ -90,9 +90,9 @@ class Graph extends PureComponent {
     this.menu = null
     this.edgeHandles = null
 
-    // Used for highlight logic
-    this.lastHighlighted = null
-    this.lastUnhighlighted = null
+    // Used for highlight logic.  This is used as a stack, because state transitions are animated (and take time)
+    // so it needs to accommodate rapid clicks
+    this.lastHighlighted = []
   }
 
   // Mount the graph (previously running headless)
@@ -255,12 +255,9 @@ class Graph extends PureComponent {
       animationDelayMs
     } = this.props
 
-    // const oldNhood = this.lastHighlighted
-    this.lastHighlighted = node.closedNeighborhood()
-    this.lastUnhighlighted = graph.elements().not(this.lastHighlighted)
-
-    const nhood = this.lastHighlighted
-    const others = this.lastUnhighlighted
+    const nhood = node.closedNeighborhood()
+    this.lastHighlighted.push(nhood)
+    const others = graph.elements().not(nhood)
     const classHidden = this.classHidden()
 
     const reset = async () => {
@@ -272,7 +269,6 @@ class Graph extends PureComponent {
       })
 
       await this.animateFit(nhood.filter(':visible'))
-      await sleep(animationDurationMs)
     }
 
     const runLayout = async () => {
@@ -308,17 +304,20 @@ class Graph extends PureComponent {
       await promise
     }
 
-    const showOthersFaded = async () => {
-      await sleep(animationDelayMs * 2)
-      graph.batch(() => {
-        others.removeClass(classHidden).addClass(CLASS_FADED)
-      })
-    }
-
+    // 1. Reset classes
     await reset()
+    // 2. Pause
+    await sleep(animationDurationMs)
+    // 3. Fade other elements
+    graph.batch(() => {
+      others.removeClass(classHidden).addClass(CLASS_FADED)
+    })
+    // 4. Layout neighborhood
     await runLayout()
+    // 5. Zoom to neighborhood
     await this.animateFit(nhood.filter(':visible'))
-    await showOthersFaded()
+    // 6. Pause (useful if rapid clicks cause a series of highlights)
+    await sleep(animationDelayMs * 2)
   }
 
   // Stop any animations
@@ -337,52 +336,47 @@ class Graph extends PureComponent {
       layoutPadding,
       easing
     } = this.props
-    const classHidden = this.classHidden()
 
+    // 1. Preempt existing animations
     this.stopAnimations()
 
-    const nhood = this.lastHighlighted
-    const others = this.lastUnhighlighted
-
-    this.lastHighlighted = null
-    this.lastUnhighlighted = null
-
-    const showOthers = async () => {
-      graph.batch(() => {
-        others.removeClass(classHidden)
-        others.removeClass(CLASS_FADED)
-      })
-
-      await sleep(animationDurationMs)
+    // 2. Remove highlighting
+    const nhood = this.lastHighlighted.pop()
+    if (nhood) {
+      nhood.removeClass(CLASS_HIGHLIGHTED)
     }
 
-    const restorePositions = async () => {
-      const opts = {
-        name: 'preset',
-        positions: n => {
-          const originalPosition = n.data(NODE_DATA_ORG_POS)
-          return originalPosition
-        },
-        animate: true,
-        animationDuration: animationDurationMs,
-        animationEasing: easing,
-        padding: layoutPadding * 4
-      }
-
-      const l = graph
-        .nodes()
-        .filter(':visible')
-        .makeLayout(opts)
-      const promise = graph.promiseOn('layoutstop')
-      l.run()
-
-      await promise
+    // 3. Restore original position
+    const opts = {
+      name: 'preset',
+      positions: n => {
+        const originalPosition = n.data(NODE_DATA_ORG_POS)
+        return originalPosition
+      },
+      animate: true,
+      animationDuration: animationDurationMs,
+      animationEasing: easing,
+      padding: layoutPadding * 4
     }
+    const l = graph
+      .nodes()
+      .filter(':visible')
+      .makeLayout(opts)
+    const promise = graph.promiseOn('layoutstop')
+    l.run()
+    await promise
 
-    nhood.removeClass(CLASS_HIGHLIGHTED)
-    await restorePositions()
+    // 4. Pause
     await sleep(animationDelayMs * 2)
-    await showOthers()
+
+    // 5. Show Others
+    graph.batch(() => {
+      const classHidden = this.classHidden()
+      const allElements = graph.elements()
+      allElements.removeClass(classHidden)
+      allElements.removeClass(CLASS_FADED)
+    })
+    await sleep(animationDurationMs)
     await this.animateFit(graph.elements().filter(':visible'))
   }
 
