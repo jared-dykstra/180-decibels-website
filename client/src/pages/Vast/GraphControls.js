@@ -208,7 +208,9 @@ class GraphTab extends PureComponent {
         layout: {
           name: 'breadthfirst',
           nodeDimensionsIncludeLabels: true,
-          animate: true
+          animate: true,
+          directed: true,
+          maximal: false
         }
       }
     ]

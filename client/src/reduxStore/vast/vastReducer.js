@@ -169,7 +169,7 @@ export default (state = initialState, action) => {
       setElementVisibility({ graph, selectedNodeTypes })
 
       // Reapply the current layout
-      applyCurrentLayout(graph, state, viewId)
+      applyCurrentLayout({ state, viewId })
 
       return {
         ...state,
@@ -211,10 +211,14 @@ export default (state = initialState, action) => {
       const { className } = NODE_TYPE_CLASS_MAP[type]
       const rawNode = { label, type }
 
+      const currentGraph = runSelector(graphSelector, state)
+
       // Add to every graph
       const cyNode = {
         data: { id: nodeId, type, ...rawNode },
-        classes: [className, CLASS_NEW]
+        classes: [className, CLASS_NEW],
+        // Center the new node horizontally
+        position: { x: currentGraph.width() / 2, y: 50 }
       }
       const graphs = runSelector(graphsSelector, state)
       const views = runSelector(viewsSelector, state)
@@ -228,16 +232,18 @@ export default (state = initialState, action) => {
           const { selectedNodeTypes } = view
           setElementVisibility({ graph, selectedNodeTypes })
         }
-
-        // Reapply the current layout
-        applyCurrentLayout(graph, state, viewId)
       })
+
+      // Reapply the current layout
+      applyCurrentLayout({ state, viewId })
 
       // Add to the underlying data model
       const nextModel = state.model.setIn(['nodes', nodeId], rawNode)
       return {
         ...state,
-        model: nextModel
+        model: nextModel,
+        views: state.views.setIn([viewId, 'editingNode'], nodeId)
+        // .setIn([viewId, 'selectedNode'], nodeId)
       }
     }
 
@@ -303,9 +309,10 @@ export default (state = initialState, action) => {
   }
 }
 
-const applyCurrentLayout = ({ graph, state, viewId }) => {
+const applyCurrentLayout = ({ state, viewId }) => {
   // Reapply the current layout
   const views = runSelector(viewsSelector, state)
+  const graph = runSelector(graphSelector, state)
   const currentLayout = views[viewId].layout
   applyLayout({ graph, layout: currentLayout })
 }

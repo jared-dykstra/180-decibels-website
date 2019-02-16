@@ -145,8 +145,6 @@ class Graph extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(`Graph componentDidUpdate ${this.props.viewId}`)
-
     // Edge Detection - Did editMode change?
     const { editMode } = this.props
     if (editMode && !prevProps.editMode) {
@@ -278,7 +276,10 @@ class Graph extends PureComponent {
     }
 
     const runLayout = async () => {
-      const p = node.data(NODE_DATA_ORG_POS)
+      // If the node is brand new, it may not have a recorded position (layout not yet run)
+      const originalPosition = node.data(NODE_DATA_ORG_POS)
+      const currentPosition = node.position()
+      const p = originalPosition || currentPosition
 
       const opts = {
         ...layoutOpts,
