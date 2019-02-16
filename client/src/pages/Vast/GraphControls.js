@@ -53,7 +53,7 @@ const styles = theme => ({
     background: theme.palette.background.default
   },
   buttonContainer: {
-    height: 56,
+    height: '2.5em',
     // padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
     display: 'flex',
     alignItems: 'stretch',
@@ -64,14 +64,8 @@ const styles = theme => ({
   button: {
     height: '100%'
   },
-  // select: {
-  //   padding: 0,
-  //   paddingRight: '10px',
-  //   width: '3em'
-  // },
   selectButton: {
-    height: '100%',
-    paddingRight: 0
+    height: '2.5em'
   }
 })
 
@@ -221,39 +215,43 @@ class GraphTab extends PureComponent {
         justify="space-around"
         alignItems="flex-start"
         className={className}
+        spacing={16}
       >
         <Grid item>
-          {/* <Tooltip title="Filter" aria-label="Filter" placement="bottom-start"> */}
-          <Paper elevation={elevation} className={classes.buttonContainer}>
-            <Select
-              multiple
-              value={selectedNodeTypes}
-              onChange={e => doSetSelectedNodeTypes(e.target.value)}
-              input={<Input disableUnderline />}
-              renderValue={selected => (
-                <Button className={classes.selectButton}>
-                  <FilterIcon />
-                </Button>
-              )}
-              MenuProps={{ disableAutoFocusItem: true }}
-            >
-              {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
-                <MenuItem key={k} value={k} style={{ color: v.color }}>
-                  <Checkbox
-                    style={{ color: v.color }}
-                    checked={selectedNodeTypes.indexOf(k) > -1}
-                  />
-                  <ListItemText
-                    primary={<span style={{ color: v.color }}>{k}</span>}
-                  />
-                </MenuItem>
-              ))}
-            </Select>
-            {/* </Tooltip> */}
-          </Paper>
-        </Grid>
-        <Grid item>
           <Paper className={classes.buttonContainer} elevation={elevation}>
+            <Tooltip
+              title="Filter"
+              aria-label="Filter"
+              placement="bottom-start"
+            >
+              <Select
+                multiple
+                value={selectedNodeTypes}
+                onChange={e => doSetSelectedNodeTypes(e.target.value)}
+                input={<Input disableUnderline />}
+                IconComponent={() => null}
+                renderValue={selected => (
+                  <Button className={classes.selectButton}>
+                    <FilterIcon />
+                    <ArrowDropDownIcon />
+                  </Button>
+                )}
+                MenuProps={{ disableAutoFocusItem: true }}
+                SelectDisplayProps={{ style: { padding: 0 } }}
+              >
+                {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
+                  <MenuItem key={k} value={k} style={{ color: v.color }}>
+                    <Checkbox
+                      style={{ color: v.color }}
+                      checked={selectedNodeTypes.indexOf(k) > -1}
+                    />
+                    <ListItemText
+                      primary={<span style={{ color: v.color }}>{k}</span>}
+                    />
+                  </MenuItem>
+                ))}
+              </Select>
+            </Tooltip>
             <Tooltip
               title="Edit Connections"
               aria-label="Edit Connections"

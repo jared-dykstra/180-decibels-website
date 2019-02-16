@@ -426,6 +426,8 @@ class Graph extends PureComponent {
   handleResize = () => {
     const { graph, doLayout } = this.props
     if (graph) {
+      graph.resize()
+      graph.fit()
       doLayout()
     }
   }
