@@ -126,7 +126,7 @@ class Header extends PureComponent {
                           </Link>
                           <Link to={ROUTE_VAST}>
                             <MenuItem onClick={this.handleClose}>
-                              Vast Intelligence
+                              Graph Intelligence
                             </MenuItem>
                           </Link>
                           <Link to={ROUTE_HELP_MY_TEAM}>

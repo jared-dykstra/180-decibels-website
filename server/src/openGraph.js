@@ -99,7 +99,7 @@ export const getOgValuesForRoute = req => {
       }
     case ROUTE_VAST:
       return {
-        [OG_TITLE]: '180 Decibels - Vast Intelligence',
+        [OG_TITLE]: '180 Decibels - Graph Intelligence',
         [OG_URL]: `${rootUrl}${ROUTE_VAST}`,
         [OG_IMAGE]: `${rootUrl}/vast-image.jpg`,
         [OG_DESCRIPTION]: `Business Intelligence for Operations.  Visualize relationships between people, organizational units, accountabilities, core values, metrics--and see changes over time.  Quickly identify outliers such as overloaded people, and unassigned accountabilities`

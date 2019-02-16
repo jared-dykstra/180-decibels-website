@@ -59,7 +59,7 @@ const footer = ({ classes }) => (
         <Grid item className={classes.siteMap}>
           <ul>
             <li>
-              <Link to={ROUTE_VAST}>Vast Intelligence</Link>
+              <Link to={ROUTE_VAST}>Graph Intelligence</Link>
             </li>
             <li>
               <Link to={ROUTE_WHAT_WE_DO}>What We Do</Link>

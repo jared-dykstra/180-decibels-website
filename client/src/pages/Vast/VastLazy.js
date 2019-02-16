@@ -9,7 +9,7 @@ const VastDynamic = React.lazy(async () =>
 const VastLazy = ({
   children,
   location,
-  title = '180 Decibels - Vast',
+  title = '180 Decibels - Graph Intelligence',
   ...props
 }) => (
   // Fallback isn't going to be visible.  If the user clicks the button to open the modal, redux state updates and the modal will open as soon as it loads
