@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import {
   Button,
   Checkbox,
-  Chip,
   ClickAwayListener,
   Grid,
   Input,
@@ -28,6 +27,7 @@ import TreeIcon from '@material-ui/icons/DeviceHub'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ConnectionsIcon from '@material-ui/icons/CompareArrows'
+import FilterIcon from '@material-ui/icons/FilterList'
 
 import { withStyles } from '@material-ui/core/styles'
 
@@ -44,16 +44,6 @@ import {
 import { NODE_TYPE_CLASS_MAP } from 'reduxStore/vast/vastConstants'
 
 const styles = theme => ({
-  chipContainer: {
-    background: theme.palette.background.default
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  chip: {
-    margin: theme.spacing.unit / 4
-  },
   speedDial: {
     // position: 'absolute',
     top: theme.spacing.unit * 2,
@@ -62,7 +52,7 @@ const styles = theme => ({
   speedDialFab: {
     background: theme.palette.background.default
   },
-  toggleContainer: {
+  buttonContainer: {
     height: 56,
     // padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
     display: 'flex',
@@ -71,8 +61,17 @@ const styles = theme => ({
     // margin: `${theme.spacing.unit}px 0`,
     background: theme.palette.background.default
   },
-  editButton: {
+  button: {
     height: '100%'
+  },
+  // select: {
+  //   padding: 0,
+  //   paddingRight: '10px',
+  //   width: '3em'
+  // },
+  selectButton: {
+    height: '100%',
+    paddingRight: 0
   }
 })
 
@@ -225,24 +224,16 @@ class GraphTab extends PureComponent {
       >
         <Grid item>
           {/* <Tooltip title="Filter" aria-label="Filter" placement="bottom-start"> */}
-          <Paper elevation={elevation} className={classes.chipContainer}>
+          <Paper elevation={elevation} className={classes.buttonContainer}>
             <Select
               multiple
               value={selectedNodeTypes}
               onChange={e => doSetSelectedNodeTypes(e.target.value)}
-              input={<Input id="select-multiple-chip" />}
+              input={<Input disableUnderline />}
               renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map(value => (
-                    <Chip
-                      key={value}
-                      label={value}
-                      className={classes.chip}
-                      onDelete={() => this.handleRemoveNodeType(value)}
-                      style={{ color: NODE_TYPE_CLASS_MAP[value].color }}
-                    />
-                  ))}
-                </div>
+                <Button className={classes.selectButton}>
+                  <FilterIcon />
+                </Button>
               )}
               MenuProps={{ disableAutoFocusItem: true }}
             >
@@ -259,6 +250,60 @@ class GraphTab extends PureComponent {
               ))}
             </Select>
             {/* </Tooltip> */}
+          </Paper>
+        </Grid>
+        <Grid item>
+          <Paper className={classes.buttonContainer} elevation={elevation}>
+            <Tooltip
+              title="Edit Connections"
+              aria-label="Edit Connections"
+              placement="bottom-start"
+            >
+              <ToggleButton
+                className={classes.button}
+                selected={editMode}
+                onChange={this.handleEditMode}
+                value="editMode"
+              >
+                <ConnectionsIcon />
+              </ToggleButton>
+            </Tooltip>
+            <Tooltip
+              title="Add Node"
+              aria-label="Add Node"
+              placement="bottom-start"
+            >
+              <Button
+                className={classes.button}
+                color="default"
+                aria-label="Add"
+                aria-owns={anchorElAdd ? 'simple-menu' : undefined}
+                aria-haspopup="true"
+                onClick={this.handleClickAdd}
+              >
+                <AddIcon />
+                <ArrowDropDownIcon />
+              </Button>
+            </Tooltip>
+            <ClickAwayListener onClickAway={this.handleCloseAdd}>
+              <Menu
+                id="add-menu"
+                anchorEl={anchorElAdd}
+                open={Boolean(anchorElAdd)}
+                onClose={this.handleCloseAdd}
+                disableAutoFocusItem
+              >
+                {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
+                  <MenuItem
+                    key={k}
+                    style={{ color: v.color }}
+                    onClick={e => this.handleAddNode(e, k)}
+                  >
+                    {k}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </ClickAwayListener>
           </Paper>
         </Grid>
         <Grid item>
@@ -292,60 +337,6 @@ class GraphTab extends PureComponent {
               ))}
             </SpeedDial>
           </Tooltip>
-        </Grid>
-        <Grid item>
-          <Paper className={classes.toggleContainer} elevation={elevation}>
-            <Tooltip
-              title="Edit Connections"
-              aria-label="Edit Connections"
-              placement="bottom-start"
-            >
-              <ToggleButton
-                className={classes.editButton}
-                selected={editMode}
-                onChange={this.handleEditMode}
-                value="editMode"
-              >
-                <ConnectionsIcon />
-              </ToggleButton>
-            </Tooltip>
-            <Tooltip
-              title="Add Node"
-              aria-label="Add Node"
-              placement="bottom-start"
-            >
-              <Button
-                className={classes.editButton}
-                color="default"
-                aria-label="Add"
-                aria-owns={anchorElAdd ? 'simple-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleClickAdd}
-              >
-                <AddIcon />
-                <ArrowDropDownIcon />
-              </Button>
-            </Tooltip>
-            <ClickAwayListener onClickAway={this.handleCloseAdd}>
-              <Menu
-                id="add-menu"
-                anchorEl={anchorElAdd}
-                open={Boolean(anchorElAdd)}
-                onClose={this.handleCloseAdd}
-                disableAutoFocusItem
-              >
-                {Object.entries(NODE_TYPE_CLASS_MAP).map(([k, v]) => (
-                  <MenuItem
-                    key={k}
-                    style={{ color: v.color }}
-                    onClick={e => this.handleAddNode(e, k)}
-                  >
-                    {k}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </ClickAwayListener>
-          </Paper>
         </Grid>
       </Grid>
     )
