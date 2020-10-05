@@ -35,7 +35,7 @@
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
     "muicss": "^0.9.41",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "nodemailer": "^5.0.0",
     "pg": "^7.7.1",
     "prop-types": "^15.6.2",
